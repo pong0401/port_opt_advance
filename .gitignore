@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+
+data/backtest_records.csv
+data/universe_snapshots/*.csv
+!data/universe_snapshots/.gitkeep
