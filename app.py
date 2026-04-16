@@ -474,7 +474,7 @@ def build_annual_return_summary(
     if len(values) < 2:
         return pd.DataFrame(), pd.DataFrame()
 
-    yearly_end = values.resample("Y").last()
+    yearly_end = values.resample("YE").last()
     annual_returns = yearly_end.pct_change().dropna()
     annual_df = annual_returns.rename("Portfolio").to_frame()
 
@@ -482,7 +482,7 @@ def build_annual_return_summary(
     if benchmark_curve is not None and not benchmark_curve.empty and "PortValue" in benchmark_curve.columns:
         benchmark_values = benchmark_curve["PortValue"].dropna().astype(float)
         if len(benchmark_values) >= 2:
-            benchmark_annual = benchmark_values.resample("Y").last().pct_change().dropna()
+            benchmark_annual = benchmark_values.resample("YE").last().pct_change().dropna()
             annual_df = annual_df.join(benchmark_annual.rename("Benchmark"), how="left")
 
     annual_df["Active"] = annual_df["Portfolio"] - annual_df.get("Benchmark", pd.Series(index=annual_df.index, dtype=float))
