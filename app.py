@@ -93,7 +93,8 @@ CUSTOM_CSS = """
 """
 
 
-DEFAULT_GROUPS = ["US Liquid Leaders", "Gold-Silver Diversified"]
+DEFAULT_GROUPS = ["US Liquid Leaders", "Gold-Silver Diversified", "Thailand SET100"]
+LEGACY_DEFAULT_GROUPS = ["US Liquid Leaders", "Gold-Silver Diversified"]
 DATA_DIR = Path(__file__).resolve().parent / "data"
 BACKTEST_RECORDS_FILE = DATA_DIR / "backtest_records.csv"
 BACKTEST_RECORD_COLUMNS = [
@@ -369,8 +370,11 @@ def init_state() -> None:
             for group in existing_groups
         ]
 
-    # Migrate older sessions that still carry the previous 8-ticker default.
-    if set(st.session_state.get("selected_groups", [])) == set(DEFAULT_GROUPS):
+    # Migrate older sessions that still carry the previous default groups.
+    if set(st.session_state.get("selected_groups", [])) == set(LEGACY_DEFAULT_GROUPS):
+        st.session_state["selected_groups"] = list(DEFAULT_GROUPS)
+        st.session_state["selected_tickers"] = default_group_tickers(DEFAULT_GROUPS)
+    elif set(st.session_state.get("selected_groups", [])) == set(DEFAULT_GROUPS):
         current_tickers = sanitize_tickers(st.session_state.get("selected_tickers", []))
         if len(current_tickers) < len(initial_tickers):
             if set(current_tickers).issubset(set(initial_tickers)):
@@ -1264,9 +1268,9 @@ def main() -> None:
             "members by average dollar volume and keeps the top liquidity names for each rebalance period. Historical listing "
             "filter still helps reduce bias when free price history is incomplete."
         )
-    if "Thailand SET100" in st.session_state.selected_groups:
+    if {"Thailand SET100", "ThaiSET100"} & set(st.session_state.selected_groups):
         st.info(
-            "Thailand SET100 now loads a historical superset from local semiannual SET100 documents, then applies point-in-time "
+            "Thailand SET100 / ThaiSET100 now loads a historical superset from local semiannual SET100 documents, then applies point-in-time "
             "membership at each rebalance date before ranking liquidity. Older 2005-2013 source files are less structured, so "
             "some half-year snapshots may contain fewer than 100 parsed names, but this still reduces survivorship bias materially "
             "versus using today's SET100 members for the full history."

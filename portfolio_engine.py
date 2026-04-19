@@ -26,6 +26,7 @@ SP500_REPO_DIR = Path(__file__).resolve().parent.parent / "sp500"
 SP500_CURRENT_FILE = SP500_REPO_DIR / "sp500.csv"
 SP500_TICKER_INTERVAL_FILE = SP500_REPO_DIR / "sp500_ticker_start_end.csv"
 THAILAND_SET100_GROUP = "Thailand SET100"
+THAI_SET100_GROUP_ALIAS = "ThaiSET100"
 
 PRESET_UNIVERSES: Dict[str, List[str]] = {
     "US Liquid Leaders": [
@@ -377,6 +378,7 @@ PRESET_UNIVERSES: Dict[str, List[str]] = {
         "SGOV",
     ],
     THAILAND_SET100_GROUP: [],
+    THAI_SET100_GROUP_ALIAS: [],
 }
 
 
@@ -567,6 +569,7 @@ if current_sp500_tickers:
 all_set100_tickers = load_all_set100_tickers()
 if all_set100_tickers:
     PRESET_UNIVERSES[THAILAND_SET100_GROUP] = all_set100_tickers
+    PRESET_UNIVERSES[THAI_SET100_GROUP_ALIAS] = all_set100_tickers
 
 
 def _extract_field(frame: pd.DataFrame, field: str) -> pd.DataFrame:
