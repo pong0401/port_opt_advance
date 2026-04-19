@@ -12,25 +12,32 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 
-from portfolio_engine import (
-    AlphaConfig,
-    ConstructionConfig,
-    find_sustainable_monthly_withdrawal,
-    find_sustainable_monthly_withdrawal_monte_carlo,
-    GovernanceConfig,
-    ImplementationConfig,
-    infer_market_reference,
-    PRESET_UNIVERSES,
-    RiskConfig,
-    download_market_data,
-    fetch_fundamentals,
-    parse_ticker_text,
-    run_forward_test,
-    run_one_shot_optimization,
-    sanitize_tickers,
-    simulate_retirement_paths,
-    simulate_retirement_paths_monte_carlo,
-)
+import portfolio_engine as pe
+
+
+AlphaConfig = pe.AlphaConfig
+ConstructionConfig = pe.ConstructionConfig
+find_sustainable_monthly_withdrawal = pe.find_sustainable_monthly_withdrawal
+find_sustainable_monthly_withdrawal_monte_carlo = pe.find_sustainable_monthly_withdrawal_monte_carlo
+GovernanceConfig = pe.GovernanceConfig
+ImplementationConfig = pe.ImplementationConfig
+PRESET_UNIVERSES = pe.PRESET_UNIVERSES
+RiskConfig = pe.RiskConfig
+download_market_data = pe.download_market_data
+fetch_fundamentals = pe.fetch_fundamentals
+parse_ticker_text = pe.parse_ticker_text
+run_forward_test = pe.run_forward_test
+run_one_shot_optimization = pe.run_one_shot_optimization
+sanitize_tickers = pe.sanitize_tickers
+simulate_retirement_paths = pe.simulate_retirement_paths
+simulate_retirement_paths_monte_carlo = pe.simulate_retirement_paths_monte_carlo
+
+
+def infer_market_reference(selected_groups: List[str], selected_tickers: List[str]) -> Dict[str, str]:
+    infer_fn = getattr(pe, "infer_market_reference", None)
+    if callable(infer_fn):
+        return infer_fn(selected_groups, selected_tickers)
+    return {"benchmark": "SPY", "vol_proxy": "^VIX"}
 
 
 st.set_page_config(
