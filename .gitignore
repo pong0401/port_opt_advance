@@ -1,5 +1,6 @@
 __pycache__/
 *.pyc
+.yfinance/
 
 data/backtest_records.csv
 data/universe_snapshots/*.csv

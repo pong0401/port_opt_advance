@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import asdict
 from datetime import date, datetime, timedelta
 from pathlib import Path
+import csv
 from typing import Dict, List
 
 import numpy as np
@@ -18,6 +19,7 @@ from portfolio_engine import (
     find_sustainable_monthly_withdrawal_monte_carlo,
     GovernanceConfig,
     ImplementationConfig,
+    infer_market_reference,
     PRESET_UNIVERSES,
     RiskConfig,
     download_market_data,
@@ -87,6 +89,91 @@ CUSTOM_CSS = """
 DEFAULT_GROUPS = ["US Liquid Leaders", "Gold-Silver Diversified"]
 DATA_DIR = Path(__file__).resolve().parent / "data"
 BACKTEST_RECORDS_FILE = DATA_DIR / "backtest_records.csv"
+BACKTEST_RECORD_COLUMNS = [
+    "run_id",
+    "saved_at",
+    "selected_groups",
+    "ticker_count",
+    "tickers",
+    "start_date",
+    "end_date",
+    "benchmark_symbol",
+    "vol_proxy_symbol",
+    "construction_method",
+    "liquidity_cut",
+    "alpha_candidate_cap",
+    "target_holdings",
+    "max_weight",
+    "min_weight",
+    "risk_free_rate",
+    "target_volatility",
+    "lookback_months",
+    "rebalance_months",
+    "transaction_cost_bps",
+    "slippage_bps",
+    "use_fundamental_factors",
+    "min_avg_dollar_volume_millions",
+    "use_historical_eligibility",
+    "min_listing_days",
+    "use_trend_filter",
+    "use_regime_filter",
+    "max_drawdown_stop",
+    "assumed_aum_usd",
+    "rebalances",
+    "first_rebalance",
+    "last_rebalance",
+    "final_portfolio_value",
+    "total_return",
+    "cagr",
+    "annual_volatility",
+    "sharpe",
+    "sortino",
+    "max_drawdown",
+    "hit_rate",
+]
+LEGACY_BACKTEST_RECORD_COLUMNS = [
+    column
+    for column in BACKTEST_RECORD_COLUMNS
+    if column not in {"benchmark_symbol", "vol_proxy_symbol"}
+]
+BACKTEST_NUMERIC_COLUMNS = [
+    "ticker_count",
+    "liquidity_cut",
+    "alpha_candidate_cap",
+    "target_holdings",
+    "max_weight",
+    "min_weight",
+    "risk_free_rate",
+    "target_volatility",
+    "lookback_months",
+    "rebalance_months",
+    "transaction_cost_bps",
+    "slippage_bps",
+    "min_avg_dollar_volume_millions",
+    "min_listing_days",
+    "max_drawdown_stop",
+    "assumed_aum_usd",
+    "rebalances",
+    "final_portfolio_value",
+    "total_return",
+    "cagr",
+    "annual_volatility",
+    "sharpe",
+    "sortino",
+    "max_drawdown",
+    "hit_rate",
+]
+BACKTEST_DATETIME_COLUMNS = [
+    "saved_at",
+    "first_rebalance",
+    "last_rebalance",
+]
+BACKTEST_BOOLEAN_COLUMNS = [
+    "use_fundamental_factors",
+    "use_historical_eligibility",
+    "use_trend_filter",
+    "use_regime_filter",
+]
 
 
 def ensure_data_dir() -> None:
@@ -106,12 +193,66 @@ def load_backtest_records() -> pd.DataFrame:
     if not BACKTEST_RECORDS_FILE.exists():
         return pd.DataFrame()
     try:
-        records = pd.read_csv(BACKTEST_RECORDS_FILE)
-    except pd.errors.EmptyDataError:
+        records = read_backtest_records_file()
+    except (pd.errors.EmptyDataError, csv.Error):
         return pd.DataFrame()
-    if "saved_at" in records.columns:
-        records["saved_at"] = pd.to_datetime(records["saved_at"], errors="coerce")
+    for column in BACKTEST_DATETIME_COLUMNS:
+        if column in records.columns:
+            records[column] = pd.to_datetime(records[column], errors="coerce")
+    for column in BACKTEST_NUMERIC_COLUMNS:
+        if column in records.columns:
+            records[column] = pd.to_numeric(records[column], errors="coerce")
+    for column in BACKTEST_BOOLEAN_COLUMNS:
+        if column in records.columns:
+            normalized = (
+                records[column]
+                .astype(str)
+                .str.strip()
+                .str.lower()
+            )
+            records[column] = normalized.map(
+                {
+                    "true": True,
+                    "false": False,
+                    "1": True,
+                    "0": False,
+                }
+            )
     return records
+
+
+def read_backtest_records_file() -> pd.DataFrame:
+    rows: List[Dict[str, object]] = []
+    with BACKTEST_RECORDS_FILE.open("r", newline="", encoding="utf-8") as handle:
+        reader = csv.reader(handle)
+        try:
+            next(reader)
+        except StopIteration:
+            return pd.DataFrame(columns=BACKTEST_RECORD_COLUMNS)
+
+        for row in reader:
+            if not row:
+                continue
+            if len(row) == len(BACKTEST_RECORD_COLUMNS):
+                record = dict(zip(BACKTEST_RECORD_COLUMNS, row))
+            elif len(row) == len(LEGACY_BACKTEST_RECORD_COLUMNS):
+                record = dict(zip(LEGACY_BACKTEST_RECORD_COLUMNS, row))
+                record["benchmark_symbol"] = ""
+                record["vol_proxy_symbol"] = ""
+            else:
+                # Skip malformed rows that do not match any known schema version.
+                continue
+            rows.append(record)
+
+    if not rows:
+        return pd.DataFrame(columns=BACKTEST_RECORD_COLUMNS)
+    return pd.DataFrame(rows).reindex(columns=BACKTEST_RECORD_COLUMNS)
+
+
+def save_backtest_records(records: pd.DataFrame) -> None:
+    ensure_data_dir()
+    output = records.copy().reindex(columns=BACKTEST_RECORD_COLUMNS)
+    output.to_csv(BACKTEST_RECORDS_FILE, index=False)
 
 
 def build_backtest_record(
@@ -135,6 +276,8 @@ def build_backtest_record(
         "tickers": ", ".join(controls["selected"]),
         "start_date": controls["start_date"],
         "end_date": controls["end_date"],
+        "benchmark_symbol": controls["benchmark_symbol"],
+        "vol_proxy_symbol": controls["vol_proxy_symbol"],
         "construction_method": controls["construction_cfg"].method,
         "liquidity_cut": controls["alpha_cfg"].liquidity_cut,
         "alpha_candidate_cap": controls["alpha_cfg"].top_n,
@@ -174,10 +317,10 @@ def append_backtest_record(
     result: Dict[str, object],
     selected_groups: List[str],
 ) -> str:
-    ensure_data_dir()
-    record = pd.DataFrame([build_backtest_record(controls, result, selected_groups)])
-    file_exists = BACKTEST_RECORDS_FILE.exists()
-    record.to_csv(BACKTEST_RECORDS_FILE, mode="a", header=not file_exists, index=False)
+    record = pd.DataFrame([build_backtest_record(controls, result, selected_groups)]).reindex(columns=BACKTEST_RECORD_COLUMNS)
+    existing = load_backtest_records()
+    combined = pd.concat([existing, record], ignore_index=True)
+    save_backtest_records(combined)
     return str(record.loc[0, "run_id"])
 
 
@@ -232,6 +375,8 @@ def build_download_signature(controls: Dict[str, object]) -> tuple:
         tuple(controls["selected"]),
         controls["start_date"],
         controls["end_date"],
+        controls["benchmark_symbol"],
+        controls["vol_proxy_symbol"],
     )
 
 
@@ -248,8 +393,20 @@ def build_run_signature(controls: Dict[str, object]) -> tuple:
 
 
 @st.cache_data(ttl=3600, show_spinner=False)
-def cached_market_download(tickers: tuple[str, ...], start_date: str, end_date: str) -> Dict[str, pd.DataFrame]:
-    return download_market_data(tickers=tickers, start_date=start_date, end_date=end_date)
+def cached_market_download(
+    tickers: tuple[str, ...],
+    start_date: str,
+    end_date: str,
+    benchmark_symbol: str,
+    vol_proxy_symbol: str,
+) -> Dict[str, pd.DataFrame]:
+    return download_market_data(
+        tickers=tickers,
+        start_date=start_date,
+        end_date=end_date,
+        benchmark=benchmark_symbol,
+        vol_proxy=vol_proxy_symbol,
+    )
 
 
 @st.cache_data(ttl=6 * 3600, show_spinner=False)
@@ -392,12 +549,31 @@ def sidebar_controls() -> Dict[str, object]:
     assumed_aum = st.sidebar.number_input("Assumed AUM for capacity check", min_value=100_000.0, value=1_000_000.0, step=100_000.0)
 
     selected = sanitize_tickers(selected_from_groups + parse_ticker_text(custom_text))
+    market_reference = infer_market_reference(selected_groups, selected)
+    if "benchmark_symbol" not in st.session_state or groups_changed:
+        st.session_state["benchmark_symbol"] = market_reference["benchmark"]
+    if "vol_proxy_symbol" not in st.session_state or groups_changed:
+        st.session_state["vol_proxy_symbol"] = market_reference["vol_proxy"]
+
+    st.sidebar.header("Market References")
+    benchmark_symbol = st.sidebar.text_input(
+        "Benchmark ticker",
+        key="benchmark_symbol",
+        help="Examples: SPY for US equities or ^SET.BK for Thailand.",
+    ).strip().upper()
+    vol_proxy_symbol = st.sidebar.text_input(
+        "Volatility proxy ticker",
+        key="vol_proxy_symbol",
+        help="Examples: ^VIX for US equities. Leave blank to disable the volatility proxy component.",
+    ).strip().upper()
     st.session_state.selected_groups = selected_groups
     st.session_state.selected_tickers = selected
     return {
         "selected": selected,
         "start_date": start_date.isoformat(),
         "end_date": end_date.isoformat(),
+        "benchmark_symbol": benchmark_symbol,
+        "vol_proxy_symbol": vol_proxy_symbol,
         "alpha_cfg": AlphaConfig(
             top_n=top_n,
             target_holdings=target_holdings,
@@ -433,6 +609,7 @@ def render_market_overview(bundle: Dict[str, pd.DataFrame]) -> None:
     prices = bundle["prices"]
     benchmark = bundle["benchmark"]
     missing = bundle["missing"]
+    benchmark_symbol = str(bundle.get("benchmark_symbol", "")).strip().upper()
 
     col1, col2, col3, col4 = st.columns(4)
     col1.metric("Tickers loaded", f"{prices.shape[1]}")
@@ -443,8 +620,12 @@ def render_market_overview(bundle: Dict[str, pd.DataFrame]) -> None:
 
     if not benchmark.empty:
         regime_fig = go.Figure()
-        regime_fig.add_trace(go.Scatter(x=benchmark.index, y=benchmark, mode="lines", name="SPY"))
-        regime_fig.update_layout(title="Benchmark monitor (SPY)", xaxis_title="Date", yaxis_title="Price")
+        regime_fig.add_trace(go.Scatter(x=benchmark.index, y=benchmark, mode="lines", name=benchmark_symbol or "Benchmark"))
+        regime_fig.update_layout(
+            title=f"Benchmark monitor ({benchmark_symbol or 'Benchmark'})",
+            xaxis_title="Date",
+            yaxis_title="Price",
+        )
         st.plotly_chart(regime_fig, use_container_width=True)
 
     if not missing.empty:
@@ -576,7 +757,7 @@ def render_one_shot(result: Dict[str, object]) -> None:
         result["metrics"],
         percent_rows=["Total Return", "CAGR", "Annual Volatility", "Max Drawdown", "Hit Rate"],
     )
-    st.caption("Alpha ranking below shows the full universe score before portfolio construction.")
+    st.caption("Alpha ranking below shows the full universe score before portfolio construction. `in_candidate_set` and `selected_for_portfolio` mark the two-stage selection flow.")
     st.dataframe(result["alpha_table"], use_container_width=True)
 
 
@@ -747,7 +928,7 @@ def render_framework_notes() -> None:
         ),
         (
             "3. Risk",
-            "Protect the system, not just the picks. The app applies trend confirmation, a composite regime filter using SPY, breadth, drawdown, and VIX, plus an optional drawdown stop.",
+            "Protect the system, not just the picks. The app applies trend confirmation, a composite regime filter using your chosen benchmark, breadth, drawdown, and an optional volatility proxy, plus an optional drawdown stop.",
         ),
         (
             "4. Implementation",
@@ -824,16 +1005,41 @@ def render_backtest_records_page() -> None:
     scatter.update_layout(xaxis_tickformat=".0%", yaxis_tickformat=".0%")
     st.plotly_chart(scatter, use_container_width=True)
 
-    trend = px.line(
-        filtered.sort_values("saved_at"),
-        x="saved_at",
-        y="cagr",
-        color="construction_method",
-        markers=True,
-        title="CAGR by saved run",
-    )
-    trend.update_layout(yaxis_tickformat=".0%", xaxis_title="Saved at", yaxis_title="CAGR")
-    st.plotly_chart(trend, use_container_width=True)
+    sharpe_chart = filtered.copy()
+    sharpe_chart = sharpe_chart.loc[sharpe_chart["sharpe"].notna()].copy()
+    if not sharpe_chart.empty:
+        sharpe_chart["saved_at_label"] = sharpe_chart["saved_at"].apply(
+            lambda value: pd.Timestamp(value).strftime("%Y-%m-%d %H:%M")
+            if pd.notna(value)
+            else "Unknown time"
+        )
+        sharpe_chart["run_label"] = sharpe_chart.apply(
+            lambda row: f"{row['construction_method']} | {row['saved_at_label']}",
+            axis=1,
+        )
+        sharpe_chart = sharpe_chart.sort_values("sharpe", ascending=False)
+        sharpe_fig = px.bar(
+            sharpe_chart,
+            x="run_label",
+            y="sharpe",
+            color="construction_method",
+            hover_data=[
+                "saved_at",
+                "selected_groups",
+                "cagr",
+                "max_drawdown",
+                "target_holdings",
+                "lookback_months",
+                "rebalance_months",
+            ],
+            title="Sharpe by saved run",
+        )
+        sharpe_fig.update_layout(
+            xaxis_title="Saved run",
+            yaxis_title="Sharpe",
+            xaxis={"categoryorder": "array", "categoryarray": sharpe_chart["run_label"].tolist()},
+        )
+        st.plotly_chart(sharpe_fig, use_container_width=True)
 
     display = filtered.copy()
     preferred_order = [
@@ -1051,6 +1257,13 @@ def main() -> None:
             "members by average dollar volume and keeps the top liquidity names for each rebalance period. Historical listing "
             "filter still helps reduce bias when free price history is incomplete."
         )
+    if "Thailand SET100" in st.session_state.selected_groups:
+        st.info(
+            "Thailand SET100 now loads a historical superset from local semiannual SET100 documents, then applies point-in-time "
+            "membership at each rebalance date before ranking liquidity. Older 2005-2013 source files are less structured, so "
+            "some half-year snapshots may contain fewer than 100 parsed names, but this still reduces survivorship bias materially "
+            "versus using today's SET100 members for the full history."
+        )
 
     if not controls["selected"]:
         st.info("Select at least one ticker to begin.")
@@ -1107,6 +1320,8 @@ def main() -> None:
                 tuple(controls["selected"]),
                 controls["start_date"],
                 controls["end_date"],
+                controls["benchmark_symbol"],
+                controls["vol_proxy_symbol"],
             )
         st.session_state.download_signature = build_download_signature(controls)
         st.session_state.fundamentals = None

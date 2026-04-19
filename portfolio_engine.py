@@ -14,13 +14,18 @@ import yfinance as yf
 TRADING_DAYS = 252
 DEFAULT_BENCHMARK = "SPY"
 DEFAULT_VOL_PROXY = "^VIX"
+THAILAND_BENCHMARK = "^SET.BK"
+THAILAND_VOL_PROXY = ""
 EPSILON = 1e-12
 SNAPSHOT_RULE_VERSION = "sp500_pit_top_liquidity_v1"
 SNAPSHOT_DIR = Path(__file__).resolve().parent / "data" / "universe_snapshots"
 US_LIQUID_LEADERS_SNAPSHOT_FILE = SNAPSHOT_DIR / "us_liquid_leaders.csv"
+THAI_STOCK_DIR = Path(__file__).resolve().parent / "data" / "thai_stock"
+SET100_INTERVAL_FILE = THAI_STOCK_DIR / "set100_ticker_start_end.csv"
 SP500_REPO_DIR = Path(__file__).resolve().parent.parent / "sp500"
 SP500_CURRENT_FILE = SP500_REPO_DIR / "sp500.csv"
 SP500_TICKER_INTERVAL_FILE = SP500_REPO_DIR / "sp500_ticker_start_end.csv"
+THAILAND_SET100_GROUP = "Thailand SET100"
 
 PRESET_UNIVERSES: Dict[str, List[str]] = {
     "US Liquid Leaders": [
@@ -371,6 +376,7 @@ PRESET_UNIVERSES: Dict[str, List[str]] = {
         "PFIX",
         "SGOV",
     ],
+    THAILAND_SET100_GROUP: [],
 }
 
 
@@ -452,6 +458,17 @@ def normalize_symbol(symbol: object) -> str:
     return value.replace(".", "-")
 
 
+def normalize_set_symbol(symbol: object) -> str:
+    value = str(symbol).strip().upper()
+    if not value or value == "NAN":
+        return ""
+    if not any(char.isalnum() for char in value):
+        return ""
+    if value.endswith(".BK"):
+        return value
+    return f"{value}.BK"
+
+
 @lru_cache(maxsize=1)
 def load_current_sp500_tickers() -> List[str]:
     if not SP500_CURRENT_FILE.exists():
@@ -496,9 +513,60 @@ def get_sp500_members_as_of(as_of_date: pd.Timestamp) -> List[str]:
     return sanitize_tickers(members)
 
 
+@lru_cache(maxsize=1)
+def load_set100_membership_intervals() -> pd.DataFrame:
+    if not SET100_INTERVAL_FILE.exists():
+        return pd.DataFrame(columns=["ticker", "start_date", "end_date"])
+
+    intervals = pd.read_csv(SET100_INTERVAL_FILE)
+    required = {"ticker", "start_date", "end_date"}
+    if not required.issubset(intervals.columns):
+        return pd.DataFrame(columns=["ticker", "start_date", "end_date"])
+
+    cleaned = intervals.loc[:, ["ticker", "start_date", "end_date"]].copy()
+    cleaned["ticker"] = cleaned["ticker"].map(normalize_set_symbol)
+    cleaned = cleaned.loc[cleaned["ticker"] != ""].copy()
+    cleaned["start_date"] = pd.to_datetime(cleaned["start_date"], errors="coerce")
+    cleaned["end_date"] = pd.to_datetime(cleaned["end_date"], errors="coerce")
+    cleaned = cleaned.dropna(subset=["start_date", "end_date"]).sort_values(["start_date", "ticker"]).reset_index(drop=True)
+    return cleaned
+
+
+def get_set100_members_as_of(as_of_date: pd.Timestamp) -> List[str]:
+    intervals = load_set100_membership_intervals()
+    if intervals.empty:
+        return []
+
+    timestamp = pd.Timestamp(as_of_date).normalize()
+    members = intervals.loc[
+        (intervals["start_date"] <= timestamp)
+        & (intervals["end_date"] >= timestamp),
+        "ticker",
+    ].tolist()
+    return sanitize_tickers(members)
+
+
+def load_all_set100_tickers() -> List[str]:
+    intervals = load_set100_membership_intervals()
+    if intervals.empty:
+        return []
+    return sanitize_tickers(intervals["ticker"].tolist())
+
+
+def infer_market_reference(selected_groups: Sequence[str], selected_tickers: Sequence[str]) -> Dict[str, str]:
+    return {
+        "benchmark": DEFAULT_BENCHMARK,
+        "vol_proxy": DEFAULT_VOL_PROXY,
+    }
+
+
 current_sp500_tickers = load_current_sp500_tickers()
 if current_sp500_tickers:
     PRESET_UNIVERSES["US Liquid Leaders"] = current_sp500_tickers
+
+all_set100_tickers = load_all_set100_tickers()
+if all_set100_tickers:
+    PRESET_UNIVERSES[THAILAND_SET100_GROUP] = all_set100_tickers
 
 
 def _extract_field(frame: pd.DataFrame, field: str) -> pd.DataFrame:
@@ -558,7 +626,9 @@ def download_market_data(
         "prices": prices,
         "volumes": volumes,
         "benchmark": benchmark_series,
+        "benchmark_symbol": benchmark,
         "vol_proxy": vol_proxy_series,
+        "vol_proxy_symbol": vol_proxy,
         "missing": pd.DataFrame({"Ticker": missing}),
     }
 
@@ -574,6 +644,8 @@ def fetch_fundamentals(tickers: Sequence[str]) -> pd.DataFrame:
             {
                 "ticker": ticker,
                 "quote_type": str(info.get("quoteType", "")).upper(),
+                "sector": str(info.get("sector", "")).strip(),
+                "industry": str(info.get("industry", "")).strip(),
                 "trailing_pe": _safe_number(info.get("trailingPE")),
                 "price_to_book": _safe_number(info.get("priceToBook")),
                 "return_on_equity": _safe_number(info.get("returnOnEquity")),
@@ -754,6 +826,100 @@ def apply_us_liquid_leaders_snapshot(
     )
 
 
+def apply_thailand_set100_snapshot(
+    prices_window: pd.DataFrame,
+    volumes_window: pd.DataFrame,
+    full_prices: pd.DataFrame,
+    as_of_date: pd.Timestamp,
+    alpha_cfg: AlphaConfig,
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    thai_tickers = [
+        ticker
+        for ticker in prices_window.columns
+        if ticker in PRESET_UNIVERSES.get(THAILAND_SET100_GROUP, [])
+    ]
+    if not thai_tickers:
+        return prices_window, volumes_window, pd.DataFrame()
+
+    pit_members = get_set100_members_as_of(as_of_date)
+    universe = [ticker for ticker in thai_tickers if ticker in pit_members]
+    if not universe:
+        other_tickers = [ticker for ticker in prices_window.columns if ticker not in thai_tickers]
+        return prices_window.reindex(columns=other_tickers), volumes_window.reindex(columns=other_tickers), pd.DataFrame()
+
+    working_prices = prices_window[universe].ffill()
+    working_volumes = volumes_window.reindex(working_prices.index).reindex(columns=universe).fillna(0.0)
+    avg_dollar_volume_m = (working_prices * working_volumes).mean() / 1_000_000.0
+    first_valid_dates = full_prices[universe].apply(lambda series: series.first_valid_index())
+
+    snapshot = pd.DataFrame(
+        {
+            "universe_name": THAILAND_SET100_GROUP,
+            "rebalance_date": snapshot_date_key(as_of_date),
+            "ticker": avg_dollar_volume_m.index,
+            "liquidity_rank": avg_dollar_volume_m.rank(ascending=False, method="dense"),
+            "avg_dollar_volume_m": avg_dollar_volume_m.values,
+            "lookback_start": prices_window.index.min(),
+            "lookback_end": prices_window.index.max(),
+            "first_valid_date": first_valid_dates.values,
+            "membership_source": "set100_ticker_start_end",
+            "membership_count": len(universe),
+            "selection_rule_version": "set100_pit_top_liquidity_v1",
+            "snapshot_source": "computed",
+        }
+    ).sort_values(["liquidity_rank", "ticker"])
+
+    liquidity_cut = max(int(alpha_cfg.liquidity_cut), 1)
+    filtered_snapshot = snapshot.head(liquidity_cut).copy()
+    ordered_tickers = [
+        ticker
+        for ticker in filtered_snapshot["ticker"].tolist()
+        if ticker in prices_window.columns
+    ]
+    if alpha_cfg.use_historical_eligibility:
+        cutoff = pd.Timestamp(as_of_date) - pd.Timedelta(days=int(alpha_cfg.min_listing_days))
+        eligible_from_snapshot = filtered_snapshot.loc[
+            pd.to_datetime(filtered_snapshot["first_valid_date"], errors="coerce") <= cutoff, "ticker"
+        ].tolist()
+        ordered_tickers = [ticker for ticker in ordered_tickers if ticker in eligible_from_snapshot]
+
+    other_tickers = [ticker for ticker in prices_window.columns if ticker not in thai_tickers]
+    final_columns = ordered_tickers + other_tickers
+    return (
+        prices_window.reindex(columns=final_columns),
+        volumes_window.reindex(columns=final_columns),
+        filtered_snapshot,
+    )
+
+
+def apply_point_in_time_universe_filters(
+    prices_window: pd.DataFrame,
+    volumes_window: pd.DataFrame,
+    full_prices: pd.DataFrame,
+    as_of_date: pd.Timestamp,
+    alpha_cfg: AlphaConfig,
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    working_prices = prices_window
+    working_volumes = volumes_window
+    snapshots: List[pd.DataFrame] = []
+
+    for filter_fn in (apply_us_liquid_leaders_snapshot, apply_thailand_set100_snapshot):
+        working_prices, working_volumes, snapshot = filter_fn(
+            prices_window=working_prices,
+            volumes_window=working_volumes,
+            full_prices=full_prices,
+            as_of_date=as_of_date,
+            alpha_cfg=alpha_cfg,
+        )
+        if not snapshot.empty:
+            snapshots.append(snapshot)
+
+    if not snapshots:
+        return working_prices, working_volumes, pd.DataFrame()
+    combined = pd.concat(snapshots, ignore_index=True)
+    return working_prices, working_volumes, combined
+
+
 def filter_historical_universe(
     prices_window: pd.DataFrame,
     full_prices: pd.DataFrame,
@@ -909,6 +1075,82 @@ def compute_alpha_table(
     signal_frame["composite_score"] = composite
     signal_frame["rank"] = signal_frame["composite_score"].rank(ascending=False, method="dense")
     return signal_frame.sort_values("composite_score", ascending=False)
+
+
+def _sector_cap_for_target_holdings(target_holdings: int) -> int:
+    if target_holdings <= 6:
+        return 2
+    if target_holdings <= 15:
+        return 3
+    return 4
+
+
+def select_diversified_holdings(
+    candidate_table: pd.DataFrame,
+    candidate_prices: pd.DataFrame,
+    target_holdings: int,
+    fundamentals: Optional[pd.DataFrame] = None,
+) -> List[str]:
+    if candidate_table.empty or target_holdings <= 0:
+        return []
+
+    ordered = [ticker for ticker in candidate_table.index.tolist() if ticker in candidate_prices.columns]
+    if not ordered:
+        return []
+
+    target = min(int(target_holdings), len(ordered))
+    sector_cap = _sector_cap_for_target_holdings(target)
+
+    sector_map: Dict[str, str] = {}
+    if fundamentals is not None and not fundamentals.empty and "sector" in fundamentals.columns:
+        sectors = fundamentals.reindex(ordered)["sector"].fillna("").astype(str).str.strip()
+        sector_map = {
+            ticker: sector
+            for ticker, sector in sectors.items()
+            if sector
+        }
+
+    clean_prices = candidate_prices.reindex(columns=ordered).ffill()
+    corr = clean_prices.pct_change(fill_method=None).dropna().corr() if len(clean_prices) >= 3 else pd.DataFrame()
+
+    selected: List[str] = []
+    sector_counts: Dict[str, int] = {}
+    correlation_thresholds = (0.80, 0.88, 0.94, 1.01)
+
+    for threshold in correlation_thresholds:
+        for ticker in ordered:
+            if ticker in selected:
+                continue
+
+            sector = sector_map.get(ticker, "")
+            if sector and sector_counts.get(sector, 0) >= sector_cap:
+                continue
+
+            if selected and not corr.empty and ticker in corr.index:
+                pairwise = corr.loc[ticker, selected].abs().dropna()
+                if not pairwise.empty and float(pairwise.max()) > threshold:
+                    continue
+
+            selected.append(ticker)
+            if sector:
+                sector_counts[sector] = sector_counts.get(sector, 0) + 1
+            if len(selected) >= target:
+                return selected
+
+    for enforce_sector_cap in (True, False):
+        for ticker in ordered:
+            if ticker in selected:
+                continue
+            sector = sector_map.get(ticker, "")
+            if enforce_sector_cap and sector and sector_counts.get(sector, 0) >= sector_cap:
+                continue
+            selected.append(ticker)
+            if sector:
+                sector_counts[sector] = sector_counts.get(sector, 0) + 1
+            if len(selected) >= target:
+                return selected
+
+    return selected
 
 
 def detect_regime(
@@ -1423,7 +1665,7 @@ def run_one_shot_optimization(
     risk_cfg: RiskConfig,
     fundamentals: Optional[pd.DataFrame] = None,
 ) -> Dict[str, object]:
-    snap_prices, snap_volumes, liquidity_snapshot = apply_us_liquid_leaders_snapshot(
+    snap_prices, snap_volumes, liquidity_snapshot = apply_point_in_time_universe_filters(
         prices_window=prices,
         volumes_window=volumes,
         full_prices=prices,
@@ -1444,7 +1686,15 @@ def run_one_shot_optimization(
         )
 
     candidate_table = alpha_table.head(alpha_cfg.top_n).copy()
-    selected = list(candidate_table.head(alpha_cfg.target_holdings).index)
+    selected = select_diversified_holdings(
+        candidate_table=candidate_table,
+        candidate_prices=eligible_prices.reindex(columns=candidate_table.index),
+        target_holdings=alpha_cfg.target_holdings,
+        fundamentals=fundamentals,
+    )
+    candidate_table["selected_for_portfolio"] = candidate_table.index.isin(selected)
+    alpha_table["in_candidate_set"] = alpha_table.index.isin(candidate_table.index)
+    alpha_table["selected_for_portfolio"] = alpha_table.index.isin(selected)
     selected_prices = prices[selected].ffill().dropna()
     optimization = optimize_weights(
         selected_prices,
@@ -1550,7 +1800,7 @@ def run_forward_test(
         if train_prices.empty:
             continue
 
-        snap_train_prices, snap_train_volumes, liquidity_snapshot = apply_us_liquid_leaders_snapshot(
+        snap_train_prices, snap_train_volumes, liquidity_snapshot = apply_point_in_time_universe_filters(
             prices_window=train_prices,
             volumes_window=train_volumes,
             full_prices=prices,
@@ -1564,7 +1814,12 @@ def run_forward_test(
             continue
 
         candidate_table = alpha_table.head(alpha_cfg.top_n).copy()
-        selected = list(candidate_table.head(alpha_cfg.target_holdings).index)
+        selected = select_diversified_holdings(
+            candidate_table=candidate_table,
+            candidate_prices=eligible_train_prices.reindex(columns=candidate_table.index),
+            target_holdings=alpha_cfg.target_holdings,
+            fundamentals=fundamentals,
+        )
         selected_train = train_prices[selected].ffill().dropna()
         if selected_train.empty or len(selected_train) < 20:
             continue
