@@ -544,7 +544,7 @@ def sidebar_controls() -> Dict[str, object]:
     target_vol = st.sidebar.slider("Target volatility", min_value=0.05, max_value=0.35, value=0.18, step=0.01)
 
     st.sidebar.header("Forward Test")
-    lookback_months = st.sidebar.slider("Lookback window (months)", min_value=3, max_value=36, value=12)
+    lookback_months = st.sidebar.slider("Lookback window (months)", min_value=3, max_value=60, value=12)
     rebalance_months = st.sidebar.slider("Recalculate every Y months", min_value=1, max_value=6, value=1)
     transaction_cost_bps = st.sidebar.slider("Transaction cost (bps)", min_value=0, max_value=100, value=10)
     slippage_bps = st.sidebar.slider("Slippage (bps)", min_value=0, max_value=50, value=2)

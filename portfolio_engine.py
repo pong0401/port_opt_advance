@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import contextlib
+import io
+import warnings
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
@@ -392,11 +395,12 @@ class AlphaConfig:
     use_fundamental_factors: bool = False
     use_historical_eligibility: bool = True
     min_listing_days: int = 252 * 2
-    momentum_weight: float = 0.35
+    momentum_weight: float = 0.25
     quality_weight: float = 0.20
     value_weight: float = 0.20
     growth_weight: float = 0.15
-    low_vol_weight: float = 0.10
+    low_vol_weight: float = 0.45
+    trend_weight: float = 0.30
 
 
 @dataclass
@@ -418,6 +422,12 @@ class RiskConfig:
     bull_exposure: float = 1.00
     neutral_exposure: float = 0.65
     bear_exposure: float = 0.25
+    regime_trend_weight: float = 0.25
+    regime_breadth_weight: float = 0.25
+    regime_vol_weight: float = 0.25
+    regime_drawdown_weight: float = 0.25
+    bull_score_threshold: float = 0.70
+    neutral_score_threshold: float = 0.40
 
 
 @dataclass
@@ -588,6 +598,24 @@ def _extract_field(frame: pd.DataFrame, field: str) -> pd.DataFrame:
     return out.sort_index()
 
 
+def _download_yfinance_chunk(
+    tickers: Sequence[str],
+    start_date: str,
+    end_date: str,
+) -> pd.DataFrame:
+    yfinance_output = io.StringIO()
+    with contextlib.redirect_stdout(yfinance_output), contextlib.redirect_stderr(yfinance_output):
+        return yf.download(
+            tickers,
+            start=start_date,
+            end=end_date,
+            auto_adjust=True,
+            progress=False,
+            threads=True,
+            group_by="column",
+        )
+
+
 def download_market_data(
     tickers: Sequence[str],
     start_date: str,
@@ -599,31 +627,88 @@ def download_market_data(
     if not universe:
         raise ValueError("No tickers were provided.")
 
-    request = sanitize_tickers(list(universe) + [benchmark, vol_proxy])
-    raw = yf.download(
-        request,
-        start=start_date,
-        end=end_date,
-        auto_adjust=True,
-        progress=False,
-        threads=True,
-        group_by="column",
-    )
-    if raw.empty:
-        raise ValueError("yfinance returned no data for the selected period.")
+    reference_tickers = sanitize_tickers([benchmark, vol_proxy])
+    chunk_size = 80
+    close_frames: List[pd.DataFrame] = []
+    volume_frames: List[pd.DataFrame] = []
+    for start in range(0, len(universe), chunk_size):
+        chunk = universe[start : start + chunk_size]
+        request = sanitize_tickers(list(chunk) + reference_tickers)
+        try:
+            raw_chunk = _download_yfinance_chunk(request, start_date, end_date)
+        except Exception:
+            raw_chunk = pd.DataFrame()
+        if raw_chunk.empty:
+            continue
+        close_chunk = _extract_field(raw_chunk, "Close")
+        volume_chunk = _extract_field(raw_chunk, "Volume")
+        if not close_chunk.empty:
+            close_frames.append(close_chunk)
+        if not volume_chunk.empty:
+            volume_frames.append(volume_chunk)
 
-    close = _extract_field(raw, "Close").ffill()
-    volume = _extract_field(raw, "Volume").fillna(0.0)
+    if close_frames:
+        close = pd.concat(close_frames, axis=1).sort_index()
+        close = close.loc[:, ~close.columns.duplicated()].ffill()
+        if volume_frames:
+            volume = pd.concat(volume_frames, axis=1).sort_index()
+            volume = volume.loc[:, ~volume.columns.duplicated()].fillna(0.0)
+        else:
+            volume = pd.DataFrame(index=close.index)
+        valid_close = close.dropna(axis=1, how="all")
+        available = [ticker for ticker in universe if ticker in valid_close.columns]
+    else:
+        close = pd.DataFrame()
+        volume = pd.DataFrame(index=close.index)
+        valid_close = pd.DataFrame()
+        available = []
 
-    missing = [ticker for ticker in universe if ticker not in close.columns]
-    available = [ticker for ticker in universe if ticker in close.columns]
+    if not available and len(universe) > chunk_size:
+        fallback_close_frames: List[pd.DataFrame] = []
+        fallback_volume_frames: List[pd.DataFrame] = []
+        for ticker in universe:
+            request = sanitize_tickers([ticker] + reference_tickers)
+            try:
+                raw_chunk = _download_yfinance_chunk(request, start_date, end_date)
+            except Exception:
+                raw_chunk = pd.DataFrame()
+            if raw_chunk.empty:
+                continue
+            close_chunk = _extract_field(raw_chunk, "Close")
+            volume_chunk = _extract_field(raw_chunk, "Volume")
+            if not close_chunk.empty:
+                fallback_close_frames.append(close_chunk)
+            if not volume_chunk.empty:
+                fallback_volume_frames.append(volume_chunk)
+
+        if fallback_close_frames:
+            close = pd.concat(fallback_close_frames, axis=1).sort_index()
+            close = close.loc[:, ~close.columns.duplicated()].ffill()
+            if fallback_volume_frames:
+                volume = pd.concat(fallback_volume_frames, axis=1).sort_index()
+                volume = volume.loc[:, ~volume.columns.duplicated()].fillna(0.0)
+            else:
+                volume = pd.DataFrame(index=close.index)
+            valid_close = close.dropna(axis=1, how="all")
+            available = [
+                ticker for ticker in universe if ticker in valid_close.columns
+            ]
+
+    missing = [
+        ticker
+        for ticker in universe
+        if ticker not in valid_close.columns
+    ]
     if not available:
-        raise ValueError("No selected tickers returned valid price history.")
+        raise ValueError(
+            "No selected tickers returned valid price history. "
+            "Try fewer universe groups, a shorter ticker list, or a later start date."
+        )
 
-    prices = close[available].copy().dropna(how="all")
+    prices = valid_close[available].copy().dropna(how="all")
     volumes = volume.reindex(prices.index).reindex(columns=available).fillna(0.0)
-    benchmark_series = close[benchmark].dropna() if benchmark in close.columns else pd.Series(dtype=float)
-    vol_proxy_series = close[vol_proxy].dropna() if vol_proxy in close.columns else pd.Series(dtype=float)
+    benchmark_series = valid_close[benchmark].dropna() if benchmark in valid_close.columns else pd.Series(dtype=float)
+    vol_proxy_series = valid_close[vol_proxy].dropna() if vol_proxy in valid_close.columns else pd.Series(dtype=float)
 
     return {
         "prices": prices,
@@ -640,7 +725,9 @@ def fetch_fundamentals(tickers: Sequence[str]) -> pd.DataFrame:
     rows: List[Dict[str, float]] = []
     for ticker in sanitize_tickers(tickers):
         try:
-            info = yf.Ticker(ticker).info
+            yfinance_output = io.StringIO()
+            with contextlib.redirect_stdout(yfinance_output), contextlib.redirect_stderr(yfinance_output):
+                info = yf.Ticker(ticker).info
         except Exception:
             info = {}
         rows.append(
@@ -1054,7 +1141,7 @@ def compute_alpha_table(
             "value": alpha_cfg.value_weight,
             "growth": alpha_cfg.growth_weight,
             "low_vol": alpha_cfg.low_vol_weight,
-            "trend": 0.10,
+            "trend": alpha_cfg.trend_weight,
         },
         index=signal_frame.index,
     )
@@ -1160,6 +1247,7 @@ def detect_regime(
     benchmark_prices: pd.Series,
     universe_prices: pd.DataFrame,
     vol_proxy_prices: Optional[pd.Series],
+    risk_cfg: Optional[RiskConfig] = None,
 ) -> Dict[str, float | str]:
     benchmark = benchmark_prices.dropna().copy()
     if benchmark.empty:
@@ -1201,10 +1289,29 @@ def detect_regime(
         else:
             vol_score = 0.0
 
-    score = float(np.mean([trend_score, breadth_score, vol_score, drawdown_score]))
-    if score >= 0.70:
+    weights = pd.Series(
+        {
+            "trend": risk_cfg.regime_trend_weight if risk_cfg else 0.25,
+            "breadth": risk_cfg.regime_breadth_weight if risk_cfg else 0.25,
+            "vol": risk_cfg.regime_vol_weight if risk_cfg else 0.25,
+            "drawdown": risk_cfg.regime_drawdown_weight if risk_cfg else 0.25,
+        },
+        dtype=float,
+    ).clip(lower=0.0)
+    if weights.sum() <= EPSILON:
+        weights = pd.Series({"trend": 0.25, "breadth": 0.25, "vol": 0.25, "drawdown": 0.25})
+    weights = weights / weights.sum()
+    score = float(
+        trend_score * weights["trend"]
+        + breadth_score * weights["breadth"]
+        + vol_score * weights["vol"]
+        + drawdown_score * weights["drawdown"]
+    )
+    bull_threshold = risk_cfg.bull_score_threshold if risk_cfg else 0.70
+    neutral_threshold = risk_cfg.neutral_score_threshold if risk_cfg else 0.40
+    if score >= bull_threshold:
         regime = "Bull"
-    elif score >= 0.40:
+    elif score >= neutral_threshold:
         regime = "Neutral"
     else:
         regime = "Bear"
@@ -1216,6 +1323,10 @@ def detect_regime(
         "breadth_score": breadth_score,
         "vol_score": vol_score,
         "drawdown_score": drawdown_score,
+        "trend_weight": float(weights["trend"]),
+        "breadth_weight": float(weights["breadth"]),
+        "vol_weight": float(weights["vol"]),
+        "drawdown_weight": float(weights["drawdown"]),
     }
 
 
@@ -1293,14 +1404,20 @@ def optimize_weights(
         else:
             raise ValueError(f"Unsupported optimization method: {method_name}")
 
-        result = minimize(
-            objective,
-            guess,
-            method="SLSQP",
-            bounds=bounds,
-            constraints=constraints,
-            options={"maxiter": 500, "ftol": 1e-9, "disp": False},
-        )
+        with warnings.catch_warnings():
+            warnings.filterwarnings(
+                "ignore",
+                message="Values in x were outside bounds during a minimize step, clipping to bounds",
+                category=RuntimeWarning,
+            )
+            result = minimize(
+                objective,
+                guess,
+                method="SLSQP",
+                bounds=bounds,
+                constraints=constraints,
+                options={"maxiter": 500, "ftol": 1e-9, "disp": False},
+            )
 
         if not result.success:
             fallback = np.repeat(1.0 / n_assets, n_assets)
@@ -1706,7 +1823,7 @@ def run_one_shot_optimization(
     )
     benchmark_window = benchmark.reindex(selected_prices.index).dropna()
     vol_window = vol_proxy.reindex(selected_prices.index).dropna() if not vol_proxy.empty else None
-    regime_info = detect_regime(benchmark_window, prices.reindex(selected_prices.index), vol_window)
+    regime_info = detect_regime(benchmark_window, prices.reindex(selected_prices.index), vol_window, risk_cfg)
 
     exposure = 1.0
     if risk_cfg.use_regime_filter:
@@ -1838,6 +1955,7 @@ def run_forward_test(
             benchmark_window,
             train_prices,
             vol_window,
+            risk_cfg,
         )
 
         exposure = 1.0

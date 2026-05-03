@@ -1,7 +1,11 @@
 __pycache__/
 *.pyc
 .yfinance/
+.yfinance_notebook/
 
 data/backtest_records.csv
 data/universe_snapshots/*.csv
 !data/universe_snapshots/.gitkeep
+
+repo_function_walkthrough.ipynb
+repo_function_walkthrough_adjust_candidate.ipynb

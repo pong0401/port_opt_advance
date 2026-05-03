@@ -4,3 +4,4 @@ numpy>=1.26
 scipy>=1.11
 plotly>=5.20
 yfinance>=0.2.54
+websockets>=13.0
