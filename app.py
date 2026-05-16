@@ -4,6 +4,7 @@ from dataclasses import asdict
 from datetime import date, datetime, timedelta
 from pathlib import Path
 import csv
+import json
 from typing import Dict, List
 
 import numpy as np
@@ -96,6 +97,7 @@ CUSTOM_CSS = """
 DEFAULT_GROUPS = ["US Liquid Leaders", "Gold-Silver Diversified", "Thailand SET100"]
 LEGACY_DEFAULT_GROUPS = ["US Liquid Leaders", "Gold-Silver Diversified"]
 DATA_DIR = Path(__file__).resolve().parent / "data"
+PRECOMPUTED_DIR = DATA_DIR / "precomputed"
 BACKTEST_RECORDS_FILE = DATA_DIR / "backtest_records.csv"
 BACKTEST_RECORD_COLUMNS = [
     "run_id",
@@ -182,6 +184,48 @@ BACKTEST_BOOLEAN_COLUMNS = [
     "use_trend_filter",
     "use_regime_filter",
 ]
+STRATEGY_EXPLANATIONS = {
+    "Side trigger realloc to active stock side, no cost": (
+        "Portfolio with US stocks, Thai stocks, gold, and bitcoin. Each stock side has its own risk trigger. "
+        "When one stock market is risk-off, its unused stock allocation is moved to the stock market that is still risk-on. "
+        "This version ignores trading cost."
+    ),
+    "Side trigger realloc to active stock side, fee+slippage": (
+        "Same side-trigger reallocation rule, but includes estimated trading cost: brokerage commission plus slippage. "
+        "This is the more realistic version of the side-trigger test."
+    ),
+    "Side trigger cash drag, no cost": (
+        "Portfolio with separate US and Thai stock risk triggers. When a sleeve turns risk-off, that allocation stays in cash "
+        "instead of being moved to another active stock market. This version ignores trading cost."
+    ),
+    "Joint US+TH Dynamic HMM Copula/Gold/BTC 60/30/10": (
+        "A joint US plus Thailand stock model combined with gold and bitcoin at 60%, 30%, and 10%. "
+        "Dynamic HMM means the model lets volatility/regime clusters change through time instead of staying fixed."
+    ),
+    "Joint US+TH Static Copula/Gold/BTC 60/30/10": (
+        "A joint US plus Thailand stock model combined with gold and bitcoin at 60%, 30%, and 10%. "
+        "Static means the regime clusters are estimated once and then kept fixed through the backtest."
+    ),
+    "Side trigger cash drag, fee+slippage": (
+        "Same cash-drag side-trigger rule, but includes estimated trading cost: brokerage commission plus slippage. "
+        "Risk-off stock sleeves become cash rather than being reallocated."
+    ),
+    "Static HMM/Gold/BTC 60/30/10 daily exposure": (
+        "A US stock strategy selected by a fixed regime model, blended with gold and bitcoin at 60%, 30%, and 10%. "
+        "Daily exposure rules reduce risk when trend, drawdown, or volatility signals are weak."
+    ),
+    "S&P Gold BTC daily exposure 70/20/10": (
+        "A simple blend of S&P 500, gold, and bitcoin at 70%, 20%, and 10%. "
+        "Daily exposure rules can reduce each sleeve during weak trend or stress periods."
+    ),
+    "S&P Gold BTC daily exposure 60/30/10": (
+        "A simple blend of S&P 500, gold, and bitcoin at 60%, 30%, and 10%. "
+        "Daily exposure rules can reduce each sleeve during weak trend or stress periods."
+    ),
+    "S&P/Gold/BTC 60/30/10 daily exposure": (
+        "The notebook baseline blend of S&P 500, gold, and bitcoin at 60%, 30%, and 10%, with daily risk exposure controls."
+    ),
+}
 
 
 def ensure_data_dir() -> None:
@@ -734,6 +778,385 @@ def build_annual_return_summary(
     return annual_df, summary
 
 
+@st.cache_data(show_spinner=False)
+def load_precomputed_strategy_data() -> Dict[str, object]:
+    summary_path = PRECOMPUTED_DIR / "streamlit_10y_strategy_summary.csv"
+    returns_path = PRECOMPUTED_DIR / "streamlit_10y_strategy_returns.parquet"
+    curves_path = PRECOMPUTED_DIR / "streamlit_10y_strategy_curves.parquet"
+    sleeves_path = PRECOMPUTED_DIR / "streamlit_10y_sleeve_returns.parquet"
+    metadata_path = PRECOMPUTED_DIR / "streamlit_10y_metadata.json"
+    if not summary_path.exists() or not returns_path.exists() or not curves_path.exists() or not sleeves_path.exists():
+        return {
+            "summary": pd.DataFrame(),
+            "returns": pd.DataFrame(),
+            "curves": pd.DataFrame(),
+            "sleeves": pd.DataFrame(),
+            "metadata": {},
+        }
+    metadata = json.loads(metadata_path.read_text(encoding="utf-8")) if metadata_path.exists() else {}
+    return {
+        "summary": pd.read_csv(summary_path),
+        "returns": pd.read_parquet(returns_path),
+        "curves": pd.read_parquet(curves_path),
+        "sleeves": pd.read_parquet(sleeves_path),
+        "metadata": metadata,
+    }
+
+
+def curve_from_return_series(returns: pd.Series, initial: float = 10_000.0) -> pd.DataFrame:
+    clean = returns.dropna().astype(float)
+    if clean.empty:
+        return pd.DataFrame(columns=["PortValue"])
+    return pd.DataFrame({"PortValue": initial * (1.0 + clean.fillna(0.0)).cumprod()}, index=clean.index)
+
+
+def quarterly_rebalanced_blend_returns(
+    sleeve_returns: pd.DataFrame,
+    target_weights: pd.Series,
+    fee_slippage_bps: float = 0.0,
+) -> pd.Series:
+    sleeves = sleeve_returns.dropna(how="all").fillna(0.0)
+    weights = target_weights.reindex(sleeves.columns).fillna(0.0).astype(float)
+    if weights.sum() <= 0 or sleeves.empty:
+        return pd.Series(dtype=float)
+    weights = weights / weights.sum()
+    values = weights * 10_000.0
+    cost_rate = max(float(fee_slippage_bps), 0.0) / 10_000.0
+    month_ends = sleeves.groupby(sleeves.index.to_period("M")).tail(1).index
+    rebalance_dates = {dt for dt in month_ends if dt.month in {1, 4, 7, 10}}
+    rows = []
+    for dt, row in sleeves.iterrows():
+        before = float(values.sum())
+        values = values * (1.0 + row)
+        after_market = float(values.sum())
+        if dt in rebalance_dates and after_market > 0:
+            desired = weights * after_market
+            turnover = float((desired - values).abs().sum() / after_market)
+            values = desired
+            after_cost = after_market * max(1.0 - turnover * cost_rate, 0.0)
+            values = weights * after_cost
+        after = float(values.sum())
+        rows.append((dt, after / before - 1.0 if before > 0 else 0.0))
+    return pd.Series(dict(rows), name="Portfolio").sort_index()
+
+
+def format_metric_card(value: float, is_percent: bool = True) -> str:
+    if pd.isna(value):
+        return "-"
+    return f"{value:.2%}" if is_percent else f"{value:.3f}"
+
+
+def render_curve_metrics(label: str, curve: pd.DataFrame) -> dict[str, float]:
+    metrics = pe.calculate_performance_metrics(curve, 0.03) if not curve.empty else pd.DataFrame()
+    return {
+        "Strategy": label,
+        "CAGR": metric_value(metrics, "CAGR"),
+        "Sharpe": metric_value(metrics, "Sharpe"),
+        "Max Drawdown": metric_value(metrics, "Max Drawdown"),
+        "Total Return": metric_value(metrics, "Total Return"),
+    }
+
+
+def strategy_curve_to_result(strategy: str, curve_series: pd.Series) -> Dict[str, object]:
+    values = curve_series.dropna().astype(float)
+    curve = pd.DataFrame({"PortValue": values}, index=values.index)
+    metrics = pe.calculate_performance_metrics(curve, 0.03) if not curve.empty else pd.DataFrame()
+    return {
+        "source": "Strategy Guide",
+        "strategy": strategy,
+        "curve": curve,
+        "metrics": metrics,
+    }
+
+
+def align_and_rebase_curves(curve_map: Dict[str, pd.DataFrame], initial: float = 10_000.0) -> Dict[str, pd.DataFrame]:
+    valid_starts = []
+    valid_ends = []
+    for curve in curve_map.values():
+        if curve.empty or "PortValue" not in curve.columns:
+            continue
+        values = curve["PortValue"].dropna()
+        if values.empty:
+            continue
+        valid_starts.append(values.index.min())
+        valid_ends.append(values.index.max())
+    if not valid_starts or not valid_ends:
+        return curve_map
+    start = max(valid_starts)
+    end = min(valid_ends)
+    aligned: Dict[str, pd.DataFrame] = {}
+    for label, curve in curve_map.items():
+        if curve.empty or "PortValue" not in curve.columns:
+            aligned[label] = curve
+            continue
+        values = curve["PortValue"].loc[start:end].dropna()
+        if values.empty:
+            aligned[label] = pd.DataFrame(columns=["PortValue"])
+        else:
+            aligned[label] = pd.DataFrame({"PortValue": values / values.iloc[0] * initial}, index=values.index)
+    return aligned
+
+
+def render_strategy_guide_page() -> None:
+    st.subheader("Strategy Guide")
+    st.caption(
+        "Frozen 10Y performance dataset for deploy-friendly testing. It stores strategy return series, not raw stock-level cache."
+    )
+    data = load_precomputed_strategy_data()
+    summary = data["summary"]
+    strategy_returns = data["returns"]
+    curves = data["curves"]
+    sleeves = data["sleeves"]
+    metadata = data["metadata"]
+    if summary.empty or strategy_returns.empty or curves.empty:
+        st.warning("Precomputed strategy data is missing. Run `python scripts/build_streamlit_precomputed.py` locally first.")
+        return
+
+    data_cols = st.columns(4)
+    data_cols[0].metric("Currency", metadata.get("currency", "THB"))
+    data_cols[1].metric("Data start", metadata.get("data_start", "-"))
+    data_cols[2].metric("Data end", metadata.get("data_end", "-"))
+    data_cols[3].metric("Strategies", f"{len(summary):,}")
+
+    left_panel, right_panel = st.columns(2)
+    with left_panel:
+        st.markdown("**Strategy A: S&P 10Y Base**")
+        left_daily = st.checkbox("Daily exposure for selected assets", value=False, key="guide_left_daily")
+        left_fee = st.checkbox("Fee and slippage", value=False, key="guide_left_fee")
+        left_sp_weight = st.slider("S&P weight", 0, 100, 100, 5, key="guide_left_sp")
+        left_gold_weight = st.slider("Additional asset: Gold %", 0, 100, 0, 5, key="guide_left_gold")
+        left_btc_weight = st.slider("Additional asset: BTC %", 0, 100, 0, 5, key="guide_left_btc")
+
+    with right_panel:
+        st.markdown("**Strategy B: US/TH Precomputed Clustering**")
+        market_choice = st.radio(
+            "Stock market sleeve",
+            ["US only", "Thailand only", "US + Thailand"],
+            index=2,
+            horizontal=True,
+            help=(
+                "The deploy dataset currently has US HMM and joint US/Thailand HMM series. "
+                "Thai-only Dynamic HMM is not yet included as a separate curve, so Thai-only uses SET30 point-in-time liquidity as the stock sleeve proxy."
+            ),
+        )
+        model_choice = st.radio(
+            "Model",
+            ["Dynamic HMM", "Static HMM"],
+            horizontal=True,
+            help=(
+                "Dynamic clustering lets regime clusters and probabilities update through time as volatility and market stress change. "
+                "Static HMM keeps the learned regime structure fixed after the initial estimation."
+            ),
+        )
+        weight_mode = st.radio(
+            "US / Thai weighting",
+            ["Separate weights", "Blend"],
+            horizontal=True,
+            help=(
+                "Separate weights keeps independent US and Thai sleeve targets before adding Gold/BTC. "
+                "Blend treats the selected stock markets as one combined stock sleeve, then allocates Gold/BTC around that combined sleeve."
+            ),
+        )
+        right_daily = st.checkbox(
+            "Daily exposure",
+            value=True,
+            key="guide_right_daily",
+            help="US uses S&P/VIX style risk caps, Thailand uses the available SET sleeve proxy, and Gold/BTC use moving-average trend exposure where available.",
+        )
+        stock_realloc = st.checkbox(
+            "Reallocate reduced stock exposure to active stock side",
+            value=True,
+            key="guide_right_realloc",
+            help="When US or Thai stock exposure is reduced, this option uses the side-trigger research series that shifts idle stock allocation toward the stock side still risk-on when available.",
+        )
+        right_fee = st.checkbox("Fee and slippage", value=True, key="guide_right_fee")
+        rc1, rc2, rc3, rc4 = st.columns(4)
+        right_us_weight = rc1.slider("US stock %", 0, 100, 30, 5, key="guide_right_us")
+        right_th_weight = rc2.slider("Thai stock %", 0, 100, 30, 5, key="guide_right_th")
+        right_gold_weight = rc3.slider("Additional asset: Gold %", 0, 100, 30, 5, key="guide_right_gold")
+        right_btc_weight = rc4.slider("Additional asset: BTC %", 0, 100, 10, 5, key="guide_right_btc")
+
+    left_cols = ["SPY_DAILY_EXPOSURE" if left_daily else "SPY"]
+    left_weights = [left_sp_weight]
+    if left_gold_weight > 0:
+        left_cols.append("GOLD_DAILY_EXPOSURE" if left_daily else "GOLD")
+        left_weights.append(left_gold_weight)
+    if left_btc_weight > 0:
+        left_cols.append("BTC_DAILY_EXPOSURE" if left_daily else "BTC")
+        left_weights.append(left_btc_weight)
+    left_returns = quarterly_rebalanced_blend_returns(
+        sleeves[left_cols],
+        pd.Series(left_weights, index=left_cols, dtype=float),
+        fee_slippage_bps=17.0 if left_fee else 0.0,
+    )
+    left_label = "Strategy A: S&P blend"
+    left_curve = curve_from_return_series(left_returns)
+
+    right_notes = []
+    if market_choice == "US + Thailand" and stock_realloc and right_daily:
+        right_series_name = (
+            "Side trigger realloc to active stock side, fee+slippage"
+            if right_fee
+            else "Side trigger realloc to active stock side, no cost"
+        )
+        right_returns = strategy_returns[right_series_name]
+        right_label = f"Strategy B: {right_series_name}"
+        right_notes.append("Using the precomputed side-trigger series, so custom US/Thai/Gold/BTC sliders are ignored for this exact research result.")
+    elif market_choice == "US + Thailand" and model_choice == "Dynamic HMM" and right_daily and weight_mode == "Blend":
+        right_series_name = "Joint US+TH Dynamic HMM Copula/Gold/BTC 60/30/10"
+        right_returns = strategy_returns[right_series_name]
+        right_label = f"Strategy B: {right_series_name}"
+        right_notes.append("Using the precomputed joint Dynamic HMM 60/30/10 research curve.")
+    elif market_choice == "US + Thailand" and model_choice == "Static HMM" and right_daily and weight_mode == "Blend":
+        right_series_name = "Joint US+TH Static Copula/Gold/BTC 60/30/10"
+        right_returns = strategy_returns[right_series_name]
+        right_label = f"Strategy B: {right_series_name}"
+        right_notes.append("Using the precomputed joint Static model 60/30/10 research curve.")
+    else:
+        stock_cols = []
+        stock_weights = []
+        if market_choice in {"US only", "US + Thailand"} and right_us_weight > 0:
+            if model_choice == "Static HMM" and right_daily and "Static HMM daily exposure" in strategy_returns:
+                stock_cols.append("Static HMM daily exposure")
+            else:
+                stock_cols.append("Top liquidity US 30 PIT")
+                if model_choice == "Dynamic HMM":
+                    right_notes.append("US-only Dynamic HMM pure stock sleeve is not yet in the deploy dataset; using US30 point-in-time liquidity proxy.")
+            stock_weights.append(right_us_weight)
+        if market_choice in {"Thailand only", "US + Thailand"} and right_th_weight > 0:
+            stock_cols.append("Top liquidity SET 30 PIT")
+            stock_weights.append(right_th_weight)
+            if model_choice == "Dynamic HMM":
+                right_notes.append("Thai-only Dynamic HMM pure stock sleeve is not yet in the deploy dataset; using SET30 point-in-time liquidity proxy.")
+
+        blend_cols = stock_cols.copy()
+        blend_weights = stock_weights.copy()
+        if right_gold_weight > 0:
+            blend_cols.append("GOLD_DAILY_EXPOSURE" if right_daily else "GOLD")
+            blend_weights.append(right_gold_weight)
+        if right_btc_weight > 0:
+            blend_cols.append("BTC_DAILY_EXPOSURE" if right_daily else "BTC")
+            blend_weights.append(right_btc_weight)
+        source_frame = pd.concat(
+            [
+                strategy_returns[[col for col in blend_cols if col in strategy_returns]],
+                sleeves[[col for col in blend_cols if col in sleeves]],
+            ],
+            axis=1,
+        )
+        source_frame = source_frame.loc[:, ~source_frame.columns.duplicated()]
+        available_cols = [col for col in blend_cols if col in source_frame.columns]
+        available_weights = [weight for col, weight in zip(blend_cols, blend_weights) if col in source_frame.columns]
+        right_returns = quarterly_rebalanced_blend_returns(
+            source_frame[available_cols],
+            pd.Series(available_weights, index=available_cols, dtype=float),
+            fee_slippage_bps=17.0 if right_fee else 0.0,
+        )
+        right_label = "Strategy B: custom US/TH blend"
+        if not available_cols:
+            right_notes.append("No valid precomputed sleeve selected.")
+
+    right_curve = curve_from_return_series(right_returns)
+
+    aligned_curves = align_and_rebase_curves({left_label: left_curve, right_label: right_curve})
+    left_curve = aligned_curves.get(left_label, left_curve)
+    right_curve = aligned_curves.get(right_label, right_curve)
+
+    chart = go.Figure()
+    if not left_curve.empty:
+        chart.add_trace(go.Scatter(x=left_curve.index, y=left_curve["PortValue"], mode="lines", name=left_label))
+    if not right_curve.empty:
+        chart.add_trace(go.Scatter(x=right_curve.index, y=right_curve["PortValue"], mode="lines", name=right_label))
+    chart.update_layout(
+        title="Compare Two Strategies (same start date, rebased to 10,000)",
+        xaxis_title="Date",
+        yaxis_title="Portfolio value",
+    )
+    st.plotly_chart(chart, use_container_width=True)
+
+    metric_payload = [
+        (left_label, left_curve, render_curve_metrics(left_label, left_curve)),
+        (right_label, right_curve, render_curve_metrics(right_label, right_curve)),
+    ]
+    metric_rows = pd.DataFrame([payload[2] for payload in metric_payload])
+    metric_display = metric_rows.copy()
+    for column in ["CAGR", "Max Drawdown", "Total Return"]:
+        metric_display[column] = metric_display[column].map(lambda value: format_metric_card(value, True))
+    metric_display["Sharpe"] = metric_display["Sharpe"].map(lambda value: format_metric_card(value, False))
+    header_cols = st.columns([3.3, 1, 1, 1.3, 1.2, 1])
+    for col, label in zip(header_cols, ["Strategy", "CAGR", "Sharpe", "Max Drawdown", "Total Return", "Action"]):
+        col.markdown(f"**{label}**")
+    for (_, row), (raw_label, raw_curve, _) in zip(metric_display.iterrows(), metric_payload):
+        row_cols = st.columns([3.3, 1, 1, 1.3, 1.2, 1])
+        row_cols[0].write(row["Strategy"])
+        row_cols[1].write(row["CAGR"])
+        row_cols[2].write(row["Sharpe"])
+        row_cols[3].write(row["Max Drawdown"])
+        row_cols[4].write(row["Total Return"])
+        if row_cols[5].button("Retirement", key=f"retire_compare_{raw_label}", use_container_width=True):
+            st.session_state.retirement_strategy_result = strategy_curve_to_result(raw_label, raw_curve["PortValue"])
+            st.session_state.app_page = "Retirement"
+            st.rerun()
+    if right_notes:
+        st.info(" ".join(dict.fromkeys(right_notes)))
+
+    explanation = pd.DataFrame(
+        [
+            {
+                "Strategy family": "S&P buy & hold",
+                "How it works": "Holds SPY continuously. In this dataset, USD assets are converted to THB for apples-to-apples comparison with SET strategies.",
+            },
+            {
+                "Strategy family": "S&P daily exposure",
+                "How it works": "Uses SPY trend, drawdown, and VIX caps to reduce exposure during weak or volatile regimes.",
+            },
+            {
+                "Strategy family": "S&P / Gold / BTC",
+                "How it works": "Combines sleeve returns with quarterly strategic rebalancing. The sandbox below lets you test custom sleeve weights.",
+            },
+            {
+                "Strategy family": "Top liquidity PIT",
+                "How it works": "At each monthly rebalance, selects active S&P 500 or SET100 members from point-in-time membership, ranks by trailing liquidity, then equal-weights the top names.",
+            },
+            {
+                "Strategy family": "Vol clustering / HMM",
+                "How it works": "Uses precomputed notebook model series: static copula, static HMM, dynamic HMM, and US/TH side-trigger variants. These are frozen research outputs for fast web comparison.",
+            },
+        ]
+    )
+    st.markdown("**Strategy Principles**")
+    st.dataframe(explanation, use_container_width=True, hide_index=True)
+
+    display = summary.copy()
+    percent_cols = ["Total Return", "CAGR", "Annual Vol", "Max Drawdown", "Hit Rate"]
+    ratio_cols = ["Sharpe", "Sortino"]
+    for column in percent_cols:
+        if column in display.columns:
+            display[column] = display[column].map(lambda value: "-" if pd.isna(value) else f"{value:.2%}")
+    for column in ratio_cols:
+        if column in display.columns:
+            display[column] = display[column].map(lambda value: "-" if pd.isna(value) else f"{value:.3f}")
+    st.markdown("**Performance Ranking**")
+    st.dataframe(display, use_container_width=True, hide_index=True)
+
+    explained_names = [name for name in summary["Strategy"].tolist() if name in STRATEGY_EXPLANATIONS]
+    if explained_names:
+        st.markdown("**Named Strategy Details**")
+        detail_rows = [
+            {"Strategy": name, "Explanation": STRATEGY_EXPLANATIONS[name]}
+            for name in explained_names
+        ]
+        st.dataframe(pd.DataFrame(detail_rows), use_container_width=True, hide_index=True)
+
+    st.download_button(
+        "Download strategy summary CSV",
+        data=summary.to_csv(index=False),
+        file_name="streamlit_10y_strategy_summary.csv",
+        mime="text/csv",
+        use_container_width=True,
+    )
+
+
 def render_one_shot(result: Dict[str, object]) -> None:
     st.subheader("One-Shot Optimization")
     weights = result["weights"].reset_index().rename(columns={"index": "Ticker"})
@@ -835,7 +1258,7 @@ def render_forward_test(result: Dict[str, object]) -> None:
             st.dataframe(display_weights, use_container_width=True, hide_index=True)
     with tab3:
         if annual_df.empty:
-            st.info("ยังมีข้อมูลไม่พอสำหรับสรุป annual return รายปี")
+            st.info("à¸¢à¸±à¸‡à¸¡à¸µà¸‚à¹‰à¸­à¸¡à¸¹à¸¥à¹„à¸¡à¹ˆà¸žà¸­à¸ªà¸³à¸«à¸£à¸±à¸šà¸ªà¸£à¸¸à¸› annual return à¸£à¸²à¸¢à¸›à¸µ")
         else:
             chart_df = annual_df.copy()
             long_annual = chart_df.melt(
@@ -1098,15 +1521,25 @@ def render_retirement_page(forward_test_result: Dict[str, object] | None) -> Non
     st.subheader("Retirement")
     st.caption("Estimate how much can be withdrawn each month without exhausting the portfolio under simulated retirement paths.")
 
-    if not forward_test_result or not isinstance(forward_test_result, dict):
-        st.info("Run `Run rolling forward test` first to create a return history for the retirement page.")
+    selected_strategy_result = st.session_state.get("retirement_strategy_result")
+    source_result = selected_strategy_result if isinstance(selected_strategy_result, dict) else forward_test_result
+
+    if not source_result or not isinstance(source_result, dict):
+        st.info("Run `Run rolling forward test` or choose a strategy from `Strategy Guide` first.")
         return
 
-    curve = forward_test_result.get("curve", pd.DataFrame())
-    metrics = forward_test_result.get("metrics", pd.DataFrame())
+    curve = source_result.get("curve", pd.DataFrame())
+    metrics = source_result.get("metrics", pd.DataFrame())
     if curve.empty or "PortValue" not in curve.columns:
-        st.info("Forward test curve is not available yet. Run a rolling forward test first.")
+        st.info("Return history is not available yet. Run a rolling forward test or choose a strategy from Strategy Guide first.")
         return
+
+    source_name = source_result.get("strategy") or source_result.get("source") or "Latest rolling forward test"
+    st.info(f"Retirement source: {source_name}")
+    if selected_strategy_result:
+        if st.button("Clear Strategy Guide source and use latest rolling forward test", use_container_width=True):
+            st.session_state.retirement_strategy_result = None
+            st.rerun()
 
     monthly_values = curve["PortValue"].resample("ME").last().dropna()
     monthly_returns = monthly_values.pct_change().dropna()
@@ -1134,14 +1567,12 @@ def render_retirement_page(forward_test_result: Dict[str, object] | None) -> Non
     retirement_years = col2.slider("Retirement horizon (years)", min_value=5, max_value=50, value=30)
     target_success_rate = col3.slider("Target survival rate", min_value=0.50, max_value=1.00, value=0.90, step=0.01)
 
-    col4, col5, col6 = st.columns(3)
-    annual_inflation = col4.slider("Annual inflation", min_value=0.00, max_value=0.10, value=0.03, step=0.005)
-    monthly_income = col5.number_input("Monthly pension / other income", min_value=0.0, value=0.0, step=1000.0)
-    num_scenarios = col6.slider("Simulation scenarios", min_value=200, max_value=5000, value=1000, step=100)
+    col5, col6, col7 = st.columns(3)
+    annual_inflation = col5.slider("Annual inflation", min_value=0.00, max_value=0.10, value=0.03, step=0.005)
+    monthly_income = col6.number_input("Monthly pension / other income", min_value=0.0, value=0.0, step=1000.0)
+    num_scenarios = col7.slider("Simulation scenarios", min_value=200, max_value=5000, value=1000, step=100)
 
-    col7, col8 = st.columns(2)
-    block_size = col7.slider("Bootstrap block size (months)", min_value=1, max_value=24, value=12)
-    custom_withdrawal = col8.number_input("Test custom monthly withdrawal", min_value=0.0, value=40_000.0, step=1_000.0)
+    block_size = st.slider("Bootstrap block size (months)", min_value=1, max_value=24, value=12)
 
     if st.button("Run retirement test", use_container_width=True):
         with st.spinner("Running retirement survival simulation..."):
@@ -1165,27 +1596,6 @@ def render_retirement_page(forward_test_result: Dict[str, object] | None) -> Non
                 target_success_rate=target_success_rate,
                 num_scenarios=num_scenarios,
             )
-            custom_result = simulate_retirement_paths_monte_carlo(
-                annual_cagr=0.0 if pd.isna(source_cagr) else float(source_cagr),
-                annual_volatility=0.0 if pd.isna(source_vol) else float(source_vol),
-                initial_portfolio=initial_portfolio,
-                monthly_withdrawal=custom_withdrawal,
-                years=retirement_years,
-                annual_inflation=annual_inflation,
-                monthly_income=monthly_income,
-                num_scenarios=num_scenarios,
-            )
-            bootstrap_custom_result = simulate_retirement_paths(
-                monthly_returns=monthly_returns,
-                initial_portfolio=initial_portfolio,
-                monthly_withdrawal=custom_withdrawal,
-                years=retirement_years,
-                annual_inflation=annual_inflation,
-                monthly_income=monthly_income,
-                num_scenarios=num_scenarios,
-                block_size=block_size,
-            )
-
         monte_carlo_result = monte_carlo_sustainable["result"]
         bootstrap_result = bootstrap_sustainable["result"]
         safe_monthly = float(monte_carlo_sustainable["monthly_withdrawal"])
@@ -1193,21 +1603,18 @@ def render_retirement_page(forward_test_result: Dict[str, object] | None) -> Non
         safe_annual = safe_monthly * 12.0
         bootstrap_safe_annual = bootstrap_safe_monthly * 12.0
         initial_withdrawal_rate = safe_annual / initial_portfolio if initial_portfolio > 0 else 0.0
-        custom_survival = float(custom_result["survival_rate"])
-        bootstrap_custom_survival = float(bootstrap_custom_result["survival_rate"])
 
-        m1, m2, m3, m4 = st.columns(4)
+        m1, m2, m3 = st.columns(3)
         m1.metric("MC safe monthly withdrawal", f"{safe_monthly:,.0f}")
         m2.metric("MC safe annual withdrawal", f"{safe_annual:,.0f}")
         m3.metric("Initial withdrawal rate", f"{initial_withdrawal_rate:.2%}")
-        m4.metric("MC custom withdrawal survival", f"{custom_survival:.2%}")
 
         final_values = monte_carlo_result["final_values"]
-        b1, b2, b3, b4 = st.columns(4)
+        b1, b2, b3 = st.columns(3)
         b1.metric("MC safe withdrawal survival", f"{float(monte_carlo_result['survival_rate']):.2%}")
         b2.metric("Bootstrap safe monthly", f"{bootstrap_safe_monthly:,.0f}")
         b3.metric("Bootstrap safe survival", f"{float(bootstrap_result['survival_rate']):.2%}")
-        b4.metric("Bootstrap custom survival", f"{bootstrap_custom_survival:.2%}")
+        st.caption(f"Target survival used for both Monte Carlo and Bootstrap: {target_success_rate:.0%}.")
 
         s1, s2, s3 = st.columns(3)
         s1.metric("MC median ending value", f"{float(final_values.quantile(0.5)):,.0f}")
@@ -1215,6 +1622,12 @@ def render_retirement_page(forward_test_result: Dict[str, object] | None) -> Non
         s3.metric("Bootstrap safe annual", f"{bootstrap_safe_annual:,.0f}")
 
         safe_paths = monte_carlo_result["simulated_paths"]
+        surviving_final_values = final_values[final_values > 0]
+        lowest_survivor_path = pd.Series(dtype=float)
+        if not surviving_final_values.empty:
+            lowest_survivor_id = surviving_final_values.idxmin()
+            if lowest_survivor_id in safe_paths.columns:
+                lowest_survivor_path = safe_paths[lowest_survivor_id]
         percentile_df = pd.DataFrame(
             {
                 "Month": np.arange(len(safe_paths)),
@@ -1227,8 +1640,18 @@ def render_retirement_page(forward_test_result: Dict[str, object] | None) -> Non
         fig.add_trace(go.Scatter(x=percentile_df["Month"], y=percentile_df["P10"], mode="lines", name="P10"))
         fig.add_trace(go.Scatter(x=percentile_df["Month"], y=percentile_df["Median"], mode="lines", name="Median"))
         fig.add_trace(go.Scatter(x=percentile_df["Month"], y=percentile_df["P90"], mode="lines", name="P90"))
+        if not lowest_survivor_path.empty:
+            fig.add_trace(
+                go.Scatter(
+                    x=np.arange(len(lowest_survivor_path)),
+                    y=lowest_survivor_path.values,
+                    mode="lines",
+                    name="Lowest surviving path",
+                    line={"dash": "dot", "color": "#dc2626"},
+                )
+            )
         fig.update_layout(
-            title="Monte Carlo retirement portfolio path percentiles",
+            title="Monte Carlo retirement portfolio path percentiles and lowest surviving path",
             xaxis_title="Month",
             yaxis_title="Portfolio value",
         )
@@ -1242,21 +1665,32 @@ def render_retirement_page(forward_test_result: Dict[str, object] | None) -> Non
 
 def main() -> None:
     init_state()
+    pages = ["Optimize Backtest", "Save Result", "Strategy Guide", "Retirement"]
+    page_aliases = {
+        "Optimization Studio": "Optimize Backtest",
+        "Strategy Lab": "Optimize Backtest",
+        "Backtest Records": "Save Result",
+    }
+    current_page = page_aliases.get(
+        st.session_state.get("app_page", "Optimize Backtest"),
+        st.session_state.get("app_page", "Optimize Backtest"),
+    )
     st.session_state["app_page"] = st.sidebar.radio(
         "Page",
-        ["Optimization Studio", "Backtest Records", "Retirement"],
-        index=["Optimization Studio", "Backtest Records", "Retirement"].index(
-            st.session_state.get("app_page", "Optimization Studio")
-        )
-        if st.session_state.get("app_page", "Optimization Studio") in ["Optimization Studio", "Backtest Records", "Retirement"]
+        pages,
+        index=pages.index(current_page)
+        if current_page in pages
         else 0,
     )
     render_header()
-    if st.session_state["app_page"] == "Backtest Records":
+    if st.session_state["app_page"] == "Save Result":
         render_backtest_records_page()
         return
     if st.session_state["app_page"] == "Retirement":
         render_retirement_page(st.session_state.get("forward_test_result"))
+        return
+    if st.session_state["app_page"] == "Strategy Guide":
+        render_strategy_guide_page()
         return
 
     controls = sidebar_controls()

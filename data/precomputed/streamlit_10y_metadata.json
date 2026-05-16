@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-05-16T18:02:04.424474+07:00",
+  "data_start": "2016-04-29",
+  "data_end": "2026-04-29",
+  "currency": "THB",
+  "notes": [
+    "This is a frozen deploy-friendly performance dataset.",
+    "It stores strategy/sleeve return series, not raw stock-level cache.",
+    "Latest rebalance weights are intentionally not included."
+  ],
+  "files": {
+    "returns": "data/precomputed/streamlit_10y_strategy_returns.parquet",
+    "curves": "data/precomputed/streamlit_10y_strategy_curves.parquet",
+    "sleeves": "data/precomputed/streamlit_10y_sleeve_returns.parquet",
+    "summary": "data/precomputed/streamlit_10y_strategy_summary.csv"
+  }
+}

@@ -2,10 +2,18 @@ __pycache__/
 *.pyc
 .yfinance/
 .yfinance_notebook/
+.yfinance_long_history/
+.yfinance_thb_grid/
+yf_test_cache/
 
 data/backtest_records.csv
+data/cache/
+!data/precomputed/
+!data/precomputed/**
 data/universe_snapshots/*.csv
 !data/universe_snapshots/.gitkeep
+result/
+notebook/
 
 repo_function_walkthrough.ipynb
 repo_function_walkthrough_adjust_candidate.ipynb

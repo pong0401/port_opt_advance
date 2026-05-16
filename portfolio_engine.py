@@ -25,9 +25,12 @@ SNAPSHOT_DIR = Path(__file__).resolve().parent / "data" / "universe_snapshots"
 US_LIQUID_LEADERS_SNAPSHOT_FILE = SNAPSHOT_DIR / "us_liquid_leaders.csv"
 THAI_STOCK_DIR = Path(__file__).resolve().parent / "data" / "thai_stock"
 SET100_INTERVAL_FILE = THAI_STOCK_DIR / "set100_ticker_start_end.csv"
+LOCAL_SP500_DIR = Path(__file__).resolve().parent / "data" / "sp500"
 SP500_REPO_DIR = Path(__file__).resolve().parent.parent / "sp500"
 SP500_CURRENT_FILE = SP500_REPO_DIR / "sp500.csv"
 SP500_TICKER_INTERVAL_FILE = SP500_REPO_DIR / "sp500_ticker_start_end.csv"
+LOCAL_SP500_CURRENT_FILE = LOCAL_SP500_DIR / "sp500.csv"
+LOCAL_SP500_TICKER_INTERVAL_FILE = LOCAL_SP500_DIR / "sp500_ticker_start_end.csv"
 THAILAND_SET100_GROUP = "Thailand SET100"
 THAI_SET100_GROUP_ALIAS = "ThaiSET100"
 
@@ -483,9 +486,10 @@ def normalize_set_symbol(symbol: object) -> str:
 
 @lru_cache(maxsize=1)
 def load_current_sp500_tickers() -> List[str]:
-    if not SP500_CURRENT_FILE.exists():
+    source_file = LOCAL_SP500_CURRENT_FILE if LOCAL_SP500_CURRENT_FILE.exists() else SP500_CURRENT_FILE
+    if not source_file.exists():
         return []
-    frame = pd.read_csv(SP500_CURRENT_FILE)
+    frame = pd.read_csv(source_file)
     symbol_column = "Symbol" if "Symbol" in frame.columns else "ticker"
     if symbol_column not in frame.columns:
         return []
@@ -494,10 +498,11 @@ def load_current_sp500_tickers() -> List[str]:
 
 @lru_cache(maxsize=1)
 def load_sp500_membership_intervals() -> pd.DataFrame:
-    if not SP500_TICKER_INTERVAL_FILE.exists():
+    source_file = LOCAL_SP500_TICKER_INTERVAL_FILE if LOCAL_SP500_TICKER_INTERVAL_FILE.exists() else SP500_TICKER_INTERVAL_FILE
+    if not source_file.exists():
         return pd.DataFrame(columns=["ticker", "start_date", "end_date"])
 
-    intervals = pd.read_csv(SP500_TICKER_INTERVAL_FILE)
+    intervals = pd.read_csv(source_file)
     required = {"ticker", "start_date", "end_date"}
     if not required.issubset(intervals.columns):
         return pd.DataFrame(columns=["ticker", "start_date", "end_date"])
@@ -883,7 +888,14 @@ def apply_us_liquid_leaders_snapshot(
     as_of_date: pd.Timestamp,
     alpha_cfg: AlphaConfig,
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    us_liquid_tickers = [ticker for ticker in prices_window.columns if ticker in PRESET_UNIVERSES["US Liquid Leaders"]]
+    intervals = load_sp500_membership_intervals()
+    historical_sp500_tickers = (
+        sanitize_tickers(intervals["ticker"].tolist())
+        if not intervals.empty and "ticker" in intervals.columns
+        else []
+    )
+    sp500_universe = set(sanitize_tickers(PRESET_UNIVERSES["US Liquid Leaders"] + historical_sp500_tickers))
+    us_liquid_tickers = [ticker for ticker in prices_window.columns if ticker in sp500_universe]
     if not us_liquid_tickers:
         return prices_window, volumes_window, pd.DataFrame()
 
