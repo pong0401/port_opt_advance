@@ -397,7 +397,7 @@ def init_state() -> None:
         "forward_test_signature": None,
         "selected_groups": initial_groups,
         "selected_tickers": initial_tickers,
-        "app_page": "Optimization Studio",
+        "app_page": "Strategy Guide",
         "last_saved_backtest_id": None,
         "last_saved_backtest_signature": None,
         "forward_test_controls_snapshot": None,
@@ -951,6 +951,7 @@ def render_strategy_guide_page() -> None:
         weight_mode = st.radio(
             "US / Thai weighting",
             ["Separate weights", "Blend"],
+            index=1,
             horizontal=True,
             help=(
                 "Separate weights keeps independent US and Thai sleeve targets before adding Gold/BTC. "
@@ -970,11 +971,118 @@ def render_strategy_guide_page() -> None:
             help="When US or Thai stock exposure is reduced, this option uses the side-trigger research series that shifts idle stock allocation toward the stock side still risk-on when available.",
         )
         right_fee = st.checkbox("Fee and slippage", value=True, key="guide_right_fee")
-        rc1, rc2, rc3, rc4 = st.columns(4)
-        right_us_weight = rc1.slider("US stock %", 0, 100, 30, 5, key="guide_right_us")
-        right_th_weight = rc2.slider("Thai stock %", 0, 100, 30, 5, key="guide_right_th")
-        right_gold_weight = rc3.slider("Additional asset: Gold %", 0, 100, 30, 5, key="guide_right_gold")
-        right_btc_weight = rc4.slider("Additional asset: BTC %", 0, 100, 10, 5, key="guide_right_btc")
+
+        def capped_slider(column, label: str, key: str, default: int, total_used: int, disabled: bool = False) -> int:
+            current = int(st.session_state.get(key, default) or 0)
+            max_value = max(0, min(100, current + max(0, 100 - total_used)))
+            value = min(current, max_value)
+            return int(column.slider(label, 0, max_value, value, 5, key=key, disabled=disabled))
+
+        if weight_mode == "Blend":
+            blend_keys = ["guide_right_stock_total", "guide_right_gold", "guide_right_btc"]
+            blend_total = sum(int(st.session_state.get(key, default) or 0) for key, default in zip(blend_keys, [60, 30, 10]))
+            if blend_total > 100:
+                overflow = blend_total - 100
+                for key in reversed(blend_keys):
+                    current_value = int(st.session_state.get(key, 0) or 0)
+                    reduction = min(current_value, overflow)
+                    st.session_state[key] = current_value - reduction
+                    overflow -= reduction
+                    if overflow <= 0:
+                        break
+            current_stock = int(st.session_state.get("guide_right_stock_total", 60) or 0)
+            current_gold = int(st.session_state.get("guide_right_gold", 30) or 0)
+            current_btc = int(st.session_state.get("guide_right_btc", 10) or 0)
+            current_total = current_stock + current_gold + current_btc
+            rc1, rc2, rc3 = st.columns(3)
+            stock_slider_label = (
+                "US stock %"
+                if market_choice == "US only"
+                else "Thai stock %"
+                if market_choice == "Thailand only"
+                else "US+Thai stock %"
+            )
+            right_stock_weight = capped_slider(
+                rc1,
+                stock_slider_label,
+                "guide_right_stock_total",
+                60,
+                current_total,
+            )
+            right_gold_weight = capped_slider(rc2, "Additional asset: Gold %", "guide_right_gold", 30, current_total)
+            right_btc_weight = capped_slider(rc3, "Additional asset: BTC %", "guide_right_btc", 10, current_total)
+            if market_choice == "US only":
+                right_us_weight = right_stock_weight
+                right_th_weight = 0
+                stock_label = "US stock"
+            elif market_choice == "Thailand only":
+                right_us_weight = 0
+                right_th_weight = right_stock_weight
+                stock_label = "Thai stock"
+            else:
+                right_us_weight = right_stock_weight / 2.0
+                right_th_weight = right_stock_weight / 2.0
+                stock_label = "US+Thai stock"
+            right_total_weight = right_stock_weight + right_gold_weight + right_btc_weight
+            st.caption(f"Allocation: {stock_label} {right_stock_weight:.0f}% + Gold {right_gold_weight:.0f}% + BTC {right_btc_weight:.0f}% = {right_total_weight:.0f}%.")
+        else:
+            separate_keys = ["guide_right_us", "guide_right_th", "guide_right_gold", "guide_right_btc"]
+            separate_defaults = [30, 30, 30, 10]
+            separate_values = {
+                key: int(st.session_state.get(key, default) or 0)
+                for key, default in zip(separate_keys, separate_defaults)
+            }
+            if market_choice == "US only":
+                separate_values["guide_right_th"] = 0
+                st.session_state["guide_right_th"] = 0
+            if market_choice == "Thailand only":
+                separate_values["guide_right_us"] = 0
+                st.session_state["guide_right_us"] = 0
+            separate_total = sum(separate_values.values())
+            if separate_total > 100:
+                overflow = separate_total - 100
+                for key in reversed(separate_keys):
+                    current_value = separate_values[key]
+                    reduction = min(current_value, overflow)
+                    st.session_state[key] = current_value - reduction
+                    overflow -= reduction
+                    if overflow <= 0:
+                        break
+            current_us = int(st.session_state.get("guide_right_us", 30) or 0) if market_choice in {"US only", "US + Thailand"} else 0
+            current_th = int(st.session_state.get("guide_right_th", 30) or 0) if market_choice in {"Thailand only", "US + Thailand"} else 0
+            current_gold = int(st.session_state.get("guide_right_gold", 30) or 0)
+            current_btc = int(st.session_state.get("guide_right_btc", 10) or 0)
+            current_total = current_us + current_th + current_gold + current_btc
+            rc1, rc2, rc3, rc4 = st.columns(4)
+            right_us_weight = capped_slider(
+                rc1,
+                "US stock %",
+                "guide_right_us",
+                30,
+                current_total,
+                disabled=market_choice == "Thailand only",
+            )
+            right_th_weight = capped_slider(
+                rc2,
+                "Thai stock %",
+                "guide_right_th",
+                30,
+                current_total,
+                disabled=market_choice == "US only",
+            )
+            if market_choice == "US only":
+                right_th_weight = 0
+            if market_choice == "Thailand only":
+                right_us_weight = 0
+            right_gold_weight = capped_slider(rc3, "Additional asset: Gold %", "guide_right_gold", 30, current_total)
+            right_btc_weight = capped_slider(rc4, "Additional asset: BTC %", "guide_right_btc", 10, current_total)
+            right_stock_weight = right_us_weight + right_th_weight
+            right_total_weight = right_us_weight + right_th_weight + right_gold_weight + right_btc_weight
+            st.caption(f"Allocation: US {right_us_weight:.0f}% + Thai {right_th_weight:.0f}% + Gold {right_gold_weight:.0f}% + BTC {right_btc_weight:.0f}% = {right_total_weight:.0f}%.")
+
+        right_cash_weight = max(0.0, 100.0 - float(right_total_weight))
+        if right_cash_weight > 0:
+            st.caption(f"Unallocated {right_cash_weight:.0f}% is treated as cash.")
 
     left_cols = ["SPY_DAILY_EXPOSURE" if left_daily else "SPY"]
     left_weights = [left_sp_weight]
@@ -993,7 +1101,13 @@ def render_strategy_guide_page() -> None:
     left_curve = curve_from_return_series(left_returns)
 
     right_notes = []
-    if market_choice == "US + Thailand" and stock_realloc and right_daily:
+    exact_60_30_10 = (
+        market_choice == "US + Thailand"
+        and abs(float(right_stock_weight) - 60.0) < 1e-9
+        and abs(float(right_gold_weight) - 30.0) < 1e-9
+        and abs(float(right_btc_weight) - 10.0) < 1e-9
+    )
+    if market_choice == "US + Thailand" and stock_realloc and right_daily and exact_60_30_10:
         right_series_name = (
             "Side trigger realloc to active stock side, fee+slippage"
             if right_fee
@@ -1002,12 +1116,12 @@ def render_strategy_guide_page() -> None:
         right_returns = strategy_returns[right_series_name]
         right_label = f"Strategy B: {right_series_name}"
         right_notes.append("Using the precomputed side-trigger series, so custom US/Thai/Gold/BTC sliders are ignored for this exact research result.")
-    elif market_choice == "US + Thailand" and model_choice == "Dynamic HMM" and right_daily and weight_mode == "Blend":
+    elif market_choice == "US + Thailand" and model_choice == "Dynamic HMM" and right_daily and weight_mode == "Blend" and exact_60_30_10:
         right_series_name = "Joint US+TH Dynamic HMM Copula/Gold/BTC 60/30/10"
         right_returns = strategy_returns[right_series_name]
         right_label = f"Strategy B: {right_series_name}"
         right_notes.append("Using the precomputed joint Dynamic HMM 60/30/10 research curve.")
-    elif market_choice == "US + Thailand" and model_choice == "Static HMM" and right_daily and weight_mode == "Blend":
+    elif market_choice == "US + Thailand" and model_choice == "Static HMM" and right_daily and weight_mode == "Blend" and exact_60_30_10:
         right_series_name = "Joint US+TH Static Copula/Gold/BTC 60/30/10"
         right_returns = strategy_returns[right_series_name]
         right_label = f"Strategy B: {right_series_name}"
@@ -1028,6 +1142,8 @@ def render_strategy_guide_page() -> None:
             stock_weights.append(right_th_weight)
             if model_choice == "Dynamic HMM":
                 right_notes.append("Thai-only Dynamic HMM pure stock sleeve is not yet in the deploy dataset; using SET30 point-in-time liquidity proxy.")
+        if market_choice == "US + Thailand" and stock_realloc and right_daily and not exact_60_30_10:
+            right_notes.append("Side-trigger reallocation is only available as a frozen 60/30/10 research curve; custom weights use the selected sleeve proxies without that exact reallocation rule.")
 
         blend_cols = stock_cols.copy()
         blend_weights = stock_weights.copy()
@@ -1045,6 +1161,10 @@ def render_strategy_guide_page() -> None:
             axis=1,
         )
         source_frame = source_frame.loc[:, ~source_frame.columns.duplicated()]
+        if right_cash_weight > 0:
+            source_frame["CASH"] = 0.0
+            blend_cols.append("CASH")
+            blend_weights.append(right_cash_weight)
         available_cols = [col for col in blend_cols if col in source_frame.columns]
         available_weights = [weight for col, weight in zip(blend_cols, blend_weights) if col in source_frame.columns]
         right_returns = quarterly_rebalanced_blend_returns(
@@ -1665,15 +1785,15 @@ def render_retirement_page(forward_test_result: Dict[str, object] | None) -> Non
 
 def main() -> None:
     init_state()
-    pages = ["Optimize Backtest", "Save Result", "Strategy Guide", "Retirement"]
+    pages = ["Strategy Guide", "Optimize Backtest", "Save Result", "Retirement"]
     page_aliases = {
         "Optimization Studio": "Optimize Backtest",
         "Strategy Lab": "Optimize Backtest",
         "Backtest Records": "Save Result",
     }
     current_page = page_aliases.get(
-        st.session_state.get("app_page", "Optimize Backtest"),
-        st.session_state.get("app_page", "Optimize Backtest"),
+        st.session_state.get("app_page", "Strategy Guide"),
+        st.session_state.get("app_page", "Strategy Guide"),
     )
     st.session_state["app_page"] = st.sidebar.radio(
         "Page",
