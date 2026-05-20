@@ -191,40 +191,125 @@ STRATEGY_EXPLANATIONS = {
         "This version ignores trading cost."
     ),
     "Side trigger realloc to active stock side, fee+slippage": (
-        "Same side-trigger reallocation rule, but includes estimated trading cost: brokerage commission plus slippage. "
-        "This is the more realistic version of the side-trigger test."
+        "ระบบดูความเสี่ยงของหุ้น US และหุ้นไทยแยกกัน. ถ้าตลาดหนึ่งถูกลดน้ำหนักลงทุน "
+        "เงินส่วนนั้นจะย้ายไปตลาดหุ้นอีกฝั่งที่ยังเปิดรับความเสี่ยงอยู่ และรวม fee+slippage แล้ว."
     ),
     "Side trigger cash drag, no cost": (
         "Portfolio with separate US and Thai stock risk triggers. When a sleeve turns risk-off, that allocation stays in cash "
         "instead of being moved to another active stock market. This version ignores trading cost."
     ),
     "Joint US+TH Dynamic HMM Copula/Gold/BTC 60/30/10": (
-        "A joint US plus Thailand stock model combined with gold and bitcoin at 60%, 30%, and 10%. "
-        "Dynamic HMM means the model lets volatility/regime clusters change through time instead of staying fixed."
+        "ใช้โมเดลร่วมของหุ้น US+TH แล้วผสม Gold/BTC ที่ 60/30/10. Dynamic HMM คือโมเดลจับ regime "
+        "เช่น ช่วงปกติหรือผันผวนสูง และปรับมุมมองตามข้อมูลใหม่."
     ),
     "Joint US+TH Static Copula/Gold/BTC 60/30/10": (
-        "A joint US plus Thailand stock model combined with gold and bitcoin at 60%, 30%, and 10%. "
-        "Static means the regime clusters are estimated once and then kept fixed through the backtest."
+        "ใช้โมเดลร่วมของหุ้น US+TH แล้วผสม Gold/BTC ที่ 60/30/10. Static model ใช้โครงสร้าง regime "
+        "ที่นิ่งกว่า Dynamic HMM จึงเปลี่ยนตามข้อมูลใหม่น้อยกว่า."
     ),
     "Side trigger cash drag, fee+slippage": (
-        "Same cash-drag side-trigger rule, but includes estimated trading cost: brokerage commission plus slippage. "
-        "Risk-off stock sleeves become cash rather than being reallocated."
+        "ระบบดูความเสี่ยงของหุ้น US และหุ้นไทยแยกกัน. ถ้าตลาดไหนเสี่ยง ตลาดนั้นจะลดน้ำหนักลงทุน "
+        "แล้วพักเงินเป็น cash ไม่ย้ายไปอีกตลาด และรวม fee+slippage แล้ว."
     ),
     "Static HMM/Gold/BTC 60/30/10 daily exposure": (
-        "A US stock strategy selected by a fixed regime model, blended with gold and bitcoin at 60%, 30%, and 10%. "
-        "Daily exposure rules reduce risk when trend, drawdown, or volatility signals are weak."
+        "Daily exposure คือการปรับน้ำหนักลงทุนรายวันตามสัญญาณความเสี่ยง. กลยุทธ์นี้ใช้โมเดล regime แบบ Static "
+        "กับหุ้น US แล้วผสม Gold/BTC ที่ 60/30/10."
     ),
     "S&P Gold BTC daily exposure 70/20/10": (
-        "A simple blend of S&P 500, gold, and bitcoin at 70%, 20%, and 10%. "
-        "Daily exposure rules can reduce each sleeve during weak trend or stress periods."
+        "Daily exposure คือการปรับน้ำหนักลงทุนรายวันตามสัญญาณความเสี่ยง. กลยุทธ์นี้เริ่มจาก S&P 70%, "
+        "Gold 20%, BTC 10% แล้วลด exposure ของแต่ละ asset เมื่อแนวโน้มหรือความเสี่ยงไม่ดี."
     ),
     "S&P Gold BTC daily exposure 60/30/10": (
-        "A simple blend of S&P 500, gold, and bitcoin at 60%, 30%, and 10%. "
-        "Daily exposure rules can reduce each sleeve during weak trend or stress periods."
+        "Daily exposure คือการปรับน้ำหนักลงทุนรายวันตามสัญญาณความเสี่ยง. กลยุทธ์นี้เริ่มจาก S&P 60%, "
+        "Gold 30%, BTC 10% แล้วลด exposure ของแต่ละ asset เมื่อแนวโน้มหรือความเสี่ยงไม่ดี."
     ),
     "S&P/Gold/BTC 60/30/10 daily exposure": (
-        "The notebook baseline blend of S&P 500, gold, and bitcoin at 60%, 30%, and 10%, with daily risk exposure controls."
+        "Daily exposure คือการปรับน้ำหนักลงทุนรายวันตามสัญญาณความเสี่ยง. กลยุทธ์นี้ใช้ S&P, Gold, BTC "
+        "ที่ 60/30/10 และทุก asset ที่เลือกมีการลด exposure ได้."
     ),
+}
+
+SNP_GUIDE_CONFIGS = {
+    "S&P 500 buy & hold": {
+        "series": ["S&P 500 buy & hold", "S&P buy & hold"],
+        "description": "ถือ S&P 500 เต็ม 100% ตลอดเวลา ไม่มีการลดน้ำหนักลงทุนรายวัน และไม่มี Gold/BTC.",
+        "setting": "S&P 100% / Gold 0% / BTC 0%",
+        "metrics": {"CAGR": 0.101017, "Sharpe": 0.520865, "Max Drawdown": -0.337173, "Total Return": 3.225871},
+    },
+    "S&P 500 daily exposure": {
+        "series": ["S&P 500 daily overlay", "S&P daily exposure"],
+        "description": "Daily exposure คือระบบปรับน้ำหนักลงทุนทุกวันตามสัญญาณความเสี่ยง: ถ้าแนวโน้มอ่อน, drawdown สูง, หรือ VIX สูง จะลดการถือ S&P ลงเพื่อคุมขาดทุน.",
+        "setting": "S&P daily exposure 100% / Gold 0% / BTC 0%",
+        "metrics": {"CAGR": 0.147568, "Sharpe": 1.170818, "Max Drawdown": -0.129262, "Total Return": 6.856954},
+    },
+    "S&P/Gold/BTC daily exposure 80/10/10": {
+        "series": "S&P overlay + Gold/BTC 80/10/10",
+        "description": "Daily exposure คือระบบปรับน้ำหนักลงทุนทุกวันตามสัญญาณความเสี่ยง. Config นี้เริ่มจาก S&P 80%, Gold 10%, BTC 10% แล้วลด exposure เมื่อสัญญาณของ asset นั้นดูเสี่ยง.",
+        "setting": "S&P daily exposure 80% / Gold 10% / BTC 10%",
+        "metrics": {"CAGR": 0.184881, "Sharpe": 1.384298, "Max Drawdown": -0.150648, "Total Return": 11.687179},
+    },
+    "S&P/Gold/BTC daily exposure 70/20/10": {
+        "blend_weights": {"SPY_DAILY_EXPOSURE": 70.0, "GOLD_DAILY_EXPOSURE": 20.0, "BTC_DAILY_EXPOSURE": 10.0},
+        "description": "Daily exposure คือระบบปรับน้ำหนักลงทุนทุกวันตามสัญญาณความเสี่ยง. Config นี้ใช้ S&P 70%, Gold 20%, BTC 10% และลด exposure ของแต่ละ asset เมื่อสัญญาณของ asset นั้นอ่อนลง.",
+        "setting": "S&P daily exposure 70% / Gold daily exposure 20% / BTC daily exposure 10%",
+        "metrics": {"CAGR": 0.179507, "Sharpe": 1.393313, "Max Drawdown": -0.153351, "Total Return": 10.852271},
+    },
+    "S&P/BTC daily exposure 85/0/15": {
+        "blend_weights": {"SPY_DAILY_EXPOSURE": 85.0, "BTC_DAILY_EXPOSURE": 15.0},
+        "description": "Daily exposure คือระบบปรับน้ำหนักลงทุนทุกวันตามสัญญาณความเสี่ยง. Config นี้ใช้ S&P 85% และ BTC 15% โดยไม่ถือ Gold; ถ้า S&P หรือ BTC เสี่ยงขึ้น ระบบจะลด exposure ของ asset นั้น.",
+        "setting": "S&P daily exposure 85% / Gold 0% / BTC daily exposure 15%",
+        "metrics": {"CAGR": 0.206984, "Sharpe": 1.307927, "Max Drawdown": -0.183881, "Total Return": 15.733137},
+    },
+}
+
+STRATEGY_B_GUIDE_CONFIGS = {
+    "US/TH stocks only: reduce risk, shift to active market, fee+slippage": {
+        "series": "Side trigger realloc to active stock side, fee+slippage",
+        "description": "ใช้เฉพาะหุ้น US และหุ้นไทย ไม่มี Gold/BTC. ระบบดูความเสี่ยงของสองตลาดแยกกัน; ถ้าตลาดหนึ่งถูกลดน้ำหนักลงทุน เงินส่วนนั้นจะย้ายไปตลาดหุ้นอีกฝั่งที่ยังเปิดรับความเสี่ยงอยู่ พร้อมคิดค่าธรรมเนียมและ slippage.",
+        "setting": "US/TH stocks only / daily risk control / move reduced exposure to active stock market / fee+slippage",
+        "metrics": {"CAGR": 0.3466, "Sharpe": 2.406, "Max Drawdown": -0.1024},
+    },
+    "US/TH stocks only: reduce risk to cash, fee+slippage": {
+        "series": "Side trigger cash drag, fee+slippage",
+        "description": "ใช้เฉพาะหุ้น US และหุ้นไทย ไม่มี Gold/BTC. ถ้าตลาดไหนเสี่ยง ตลาดนั้นจะลดน้ำหนักลงทุนแล้วพักเงินเป็น cash ไม่ย้ายไปอีกตลาด พร้อมคิดค่าธรรมเนียมและ slippage.",
+        "setting": "US/TH stocks only / daily risk control / reduced exposure stays in cash / fee+slippage",
+        "metrics": {"CAGR": 0.2619, "Sharpe": 2.070, "Max Drawdown": -0.0938},
+    },
+    "US/TH stocks + Gold/BTC: Dynamic HMM 60/30/10": {
+        "series": "Joint US+TH Dynamic HMM Copula/Gold/BTC 60/30/10",
+        "description": "มีทั้งหุ้น US/TH, Gold, และ BTC. Dynamic HMM คือโมเดลจับ regime ตลาด เช่น ช่วงปกติหรือช่วงผันผวนสูง และปรับมุมมองตามข้อมูลใหม่. สัดส่วนคือหุ้น US/TH 60%, Gold 30%, BTC 10%.",
+        "setting": "US/TH stocks 60% / Gold 30% / BTC 10% / Dynamic HMM",
+        "metrics": {"CAGR": 0.3544, "Sharpe": 2.301, "Max Drawdown": -0.1589},
+    },
+    "US/TH stocks + Gold/BTC: Static model 60/30/10": {
+        "series": "Joint US+TH Static Copula/Gold/BTC 60/30/10",
+        "description": "มีทั้งหุ้น US/TH, Gold, และ BTC. Static model ใช้โครงสร้าง regime ที่นิ่งกว่า Dynamic HMM จึงเปลี่ยนตามข้อมูลใหม่น้อยกว่า. สัดส่วนคือหุ้น US/TH 60%, Gold 30%, BTC 10%.",
+        "setting": "US/TH stocks 60% / Gold 30% / BTC 10% / Static model",
+        "metrics": {"CAGR": 0.3531, "Sharpe": 2.292, "Max Drawdown": -0.1591},
+    },
+    "US/TH stocks + Gold/BTC: all assets Dynamic HMM": {
+        "series": "All assets in one Dynamic HMM Copula model",
+        "description": "มีหุ้น US, หุ้นไทย, Gold, และ BTC อยู่ในโมเดลเดียวกันทั้งหมด. Dynamic HMM ให้โมเดลจับ regime ของทุก asset พร้อมกันและปรับตามข้อมูลใหม่ วิธีนี้ยืดหยุ่นกว่าแต่ drawdown อาจสูงขึ้น.",
+        "setting": "US stocks + Thai stocks + Gold + BTC / one Dynamic HMM model",
+        "metrics": {"CAGR": 0.3367, "Sharpe": 1.332, "Max Drawdown": -0.3073},
+    },
+    "US/TH stocks + Gold/BTC: all assets Static model": {
+        "series": "All assets in one Static Copula model",
+        "description": "มีหุ้น US, หุ้นไทย, Gold, และ BTC อยู่ในโมเดลเดียวกันทั้งหมด. Static model ใช้โครงสร้าง regime ที่เปลี่ยนช้ากว่า Dynamic HMM และใช้เป็น baseline เทียบกับ Dynamic model.",
+        "setting": "US stocks + Thai stocks + Gold + BTC / one Static model",
+        "metrics": {"CAGR": 0.3345, "Sharpe": 1.323, "Max Drawdown": -0.3073},
+    },
+    "US/TH stocks only: US30/TH30 max 6%, reduce risk to cash, fee+slippage": {
+        "series": "Best asset sweep US30/TH30/max6 dynamic cash drag, fee+slippage",
+        "description": "ใช้เฉพาะหุ้น US และหุ้นไทย ไม่มี Gold/BTC. เลือกหุ้น US 30 ตัวและหุ้นไทย 30 ตัวจากชุด precomputed จำกัดน้ำหนักหุ้นรายตัวไม่เกิน 6%. ถ้าสัญญาณเสี่ยงขึ้น ระบบลด exposure แล้วพักเงินเป็น cash พร้อมคิดค่าธรรมเนียมและ slippage.",
+        "setting": "US/TH stocks only / US30 + Thai30 / max stock weight 6% / reduced exposure stays in cash / fee+slippage",
+        "metrics": {"CAGR": 0.2928, "Sharpe": 1.957, "Max Drawdown": -0.0965},
+    },
+    "US/TH stocks only: US30/TH30 max 6%, shift to active market, fee+slippage": {
+        "series": "Best asset sweep US30/TH30/max6 dynamic realloc idle exposure, fee+slippage",
+        "description": "ใช้เฉพาะหุ้น US และหุ้นไทย ไม่มี Gold/BTC. เลือกหุ้น US 30 ตัวและหุ้นไทย 30 ตัวจากชุด precomputed จำกัดน้ำหนักหุ้นรายตัวไม่เกิน 6%. ถ้าตลาดหนึ่งถูกลด exposure ระบบย้ายเงินไปตลาดหุ้นอีกฝั่งที่ยัง active พร้อมคิดค่าธรรมเนียมและ slippage.",
+        "setting": "US/TH stocks only / US30 + Thai30 / max stock weight 6% / move reduced exposure to active stock market / fee+slippage",
+        "metrics": {"CAGR": 0.3283, "Sharpe": 1.776, "Max Drawdown": -0.1410},
+    },
 }
 
 
@@ -870,26 +955,23 @@ def strategy_curve_to_result(strategy: str, curve_series: pd.Series) -> Dict[str
 
 
 def align_and_rebase_curves(curve_map: Dict[str, pd.DataFrame], initial: float = 10_000.0) -> Dict[str, pd.DataFrame]:
-    valid_starts = []
-    valid_ends = []
+    common_index = None
     for curve in curve_map.values():
         if curve.empty or "PortValue" not in curve.columns:
             continue
         values = curve["PortValue"].dropna()
         if values.empty:
             continue
-        valid_starts.append(values.index.min())
-        valid_ends.append(values.index.max())
-    if not valid_starts or not valid_ends:
+        common_index = values.index if common_index is None else common_index.intersection(values.index)
+    if common_index is None or common_index.empty:
         return curve_map
-    start = max(valid_starts)
-    end = min(valid_ends)
+    common_index = common_index.sort_values()
     aligned: Dict[str, pd.DataFrame] = {}
     for label, curve in curve_map.items():
         if curve.empty or "PortValue" not in curve.columns:
             aligned[label] = curve
             continue
-        values = curve["PortValue"].loc[start:end].dropna()
+        values = curve["PortValue"].reindex(common_index).dropna()
         if values.empty:
             aligned[label] = pd.DataFrame(columns=["PortValue"])
         else:
@@ -921,262 +1003,58 @@ def render_strategy_guide_page() -> None:
     left_panel, right_panel = st.columns(2)
     with left_panel:
         st.markdown("**Strategy A: S&P 10Y Base**")
-        left_daily = st.checkbox("Daily exposure for selected assets", value=False, key="guide_left_daily")
-        left_fee = st.checkbox("Fee and slippage", value=False, key="guide_left_fee")
-        left_sp_weight = st.slider("S&P weight", 0, 100, 100, 5, key="guide_left_sp")
-        left_gold_weight = st.slider("Additional asset: Gold %", 0, 100, 0, 5, key="guide_left_gold")
-        left_btc_weight = st.slider("Additional asset: BTC %", 0, 100, 0, 5, key="guide_left_btc")
+        left_choice = st.selectbox(
+            "S&P backtest config",
+            list(SNP_GUIDE_CONFIGS.keys()),
+            index=3,
+            key="guide_left_config",
+        )
+        left_config = SNP_GUIDE_CONFIGS[left_choice]
+        st.caption(left_config["setting"])
+        st.info(left_config["description"])
 
     with right_panel:
         st.markdown("**Strategy B: US/TH Precomputed Clustering**")
-        market_choice = st.radio(
-            "Stock market sleeve",
-            ["US only", "Thailand only", "US + Thailand"],
-            index=2,
-            horizontal=True,
-            help=(
-                "The deploy dataset currently has US HMM and joint US/Thailand HMM series. "
-                "Thai-only Dynamic HMM is not yet included as a separate curve, so Thai-only uses SET30 point-in-time liquidity as the stock sleeve proxy."
-            ),
+        right_choice = st.selectbox(
+            "US/TH backtest config",
+            list(STRATEGY_B_GUIDE_CONFIGS.keys()),
+            index=0,
+            key="guide_right_config",
         )
-        model_choice = st.radio(
-            "Model",
-            ["Dynamic HMM", "Static HMM"],
-            horizontal=True,
-            help=(
-                "Dynamic clustering lets regime clusters and probabilities update through time as volatility and market stress change. "
-                "Static HMM keeps the learned regime structure fixed after the initial estimation."
-            ),
-        )
-        weight_mode = st.radio(
-            "US / Thai weighting",
-            ["Separate weights", "Blend"],
-            index=1,
-            horizontal=True,
-            help=(
-                "Separate weights keeps independent US and Thai sleeve targets before adding Gold/BTC. "
-                "Blend treats the selected stock markets as one combined stock sleeve, then allocates Gold/BTC around that combined sleeve."
-            ),
-        )
-        right_daily = st.checkbox(
-            "Daily exposure",
-            value=True,
-            key="guide_right_daily",
-            help="US uses S&P/VIX style risk caps, Thailand uses the available SET sleeve proxy, and Gold/BTC use moving-average trend exposure where available.",
-        )
-        stock_realloc = st.checkbox(
-            "Reallocate reduced stock exposure to active stock side",
-            value=True,
-            key="guide_right_realloc",
-            help="When US or Thai stock exposure is reduced, this option uses the side-trigger research series that shifts idle stock allocation toward the stock side still risk-on when available.",
-        )
-        right_fee = st.checkbox("Fee and slippage", value=True, key="guide_right_fee")
+        right_config = STRATEGY_B_GUIDE_CONFIGS[right_choice]
+        st.caption(right_config["setting"])
+        st.info(right_config["description"])
 
-        def capped_slider(column, label: str, key: str, default: int, total_used: int, disabled: bool = False) -> int:
-            current = int(st.session_state.get(key, default) or 0)
-            max_value = max(0, min(100, current + max(0, 100 - total_used)))
-            value = min(current, max_value)
-            return int(column.slider(label, 0, max_value, value, 5, key=key, disabled=disabled))
+    def selected_config_returns(config: dict) -> pd.Series:
+        series_names = config.get("series", [])
+        if isinstance(series_names, str):
+            series_names = [series_names]
+        for series_name in series_names:
+            if series_name in strategy_returns:
+                return strategy_returns[series_name].dropna().astype(float)
 
-        if weight_mode == "Blend":
-            blend_keys = ["guide_right_stock_total", "guide_right_gold", "guide_right_btc"]
-            blend_total = sum(int(st.session_state.get(key, default) or 0) for key, default in zip(blend_keys, [60, 30, 10]))
-            if blend_total > 100:
-                overflow = blend_total - 100
-                for key in reversed(blend_keys):
-                    current_value = int(st.session_state.get(key, 0) or 0)
-                    reduction = min(current_value, overflow)
-                    st.session_state[key] = current_value - reduction
-                    overflow -= reduction
-                    if overflow <= 0:
-                        break
-            current_stock = int(st.session_state.get("guide_right_stock_total", 60) or 0)
-            current_gold = int(st.session_state.get("guide_right_gold", 30) or 0)
-            current_btc = int(st.session_state.get("guide_right_btc", 10) or 0)
-            current_total = current_stock + current_gold + current_btc
-            rc1, rc2, rc3 = st.columns(3)
-            stock_slider_label = (
-                "US stock %"
-                if market_choice == "US only"
-                else "Thai stock %"
-                if market_choice == "Thailand only"
-                else "US+Thai stock %"
-            )
-            right_stock_weight = capped_slider(
-                rc1,
-                stock_slider_label,
-                "guide_right_stock_total",
-                60,
-                current_total,
-            )
-            right_gold_weight = capped_slider(rc2, "Additional asset: Gold %", "guide_right_gold", 30, current_total)
-            right_btc_weight = capped_slider(rc3, "Additional asset: BTC %", "guide_right_btc", 10, current_total)
-            if market_choice == "US only":
-                right_us_weight = right_stock_weight
-                right_th_weight = 0
-                stock_label = "US stock"
-            elif market_choice == "Thailand only":
-                right_us_weight = 0
-                right_th_weight = right_stock_weight
-                stock_label = "Thai stock"
-            else:
-                right_us_weight = right_stock_weight / 2.0
-                right_th_weight = right_stock_weight / 2.0
-                stock_label = "US+Thai stock"
-            right_total_weight = right_stock_weight + right_gold_weight + right_btc_weight
-            st.caption(f"Allocation: {stock_label} {right_stock_weight:.0f}% + Gold {right_gold_weight:.0f}% + BTC {right_btc_weight:.0f}% = {right_total_weight:.0f}%.")
-        else:
-            separate_keys = ["guide_right_us", "guide_right_th", "guide_right_gold", "guide_right_btc"]
-            separate_defaults = [30, 30, 30, 10]
-            separate_values = {
-                key: int(st.session_state.get(key, default) or 0)
-                for key, default in zip(separate_keys, separate_defaults)
-            }
-            if market_choice == "US only":
-                separate_values["guide_right_th"] = 0
-                st.session_state["guide_right_th"] = 0
-            if market_choice == "Thailand only":
-                separate_values["guide_right_us"] = 0
-                st.session_state["guide_right_us"] = 0
-            separate_total = sum(separate_values.values())
-            if separate_total > 100:
-                overflow = separate_total - 100
-                for key in reversed(separate_keys):
-                    current_value = separate_values[key]
-                    reduction = min(current_value, overflow)
-                    st.session_state[key] = current_value - reduction
-                    overflow -= reduction
-                    if overflow <= 0:
-                        break
-            current_us = int(st.session_state.get("guide_right_us", 30) or 0) if market_choice in {"US only", "US + Thailand"} else 0
-            current_th = int(st.session_state.get("guide_right_th", 30) or 0) if market_choice in {"Thailand only", "US + Thailand"} else 0
-            current_gold = int(st.session_state.get("guide_right_gold", 30) or 0)
-            current_btc = int(st.session_state.get("guide_right_btc", 10) or 0)
-            current_total = current_us + current_th + current_gold + current_btc
-            rc1, rc2, rc3, rc4 = st.columns(4)
-            right_us_weight = capped_slider(
-                rc1,
-                "US stock %",
-                "guide_right_us",
-                30,
-                current_total,
-                disabled=market_choice == "Thailand only",
-            )
-            right_th_weight = capped_slider(
-                rc2,
-                "Thai stock %",
-                "guide_right_th",
-                30,
-                current_total,
-                disabled=market_choice == "US only",
-            )
-            if market_choice == "US only":
-                right_th_weight = 0
-            if market_choice == "Thailand only":
-                right_us_weight = 0
-            right_gold_weight = capped_slider(rc3, "Additional asset: Gold %", "guide_right_gold", 30, current_total)
-            right_btc_weight = capped_slider(rc4, "Additional asset: BTC %", "guide_right_btc", 10, current_total)
-            right_stock_weight = right_us_weight + right_th_weight
-            right_total_weight = right_us_weight + right_th_weight + right_gold_weight + right_btc_weight
-            st.caption(f"Allocation: US {right_us_weight:.0f}% + Thai {right_th_weight:.0f}% + Gold {right_gold_weight:.0f}% + BTC {right_btc_weight:.0f}% = {right_total_weight:.0f}%.")
+        blend_weights = config.get("blend_weights")
+        if blend_weights:
+            blend_cols = [col for col in blend_weights if col in sleeves]
+            if blend_cols:
+                return quarterly_rebalanced_blend_returns(
+                    sleeves[blend_cols],
+                    pd.Series({col: blend_weights[col] for col in blend_cols}, dtype=float),
+                )
+        return pd.Series(dtype=float)
 
-        right_cash_weight = max(0.0, 100.0 - float(right_total_weight))
-        if right_cash_weight > 0:
-            st.caption(f"Unallocated {right_cash_weight:.0f}% is treated as cash.")
-
-    left_cols = ["SPY_DAILY_EXPOSURE" if left_daily else "SPY"]
-    left_weights = [left_sp_weight]
-    if left_gold_weight > 0:
-        left_cols.append("GOLD_DAILY_EXPOSURE" if left_daily else "GOLD")
-        left_weights.append(left_gold_weight)
-    if left_btc_weight > 0:
-        left_cols.append("BTC_DAILY_EXPOSURE" if left_daily else "BTC")
-        left_weights.append(left_btc_weight)
-    left_returns = quarterly_rebalanced_blend_returns(
-        sleeves[left_cols],
-        pd.Series(left_weights, index=left_cols, dtype=float),
-        fee_slippage_bps=17.0 if left_fee else 0.0,
-    )
-    left_label = "Strategy A: S&P blend"
+    left_returns = selected_config_returns(left_config)
+    right_returns = selected_config_returns(right_config)
+    left_label = f"Strategy A: {left_choice}"
+    right_label = f"Strategy B: {right_choice}"
     left_curve = curve_from_return_series(left_returns)
+    right_curve = curve_from_return_series(right_returns)
 
     right_notes = []
-    exact_60_30_10 = (
-        market_choice == "US + Thailand"
-        and abs(float(right_stock_weight) - 60.0) < 1e-9
-        and abs(float(right_gold_weight) - 30.0) < 1e-9
-        and abs(float(right_btc_weight) - 10.0) < 1e-9
-    )
-    if market_choice == "US + Thailand" and stock_realloc and right_daily and exact_60_30_10:
-        right_series_name = (
-            "Side trigger realloc to active stock side, fee+slippage"
-            if right_fee
-            else "Side trigger realloc to active stock side, no cost"
-        )
-        right_returns = strategy_returns[right_series_name]
-        right_label = f"Strategy B: {right_series_name}"
-        right_notes.append("Using the precomputed side-trigger series, so custom US/Thai/Gold/BTC sliders are ignored for this exact research result.")
-    elif market_choice == "US + Thailand" and model_choice == "Dynamic HMM" and right_daily and weight_mode == "Blend" and exact_60_30_10:
-        right_series_name = "Joint US+TH Dynamic HMM Copula/Gold/BTC 60/30/10"
-        right_returns = strategy_returns[right_series_name]
-        right_label = f"Strategy B: {right_series_name}"
-        right_notes.append("Using the precomputed joint Dynamic HMM 60/30/10 research curve.")
-    elif market_choice == "US + Thailand" and model_choice == "Static HMM" and right_daily and weight_mode == "Blend" and exact_60_30_10:
-        right_series_name = "Joint US+TH Static Copula/Gold/BTC 60/30/10"
-        right_returns = strategy_returns[right_series_name]
-        right_label = f"Strategy B: {right_series_name}"
-        right_notes.append("Using the precomputed joint Static model 60/30/10 research curve.")
-    else:
-        stock_cols = []
-        stock_weights = []
-        if market_choice in {"US only", "US + Thailand"} and right_us_weight > 0:
-            if model_choice == "Static HMM" and right_daily and "Static HMM daily exposure" in strategy_returns:
-                stock_cols.append("Static HMM daily exposure")
-            else:
-                stock_cols.append("Top liquidity US 30 PIT")
-                if model_choice == "Dynamic HMM":
-                    right_notes.append("US-only Dynamic HMM pure stock sleeve is not yet in the deploy dataset; using US30 point-in-time liquidity proxy.")
-            stock_weights.append(right_us_weight)
-        if market_choice in {"Thailand only", "US + Thailand"} and right_th_weight > 0:
-            stock_cols.append("Top liquidity SET 30 PIT")
-            stock_weights.append(right_th_weight)
-            if model_choice == "Dynamic HMM":
-                right_notes.append("Thai-only Dynamic HMM pure stock sleeve is not yet in the deploy dataset; using SET30 point-in-time liquidity proxy.")
-        if market_choice == "US + Thailand" and stock_realloc and right_daily and not exact_60_30_10:
-            right_notes.append("Side-trigger reallocation is only available as a frozen 60/30/10 research curve; custom weights use the selected sleeve proxies without that exact reallocation rule.")
-
-        blend_cols = stock_cols.copy()
-        blend_weights = stock_weights.copy()
-        if right_gold_weight > 0:
-            blend_cols.append("GOLD_DAILY_EXPOSURE" if right_daily else "GOLD")
-            blend_weights.append(right_gold_weight)
-        if right_btc_weight > 0:
-            blend_cols.append("BTC_DAILY_EXPOSURE" if right_daily else "BTC")
-            blend_weights.append(right_btc_weight)
-        source_frame = pd.concat(
-            [
-                strategy_returns[[col for col in blend_cols if col in strategy_returns]],
-                sleeves[[col for col in blend_cols if col in sleeves]],
-            ],
-            axis=1,
-        )
-        source_frame = source_frame.loc[:, ~source_frame.columns.duplicated()]
-        if right_cash_weight > 0:
-            source_frame["CASH"] = 0.0
-            blend_cols.append("CASH")
-            blend_weights.append(right_cash_weight)
-        available_cols = [col for col in blend_cols if col in source_frame.columns]
-        available_weights = [weight for col, weight in zip(blend_cols, blend_weights) if col in source_frame.columns]
-        right_returns = quarterly_rebalanced_blend_returns(
-            source_frame[available_cols],
-            pd.Series(available_weights, index=available_cols, dtype=float),
-            fee_slippage_bps=17.0 if right_fee else 0.0,
-        )
-        right_label = "Strategy B: custom US/TH blend"
-        if not available_cols:
-            right_notes.append("No valid precomputed sleeve selected.")
-
-    right_curve = curve_from_return_series(right_returns)
+    if left_curve.empty:
+        right_notes.append(f"No return series found for {left_choice}.")
+    if right_curve.empty:
+        right_notes.append(f"No return series found for {right_choice}.")
 
     aligned_curves = align_and_rebase_curves({left_label: left_curve, right_label: right_curve})
     left_curve = aligned_curves.get(left_label, left_curve)
@@ -1193,6 +1071,7 @@ def render_strategy_guide_page() -> None:
         yaxis_title="Portfolio value",
     )
     st.plotly_chart(chart, use_container_width=True)
+    st.caption("Metrics below are recalculated from the same aligned, rebased curves shown in the chart.")
 
     metric_payload = [
         (left_label, left_curve, render_curve_metrics(left_label, left_curve)),
@@ -1213,7 +1092,7 @@ def render_strategy_guide_page() -> None:
         row_cols[2].write(row["Sharpe"])
         row_cols[3].write(row["Max Drawdown"])
         row_cols[4].write(row["Total Return"])
-        if row_cols[5].button("Retirement", key=f"retire_compare_{raw_label}", use_container_width=True):
+        if row_cols[5].button("Retirement", key=f"retire_compare_{raw_label}", use_container_width=True, disabled=raw_curve.empty):
             st.session_state.retirement_strategy_result = strategy_curve_to_result(raw_label, raw_curve["PortValue"])
             st.session_state.app_page = "Retirement"
             st.rerun()
@@ -1247,7 +1126,8 @@ def render_strategy_guide_page() -> None:
     st.markdown("**Strategy Principles**")
     st.dataframe(explanation, use_container_width=True, hide_index=True)
 
-    display = summary.copy()
+    realistic_summary = summary[~summary["Strategy"].str.contains("no cost", case=False, na=False)].copy()
+    display = realistic_summary.copy()
     percent_cols = ["Total Return", "CAGR", "Annual Vol", "Max Drawdown", "Hit Rate"]
     ratio_cols = ["Sharpe", "Sortino"]
     for column in percent_cols:
@@ -1259,7 +1139,7 @@ def render_strategy_guide_page() -> None:
     st.markdown("**Performance Ranking**")
     st.dataframe(display, use_container_width=True, hide_index=True)
 
-    explained_names = [name for name in summary["Strategy"].tolist() if name in STRATEGY_EXPLANATIONS]
+    explained_names = [name for name in realistic_summary["Strategy"].tolist() if name in STRATEGY_EXPLANATIONS]
     if explained_names:
         st.markdown("**Named Strategy Details**")
         detail_rows = [

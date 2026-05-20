@@ -242,17 +242,23 @@ def main() -> None:
             )
 
     curve_sources = [
+        _repo_path("result", "gold_btc_sp500_overlay", "equity_curves.csv"),
         _repo_path("..", "dynamic_port_opt", "result", "joint_confirm_603010_504d_1m_overlay_curves_thb.csv"),
         _repo_path("..", "dynamic_port_opt", "result", "us_th_joint_model_curves_thb.csv"),
         _repo_path("result", "us_th_side_trigger_reallocation_curves_thb.csv"),
+        _repo_path("result", "us_th_best_asset_sweep_fee_realloc_curves_thb.csv"),
     ]
+    curve_renames = {
+        "S&P overlay + Gold/BTC": "S&P overlay + Gold/BTC 80/10/10",
+    }
     for path in curve_sources:
         if not path.exists():
             continue
         curves = _read_curve_csv(path).loc[overlay.index.min() : overlay.index.max()]
         for column in curves.columns:
-            if column not in strategy_returns:
-                strategy_returns[column] = _returns_from_curve(curves[column])
+            name = curve_renames.get(column, column)
+            if name not in strategy_returns:
+                strategy_returns[name] = _returns_from_curve(curves[column])
 
     returns = pd.DataFrame(strategy_returns).sort_index().loc[overlay.index.min() : overlay.index.max()]
     curves = returns.apply(_curve_from_returns)
