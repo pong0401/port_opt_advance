@@ -324,18 +324,6 @@ STRATEGY_B_GUIDE_CONFIGS = {
         "setting": "Weekly exposure W-WED / lag-1 execution / stock sleeve 60% / Gold 30% / BTC 10% / US30 + Thai30 / max stock weight 6% / reallocate reduced stock sleeve / fee+slippage",
         "metrics": {"CAGR": 0.166706, "Sharpe": 0.955011, "Max Drawdown": -0.215583, "Total Return": 2.756220},
     },
-    "US/TH stocks + Gold/BTC 60/30/10: daily exposure (lag-1), whipsaw confirm1 hold2, fee+slippage": {
-        "series": "Side trigger whipsaw confirm1_hold2 realloc, fee+slippage",
-        "description": "Whipsaw-filter variant of the side-trigger strategy. A risk-on/off change must be confirmed for 1 day, then the new exposure is held for at least 2 trading days. Includes 17 bps fee+slippage.",
-        "setting": "Lag-1 daily exposure / whipsaw confirm 1 day / min hold 2 days / reallocate reduced stock sleeve / fee+slippage",
-        "metrics": {"CAGR": 0.300928, "Sharpe": 1.851587, "Max Drawdown": -0.109198, "Total Return": 8.564761},
-    },
-    "US/TH stocks + Gold/BTC 60/30/10: daily exposure (lag-1), whipsaw confirm1 hold3, fee+slippage": {
-        "series": "Side trigger whipsaw confirm1_hold3 realloc, fee+slippage",
-        "description": "Whipsaw-filter variant of the side-trigger strategy. A risk-on/off change must be confirmed for 1 day, then the new exposure is held for at least 3 trading days. Includes 17 bps fee+slippage.",
-        "setting": "Lag-1 daily exposure / whipsaw confirm 1 day / min hold 3 days / reallocate reduced stock sleeve / fee+slippage",
-        "metrics": {"CAGR": 0.290004, "Sharpe": 1.789087, "Max Drawdown": -0.113884, "Total Return": 7.896945},
-    },
     "US/TH stocks only: daily exposure (lag-1), shift reduced exposure to active market, fee+slippage": {
         "series": "US/TH stocks only reduce risk shift active market fee+slippage",
         "exposure_file": "../dynamic_port_opt/result/us_th_stocks_only_side_trigger_daily_asset_exposure_fee_slippage_thb.csv",
@@ -351,16 +339,11 @@ STRATEGY_B_GUIDE_CONFIGS = {
         "metrics": {"CAGR": 0.261740, "Sharpe": 1.866124, "Max Drawdown": -0.093789, "Total Return": 6.356255},
     },
     "US/TH stocks + Gold/BTC: Dynamic HMM 60/30/10 daily exposure (lag-1)": {
-        "series": "Joint US+TH Dynamic HMM Copula/Gold/BTC 60/30/10",
-        "description": "มีทั้งหุ้น US/TH, Gold, และ BTC. Dynamic HMM คือโมเดลจับ regime ตลาด เช่น ช่วงปกติหรือช่วงผันผวนสูง และปรับมุมมองตามข้อมูลใหม่. สัดส่วนคือหุ้น US/TH 60%, Gold 30%, BTC 10%.",
-        "setting": "Lag-1 daily exposure / US/TH stocks 60% / Gold 30% / BTC 10% / Dynamic HMM",
-        "metrics": {"CAGR": 0.3544, "Sharpe": 2.301, "Max Drawdown": -0.1589},
-    },
-    "US/TH stocks + Gold/BTC: Static model 60/30/10 daily exposure (lag-1)": {
-        "series": "Joint US+TH Static Copula/Gold/BTC 60/30/10",
-        "description": "มีทั้งหุ้น US/TH, Gold, และ BTC. Static model ใช้โครงสร้าง regime ที่นิ่งกว่า Dynamic HMM จึงเปลี่ยนตามข้อมูลใหม่น้อยกว่า. สัดส่วนคือหุ้น US/TH 60%, Gold 30%, BTC 10%.",
-        "setting": "Lag-1 daily exposure / US/TH stocks 60% / Gold 30% / BTC 10% / Static model",
-        "metrics": {"CAGR": 0.3531, "Sharpe": 2.292, "Max Drawdown": -0.1591},
+        "series": "Best asset sweep US30/TH30/max6 dynamic cash drag, fee+slippage",
+        "exposure_file": "result/us_th_best_asset_sweep_daily_asset_exposure_cash_drag_thb.csv",
+        "description": "Local lag-1 rerun: uses the Dynamic HMM stock model with US30/Thai30/max6 inside a 60% stock sleeve, plus Gold 30% and BTC 10%. Daily exposure signals are shifted by one trading day before returns are applied, and reduced exposure stays in cash. Includes 17 bps fee+slippage.",
+        "setting": "Lag-1 daily exposure / US30 + Thai30 max 6% / stock sleeve 60% / Gold 30% / BTC 10% / Dynamic HMM / reduced exposure to cash / fee+slippage",
+        "metrics": {"CAGR": 0.292766, "Sharpe": 1.956816, "Max Drawdown": -0.096523, "Total Return": 8.061765},
     },
     "US/TH stocks + Gold/BTC 50/10/30/10: no daily exposure": {
         "series": "US/TH/Gold/BTC 50/10/30/10",
@@ -1311,10 +1294,16 @@ def align_and_rebase_curves(curve_map: Dict[str, pd.DataFrame], initial: float =
     return aligned
 
 
-def best_sharpe_config_name(configs: dict[str, dict], summary: pd.DataFrame) -> str:
+def config_has_weight_details(config: dict) -> bool:
+    return bool(config.get("latest_weights_file") or config.get("exposure_file") or config.get("blend_weights"))
+
+
+def best_sharpe_config_name(configs: dict[str, dict], summary: pd.DataFrame, require_weight_details: bool = False) -> str:
     best_name = next(iter(configs))
     best_sharpe = float("-inf")
     for name, config in configs.items():
+        if require_weight_details and not config_has_weight_details(config):
+            continue
         sharpe = float("nan")
         series_names = config.get("series", [])
         if isinstance(series_names, str):
@@ -1328,6 +1317,8 @@ def best_sharpe_config_name(configs: dict[str, dict], summary: pd.DataFrame) -> 
         if not pd.isna(sharpe) and sharpe > best_sharpe:
             best_name = name
             best_sharpe = sharpe
+    if best_sharpe == float("-inf") and require_weight_details:
+        return best_sharpe_config_name(configs, summary, require_weight_details=False)
     return best_name
 
 
@@ -1358,9 +1349,11 @@ def render_strategy_guide_page() -> None:
     )
 
     left_default = best_sharpe_config_name(SNP_GUIDE_CONFIGS, summary)
-    right_default = best_sharpe_config_name(STRATEGY_B_GUIDE_CONFIGS, summary)
+    right_default = best_sharpe_config_name(STRATEGY_B_GUIDE_CONFIGS, summary, require_weight_details=True)
     defaults_version = f"best-sharpe:{left_default}|{right_default}"
     if st.session_state.get("guide_defaults_version") != defaults_version:
+        st.session_state.pop("guide_left_config", None)
+        st.session_state.pop("guide_right_config", None)
         st.session_state.guide_defaults_version = defaults_version
 
     left_panel, right_panel = st.columns(2)

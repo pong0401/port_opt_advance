@@ -14,10 +14,22 @@ START_YEARS = 10
 INITIAL_VALUE = 10_000.0
 RISK_FREE_RATE = 0.03
 REBALANCE_MONTHS = (1, 4, 7, 10)
+LOOKAHEAD_SERIES_PREFIXES = (
+    "Joint US+TH Dynamic HMM Copula/Gold/BTC 60/30/10",
+    "Joint US+TH Static Copula/Gold/BTC 60/30/10",
+    "Side trigger whipsaw",
+)
+LOOKAHEAD_SERIES_NAMES = {
+    "Side trigger realloc to active stock side, fee+slippage (with Gold/BTC 60/30/10)",
+}
 
 
 def _repo_path(*parts: str) -> Path:
     return PROJECT_ROOT.joinpath(*parts)
+
+
+def _is_legacy_lookahead_series(name: str) -> bool:
+    return name in LOOKAHEAD_SERIES_NAMES or any(name.startswith(prefix) for prefix in LOOKAHEAD_SERIES_PREFIXES)
 
 
 def _read_curve_csv(path: Path) -> pd.DataFrame:
@@ -95,6 +107,8 @@ def _read_source_metrics(paths: list[Path]) -> dict[str, dict[str, object]]:
         else:
             continue
         for strategy, row in frame.iterrows():
+            if _is_legacy_lookahead_series(str(strategy)):
+                continue
             source_metrics.setdefault(str(strategy), {
                 column: row[column]
                 for column in metric_columns
@@ -295,14 +309,14 @@ def main() -> None:
     curve_sources = [
         _repo_path("result", "gold_btc_sp500_overlay", "equity_curves.csv"),
         _repo_path("..", "dynamic_port_opt", "result", "joint_confirm_603010_504d_1m_overlay_curves_thb.csv"),
-        _repo_path("..", "dynamic_port_opt", "result", "us_th_joint_model_curves_thb.csv"),
-        _repo_path("..", "dynamic_port_opt", "result", "us_th_gold_btc_blended_curves_thb.csv"),
-        _repo_path("..", "dynamic_port_opt", "result", "us_th_side_trigger_reallocation_curves_thb.csv"),
         _repo_path("result", "us_th_side_trigger_reallocation_curves_thb.csv"),
         _repo_path("result", "strategy_b_weekly_exposure_test_curves.csv"),
         _repo_path("result", "us_th_stocks_only_vs_gold_btc_side_trigger_curves_thb.csv"),
-        _repo_path("..", "dynamic_port_opt", "result", "us_th_stocks_only_vs_gold_btc_side_trigger_curves_thb.csv"),
         _repo_path("result", "us_th_best_asset_sweep_fee_realloc_curves_thb.csv"),
+        _repo_path("..", "dynamic_port_opt", "result", "us_th_joint_model_curves_thb.csv"),
+        _repo_path("..", "dynamic_port_opt", "result", "us_th_gold_btc_blended_curves_thb.csv"),
+        _repo_path("..", "dynamic_port_opt", "result", "us_th_side_trigger_reallocation_curves_thb.csv"),
+        _repo_path("..", "dynamic_port_opt", "result", "us_th_stocks_only_vs_gold_btc_side_trigger_curves_thb.csv"),
     ]
     curve_renames = {
         "S&P overlay + Gold/BTC": "S&P overlay + Gold/BTC 80/10/10",
@@ -313,6 +327,8 @@ def main() -> None:
         curves = _read_curve_csv(path).loc[overlay.index.min() : overlay.index.max()]
         for column in curves.columns:
             name = curve_renames.get(column, column)
+            if _is_legacy_lookahead_series(name):
+                continue
             if name not in strategy_returns:
                 strategy_returns[name] = _returns_from_curve(curves[column])
 
@@ -324,12 +340,12 @@ def main() -> None:
 
     source_metrics = _read_source_metrics(
         [
-            _repo_path("..", "dynamic_port_opt", "result", "us_th_side_trigger_reallocation_summary_thb.csv"),
-            _repo_path("..", "dynamic_port_opt", "result", "us_th_gold_btc_blended_summary_thb.csv"),
             _repo_path("result", "us_th_side_trigger_reallocation_summary_thb.csv"),
             _repo_path("result", "strategy_b_weekly_exposure_test_summary.csv"),
             _repo_path("result", "us_th_best_asset_sweep_fee_realloc_summary_thb.csv"),
             _repo_path("result", "us_th_stocks_only_vs_gold_btc_side_trigger_comparison_thb.csv"),
+            _repo_path("..", "dynamic_port_opt", "result", "us_th_side_trigger_reallocation_summary_thb.csv"),
+            _repo_path("..", "dynamic_port_opt", "result", "us_th_gold_btc_blended_summary_thb.csv"),
             _repo_path("..", "dynamic_port_opt", "result", "us_th_best_asset_sweep_fee_realloc_summary_thb.csv"),
             _repo_path("..", "dynamic_port_opt", "result", "us_th_stocks_only_vs_gold_btc_side_trigger_comparison_thb.csv"),
         ]
