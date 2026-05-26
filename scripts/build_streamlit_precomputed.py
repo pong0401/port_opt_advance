@@ -71,6 +71,38 @@ def _metrics(curve: pd.Series) -> dict[str, float]:
     }
 
 
+def _read_source_metrics(paths: list[Path]) -> dict[str, dict[str, object]]:
+    source_metrics: dict[str, dict[str, object]] = {}
+    metric_columns = [
+        "Total Return",
+        "CAGR",
+        "Annual Vol",
+        "Sharpe",
+        "Sortino",
+        "Max Drawdown",
+        "Hit Rate",
+        "Start",
+        "End",
+    ]
+    for path in paths:
+        if not path.exists():
+            continue
+        frame = pd.read_csv(path)
+        if "Strategy" in frame.columns:
+            frame = frame.set_index("Strategy")
+        elif frame.columns[0].startswith("Unnamed"):
+            frame = frame.set_index(frame.columns[0])
+        else:
+            continue
+        for strategy, row in frame.iterrows():
+            source_metrics.setdefault(str(strategy), {
+                column: row[column]
+                for column in metric_columns
+                if column in row.index and pd.notna(row[column])
+            })
+    return source_metrics
+
+
 def _quarterly_rebalanced_returns(sleeves: pd.DataFrame, weights: dict[str, float]) -> pd.Series:
     weights_s = pd.Series(weights, dtype=float).reindex(sleeves.columns).fillna(0.0)
     if weights_s.sum() <= 0:
@@ -105,11 +137,11 @@ def _sp_daily_exposure(spy_thb: pd.Series, vix: pd.Series) -> pd.Series:
     exposure = pd.concat(
         [
             exposure,
-            pd.Series(np.where(spy_thb < ma200, 0.65, 1.0), index=spy_thb.index),
-            pd.Series(np.where(drawdown <= -0.08, 0.50, 1.0), index=spy_thb.index),
-            pd.Series(np.where(drawdown <= -0.15, 0.25, 1.0), index=spy_thb.index),
-            pd.Series(np.where(vix.reindex(spy_thb.index).ffill() >= 28.0, 0.50, 1.0), index=spy_thb.index),
-            pd.Series(np.where(vix.reindex(spy_thb.index).ffill() >= 35.0, 0.25, 1.0), index=spy_thb.index),
+            pd.Series(np.where(spy_thb < ma200, 0.50, 1.0), index=spy_thb.index),
+            pd.Series(np.where(drawdown <= -0.08, 0.35, 1.0), index=spy_thb.index),
+            pd.Series(np.where(drawdown <= -0.15, 0.15, 1.0), index=spy_thb.index),
+            pd.Series(np.where(vix.reindex(spy_thb.index).ffill() >= 28.0, 0.35, 1.0), index=spy_thb.index),
+            pd.Series(np.where(vix.reindex(spy_thb.index).ffill() >= 35.0, 0.15, 1.0), index=spy_thb.index),
         ],
         axis=1,
     ).min(axis=1)
@@ -182,15 +214,18 @@ def main() -> None:
     gold_thb = overlay["GC=F"] * fx
     btc_thb = overlay["BTC-USD"] * fx
     vix = overlay["^VIX"].ffill()
+    spy_exposure = _sp_daily_exposure(spy_thb, vix).shift(1).ffill().fillna(1.0)
+    gold_exposure = _trend_exposure(gold_thb, 0.25).shift(1).ffill().fillna(1.0)
+    btc_exposure = _trend_exposure(btc_thb, 0.00).shift(1).ffill().fillna(1.0)
 
     sleeve_returns = pd.DataFrame(
         {
             "SPY": spy_thb.pct_change(fill_method=None).fillna(0.0),
-            "SPY_DAILY_EXPOSURE": spy_thb.pct_change(fill_method=None).fillna(0.0) * _sp_daily_exposure(spy_thb, vix),
+            "SPY_DAILY_EXPOSURE": spy_thb.pct_change(fill_method=None).fillna(0.0) * spy_exposure,
             "GOLD": gold_thb.pct_change(fill_method=None).fillna(0.0),
-            "GOLD_DAILY_EXPOSURE": gold_thb.pct_change(fill_method=None).fillna(0.0) * _trend_exposure(gold_thb, 0.50),
+            "GOLD_DAILY_EXPOSURE": gold_thb.pct_change(fill_method=None).fillna(0.0) * gold_exposure,
             "BTC": btc_thb.pct_change(fill_method=None).fillna(0.0),
-            "BTC_DAILY_EXPOSURE": btc_thb.pct_change(fill_method=None).fillna(0.0) * _trend_exposure(btc_thb, 0.00),
+            "BTC_DAILY_EXPOSURE": btc_thb.pct_change(fill_method=None).fillna(0.0) * btc_exposure,
         }
     )
 
@@ -205,13 +240,29 @@ def main() -> None:
             sleeve_returns[["SPY", "GOLD", "BTC"]],
             {"SPY": 0.70, "GOLD": 0.20, "BTC": 0.10},
         ),
+        "S&P Gold BTC 80/10/10": _quarterly_rebalanced_returns(
+            sleeve_returns[["SPY", "GOLD", "BTC"]],
+            {"SPY": 0.80, "GOLD": 0.10, "BTC": 0.10},
+        ),
+        "S&P BTC 85/0/15": _quarterly_rebalanced_returns(
+            sleeve_returns[["SPY", "BTC"]],
+            {"SPY": 0.85, "BTC": 0.15},
+        ),
         "S&P Gold BTC daily exposure 60/30/10": _quarterly_rebalanced_returns(
             sleeve_returns[["SPY_DAILY_EXPOSURE", "GOLD_DAILY_EXPOSURE", "BTC_DAILY_EXPOSURE"]],
             {"SPY_DAILY_EXPOSURE": 0.60, "GOLD_DAILY_EXPOSURE": 0.30, "BTC_DAILY_EXPOSURE": 0.10},
         ),
+        "S&P Gold BTC daily exposure 80/10/10": _quarterly_rebalanced_returns(
+            sleeve_returns[["SPY_DAILY_EXPOSURE", "GOLD_DAILY_EXPOSURE", "BTC_DAILY_EXPOSURE"]],
+            {"SPY_DAILY_EXPOSURE": 0.80, "GOLD_DAILY_EXPOSURE": 0.10, "BTC_DAILY_EXPOSURE": 0.10},
+        ),
         "S&P Gold BTC daily exposure 70/20/10": _quarterly_rebalanced_returns(
             sleeve_returns[["SPY_DAILY_EXPOSURE", "GOLD_DAILY_EXPOSURE", "BTC_DAILY_EXPOSURE"]],
             {"SPY_DAILY_EXPOSURE": 0.70, "GOLD_DAILY_EXPOSURE": 0.20, "BTC_DAILY_EXPOSURE": 0.10},
+        ),
+        "S&P BTC daily exposure 85/0/15": _quarterly_rebalanced_returns(
+            sleeve_returns[["SPY_DAILY_EXPOSURE", "BTC_DAILY_EXPOSURE"]],
+            {"SPY_DAILY_EXPOSURE": 0.85, "BTC_DAILY_EXPOSURE": 0.15},
         ),
     }
 
@@ -245,7 +296,11 @@ def main() -> None:
         _repo_path("result", "gold_btc_sp500_overlay", "equity_curves.csv"),
         _repo_path("..", "dynamic_port_opt", "result", "joint_confirm_603010_504d_1m_overlay_curves_thb.csv"),
         _repo_path("..", "dynamic_port_opt", "result", "us_th_joint_model_curves_thb.csv"),
+        _repo_path("..", "dynamic_port_opt", "result", "us_th_gold_btc_blended_curves_thb.csv"),
+        _repo_path("..", "dynamic_port_opt", "result", "us_th_side_trigger_reallocation_curves_thb.csv"),
         _repo_path("result", "us_th_side_trigger_reallocation_curves_thb.csv"),
+        _repo_path("result", "us_th_stocks_only_vs_gold_btc_side_trigger_curves_thb.csv"),
+        _repo_path("..", "dynamic_port_opt", "result", "us_th_stocks_only_vs_gold_btc_side_trigger_curves_thb.csv"),
         _repo_path("result", "us_th_best_asset_sweep_fee_realloc_curves_thb.csv"),
     ]
     curve_renames = {
@@ -266,6 +321,18 @@ def main() -> None:
     curves.to_parquet(OUT_DIR / "streamlit_10y_strategy_curves.parquet")
     sleeve_returns.to_parquet(OUT_DIR / "streamlit_10y_sleeve_returns.parquet")
 
+    source_metrics = _read_source_metrics(
+        [
+            _repo_path("..", "dynamic_port_opt", "result", "us_th_side_trigger_reallocation_summary_thb.csv"),
+            _repo_path("..", "dynamic_port_opt", "result", "us_th_gold_btc_blended_summary_thb.csv"),
+            _repo_path("result", "us_th_side_trigger_reallocation_summary_thb.csv"),
+            _repo_path("result", "us_th_best_asset_sweep_fee_realloc_summary_thb.csv"),
+            _repo_path("result", "us_th_stocks_only_vs_gold_btc_side_trigger_comparison_thb.csv"),
+            _repo_path("..", "dynamic_port_opt", "result", "us_th_best_asset_sweep_fee_realloc_summary_thb.csv"),
+            _repo_path("..", "dynamic_port_opt", "result", "us_th_stocks_only_vs_gold_btc_side_trigger_comparison_thb.csv"),
+        ]
+    )
+
     rows = []
     for strategy in curves.columns:
         row = {
@@ -274,6 +341,7 @@ def main() -> None:
             "End": curves[strategy].dropna().index.max().date().isoformat(),
             **_metrics(curves[strategy]),
         }
+        row.update(source_metrics.get(strategy, {}))
         rows.append(row)
     summary = pd.DataFrame(rows).sort_values(["Sharpe", "CAGR"], ascending=[False, False])
     summary.to_csv(OUT_DIR / "streamlit_10y_strategy_summary.csv", index=False)
@@ -297,7 +365,7 @@ def main() -> None:
     }
     (OUT_DIR / "streamlit_10y_metadata.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
     print(summary.to_string(index=False))
-    print(f"\nWrote precomputed dataset to {OUT_DIR}")
+    print("\nWrote precomputed dataset to data/precomputed")
 
 
 if __name__ == "__main__":

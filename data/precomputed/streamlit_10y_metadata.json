@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-05-20T20:15:35.134188+07:00",
-  "data_start": "2016-04-29",
-  "data_end": "2026-04-29",
+  "generated_at": "2026-05-26T17:15:39.232780+07:00",
+  "data_start": "2016-05-25",
+  "data_end": "2026-05-25",
   "currency": "THB",
   "notes": [
     "This is a frozen deploy-friendly performance dataset.",

@@ -235,85 +235,134 @@ STRATEGY_EXPLANATIONS = {
 }
 
 SNP_GUIDE_CONFIGS = {
-    "S&P 500 buy & hold": {
+    "S&P 500 hold": {
         "series": ["S&P 500 buy & hold", "S&P buy & hold"],
         "description": "ถือ S&P 500 เต็ม 100% ตลอดเวลา ไม่มีการลดน้ำหนักลงทุนรายวัน และไม่มี Gold/BTC.",
         "setting": "S&P 100% / Gold 0% / BTC 0%",
         "metrics": {"CAGR": 0.101017, "Sharpe": 0.520865, "Max Drawdown": -0.337173, "Total Return": 3.225871},
     },
+    "S&P/Gold/BTC hold 70/20/10": {
+        "series": "S&P Gold BTC 70/20/10",
+        "blend_weights": {"SPY": 70.0, "GOLD": 20.0, "BTC": 10.0},
+        "description": "Hold baseline: ถือ S&P 70%, Gold 20%, BTC 10% และ rebalance ตามรอบเดิมโดยไม่มี daily exposure overlay. ใช้เป็นตัวเทียบกับ daily exposure lag-1 rule.",
+        "setting": "S&P hold 70% / Gold hold 20% / BTC hold 10%",
+        "metrics": {"CAGR": 0.140674, "Sharpe": 0.726985, "Max Drawdown": -0.262583, "Total Return": 5.735832},
+    },
+    "S&P/Gold/BTC hold 80/10/10": {
+        "series": "S&P Gold BTC 80/10/10",
+        "blend_weights": {"SPY": 80.0, "GOLD": 10.0, "BTC": 10.0},
+        "description": "Hold baseline: ถือ S&P 80%, Gold 10%, BTC 10% และ rebalance ตามรอบเดิมโดยไม่มี daily exposure overlay.",
+        "setting": "S&P hold 80% / Gold hold 10% / BTC hold 10%",
+    },
+    "S&P/Gold/BTC hold 60/30/10": {
+        "series": "S&P Gold BTC 60/30/10",
+        "blend_weights": {"SPY": 60.0, "GOLD": 30.0, "BTC": 10.0},
+        "description": "Hold baseline: ถือ S&P 60%, Gold 30%, BTC 10% และ rebalance ตามรอบเดิมโดยไม่มี daily exposure overlay.",
+        "setting": "S&P hold 60% / Gold hold 30% / BTC hold 10%",
+    },
+    "S&P/BTC hold 85/0/15": {
+        "series": "S&P BTC 85/0/15",
+        "blend_weights": {"SPY": 85.0, "BTC": 15.0},
+        "description": "Hold baseline: ถือ S&P 85%, BTC 15%, Gold 0% และ rebalance ตามรอบเดิมโดยไม่มี daily exposure overlay.",
+        "setting": "S&P hold 85% / Gold hold 0% / BTC hold 15%",
+    },
     "S&P 500 daily exposure": {
-        "series": ["S&P 500 daily overlay", "S&P daily exposure"],
-        "description": "Daily exposure คือระบบปรับน้ำหนักลงทุนทุกวันตามสัญญาณความเสี่ยง: ถ้าแนวโน้มอ่อน, drawdown สูง, หรือ VIX สูง จะลดการถือ S&P ลงเพื่อคุมขาดทุน.",
-        "setting": "S&P daily exposure 100% / Gold 0% / BTC 0%",
-        "metrics": {"CAGR": 0.147568, "Sharpe": 1.170818, "Max Drawdown": -0.129262, "Total Return": 6.856954},
+        "series": "S&P daily exposure",
+        "description": "Daily exposure แบบ lag-1: คำนวณ target exposure จากข้อมูลปิดวันก่อนหน้า แล้วใช้กับ return วันถัดไป. ถ้าแนวโน้มอ่อน, drawdown สูง, หรือ VIX สูง จะลดการถือ S&P ลงเพื่อคุมขาดทุน.",
+        "setting": "S&P daily exposure 100% / Gold 0% / BTC 0% / lag-1 signal",
+        "metrics": {"CAGR": 0.032014, "Sharpe": 0.019083, "Max Drawdown": -0.234136, "Total Return": 0.578817},
     },
     "S&P/Gold/BTC daily exposure 80/10/10": {
-        "series": "S&P overlay + Gold/BTC 80/10/10",
+        "series": "S&P Gold BTC daily exposure 80/10/10",
         "blend_weights": {"SPY_DAILY_EXPOSURE": 80.0, "GOLD_DAILY_EXPOSURE": 10.0, "BTC_DAILY_EXPOSURE": 10.0},
-        "description": "Daily exposure คือระบบปรับน้ำหนักลงทุนทุกวันตามสัญญาณความเสี่ยง. Config นี้เริ่มจาก S&P 80%, Gold 10%, BTC 10% แล้วลด exposure เมื่อสัญญาณของ asset นั้นดูเสี่ยง.",
-        "setting": "S&P daily exposure 80% / Gold 10% / BTC 10%",
-        "metrics": {"CAGR": 0.184881, "Sharpe": 1.384298, "Max Drawdown": -0.150648, "Total Return": 11.687179},
+        "description": "Daily exposure แบบ lag-1: คำนวณ target exposure จากข้อมูลปิดวันก่อนหน้าแล้วใช้กับวันถัดไป. Config นี้เริ่มจาก S&P 80%, Gold 10%, BTC 10% แล้วส่วนที่ถูกลดกลายเป็น cash.",
+        "setting": "S&P daily exposure 80% / Gold daily exposure 10% / BTC daily exposure 10% / lag-1 signal",
+        "metrics": {"CAGR": 0.085648, "Sharpe": 0.494591, "Max Drawdown": -0.223059, "Total Return": 2.290099},
     },
     "S&P/Gold/BTC daily exposure 70/20/10": {
+        "series": "S&P Gold BTC daily exposure 70/20/10",
         "blend_weights": {"SPY_DAILY_EXPOSURE": 70.0, "GOLD_DAILY_EXPOSURE": 20.0, "BTC_DAILY_EXPOSURE": 10.0},
-        "description": "Daily exposure คือระบบปรับน้ำหนักลงทุนทุกวันตามสัญญาณความเสี่ยง. Config นี้ใช้ S&P 70%, Gold 20%, BTC 10% และลด exposure ของแต่ละ asset เมื่อสัญญาณของ asset นั้นอ่อนลง.",
-        "setting": "S&P daily exposure 70% / Gold daily exposure 20% / BTC daily exposure 10%",
-        "metrics": {"CAGR": 0.179507, "Sharpe": 1.393313, "Max Drawdown": -0.153351, "Total Return": 10.852271},
+        "description": "Daily exposure แบบ lag-1: คำนวณ target exposure จากข้อมูลปิดวันก่อนหน้าแล้วใช้กับวันถัดไป. Config นี้ใช้ S&P 70%, Gold 20%, BTC 10% และส่วนที่ถูกลดกลายเป็น cash.",
+        "setting": "S&P daily exposure 70% / Gold daily exposure 20% / BTC daily exposure 10% / lag-1 signal",
+        "metrics": {"CAGR": 0.089355, "Sharpe": 0.546297, "Max Drawdown": -0.218233, "Total Return": 2.456695},
+    },
+    "S&P/Gold/BTC daily exposure 60/30/10": {
+        "series": "S&P Gold BTC daily exposure 60/30/10",
+        "blend_weights": {"SPY_DAILY_EXPOSURE": 60.0, "GOLD_DAILY_EXPOSURE": 30.0, "BTC_DAILY_EXPOSURE": 10.0},
+        "description": "Daily exposure แบบ lag-1: คำนวณ target exposure จากข้อมูลปิดวันก่อนหน้าแล้วใช้กับวันถัดไป. Config นี้ใช้ S&P 60%, Gold 30%, BTC 10% และส่วนที่ถูกลดกลายเป็น cash.",
+        "setting": "S&P daily exposure 60% / Gold daily exposure 30% / BTC daily exposure 10% / lag-1 signal",
+        "metrics": {"CAGR": 0.092796, "Sharpe": 0.586842, "Max Drawdown": -0.218038, "Total Return": 2.618358},
     },
     "S&P/BTC daily exposure 85/0/15": {
+        "series": "S&P BTC daily exposure 85/0/15",
         "blend_weights": {"SPY_DAILY_EXPOSURE": 85.0, "BTC_DAILY_EXPOSURE": 15.0},
-        "description": "Daily exposure คือระบบปรับน้ำหนักลงทุนทุกวันตามสัญญาณความเสี่ยง. Config นี้ใช้ S&P 85% และ BTC 15% โดยไม่ถือ Gold; ถ้า S&P หรือ BTC เสี่ยงขึ้น ระบบจะลด exposure ของ asset นั้น.",
-        "setting": "S&P daily exposure 85% / Gold 0% / BTC daily exposure 15%",
-        "metrics": {"CAGR": 0.206984, "Sharpe": 1.307927, "Max Drawdown": -0.183881, "Total Return": 15.733137},
+        "description": "Daily exposure แบบ lag-1: คำนวณ target exposure จากข้อมูลปิดวันก่อนหน้าแล้วใช้กับวันถัดไป. Config นี้ใช้ S&P 85% และ BTC 15% โดยไม่ถือ Gold; ส่วนที่ถูกลดกลายเป็น cash.",
+        "setting": "S&P daily exposure 85% / Gold 0% / BTC daily exposure 15% / lag-1 signal",
+        "metrics": {"CAGR": 0.105721, "Sharpe": 0.567250, "Max Drawdown": -0.271761, "Total Return": 3.290587},
     },
 }
 
 STRATEGY_B_GUIDE_CONFIGS = {
-    "US/TH stocks + Gold/BTC 60/30/10: daily exposure, shift reduced stock sleeve to active market, fee+slippage": {
+    "US/TH stocks + Gold/BTC 60/30/10: daily exposure (lag-1), shift reduced stock sleeve to active market, fee+slippage": {
         "series": "Side trigger realloc to active stock side, fee+slippage",
         "exposure_file": "result/us_th_side_trigger_daily_asset_exposure_realloc_stock_thb.csv",
         "latest_weights_file": "result/us_th_side_trigger_latest_asset_weights_live_thb.csv",
         "latest_weights_metadata_file": "result/us_th_side_trigger_latest_asset_weights_live_metadata.json",
-        "description": "Daily exposure overlay: US/TH stocks plus Gold/BTC. The base sleeves are US/TH stock sleeve 60%, Gold 30%, and BTC 10%. Each day, the US and Thai stock sides can reduce exposure from their own risk triggers. If one stock market is reduced, that idle stock-sleeve exposure moves to the other stock market when it is still active. Gold and BTC keep their own trend exposure rules. Includes 17 bps fee+slippage.",
-        "setting": "Daily exposure / US/TH stock sleeve 60% / Gold 30% / BTC 10% / US30 + Thai30 / max stock weight 6% / move reduced stock exposure to active market / fee+slippage",
+        "description": "Lag-1 daily exposure: uses prior-close risk/trend signals for the next trading day. Base sleeves are US/TH stock 60%, Gold 30%, BTC 10%. Reduced stock exposure moves to the stock side that is still active. Includes 17 bps fee+slippage.",
+        "setting": "Lag-1 daily exposure / stock sleeve 60% / Gold 30% / BTC 10% / US30 + Thai30 / max stock weight 6% / reallocate reduced stock sleeve / fee+slippage",
         "metrics": {"CAGR": 0.346367, "Sharpe": 2.100958, "Max Drawdown": -0.102445, "Total Return": 11.842623},
     },
-    "US/TH stocks only: daily exposure, shift reduced exposure to active market, fee+slippage": {
+    "US/TH stocks only: daily exposure (lag-1), shift reduced exposure to active market, fee+slippage": {
         "series": "US/TH stocks only reduce risk shift active market fee+slippage",
         "exposure_file": "../dynamic_port_opt/result/us_th_stocks_only_side_trigger_daily_asset_exposure_fee_slippage_thb.csv",
-        "description": "Daily exposure overlay: US/TH stocks only, with no Gold/BTC sleeve. Each day, the US and Thai stock sides can reduce exposure from their own risk triggers. If one stock market is reduced, that idle exposure moves to the other stock market when it is still active. Includes 17 bps fee+slippage.",
-        "setting": "Daily exposure / US/TH stocks only / US30 + Thai30 / max stock weight 6% / move reduced exposure to active stock market / fee+slippage",
+        "description": "Lag-1 daily exposure for US/TH stocks only. Reduced exposure moves to the stock market that is still active. No Gold/BTC sleeve. Includes 17 bps fee+slippage.",
+        "setting": "Lag-1 daily exposure / US/TH stocks only / US30 + Thai30 / max stock weight 6% / reallocate reduced exposure / fee+slippage",
         "metrics": {"CAGR": 0.362612, "Sharpe": 1.802835, "Max Drawdown": -0.150726, "Total Return": 13.235137},
     },
-    "US/TH stocks + Gold/BTC 60/30/10: daily exposure, reduced stock sleeve to cash, fee+slippage": {
+    "US/TH stocks + Gold/BTC 60/30/10: daily exposure (lag-1), reduced stock sleeve to cash, fee+slippage": {
         "series": "Side trigger cash drag, fee+slippage",
         "exposure_file": "result/us_th_side_trigger_daily_asset_exposure_cash_drag_thb.csv",
-        "description": "Daily exposure overlay: US/TH stocks plus Gold/BTC. The base sleeves are US/TH stock sleeve 60%, Gold 30%, and BTC 10%. Each day, the US and Thai stock sides can reduce exposure from their own risk triggers. If one stock market is reduced, that reduced stock-sleeve exposure stays in cash instead of moving to the other stock market. Gold and BTC keep their own trend exposure rules. Includes 17 bps fee+slippage.",
-        "setting": "Daily exposure / US/TH stock sleeve 60% / Gold 30% / BTC 10% / US30 + Thai30 / max stock weight 6% / reduced stock exposure stays in cash / fee+slippage",
+        "description": "Lag-1 daily exposure: uses prior-close risk/trend signals for the next trading day. Base sleeves are US/TH stock 60%, Gold 30%, BTC 10%. Reduced stock exposure stays in cash. Includes 17 bps fee+slippage.",
+        "setting": "Lag-1 daily exposure / stock sleeve 60% / Gold 30% / BTC 10% / US30 + Thai30 / max stock weight 6% / reduced stock sleeve to cash / fee+slippage",
         "metrics": {"CAGR": 0.261740, "Sharpe": 1.866124, "Max Drawdown": -0.093789, "Total Return": 6.356255},
     },
-    "US/TH stocks + Gold/BTC: Dynamic HMM 60/30/10": {
+    "US/TH stocks + Gold/BTC: Dynamic HMM 60/30/10 daily exposure (lag-1)": {
         "series": "Joint US+TH Dynamic HMM Copula/Gold/BTC 60/30/10",
         "description": "มีทั้งหุ้น US/TH, Gold, และ BTC. Dynamic HMM คือโมเดลจับ regime ตลาด เช่น ช่วงปกติหรือช่วงผันผวนสูง และปรับมุมมองตามข้อมูลใหม่. สัดส่วนคือหุ้น US/TH 60%, Gold 30%, BTC 10%.",
-        "setting": "US/TH stocks 60% / Gold 30% / BTC 10% / Dynamic HMM",
+        "setting": "Lag-1 daily exposure / US/TH stocks 60% / Gold 30% / BTC 10% / Dynamic HMM",
         "metrics": {"CAGR": 0.3544, "Sharpe": 2.301, "Max Drawdown": -0.1589},
     },
-    "US/TH stocks + Gold/BTC: Static model 60/30/10": {
+    "US/TH stocks + Gold/BTC: Static model 60/30/10 daily exposure (lag-1)": {
         "series": "Joint US+TH Static Copula/Gold/BTC 60/30/10",
         "description": "มีทั้งหุ้น US/TH, Gold, และ BTC. Static model ใช้โครงสร้าง regime ที่นิ่งกว่า Dynamic HMM จึงเปลี่ยนตามข้อมูลใหม่น้อยกว่า. สัดส่วนคือหุ้น US/TH 60%, Gold 30%, BTC 10%.",
-        "setting": "US/TH stocks 60% / Gold 30% / BTC 10% / Static model",
+        "setting": "Lag-1 daily exposure / US/TH stocks 60% / Gold 30% / BTC 10% / Static model",
         "metrics": {"CAGR": 0.3531, "Sharpe": 2.292, "Max Drawdown": -0.1591},
     },
-    "US/TH stocks + Gold/BTC: all assets Dynamic HMM": {
+    "US/TH stocks + Gold/BTC 50/10/30/10: no daily exposure": {
+        "series": "US/TH/Gold/BTC 50/10/30/10",
+        "description": "No daily exposure baseline: model blend with US 50%, Thai 10%, Gold 30%, BTC 10%.",
+        "setting": "No daily exposure / US 50% / Thai 10% / Gold 30% / BTC 10%",
+    },
+    "US/TH stocks + Gold/BTC 45/15/30/10: no daily exposure": {
+        "series": "US/TH/Gold/BTC 45/15/30/10",
+        "description": "No daily exposure baseline: model blend with US 45%, Thai 15%, Gold 30%, BTC 10%.",
+        "setting": "No daily exposure / US 45% / Thai 15% / Gold 30% / BTC 10%",
+    },
+    "US/TH stocks + Gold/BTC 40/20/30/10: no daily exposure": {
+        "series": "US/TH/Gold/BTC 40/20/30/10",
+        "description": "No daily exposure baseline: model blend with US 40%, Thai 20%, Gold 30%, BTC 10%.",
+        "setting": "No daily exposure / US 40% / Thai 20% / Gold 30% / BTC 10%",
+    },
+    "US/TH stocks + Gold/BTC: all assets Dynamic HMM, no daily exposure": {
         "series": "All assets in one Dynamic HMM Copula model",
         "description": "มีหุ้น US, หุ้นไทย, Gold, และ BTC อยู่ในโมเดลเดียวกันทั้งหมด. Dynamic HMM ให้โมเดลจับ regime ของทุก asset พร้อมกันและปรับตามข้อมูลใหม่ วิธีนี้ยืดหยุ่นกว่าแต่ drawdown อาจสูงขึ้น.",
-        "setting": "US stocks + Thai stocks + Gold + BTC / one Dynamic HMM model",
+        "setting": "No daily exposure / US stocks + Thai stocks + Gold + BTC / one Dynamic HMM model",
         "metrics": {"CAGR": 0.3367, "Sharpe": 1.332, "Max Drawdown": -0.3073},
     },
-    "US/TH stocks + Gold/BTC: all assets Static model": {
+    "US/TH stocks + Gold/BTC: all assets Static model, no daily exposure": {
         "series": "All assets in one Static Copula model",
         "description": "มีหุ้น US, หุ้นไทย, Gold, และ BTC อยู่ในโมเดลเดียวกันทั้งหมด. Static model ใช้โครงสร้าง regime ที่เปลี่ยนช้ากว่า Dynamic HMM และใช้เป็น baseline เทียบกับ Dynamic model.",
-        "setting": "US stocks + Thai stocks + Gold + BTC / one Static model",
+        "setting": "No daily exposure / US stocks + Thai stocks + Gold + BTC / one Static model",
         "metrics": {"CAGR": 0.3345, "Sharpe": 1.323, "Max Drawdown": -0.3073},
     },
 }
@@ -870,7 +919,8 @@ def build_annual_return_summary(
 
 
 @st.cache_data(show_spinner=False)
-def load_precomputed_strategy_data() -> Dict[str, object]:
+def load_precomputed_strategy_data(cache_bust: tuple[float, ...] = ()) -> Dict[str, object]:
+    _ = cache_bust
     summary_path = PRECOMPUTED_DIR / "streamlit_10y_strategy_summary.csv"
     returns_path = PRECOMPUTED_DIR / "streamlit_10y_strategy_returns.parquet"
     curves_path = PRECOMPUTED_DIR / "streamlit_10y_strategy_curves.parquet"
@@ -892,6 +942,17 @@ def load_precomputed_strategy_data() -> Dict[str, object]:
         "sleeves": pd.read_parquet(sleeves_path),
         "metadata": metadata,
     }
+
+
+def precomputed_strategy_cache_bust() -> tuple[float, ...]:
+    files = [
+        PRECOMPUTED_DIR / "streamlit_10y_strategy_summary.csv",
+        PRECOMPUTED_DIR / "streamlit_10y_strategy_returns.parquet",
+        PRECOMPUTED_DIR / "streamlit_10y_strategy_curves.parquet",
+        PRECOMPUTED_DIR / "streamlit_10y_sleeve_returns.parquet",
+        PRECOMPUTED_DIR / "streamlit_10y_metadata.json",
+    ]
+    return tuple(path.stat().st_mtime for path in files if path.exists())
 
 
 def curve_from_return_series(returns: pd.Series, initial: float = 10_000.0) -> pd.DataFrame:
@@ -1029,28 +1090,28 @@ def _latest_strategy_a_exposure_factor(
             drawdown = spy_thb / spy_thb.cummax() - 1.0
             last = spy_thb.index.max()
             checks = [
-                0.65 if spy_thb.loc[last] < ma200.loc[last] else 1.0,
-                0.50 if drawdown.loc[last] <= -0.08 else 1.0,
-                0.25 if drawdown.loc[last] <= -0.15 else 1.0,
-                0.50 if vix.loc[last] >= 28.0 else 1.0,
-                0.25 if vix.loc[last] >= 35.0 else 1.0,
+                0.50 if spy_thb.loc[last] < ma200.loc[last] else 1.0,
+                0.35 if drawdown.loc[last] <= -0.08 else 1.0,
+                0.15 if drawdown.loc[last] <= -0.15 else 1.0,
+                0.35 if vix.loc[last] >= 28.0 else 1.0,
+                0.15 if vix.loc[last] >= 35.0 else 1.0,
             ]
             factor = min(checks)
-            detail = f"{factor:.0%}; {pd.Timestamp(last).date()} SPY {spy_thb.loc[last]:,.2f} vs MA200 {ma200.loc[last]:,.2f}"
+            detail = f"{factor:.0%}; {pd.Timestamp(last).date()} close signal, applied next day"
             return factor, detail
         if sleeve_col == "GOLD_DAILY_EXPOSURE" and "GC=F" in overlay.columns:
             gold_thb = (overlay["GC=F"] * fx).dropna()
             ma200 = gold_thb.rolling(200, min_periods=40).mean()
             last = gold_thb.index.max()
-            factor = 0.50 if gold_thb.loc[last] < ma200.loc[last] else 1.0
-            detail = f"{factor:.0%}; {pd.Timestamp(last).date()} Gold {gold_thb.loc[last]:,.2f} vs MA200 {ma200.loc[last]:,.2f}"
+            factor = 0.25 if gold_thb.loc[last] < ma200.loc[last] else 1.0
+            detail = f"{factor:.0%}; {pd.Timestamp(last).date()} close signal, applied next day"
             return factor, detail
         if sleeve_col == "BTC_DAILY_EXPOSURE" and "BTC-USD" in overlay.columns:
             btc_thb = (overlay["BTC-USD"] * fx).dropna()
             ma200 = btc_thb.rolling(200, min_periods=40).mean()
             last = btc_thb.index.max()
             factor = 0.0 if btc_thb.loc[last] < ma200.loc[last] else 1.0
-            detail = f"{factor:.0%}; {pd.Timestamp(last).date()} BTC {btc_thb.loc[last]:,.2f} vs MA200 {ma200.loc[last]:,.2f}"
+            detail = f"{factor:.0%}; {pd.Timestamp(last).date()} close signal, applied next day"
             return factor, detail
     raw_lookup = {
         "SPY_DAILY_EXPOSURE": "SPY",
@@ -1099,7 +1160,7 @@ def latest_weight_rows(label: str, config: dict, sleeves: pd.DataFrame) -> tuple
         if isinstance(series_names, str):
             series_names = [series_names]
         series_label = " ".join(series_names)
-        if "S&P 500 buy" in label or "S&P buy" in series_label:
+        if "S&P 500 hold" in label or "S&P 500 buy" in label or "S&P buy" in series_label:
             weight_map = {"SPY": 100.0}
         elif "S&P 500 daily" in label or "S&P daily" in series_label:
             weight_map = {"SPY_DAILY_EXPOSURE": 100.0}
@@ -1226,12 +1287,32 @@ def align_and_rebase_curves(curve_map: Dict[str, pd.DataFrame], initial: float =
     return aligned
 
 
+def best_sharpe_config_name(configs: dict[str, dict], summary: pd.DataFrame) -> str:
+    best_name = next(iter(configs))
+    best_sharpe = float("-inf")
+    for name, config in configs.items():
+        sharpe = float("nan")
+        series_names = config.get("series", [])
+        if isinstance(series_names, str):
+            series_names = [series_names]
+        if not summary.empty and "Strategy" in summary.columns and "Sharpe" in summary.columns:
+            matches = summary.loc[summary["Strategy"].isin(series_names), "Sharpe"].dropna()
+            if not matches.empty:
+                sharpe = float(matches.max())
+        if pd.isna(sharpe):
+            sharpe = float(config.get("metrics", {}).get("Sharpe", float("nan")))
+        if not pd.isna(sharpe) and sharpe > best_sharpe:
+            best_name = name
+            best_sharpe = sharpe
+    return best_name
+
+
 def render_strategy_guide_page() -> None:
     st.subheader("Strategy Guide")
     st.caption(
         "Frozen 10Y performance dataset for deploy-friendly testing. It stores strategy return series, not raw stock-level cache."
     )
-    data = load_precomputed_strategy_data()
+    data = load_precomputed_strategy_data(precomputed_strategy_cache_bust())
     summary = data["summary"]
     strategy_returns = data["returns"]
     curves = data["curves"]
@@ -1252,13 +1333,22 @@ def render_strategy_guide_page() -> None:
         "the reduced stock exposure either moves to the active stock market or stays in cash, depending on the selected config."
     )
 
+    left_default = best_sharpe_config_name(SNP_GUIDE_CONFIGS, summary)
+    right_default = best_sharpe_config_name(STRATEGY_B_GUIDE_CONFIGS, summary)
+    defaults_version = f"best-sharpe:{left_default}|{right_default}"
+    if st.session_state.get("guide_defaults_version") != defaults_version:
+        st.session_state.guide_left_config = left_default
+        st.session_state.guide_right_config = right_default
+        st.session_state.guide_defaults_version = defaults_version
+
     left_panel, right_panel = st.columns(2)
     with left_panel:
         st.markdown("**Strategy A: S&P 10Y Base**")
+        left_options = list(SNP_GUIDE_CONFIGS.keys())
         left_choice = st.selectbox(
             "S&P backtest config",
-            list(SNP_GUIDE_CONFIGS.keys()),
-            index=3,
+            left_options,
+            index=left_options.index(left_default),
             key="guide_left_config",
         )
         left_config = SNP_GUIDE_CONFIGS[left_choice]
@@ -1267,10 +1357,11 @@ def render_strategy_guide_page() -> None:
 
     with right_panel:
         st.markdown("**Strategy B: US/TH Precomputed Clustering**")
+        right_options = list(STRATEGY_B_GUIDE_CONFIGS.keys())
         right_choice = st.selectbox(
             "US/TH backtest config",
-            list(STRATEGY_B_GUIDE_CONFIGS.keys()),
-            index=0,
+            right_options,
+            index=right_options.index(right_default),
             key="guide_right_config",
         )
         right_config = STRATEGY_B_GUIDE_CONFIGS[right_choice]
