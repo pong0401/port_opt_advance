@@ -1,0 +1,83 @@
+name: Daily latest weights
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_backtest:
+        description: "Also rebuild frozen backtest/precomputed files"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+  schedule:
+    # 23:35 UTC is 06:35 Asia/Bangkok on the next day, after the US close.
+    - cron: "35 23 * * 1-5"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-latest-weights
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Restore yfinance timezone cache
+        uses: actions/cache@v4
+        with:
+          path: data/cache/dynamic_factor_copula/.yfinance
+          key: yfinance-tz-${{ runner.os }}
+          restore-keys: yfinance-tz-${{ runner.os }}
+
+      - name: Validate seeded market cache
+        run: |
+          test -f data/cache/portopt_optimizer_proof/20Y/prices.parquet
+          test -f data/cache/portopt_optimizer_proof/20Y/volumes.parquet
+          test -f data/cache/dynamic_factor_copula/extra_prices.parquet
+          test -f data/cache/dynamic_factor_copula/extra_volumes.parquet
+          test -f result/us_th_best_asset_sweep_dynamic_weight_history_thb.csv
+
+      - name: Refresh latest overlay data
+        run: python scripts/refresh_overlay_latest.py
+
+      - name: Refresh Strategy B latest weights
+        run: python scripts/refresh_us_th_best_config_latest.py
+
+      - name: Rebuild frozen backtest dataset
+        if: github.event_name == 'workflow_dispatch' && inputs.run_backtest == 'true'
+        run: |
+          python scripts/run_us_th_best_config.py
+          python scripts/build_streamlit_precomputed.py
+
+      - name: Commit refreshed outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/cache/dynamic_factor_copula/overlay_compare_prices.parquet
+          git add data/cache/dynamic_factor_copula/extra_prices.parquet
+          git add data/cache/dynamic_factor_copula/extra_volumes.parquet
+          git add result/us_th_best_asset_sweep_dynamic_weight_history_thb.csv
+          git add result/us_th_side_trigger_daily_asset_exposure_realloc_stock_thb.csv
+          git add result/us_th_side_trigger_latest_asset_weights_live_metadata.json
+          git add result/us_th_side_trigger_latest_asset_weights_live_thb.csv
+          git add data/precomputed
+          git diff --cached --quiet || git commit -m "Refresh latest portfolio weights [skip ci]"
+          git push

@@ -1,4 +1,5 @@
 __pycache__/
+.pycache_tmp/
 *.pyc
 .yfinance/
 .yfinance_notebook/
@@ -7,12 +8,26 @@ __pycache__/
 yf_test_cache/
 
 data/backtest_records.csv
-data/cache/
+data/cache/*
+!data/cache/dynamic_factor_copula/
+!data/cache/dynamic_factor_copula/overlay_compare_prices.parquet
+!data/cache/dynamic_factor_copula/extra_prices.parquet
+!data/cache/dynamic_factor_copula/extra_volumes.parquet
+!data/cache/portopt_optimizer_proof/
+!data/cache/portopt_optimizer_proof/20Y/
+!data/cache/portopt_optimizer_proof/20Y/benchmark.parquet
+!data/cache/portopt_optimizer_proof/20Y/prices.parquet
+!data/cache/portopt_optimizer_proof/20Y/volumes.parquet
+!data/cache/portopt_optimizer_proof/20Y/vol_proxy.parquet
 !data/precomputed/
 !data/precomputed/**
 data/universe_snapshots/*.csv
 !data/universe_snapshots/.gitkeep
-result/
+result/*
+!result/us_th_best_asset_sweep_dynamic_weight_history_thb.csv
+!result/us_th_side_trigger_daily_asset_exposure_realloc_stock_thb.csv
+!result/us_th_side_trigger_latest_asset_weights_live_metadata.json
+!result/us_th_side_trigger_latest_asset_weights_live_thb.csv
 notebook/
 
 repo_function_walkthrough.ipynb
