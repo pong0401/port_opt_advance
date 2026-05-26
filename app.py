@@ -312,6 +312,30 @@ STRATEGY_B_GUIDE_CONFIGS = {
         "setting": "Lag-1 daily exposure / stock sleeve 60% / Gold 30% / BTC 10% / US30 + Thai30 / max stock weight 6% / reallocate reduced stock sleeve / fee+slippage",
         "metrics": {"CAGR": 0.346367, "Sharpe": 2.100958, "Max Drawdown": -0.102445, "Total Return": 11.842623},
     },
+    "US/TH stocks + Gold/BTC 60/30/10: weekly exposure W-FRI (lag-1), shift reduced stock sleeve to active market, fee+slippage": {
+        "series": "Side trigger realloc active stock side, weekly exposure W-FRI, fee+slippage",
+        "description": "Weekly exposure test: the US, Thai, Gold, and BTC trigger levels are sampled once per week on Friday, then held until the next weekly signal. The portfolio still uses lag-1 execution, so a signal is applied after it is known. Base sleeves are US/TH stock 60%, Gold 30%, BTC 10%; reduced stock exposure moves to the stock side that is still active. Includes 17 bps fee+slippage.",
+        "setting": "Weekly exposure W-FRI / lag-1 execution / stock sleeve 60% / Gold 30% / BTC 10% / US30 + Thai30 / max stock weight 6% / reallocate reduced stock sleeve / fee+slippage",
+        "metrics": {"CAGR": 0.172013, "Sharpe": 0.978749, "Max Drawdown": -0.182050, "Total Return": 2.905430},
+    },
+    "US/TH stocks + Gold/BTC 60/30/10: weekly exposure W-WED (lag-1), shift reduced stock sleeve to active market, fee+slippage": {
+        "series": "Side trigger realloc active stock side, weekly exposure W-WED, fee+slippage",
+        "description": "Weekly exposure test: the US, Thai, Gold, and BTC trigger levels are sampled once per week on Wednesday, then held until the next weekly signal. The portfolio still uses lag-1 execution, so a signal is applied after it is known. Base sleeves are US/TH stock 60%, Gold 30%, BTC 10%; reduced stock exposure moves to the stock side that is still active. Includes 17 bps fee+slippage.",
+        "setting": "Weekly exposure W-WED / lag-1 execution / stock sleeve 60% / Gold 30% / BTC 10% / US30 + Thai30 / max stock weight 6% / reallocate reduced stock sleeve / fee+slippage",
+        "metrics": {"CAGR": 0.166706, "Sharpe": 0.955011, "Max Drawdown": -0.215583, "Total Return": 2.756220},
+    },
+    "US/TH stocks + Gold/BTC 60/30/10: daily exposure (lag-1), whipsaw confirm1 hold2, fee+slippage": {
+        "series": "Side trigger whipsaw confirm1_hold2 realloc, fee+slippage",
+        "description": "Whipsaw-filter variant of the side-trigger strategy. A risk-on/off change must be confirmed for 1 day, then the new exposure is held for at least 2 trading days. Includes 17 bps fee+slippage.",
+        "setting": "Lag-1 daily exposure / whipsaw confirm 1 day / min hold 2 days / reallocate reduced stock sleeve / fee+slippage",
+        "metrics": {"CAGR": 0.300928, "Sharpe": 1.851587, "Max Drawdown": -0.109198, "Total Return": 8.564761},
+    },
+    "US/TH stocks + Gold/BTC 60/30/10: daily exposure (lag-1), whipsaw confirm1 hold3, fee+slippage": {
+        "series": "Side trigger whipsaw confirm1_hold3 realloc, fee+slippage",
+        "description": "Whipsaw-filter variant of the side-trigger strategy. A risk-on/off change must be confirmed for 1 day, then the new exposure is held for at least 3 trading days. Includes 17 bps fee+slippage.",
+        "setting": "Lag-1 daily exposure / whipsaw confirm 1 day / min hold 3 days / reallocate reduced stock sleeve / fee+slippage",
+        "metrics": {"CAGR": 0.290004, "Sharpe": 1.789087, "Max Drawdown": -0.113884, "Total Return": 7.896945},
+    },
     "US/TH stocks only: daily exposure (lag-1), shift reduced exposure to active market, fee+slippage": {
         "series": "US/TH stocks only reduce risk shift active market fee+slippage",
         "exposure_file": "../dynamic_port_opt/result/us_th_stocks_only_side_trigger_daily_asset_exposure_fee_slippage_thb.csv",
@@ -1337,18 +1361,19 @@ def render_strategy_guide_page() -> None:
     right_default = best_sharpe_config_name(STRATEGY_B_GUIDE_CONFIGS, summary)
     defaults_version = f"best-sharpe:{left_default}|{right_default}"
     if st.session_state.get("guide_defaults_version") != defaults_version:
-        st.session_state.guide_left_config = left_default
-        st.session_state.guide_right_config = right_default
         st.session_state.guide_defaults_version = defaults_version
 
     left_panel, right_panel = st.columns(2)
     with left_panel:
         st.markdown("**Strategy A: S&P 10Y Base**")
         left_options = list(SNP_GUIDE_CONFIGS.keys())
+        left_initial = st.session_state.get("guide_left_config", left_default)
+        if left_initial not in SNP_GUIDE_CONFIGS:
+            left_initial = left_default
         left_choice = st.selectbox(
             "S&P backtest config",
             left_options,
-            index=left_options.index(left_default),
+            index=left_options.index(left_initial),
             key="guide_left_config",
         )
         left_config = SNP_GUIDE_CONFIGS[left_choice]
@@ -1358,10 +1383,13 @@ def render_strategy_guide_page() -> None:
     with right_panel:
         st.markdown("**Strategy B: US/TH Precomputed Clustering**")
         right_options = list(STRATEGY_B_GUIDE_CONFIGS.keys())
+        right_initial = st.session_state.get("guide_right_config", right_default)
+        if right_initial not in STRATEGY_B_GUIDE_CONFIGS:
+            right_initial = right_default
         right_choice = st.selectbox(
             "US/TH backtest config",
             right_options,
-            index=right_options.index(right_default),
+            index=right_options.index(right_initial),
             key="guide_right_config",
         )
         right_config = STRATEGY_B_GUIDE_CONFIGS[right_choice]
