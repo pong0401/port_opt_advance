@@ -340,7 +340,7 @@ STRATEGY_B_GUIDE_CONFIGS = {
     },
     "US/TH stocks + Gold/BTC: Dynamic HMM 60/30/10 daily exposure (lag-1)": {
         "series": "Best asset sweep US30/TH30/max6 dynamic cash drag, fee+slippage",
-        "exposure_file": "result/us_th_best_asset_sweep_daily_asset_exposure_cash_drag_thb.csv",
+        "latest_weights_file": "result/us_th_best_asset_sweep_latest_asset_weights_thb.csv",
         "description": "Local lag-1 rerun: uses the Dynamic HMM stock model with US30/Thai30/max6 inside a 60% stock sleeve, plus Gold 30% and BTC 10%. Daily exposure signals are shifted by one trading day before returns are applied, and reduced exposure stays in cash. Includes 17 bps fee+slippage.",
         "setting": "Lag-1 daily exposure / US30 + Thai30 max 6% / stock sleeve 60% / Gold 30% / BTC 10% / Dynamic HMM / reduced exposure to cash / fee+slippage",
         "metrics": {"CAGR": 0.292766, "Sharpe": 1.956816, "Max Drawdown": -0.096523, "Total Return": 8.061765},
@@ -1135,13 +1135,23 @@ def latest_weight_rows(label: str, config: dict, sleeves: pd.DataFrame) -> tuple
         latest_path = _resolved_project_path(str(latest_weights_file))
         if latest_path.exists():
             latest = pd.read_csv(latest_path)
-            if not latest.empty and {"Asset", "Portfolio Exposure %", "Date"}.issubset(latest.columns):
-                rows = latest.rename(columns={"Portfolio Exposure %": "Portfolio %"}).copy()
+            if not latest.empty and "Asset" in latest.columns and "Date" in latest.columns:
+                rows = latest.copy()
+                if "Portfolio Exposure %" in rows.columns:
+                    rows = rows.rename(columns={"Portfolio Exposure %": "Portfolio %"})
+                    exposure_label = "Active after overlay"
+                elif "Portfolio Weight" in rows.columns:
+                    rows["Portfolio %"] = rows["Portfolio Weight"].astype(float) * 100.0
+                    exposure_label = "Latest model weight"
+                else:
+                    rows = pd.DataFrame()
+                if rows.empty or "Portfolio %" not in rows.columns:
+                    return pd.DataFrame(), ""
                 if "Sleeve" in rows.columns:
                     rows["Group"] = rows["Sleeve"].replace({"Overlay": "Gold/BTC"})
                 else:
                     rows["Group"] = rows["Asset"].map(_asset_group)
-                rows["Daily Exposure"] = np.where(rows["Asset"].eq("CASH"), "Cash after overlay", "Active after overlay")
+                rows["Daily Exposure"] = np.where(rows["Asset"].eq("CASH"), "Cash after overlay", exposure_label)
                 rows = rows.sort_values("Portfolio %", ascending=False)
                 latest_date = str(rows["Date"].iloc[0])
                 return rows[["Asset", "Group", "Daily Exposure", "Portfolio %"]], latest_date
@@ -1385,6 +1395,7 @@ def render_strategy_guide_page() -> None:
             right_initial not in STRATEGY_B_GUIDE_CONFIGS
             or not config_has_weight_details(STRATEGY_B_GUIDE_CONFIGS[right_initial])
         ):
+            st.session_state.pop("guide_right_config", None)
             right_initial = right_default
         right_choice = st.selectbox(
             "US/TH backtest config",

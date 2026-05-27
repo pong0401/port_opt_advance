@@ -12,8 +12,8 @@ on:
           - "false"
           - "true"
   schedule:
-    # 23:35 UTC is 06:35 Asia/Bangkok on the next day, after the US close.
-    - cron: "35 23 * * 1-5"
+    # 00:30 UTC is 07:30 Asia/Bangkok, safely after the prior US trading day's close.
+    - cron: "30 0 * * 2-6"
 
 permissions:
   contents: write
@@ -75,6 +75,7 @@ jobs:
           git add data/cache/dynamic_factor_copula/extra_prices.parquet
           git add data/cache/dynamic_factor_copula/extra_volumes.parquet
           git add result/us_th_best_asset_sweep_dynamic_weight_history_thb.csv
+          git add result/us_th_best_asset_sweep_latest_asset_weights_thb.csv
           git add result/us_th_side_trigger_daily_asset_exposure_realloc_stock_thb.csv
           git add result/us_th_side_trigger_latest_asset_weights_live_metadata.json
           git add result/us_th_side_trigger_latest_asset_weights_live_thb.csv
