@@ -1,8 +1,8 @@
 {
-  "calculated_at":"2026-05-27T06:57:12.133802+07:00",
+  "calculated_at":"2026-05-27T08:28:41.527455+07:00",
   "data_as_of":"2026-05-26",
-  "downloaded_tickers":63,
-  "requested_tickers":63,
-  "universe_tickers":60,
+  "downloaded_tickers":62,
+  "requested_tickers":62,
+  "universe_tickers":59,
   "note":"Latest live weights only. Historical backtest summary\/curves are intentionally not updated."
 }
