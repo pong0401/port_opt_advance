@@ -22,6 +22,7 @@ import run_us_th_best_config as best_config  # noqa: E402
 YF_CACHE_DIR = PROJECT_ROOT / "data" / "cache" / "dynamic_factor_copula" / ".yfinance"
 LIVE_LATEST_WEIGHTS_FILE = "us_th_side_trigger_latest_asset_weights_live_thb.csv"
 LIVE_LATEST_METADATA_FILE = "us_th_side_trigger_latest_asset_weights_live_metadata.json"
+BEST_ASSET_LIVE_LATEST_WEIGHTS_FILE = "us_th_best_asset_sweep_latest_effective_weights_live_thb.csv"
 
 
 def _download_latest(tickers: list[str], start: str, end: str) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -146,6 +147,88 @@ def _write_live_latest_weights(
     return latest
 
 
+def _write_best_asset_live_latest_weights(
+    model_results: dict[str, object],
+    benchmark: pd.Series,
+    latest_date: str,
+) -> pd.DataFrame:
+    paths = default_paths(PROJECT_ROOT)
+    overlay_prices = best_config.load_overlay_compare_prices(
+        paths,
+        start_date="2016-01-01",
+        end_date=latest_date,
+        tickers=["SPY", "GC=F", "BTC-USD", "^VIX", "USDTHB=X"],
+    ).dropna(subset=["SPY", "GC=F", "BTC-USD", "^VIX", "USDTHB=X"])
+    gold_thb = overlay_prices["GC=F"].mul(overlay_prices["USDTHB=X"])
+    btc_thb = overlay_prices["BTC-USD"].mul(overlay_prices["USDTHB=X"])
+    gold_returns = gold_thb.pct_change(fill_method=None).fillna(0.0)
+    btc_returns = btc_thb.pct_change(fill_method=None).fillna(0.0)
+    gold_exposure = best_config.compare_trend_exposure(overlay_prices["GC=F"], 0.50)
+    btc_exposure = best_config.compare_trend_exposure(overlay_prices["BTC-USD"], 0.00)
+
+    sample_index = model_results["nav"]["Dynamic HMM Copula"].index.intersection(benchmark.index).sort_values()
+    equity_returns = (
+        model_results["nav"]["Dynamic HMM Copula"]
+        .reindex(sample_index)
+        .pct_change(fill_method=None)
+        .fillna(0.0)
+    )
+    _, equity_exposure = best_config.apply_daily_exposure_overlay(
+        equity_returns,
+        benchmark.reindex(sample_index).ffill(),
+        overlay_prices["^VIX"].reindex(sample_index).ffill(),
+    )
+    sleeves = pd.concat(
+        {
+            "JOINT_EQUITY": equity_returns,
+            "GOLD": gold_returns,
+            "BTC": btc_returns,
+        },
+        axis=1,
+    ).dropna()
+    exposures = pd.concat(
+        {
+            "JOINT_EQUITY": equity_exposure["Daily Exposure"],
+            "GOLD": gold_exposure,
+            "BTC": btc_exposure,
+        },
+        axis=1,
+    ).reindex(sleeves.index).ffill().bfill()
+    strategic_weights = pd.Series({"JOINT_EQUITY": 0.60, "GOLD": 0.30, "BTC": 0.10}, dtype=float)
+    sleeve_weight_history = best_config._weights_history_to_frame(
+        model_results["weights_history"]["Dynamic HMM Copula"]
+    )
+    _, _, cash_drag_sleeves = best_config._dynamic_rebalanced_returns(
+        sleeves,
+        strategic_weights,
+        exposures,
+        rebalance_months=1,
+        transaction_cost_bps=0.0,
+        reallocate_cash=False,
+    )
+    cash_drag_assets = best_config._daily_asset_exposure_from_sleeves(sleeve_weight_history, cash_drag_sleeves)
+
+    latest_dt = cash_drag_assets.index.max()
+    latest = cash_drag_assets.loc[latest_dt].rename("Portfolio Exposure").reset_index()
+    latest.columns = ["Asset", "Portfolio Exposure"]
+    latest = latest.loc[latest["Portfolio Exposure"] > 1e-10].copy()
+    latest["Portfolio Exposure %"] = latest["Portfolio Exposure"] * 100.0
+    latest["Sleeve"] = latest["Asset"].map(best_config._asset_sleeve)
+    latest["Trigger Source"] = latest["Asset"].map(
+        lambda asset: "Dynamic HMM stock sleeve"
+        if asset not in {"CASH", "GOLD", "BTC"} and not str(asset).endswith(".BK")
+        else (
+            "Dynamic HMM Thai stock sleeve"
+            if str(asset).endswith(".BK")
+            else best_config._asset_trigger_source(asset)
+        )
+    )
+    latest.insert(0, "Date", pd.Timestamp(latest_dt).date().isoformat())
+    latest = latest.sort_values("Portfolio Exposure %", ascending=False)
+    latest.to_csv(paths.result_dir / BEST_ASSET_LIVE_LATEST_WEIGHTS_FILE, index=False)
+    return latest
+
+
 def main() -> None:
     paths = default_paths(PROJECT_ROOT)
     overlay_file = paths.local_cache_root / "overlay_compare_prices.parquet"
@@ -181,10 +264,17 @@ def main() -> None:
         downloaded_count=len(prices.columns),
         requested_count=len(tickers),
     )
+    latest_best_asset_exposure = _write_best_asset_live_latest_weights(
+        results,
+        benchmark,
+        latest_date.isoformat(),
+    )
     print(f"Updated Strategy B live latest weights through {latest_date.isoformat()}")
     print(f"Downloaded latest rows for {len(prices.columns)} / {len(tickers)} tickers")
     print("Backtest summary/curves were not updated.")
     print(latest_exposure.head(12).to_string(index=False))
+    print("Updated Dynamic HMM cash-drag latest effective weights.")
+    print(latest_best_asset_exposure.head(12).to_string(index=False))
 
 
 if __name__ == "__main__":

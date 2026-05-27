@@ -340,7 +340,8 @@ STRATEGY_B_GUIDE_CONFIGS = {
     },
     "US/TH stocks + Gold/BTC: Dynamic HMM 60/30/10 daily exposure (lag-1)": {
         "series": "Best asset sweep US30/TH30/max6 dynamic cash drag, fee+slippage",
-        "latest_weights_file": "result/us_th_best_asset_sweep_latest_asset_weights_thb.csv",
+        "latest_weights_file": "result/us_th_best_asset_sweep_latest_effective_weights_live_thb.csv",
+        "latest_weights_metadata_file": "result/us_th_side_trigger_latest_asset_weights_live_metadata.json",
         "description": "Local lag-1 rerun: uses the Dynamic HMM stock model with US30/Thai30/max6 inside a 60% stock sleeve, plus Gold 30% and BTC 10%. Daily exposure signals are shifted by one trading day before returns are applied, and reduced exposure stays in cash. Includes 17 bps fee+slippage.",
         "setting": "Lag-1 daily exposure / US30 + Thai30 max 6% / stock sleeve 60% / Gold 30% / BTC 10% / Dynamic HMM / reduced exposure to cash / fee+slippage",
         "metrics": {"CAGR": 0.292766, "Sharpe": 1.956816, "Max Drawdown": -0.096523, "Total Return": 8.061765},
