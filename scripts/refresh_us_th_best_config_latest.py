@@ -23,6 +23,9 @@ YF_CACHE_DIR = PROJECT_ROOT / "data" / "cache" / "dynamic_factor_copula" / ".yfi
 LIVE_LATEST_WEIGHTS_FILE = "us_th_side_trigger_latest_asset_weights_live_thb.csv"
 LIVE_LATEST_METADATA_FILE = "us_th_side_trigger_latest_asset_weights_live_metadata.json"
 BEST_ASSET_LIVE_LATEST_WEIGHTS_FILE = "us_th_best_asset_sweep_latest_effective_weights_live_thb.csv"
+SHARE_CLASS_REPRESENTATIVES = {
+    "GOOG": "GOOGL",
+}
 
 
 def _download_latest(tickers: list[str], start: str, end: str) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -64,10 +67,22 @@ def _current_best_universe() -> list[str]:
     weight_file = PROJECT_ROOT / "result" / "us_th_best_asset_sweep_dynamic_weight_history_thb.csv"
     if weight_file.exists():
         frame = pd.read_csv(weight_file, index_col=0)
-        return [column for column in frame.columns if column not in {"GOLD", "BTC", "CASH"}]
+        return _dedupe_share_classes([column for column in frame.columns if column not in {"GOLD", "BTC", "CASH"}])
     exposure_file = PROJECT_ROOT / "result" / "us_th_side_trigger_daily_asset_exposure_realloc_stock_thb.csv"
     frame = pd.read_csv(exposure_file, index_col=0)
-    return [column for column in frame.columns if column not in {"GOLD", "BTC", "CASH"}]
+    return _dedupe_share_classes([column for column in frame.columns if column not in {"GOLD", "BTC", "CASH"}])
+
+
+def _dedupe_share_classes(tickers: list[str]) -> list[str]:
+    ticker_set = set(tickers)
+    deduped: list[str] = []
+    for ticker in tickers:
+        representative = SHARE_CLASS_REPRESENTATIVES.get(ticker)
+        if representative and representative in ticker_set:
+            continue
+        if ticker not in deduped:
+            deduped.append(ticker)
+    return deduped
 
 
 def _write_live_latest_weights(
