@@ -1295,7 +1295,11 @@ def align_and_rebase_curves(curve_map: Dict[str, pd.DataFrame], initial: float =
 
 
 def config_has_weight_details(config: dict) -> bool:
-    return bool(config.get("latest_weights_file") or config.get("exposure_file") or config.get("blend_weights"))
+    for file_key in ["latest_weights_file", "exposure_file"]:
+        file_name = config.get(file_key)
+        if file_name and _resolved_project_path(str(file_name)).exists():
+            return True
+    return bool(config.get("blend_weights"))
 
 
 def best_sharpe_config_name(configs: dict[str, dict], summary: pd.DataFrame, require_weight_details: bool = False) -> str:
@@ -1377,7 +1381,10 @@ def render_strategy_guide_page() -> None:
         st.markdown("**Strategy B: US/TH Precomputed Clustering**")
         right_options = list(STRATEGY_B_GUIDE_CONFIGS.keys())
         right_initial = st.session_state.get("guide_right_config", right_default)
-        if right_initial not in STRATEGY_B_GUIDE_CONFIGS:
+        if (
+            right_initial not in STRATEGY_B_GUIDE_CONFIGS
+            or not config_has_weight_details(STRATEGY_B_GUIDE_CONFIGS[right_initial])
+        ):
             right_initial = right_default
         right_choice = st.selectbox(
             "US/TH backtest config",
