@@ -21,6 +21,8 @@ import run_us_th_best_config as best_config  # noqa: E402
 
 YF_CACHE_DIR = PROJECT_ROOT / "data" / "cache" / "dynamic_factor_copula" / ".yfinance"
 LIVE_LATEST_WEIGHTS_FILE = "us_th_side_trigger_latest_asset_weights_live_thb.csv"
+LIVE_CASH_DRAG_LATEST_WEIGHTS_FILE = "us_th_side_trigger_cash_drag_latest_asset_weights_live_thb.csv"
+STOCKS_ONLY_LATEST_WEIGHTS_FILE = "us_th_stocks_only_latest_asset_weights_live_thb.csv"
 LIVE_LATEST_METADATA_FILE = "us_th_side_trigger_latest_asset_weights_live_metadata.json"
 BEST_ASSET_LIVE_LATEST_WEIGHTS_FILE = "us_th_best_asset_sweep_latest_effective_weights_live_thb.csv"
 SHARE_CLASS_REPRESENTATIVES = {
@@ -135,18 +137,33 @@ def _write_live_latest_weights(
         btc_exposure=btc_exposure,
         reallocate_stock_sleeve=True,
     )
+    cash_drag_exposure = best_config._side_trigger_asset_exposure(
+        prices=asset_prices,
+        sleeve_weight_history=sleeve_weight_history,
+        us_exposure=us_exposure_df["Daily Exposure"],
+        th_exposure=th_exposure_df["Daily Exposure"],
+        gold_exposure=gold_exposure,
+        btc_exposure=btc_exposure,
+        reallocate_stock_sleeve=False,
+    )
+
+    def latest_rows(exposure: pd.DataFrame) -> pd.DataFrame:
+        latest_dt = exposure.index.max()
+        latest_frame = exposure.loc[latest_dt].rename("Portfolio Exposure").reset_index()
+        latest_frame.columns = ["Asset", "Portfolio Exposure"]
+        latest_frame = latest_frame.loc[latest_frame["Portfolio Exposure"] > 1e-10].copy()
+        latest_frame["Portfolio Exposure %"] = latest_frame["Portfolio Exposure"] * 100.0
+        latest_frame["Sleeve"] = latest_frame["Asset"].map(best_config._asset_sleeve)
+        latest_frame["Trigger Source"] = latest_frame["Asset"].map(best_config._asset_trigger_source)
+        latest_frame.insert(0, "Date", pd.Timestamp(latest_dt).date().isoformat())
+        return latest_frame.sort_values("Portfolio Exposure %", ascending=False)
+
+    latest = latest_rows(live_exposure)
+    cash_drag_latest = latest_rows(cash_drag_exposure)
+    latest.to_csv(paths.result_dir / LIVE_LATEST_WEIGHTS_FILE, index=False)
+    cash_drag_latest.to_csv(paths.result_dir / LIVE_CASH_DRAG_LATEST_WEIGHTS_FILE, index=False)
 
     latest_dt = live_exposure.index.max()
-    latest = live_exposure.loc[latest_dt].rename("Portfolio Exposure").reset_index()
-    latest.columns = ["Asset", "Portfolio Exposure"]
-    latest = latest.loc[latest["Portfolio Exposure"] > 1e-10].copy()
-    latest["Portfolio Exposure %"] = latest["Portfolio Exposure"] * 100.0
-    latest["Sleeve"] = latest["Asset"].map(best_config._asset_sleeve)
-    latest["Trigger Source"] = latest["Asset"].map(best_config._asset_trigger_source)
-    latest.insert(0, "Date", pd.Timestamp(latest_dt).date().isoformat())
-    latest = latest.sort_values("Portfolio Exposure %", ascending=False)
-    latest.to_csv(paths.result_dir / LIVE_LATEST_WEIGHTS_FILE, index=False)
-
     metadata = {
         "calculated_at": pd.Timestamp.now(tz="Asia/Bangkok").isoformat(),
         "data_as_of": pd.Timestamp(latest_dt).date().isoformat(),
@@ -159,6 +176,77 @@ def _write_live_latest_weights(
         pd.Series(metadata).to_json(indent=2),
         encoding="utf-8",
     )
+    return latest
+
+
+def _write_stocks_only_live_latest_weights(
+    model_results: dict[str, object],
+    panel_prices: pd.DataFrame,
+    latest_date: str,
+) -> pd.DataFrame:
+    paths = default_paths(PROJECT_ROOT)
+    overlay_prices = best_config.load_overlay_compare_prices(
+        paths,
+        start_date="2016-01-01",
+        end_date=latest_date,
+        tickers=["SPY", "^VIX"],
+    ).dropna(subset=["SPY", "^VIX"])
+    set_index = pd.read_parquet(paths.local_cache_root / "extra_prices.parquet")["^SET.BK"].loc[
+        best_config.START_DATE : latest_date
+    ].ffill()
+
+    asset_returns = panel_prices.pct_change(fill_method=None).fillna(0.0)
+    sample_returns = pd.Series(0.0, index=asset_returns.index, name="dummy")
+    _, us_exposure_df = best_config.apply_daily_exposure_overlay(
+        sample_returns,
+        overlay_prices["SPY"].reindex(asset_returns.index).ffill(),
+        overlay_prices["^VIX"].reindex(asset_returns.index).ffill(),
+    )
+    _, th_exposure_df = best_config.apply_daily_exposure_overlay(
+        sample_returns,
+        set_index.reindex(asset_returns.index).ffill(),
+        None,
+    )
+
+    index = panel_prices.index
+    sleeve_weight_history = best_config._weights_history_to_frame(
+        model_results["weights_history"]["Dynamic HMM Copula"]
+    )
+    weights = sleeve_weight_history.reindex(index).ffill().fillna(0.0)
+    us_cols = [column for column in weights.columns if not str(column).endswith(".BK")]
+    th_cols = [column for column in weights.columns if str(column).endswith(".BK")]
+    exposure = pd.DataFrame(0.0, index=index, columns=weights.columns, dtype=float)
+    us_signal = us_exposure_df["Daily Exposure"].reindex(index).ffill().bfill()
+    th_signal = th_exposure_df["Daily Exposure"].reindex(index).ffill().bfill()
+    exposure[us_cols] = weights[us_cols].mul(us_signal, axis=0)
+    exposure[th_cols] = weights[th_cols].mul(th_signal, axis=0)
+
+    for dt in index:
+        idle = 1.0 - float(exposure.loc[dt, weights.columns].sum())
+        if idle <= 1e-12:
+            continue
+        eligible_cols: list[str] = []
+        if float(us_signal.loc[dt]) >= 0.999:
+            eligible_cols.extend(us_cols)
+        if float(th_signal.loc[dt]) >= 0.999:
+            eligible_cols.extend(th_cols)
+        eligible_base = weights.loc[dt, eligible_cols]
+        eligible_base = eligible_base[eligible_base > 0.0]
+        if eligible_base.sum() > 0.0:
+            exposure.loc[dt, eligible_base.index] += idle * eligible_base / eligible_base.sum()
+        else:
+            exposure.loc[dt, "CASH"] = idle
+
+    latest_dt = exposure.index.max()
+    latest = exposure.loc[latest_dt].rename("Portfolio Exposure").reset_index()
+    latest.columns = ["Asset", "Portfolio Exposure"]
+    latest = latest.loc[latest["Portfolio Exposure"] > 1e-10].copy()
+    latest["Portfolio Exposure %"] = latest["Portfolio Exposure"] * 100.0
+    latest["Sleeve"] = latest["Asset"].map(best_config._asset_sleeve)
+    latest["Trigger Source"] = latest["Asset"].map(best_config._asset_trigger_source)
+    latest.insert(0, "Date", pd.Timestamp(latest_dt).date().isoformat())
+    latest = latest.sort_values("Portfolio Exposure %", ascending=False)
+    latest.to_csv(paths.result_dir / STOCKS_ONLY_LATEST_WEIGHTS_FILE, index=False)
     return latest
 
 
@@ -280,6 +368,11 @@ def main() -> None:
         downloaded_count=len(prices.columns),
         requested_count=len(tickers),
     )
+    latest_stocks_only_exposure = _write_stocks_only_live_latest_weights(
+        results,
+        panel_prices,
+        latest_date.isoformat(),
+    )
     latest_best_asset_exposure = _write_best_asset_live_latest_weights(
         results,
         benchmark,
@@ -289,6 +382,8 @@ def main() -> None:
     print(f"Downloaded latest rows for {len(prices.columns)} / {len(tickers)} tickers")
     print("Backtest summary/curves were not updated.")
     print(latest_exposure.head(12).to_string(index=False))
+    print("Updated stocks-only latest effective weights.")
+    print(latest_stocks_only_exposure.head(12).to_string(index=False))
     print("Updated Dynamic HMM cash-drag latest effective weights.")
     print(latest_best_asset_exposure.head(12).to_string(index=False))
 

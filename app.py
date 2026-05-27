@@ -327,6 +327,8 @@ STRATEGY_B_GUIDE_CONFIGS = {
     "US/TH stocks only: daily exposure (lag-1), shift reduced exposure to active market, fee+slippage": {
         "series": "US/TH stocks only reduce risk shift active market fee+slippage",
         "exposure_file": "../dynamic_port_opt/result/us_th_stocks_only_side_trigger_daily_asset_exposure_fee_slippage_thb.csv",
+        "latest_weights_file": "result/us_th_stocks_only_latest_asset_weights_live_thb.csv",
+        "latest_weights_metadata_file": "result/us_th_side_trigger_latest_asset_weights_live_metadata.json",
         "description": "Lag-1 daily exposure for US/TH stocks only. Reduced exposure moves to the stock market that is still active. No Gold/BTC sleeve. Includes 17 bps fee+slippage.",
         "setting": "Lag-1 daily exposure / US/TH stocks only / US30 + Thai30 / max stock weight 6% / reallocate reduced exposure / fee+slippage",
         "metrics": {"CAGR": 0.362612, "Sharpe": 1.802835, "Max Drawdown": -0.150726, "Total Return": 13.235137},
@@ -334,6 +336,8 @@ STRATEGY_B_GUIDE_CONFIGS = {
     "US/TH stocks + Gold/BTC 60/30/10: daily exposure (lag-1), reduced stock sleeve to cash, fee+slippage": {
         "series": "Side trigger cash drag, fee+slippage",
         "exposure_file": "result/us_th_side_trigger_daily_asset_exposure_cash_drag_thb.csv",
+        "latest_weights_file": "result/us_th_side_trigger_cash_drag_latest_asset_weights_live_thb.csv",
+        "latest_weights_metadata_file": "result/us_th_side_trigger_latest_asset_weights_live_metadata.json",
         "description": "Lag-1 daily exposure: uses prior-close risk/trend signals for the next trading day. Base sleeves are US/TH stock 60%, Gold 30%, BTC 10%. Reduced stock exposure stays in cash. Includes 17 bps fee+slippage.",
         "setting": "Lag-1 daily exposure / stock sleeve 60% / Gold 30% / BTC 10% / US30 + Thai30 / max stock weight 6% / reduced stock sleeve to cash / fee+slippage",
         "metrics": {"CAGR": 0.261740, "Sharpe": 1.866124, "Max Drawdown": -0.093789, "Total Return": 6.356255},
@@ -348,16 +352,19 @@ STRATEGY_B_GUIDE_CONFIGS = {
     },
     "US/TH stocks + Gold/BTC 50/10/30/10: no daily exposure": {
         "series": "US/TH/Gold/BTC 50/10/30/10",
+        "blend_weights": {"US Equity": 50.0, "TH Equity": 10.0, "GOLD": 30.0, "BTC": 10.0},
         "description": "No daily exposure baseline: model blend with US 50%, Thai 10%, Gold 30%, BTC 10%.",
         "setting": "No daily exposure / US 50% / Thai 10% / Gold 30% / BTC 10%",
     },
     "US/TH stocks + Gold/BTC 45/15/30/10: no daily exposure": {
         "series": "US/TH/Gold/BTC 45/15/30/10",
+        "blend_weights": {"US Equity": 45.0, "TH Equity": 15.0, "GOLD": 30.0, "BTC": 10.0},
         "description": "No daily exposure baseline: model blend with US 45%, Thai 15%, Gold 30%, BTC 10%.",
         "setting": "No daily exposure / US 45% / Thai 15% / Gold 30% / BTC 10%",
     },
     "US/TH stocks + Gold/BTC 40/20/30/10: no daily exposure": {
         "series": "US/TH/Gold/BTC 40/20/30/10",
+        "blend_weights": {"US Equity": 40.0, "TH Equity": 20.0, "GOLD": 30.0, "BTC": 10.0},
         "description": "No daily exposure baseline: model blend with US 40%, Thai 20%, Gold 30%, BTC 10%.",
         "setting": "No daily exposure / US 40% / Thai 20% / Gold 30% / BTC 10%",
     },
@@ -1024,18 +1031,16 @@ def render_config_metrics(
     summary: pd.DataFrame | None = None,
 ) -> dict[str, float]:
     metrics = render_curve_metrics(label, curve)
-    source_metrics = {}
+    source_metrics = config.get("metrics", {})
     series_names = config.get("series", [])
     if isinstance(series_names, str):
         series_names = [series_names]
-    if summary is not None and not summary.empty and "Strategy" in summary.columns:
+    if not source_metrics and summary is not None and not summary.empty and "Strategy" in summary.columns:
         for series_name in series_names:
             match = summary.loc[summary["Strategy"] == series_name]
             if not match.empty:
                 source_metrics = match.iloc[0].to_dict()
                 break
-    if not source_metrics:
-        source_metrics = config.get("metrics", {})
     for key in ["CAGR", "Sharpe", "Max Drawdown", "Total Return"]:
         if key in source_metrics:
             metrics[key] = float(source_metrics[key])
@@ -1049,6 +1054,10 @@ def _resolved_project_path(path_text: str) -> Path:
 def _asset_group(asset: str) -> str:
     if asset == "CASH":
         return "Cash"
+    if asset in {"US Equity", "US Equity sleeve"}:
+        return "US Equity"
+    if asset in {"TH Equity", "TH Equity sleeve"}:
+        return "TH Equity"
     if asset in {"SPY", "S&P 500"}:
         return "US Equity"
     if asset in {"GOLD", "Gold"}:
@@ -1130,6 +1139,25 @@ def _latest_strategy_a_exposure_factor(
     return factor, f"{factor:.0%}; inferred from latest sleeve return"
 
 
+def _latest_strategy_b_overlay_exposure_factor(sleeve_col: str, sleeves: pd.DataFrame) -> tuple[float, str]:
+    overlay = _load_overlay_prices_for_exposure()
+    if not overlay.empty:
+        if sleeve_col == "GOLD" and "GC=F" in overlay.columns:
+            price = overlay["GC=F"].dropna()
+            ma200 = price.rolling(200, min_periods=40).mean()
+            last = price.index.max()
+            factor = 0.50 if price.loc[last] < ma200.loc[last] else 1.0
+            return factor, f"{factor:.0%}; {pd.Timestamp(last).date()} close signal, applied next day"
+        if sleeve_col == "BTC" and "BTC-USD" in overlay.columns:
+            price = overlay["BTC-USD"].dropna()
+            ma200 = price.rolling(200, min_periods=40).mean()
+            last = price.index.max()
+            factor = 0.0 if price.loc[last] < ma200.loc[last] else 1.0
+            return factor, f"{factor:.0%}; {pd.Timestamp(last).date()} close signal, applied next day"
+    factor = _daily_exposure_factor(sleeves, f"{sleeve_col}_DAILY_EXPOSURE", sleeve_col)
+    return factor, f"{factor:.0%}; inferred from latest sleeve return"
+
+
 def latest_weight_rows(label: str, config: dict, sleeves: pd.DataFrame) -> tuple[pd.DataFrame, str]:
     latest_weights_file = config.get("latest_weights_file")
     if latest_weights_file:
@@ -1190,16 +1218,48 @@ def latest_weight_rows(label: str, config: dict, sleeves: pd.DataFrame) -> tuple
         "GOLD_DAILY_EXPOSURE": ("GOLD", "Gold"),
         "BTC_DAILY_EXPOSURE": ("BTC", "BTC"),
         "SPY": ("SPY", "S&P 500"),
+        "US Equity": ("US Equity sleeve", "US Equity"),
+        "TH Equity": ("TH Equity sleeve", "TH Equity"),
         "GOLD": ("GOLD", "Gold"),
         "BTC": ("BTC", "BTC"),
     }
     rows = []
     cash_weight = 0.0
+    expanded_stock_rows: list[dict] = []
+    stock_weight_path = _resolved_project_path("result/us_th_best_asset_sweep_latest_effective_weights_live_thb.csv")
+    if not stock_weight_path.exists():
+        stock_weight_path = _resolved_project_path("result/us_th_best_asset_sweep_latest_asset_weights_thb.csv")
+    stock_weights = pd.DataFrame()
+    if stock_weight_path.exists():
+        stock_weights = pd.read_csv(stock_weight_path)
     for sleeve_col, percent_weight in weight_map.items():
+        if str(sleeve_col) in {"US Equity", "TH Equity"} and not stock_weights.empty:
+            weight_column = "Portfolio Exposure"
+            if weight_column not in stock_weights.columns:
+                weight_column = "Equity Sleeve Weight"
+            group_weights = stock_weights.loc[
+                (stock_weights.get("Sleeve") == str(sleeve_col))
+                & (stock_weights[weight_column].astype(float) > 1e-10)
+            ].copy()
+            group_total = float(group_weights[weight_column].sum()) if not group_weights.empty else 0.0
+            if group_total > 0.0:
+                for _, stock_row in group_weights.iterrows():
+                    portfolio_pct = float(percent_weight) * float(stock_row[weight_column]) / group_total
+                    expanded_stock_rows.append(
+                        {
+                            "Asset": str(stock_row["Asset"]),
+                            "Group": str(sleeve_col),
+                            "Daily Exposure": "100%; no daily exposure overlay",
+                            "Portfolio %": portfolio_pct,
+                        }
+                    )
+                continue
         raw_col, asset_name = raw_lookup.get(sleeve_col, (sleeve_col, sleeve_col))
         base_weight = float(percent_weight) / 100.0
         if str(sleeve_col).endswith("_DAILY_EXPOSURE"):
             factor, detail = _latest_strategy_a_exposure_factor(str(sleeve_col), sleeves)
+        elif "Strategy B:" in label and sleeve_col in {"GOLD", "BTC"}:
+            factor, detail = _latest_strategy_b_overlay_exposure_factor(str(sleeve_col), sleeves)
         else:
             factor = 1.0
             detail = "100%; no daily exposure overlay"
@@ -1213,6 +1273,8 @@ def latest_weight_rows(label: str, config: dict, sleeves: pd.DataFrame) -> tuple
                 "Portfolio %": active_weight * 100.0,
             }
         )
+    if expanded_stock_rows:
+        rows = expanded_stock_rows + rows
     if cash_weight > 1e-10:
         rows.append(
             {
@@ -1223,7 +1285,9 @@ def latest_weight_rows(label: str, config: dict, sleeves: pd.DataFrame) -> tuple
             }
         )
     overlay = _load_overlay_prices_for_exposure()
-    if not overlay.empty:
+    if expanded_stock_rows and not stock_weights.empty and "Date" in stock_weights.columns:
+        latest_date = str(stock_weights["Date"].dropna().iloc[0])
+    elif not overlay.empty:
         latest_date = overlay.index.max().date().isoformat()
     else:
         latest_date = sleeves.index.max().date().isoformat() if not sleeves.empty else ""
@@ -1392,10 +1456,7 @@ def render_strategy_guide_page() -> None:
         st.markdown("**Strategy B: US/TH Precomputed Clustering**")
         right_options = list(STRATEGY_B_GUIDE_CONFIGS.keys())
         right_initial = st.session_state.get("guide_right_config", right_default)
-        if (
-            right_initial not in STRATEGY_B_GUIDE_CONFIGS
-            or not config_has_weight_details(STRATEGY_B_GUIDE_CONFIGS[right_initial])
-        ):
+        if right_initial not in STRATEGY_B_GUIDE_CONFIGS:
             st.session_state.pop("guide_right_config", None)
             right_initial = right_default
         right_choice = st.selectbox(
@@ -1407,6 +1468,17 @@ def render_strategy_guide_page() -> None:
         right_config = STRATEGY_B_GUIDE_CONFIGS[right_choice]
         st.caption(right_config["setting"])
         st.info(right_config["description"])
+
+    selected_pair = (left_choice, right_choice)
+    if st.session_state.get("strategy_guide_selected_pair") != selected_pair:
+        st.session_state.strategy_guide_selected_pair = selected_pair
+        for key in [
+            "strategy_latest_weights",
+            "strategy_latest_weights_label",
+            "strategy_latest_weights_date",
+            "strategy_latest_weights_metadata",
+        ]:
+            st.session_state.pop(key, None)
 
     def selected_config_returns(config: dict) -> pd.Series:
         series_names = config.get("series", [])
@@ -1512,7 +1584,13 @@ def render_strategy_guide_page() -> None:
         latest_label = st.session_state.get("strategy_latest_weights_label", "Selected strategy")
         latest_date = st.session_state.get("strategy_latest_weights_date", "")
         latest_metadata = st.session_state.get("strategy_latest_weights_metadata", {})
-        st.markdown(f"**Latest Daily Exposure Weights: {latest_label}**")
+        exposure_text = latest_table["Daily Exposure"].astype(str)
+        has_daily_overlay = (
+            exposure_text.str.contains("overlay|signal", case=False, na=False)
+            & ~exposure_text.str.contains("no daily exposure overlay", case=False, na=False)
+        ).any()
+        latest_heading = "Latest Daily Exposure Weights" if has_daily_overlay else "Latest Weights"
+        st.markdown(f"**{latest_heading}: {latest_label}**")
         if latest_date:
             generated_at = latest_metadata.get("calculated_at") or metadata.get("generated_at", "")
             calculated_text = ""
@@ -1520,11 +1598,18 @@ def render_strategy_guide_page() -> None:
                 calculated_at = pd.Timestamp(generated_at)
                 calculated_text = f" Calculated at {calculated_at.strftime('%Y-%m-%d %H:%M:%S %Z')} from the latest refreshed dataset."
             if "Strategy B:" in latest_label:
-                st.caption(
-                    f"As of {latest_date}; Strategy B stock model and daily exposure were precomputed by the scheduled refresh job. "
-                    f"Only latest weights are refreshed; historical backtest metrics and curves stay frozen. "
-                    f"Values are effective portfolio weights after daily exposure overlay.{calculated_text}"
-                )
+                if has_daily_overlay:
+                    st.caption(
+                        f"As of {latest_date}; Strategy B stock model and daily/weekly exposure were precomputed by the scheduled refresh job. "
+                        f"Only latest weights are refreshed; historical backtest metrics and curves stay frozen. "
+                        f"Values are effective portfolio weights after exposure overlay.{calculated_text}"
+                    )
+                else:
+                    st.caption(
+                        f"As of {latest_date}; this Strategy B config has no daily exposure overlay. "
+                        f"Latest weights use the refreshed stock model holdings scaled to the selected US/TH/Gold/BTC sleeves. "
+                        f"Historical backtest metrics and curves stay frozen.{calculated_text}"
+                    )
             else:
                 st.caption(
                     f"As of {latest_date}; latest overlay signals use the precomputed SPY/Gold/BTC/VIX/USDTHB dataset. "
