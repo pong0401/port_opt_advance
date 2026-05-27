@@ -156,11 +156,16 @@ def _run_model_on_prices(
     vol_proxy: pd.Series,
     objective_mode: str = "mean_variance",
     max_weight: float = MAX_WEIGHT,
+    include_latest_weight_asof: bool = False,
 ) -> dict[str, object]:
     returns = prices.pct_change(fill_method=None).replace([np.inf, -np.inf], np.nan)
     benchmark_ret = benchmark.pct_change().rename("benchmark")
     vol_proxy_ret = vol_proxy.pct_change().rename("vol_proxy")
     schedule = monthly_rebalance_dates(prices.index, lookback_days=LOOKBACK_DAYS, freq="ME")
+    if include_latest_weight_asof and len(prices.index) > LOOKBACK_DAYS:
+        latest_date = prices.index.max()
+        if latest_date not in schedule:
+            schedule = sorted([*schedule, latest_date])
 
     feature_history: dict[pd.Timestamp, pd.DataFrame] = {}
     market_stress_history: dict[pd.Timestamp, float] = {}
@@ -262,6 +267,51 @@ def _run_model_on_prices(
             weighted = period_returns.mul(strategy_weights, axis=1).sum(axis=1)
             starting_value = float(nav[strategy].iloc[-1])
             nav[strategy] = pd.concat([nav[strategy], starting_value * (1.0 + weighted).cumprod()])
+
+    if include_latest_weight_asof:
+        latest_date = schedule[-1]
+        if latest_date in feature_history and latest_date not in weights_history["Dynamic HMM Copula"]:
+            loc = prices.index.get_loc(latest_date)
+            train_index = prices.index[max(0, loc - LOOKBACK_DAYS + 1) : loc + 1]
+            current_features = feature_history[latest_date]
+            current_assets = current_features.index.tolist()
+            train_returns = returns.reindex(train_index)[current_assets].dropna(how="all")
+            bench_train = benchmark_ret.reindex(train_index)
+            momentum_signal = build_momentum_signal(current_features, mode="mom_63")
+            risk_parity_cov = train_returns.cov().reindex(index=current_assets, columns=current_assets).fillna(0.0)
+            static_cov, _ = build_factor_covariance(
+                train_returns,
+                bench_train,
+                static_post.reindex(current_assets).fillna(0.0),
+                current_features,
+                dynamic=False,
+            )
+            dyn_cov, _ = build_factor_covariance(
+                train_returns,
+                bench_train,
+                dynamic_state["posterior_history"][latest_date].reindex(current_assets).fillna(0.0),
+                current_features,
+                dynamic=True,
+                centroid_snapshot=dynamic_state["centroid_history"][latest_date],
+            )
+            latest_weights = {
+                "Equal Weight": pd.Series(1.0 / len(current_assets), index=current_assets),
+                "Risk Parity": optimize_risk_parity(risk_parity_cov, max_weight=max_weight),
+                "Static Copula": optimize_portfolio(
+                    static_cov,
+                    momentum_signal,
+                    max_weight=max_weight,
+                    objective_mode=objective_mode,
+                ),
+                "Dynamic HMM Copula": optimize_portfolio(
+                    dyn_cov,
+                    momentum_signal,
+                    max_weight=max_weight,
+                    objective_mode=objective_mode,
+                ),
+            }
+            for strategy, strategy_weights in latest_weights.items():
+                weights_history[strategy][latest_date] = strategy_weights
 
     nav = {name: series[~series.index.duplicated(keep="last")].sort_index() for name, series in nav.items()}
     return {

@@ -256,6 +256,7 @@ def main() -> None:
         vol_proxy,
         objective_mode=best_config.BEST_OBJECTIVE,
         max_weight=best_config.BEST_ASSET_SWEEP_CASE["max_weight"],
+        include_latest_weight_asof=True,
     )
     latest_exposure = _write_live_latest_weights(
         results,
