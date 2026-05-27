@@ -1031,6 +1031,9 @@ def render_config_metrics(
     summary: pd.DataFrame | None = None,
 ) -> dict[str, float]:
     metrics = render_curve_metrics(label, curve)
+    if not curve.empty and "PortValue" in curve.columns and not pd.isna(metrics.get("Total Return", float("nan"))):
+        return metrics
+
     source_metrics = config.get("metrics", {})
     series_names = config.get("series", [])
     if isinstance(series_names, str):
@@ -1525,7 +1528,7 @@ def render_strategy_guide_page() -> None:
     )
     st.plotly_chart(chart, use_container_width=True)
     st.caption(f"Chart legend: Strategy A = {left_choice}; Strategy B = {right_choice}.")
-    st.caption("Metrics below use the source backtest values when a config provides them; otherwise they are calculated from the aligned chart curves.")
+    st.caption("Metrics below are calculated from the displayed, same-start-date chart curves; source metrics are used only when no curve is available.")
 
     metric_payload = [
         (left_label, left_curve, left_config, render_config_metrics(left_label, left_curve, left_config, summary)),
