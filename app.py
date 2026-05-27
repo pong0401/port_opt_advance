@@ -1139,25 +1139,6 @@ def _latest_strategy_a_exposure_factor(
     return factor, f"{factor:.0%}; inferred from latest sleeve return"
 
 
-def _latest_strategy_b_overlay_exposure_factor(sleeve_col: str, sleeves: pd.DataFrame) -> tuple[float, str]:
-    overlay = _load_overlay_prices_for_exposure()
-    if not overlay.empty:
-        if sleeve_col == "GOLD" and "GC=F" in overlay.columns:
-            price = overlay["GC=F"].dropna()
-            ma200 = price.rolling(200, min_periods=40).mean()
-            last = price.index.max()
-            factor = 0.50 if price.loc[last] < ma200.loc[last] else 1.0
-            return factor, f"{factor:.0%}; {pd.Timestamp(last).date()} close signal, applied next day"
-        if sleeve_col == "BTC" and "BTC-USD" in overlay.columns:
-            price = overlay["BTC-USD"].dropna()
-            ma200 = price.rolling(200, min_periods=40).mean()
-            last = price.index.max()
-            factor = 0.0 if price.loc[last] < ma200.loc[last] else 1.0
-            return factor, f"{factor:.0%}; {pd.Timestamp(last).date()} close signal, applied next day"
-    factor = _daily_exposure_factor(sleeves, f"{sleeve_col}_DAILY_EXPOSURE", sleeve_col)
-    return factor, f"{factor:.0%}; inferred from latest sleeve return"
-
-
 def latest_weight_rows(label: str, config: dict, sleeves: pd.DataFrame) -> tuple[pd.DataFrame, str]:
     latest_weights_file = config.get("latest_weights_file")
     if latest_weights_file:
@@ -1258,8 +1239,6 @@ def latest_weight_rows(label: str, config: dict, sleeves: pd.DataFrame) -> tuple
         base_weight = float(percent_weight) / 100.0
         if str(sleeve_col).endswith("_DAILY_EXPOSURE"):
             factor, detail = _latest_strategy_a_exposure_factor(str(sleeve_col), sleeves)
-        elif "Strategy B:" in label and sleeve_col in {"GOLD", "BTC"}:
-            factor, detail = _latest_strategy_b_overlay_exposure_factor(str(sleeve_col), sleeves)
         else:
             factor = 1.0
             detail = "100%; no daily exposure overlay"
