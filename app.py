@@ -4,6 +4,7 @@ from dataclasses import asdict
 from datetime import date, datetime, timedelta
 from pathlib import Path
 import csv
+import inspect
 import json
 import subprocess
 import sys
@@ -16,6 +17,27 @@ import plotly.graph_objects as go
 import streamlit as st
 
 import portfolio_engine as pe
+
+
+def _patch_streamlit_width_compat() -> None:
+    """Let newer width= calls run on older Streamlit versions during local dev."""
+
+    for name in ["button", "download_button", "plotly_chart"]:
+        func = getattr(st, name)
+        params = inspect.signature(func).parameters
+        if "width" in params or "use_container_width" not in params:
+            continue
+
+        def _wrapped(*args, _func=func, **kwargs):
+            width = kwargs.pop("width", None)
+            if width is not None:
+                kwargs["use_container_width"] = width == "stretch"
+            return _func(*args, **kwargs)
+
+        setattr(st, name, _wrapped)
+
+
+_patch_streamlit_width_compat()
 
 
 AlphaConfig = pe.AlphaConfig
@@ -836,7 +858,7 @@ def render_market_overview(bundle: Dict[str, pd.DataFrame]) -> None:
             xaxis_title="Date",
             yaxis_title="Price",
         )
-        st.plotly_chart(regime_fig, use_container_width=True)
+        st.plotly_chart(regime_fig, width="stretch")
 
     if not missing.empty:
         st.warning(f"Missing tickers from yfinance: {', '.join(missing['Ticker'].tolist())}")
@@ -851,7 +873,7 @@ def render_metrics_table(metrics: pd.DataFrame, percent_rows: List[str]) -> None
         lambda row: f"{row['Value']:.2%}" if row["Metric"] in percent_rows else f"{row['Value']:.2f}",
         axis=1,
     )
-    st.dataframe(display[["Metric", "Formatted"]], use_container_width=True, hide_index=True)
+    st.dataframe(display[["Metric", "Formatted"]], width="stretch", hide_index=True)
 
 
 def build_annual_return_summary(
@@ -1526,7 +1548,7 @@ def render_strategy_guide_page() -> None:
         margin=dict(l=56, r=32, t=64, b=96),
         legend=dict(orientation="h", yanchor="top", y=-0.22, xanchor="left", x=0.0),
     )
-    st.plotly_chart(chart, use_container_width=True)
+    st.plotly_chart(chart, width="stretch")
     st.caption(f"Chart legend: Strategy A = {left_choice}; Strategy B = {right_choice}.")
     st.caption("Metrics below are calculated from the displayed, same-start-date chart curves; source metrics are used only when no curve is available.")
 
@@ -1551,13 +1573,13 @@ def render_strategy_guide_page() -> None:
         row_cols[4].write(row["Total Return"])
         latest_weights, latest_date = latest_weight_rows(raw_label, raw_config, sleeves)
         action_cols = row_cols[5].columns(2)
-        if action_cols[0].button("Latest weights", key=f"weights_compare_{raw_label}", use_container_width=True, disabled=latest_weights.empty):
+        if action_cols[0].button("Latest weights", key=f"weights_compare_{raw_label}", width="stretch", disabled=latest_weights.empty):
             latest_weights, latest_date = latest_weight_rows(raw_label, raw_config, sleeves)
             st.session_state.strategy_latest_weights = latest_weights
             st.session_state.strategy_latest_weights_label = raw_label
             st.session_state.strategy_latest_weights_date = latest_date
             st.session_state.strategy_latest_weights_metadata = latest_weight_metadata(raw_config)
-        if action_cols[1].button("Retire", key=f"retire_compare_{raw_label}", use_container_width=True, disabled=raw_curve.empty):
+        if action_cols[1].button("Retire", key=f"retire_compare_{raw_label}", width="stretch", disabled=raw_curve.empty):
             st.session_state.retirement_strategy_result = strategy_curve_to_result(raw_label, raw_curve["PortValue"])
             st.session_state.app_page = "Retirement"
             st.rerun()
@@ -1606,7 +1628,7 @@ def render_strategy_guide_page() -> None:
         summary_cols[1].metric("Cash after overlay", f"{cash_pct:.2f}%")
         summary_cols[2].metric("Total portfolio", f"{total_pct:.2f}%")
         display_weights["Portfolio %"] = display_weights["Portfolio %"].map(lambda value: f"{value:.2f}%")
-        st.dataframe(display_weights, use_container_width=True, hide_index=True)
+        st.dataframe(display_weights, width="stretch", hide_index=True)
     if right_notes:
         st.info(" ".join(dict.fromkeys(right_notes)))
 
@@ -1635,7 +1657,7 @@ def render_strategy_guide_page() -> None:
         ]
     )
     st.markdown("**Strategy Principles**")
-    st.dataframe(explanation, use_container_width=True, hide_index=True)
+    st.dataframe(explanation, width="stretch", hide_index=True)
 
     realistic_summary = summary[~summary["Strategy"].str.contains("no cost", case=False, na=False)].copy()
     display = realistic_summary.copy()
@@ -1648,7 +1670,7 @@ def render_strategy_guide_page() -> None:
         if column in display.columns:
             display[column] = display[column].map(lambda value: "-" if pd.isna(value) else f"{value:.3f}")
     st.markdown("**Performance Ranking**")
-    st.dataframe(display, use_container_width=True, hide_index=True)
+    st.dataframe(display, width="stretch", hide_index=True)
 
     explained_names = [name for name in realistic_summary["Strategy"].tolist() if name in STRATEGY_EXPLANATIONS]
     if explained_names:
@@ -1657,14 +1679,14 @@ def render_strategy_guide_page() -> None:
             {"Strategy": name, "Explanation": STRATEGY_EXPLANATIONS[name]}
             for name in explained_names
         ]
-        st.dataframe(pd.DataFrame(detail_rows), use_container_width=True, hide_index=True)
+        st.dataframe(pd.DataFrame(detail_rows), width="stretch", hide_index=True)
 
     st.download_button(
         "Download strategy summary CSV",
         data=summary.to_csv(index=False),
         file_name="streamlit_10y_strategy_summary.csv",
         mime="text/csv",
-        use_container_width=True,
+        width="stretch",
     )
 
 
@@ -1687,23 +1709,23 @@ def render_one_shot(result: Dict[str, object]) -> None:
 
     left, right = st.columns([1.1, 1.2])
     with left:
-        st.dataframe(weights, use_container_width=True, hide_index=True)
+        st.dataframe(weights, width="stretch", hide_index=True)
         pie_weights = weights[weights["Invested Weight"] > 0]
         pie = px.pie(pie_weights, names="Ticker", values="Invested Weight", title="Invested weights")
-        st.plotly_chart(pie, use_container_width=True)
+        st.plotly_chart(pie, width="stretch")
     with right:
         fig = go.Figure()
         fig.add_trace(go.Scatter(x=curve.index, y=curve["PortValue"], mode="lines", name="Portfolio"))
         fig.update_layout(title="In-sample portfolio value", xaxis_title="Date", yaxis_title="Portfolio value")
-        st.plotly_chart(fig, use_container_width=True)
-        st.dataframe(result["factor_exposure"], use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
+        st.dataframe(result["factor_exposure"], width="stretch")
 
     render_metrics_table(
         result["metrics"],
         percent_rows=["Total Return", "CAGR", "Annual Volatility", "Max Drawdown", "Hit Rate"],
     )
     st.caption("Alpha ranking below shows the full universe score before portfolio construction. `in_candidate_set` and `selected_for_portfolio` mark the two-stage selection flow.")
-    st.dataframe(result["alpha_table"], use_container_width=True)
+    st.dataframe(result["alpha_table"], width="stretch")
 
 
 def render_forward_test(result: Dict[str, object]) -> None:
@@ -1717,7 +1739,7 @@ def render_forward_test(result: Dict[str, object]) -> None:
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=curve.index, y=curve["PortValue"], mode="lines", name="Forward test"))
     fig.update_layout(title="Portfolio value through rolling re-optimization", xaxis_title="Date", yaxis_title="Portfolio value")
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
     render_metrics_table(
         result["metrics"],
@@ -1728,7 +1750,7 @@ def render_forward_test(result: Dict[str, object]) -> None:
 
     tab1, tab2, tab3, tab4, tab5 = st.tabs(["Rebalances", "Weights", "Annual Returns", "Stress Tests", "Governance"])
     with tab1:
-        st.dataframe(result["rebalance_report"], use_container_width=True)
+        st.dataframe(result["rebalance_report"], width="stretch")
     with tab2:
         if result["weight_history"].empty:
             st.info("No weight history captured.")
@@ -1762,11 +1784,11 @@ def render_forward_test(result: Dict[str, object]) -> None:
                 barmode="stack",
                 yaxis_tickformat=".0%",
             )
-            st.plotly_chart(stacked, use_container_width=True)
+            st.plotly_chart(stacked, width="stretch")
 
             display_weights = weight_history.copy()
             display_weights["Weight"] = display_weights["Weight"].map(lambda x: f"{x:.2%}")
-            st.dataframe(display_weights, use_container_width=True, hide_index=True)
+            st.dataframe(display_weights, width="stretch", hide_index=True)
     with tab3:
         if annual_df.empty:
             st.info("à¸¢à¸±à¸‡à¸¡à¸µà¸‚à¹‰à¸­à¸¡à¸¹à¸¥à¹„à¸¡à¹ˆà¸žà¸­à¸ªà¸³à¸«à¸£à¸±à¸šà¸ªà¸£à¸¸à¸› annual return à¸£à¸²à¸¢à¸›à¸µ")
@@ -1789,7 +1811,7 @@ def render_forward_test(result: Dict[str, object]) -> None:
             )
             annual_chart.update_traces(textposition="outside", hovertemplate="Year %{x}<br>%{fullData.name}: %{y:.2%}<extra></extra>")
             annual_chart.update_layout(yaxis_title="Return (%)", yaxis_tickformat=".0%")
-            st.plotly_chart(annual_chart, use_container_width=True)
+            st.plotly_chart(annual_chart, width="stretch")
 
             if "Benchmark" in annual_df.columns:
                 active_chart = px.bar(
@@ -1805,7 +1827,7 @@ def render_forward_test(result: Dict[str, object]) -> None:
                     hovertemplate="Year %{x}<br>Active return %{y:.2%}<extra></extra>",
                 )
                 active_chart.update_layout(yaxis_title="Active Return (%)", yaxis_tickformat=".0%")
-                st.plotly_chart(active_chart, use_container_width=True)
+                st.plotly_chart(active_chart, width="stretch")
 
             best_row = annual_df.loc[annual_df["Portfolio"].idxmax()]
             worst_row = annual_df.loc[annual_df["Portfolio"].idxmin()]
@@ -1823,40 +1845,40 @@ def render_forward_test(result: Dict[str, object]) -> None:
                 lambda row: f"{row['Statistic']} ({row['Label']})" if str(row["Label"]).strip() else row["Statistic"],
                 axis=1,
             )
-            st.dataframe(summary_display, use_container_width=True, hide_index=True)
+            st.dataframe(summary_display, width="stretch", hide_index=True)
 
             annual_table = annual_df.copy()
             for column in ["Portfolio", "Benchmark", "Active"]:
                 if column in annual_table.columns:
                     annual_table[column] = annual_table[column].map(lambda x: "-" if pd.isna(x) else f"{x:.2%}")
-            st.dataframe(annual_table, use_container_width=True, hide_index=True)
+            st.dataframe(annual_table, width="stretch", hide_index=True)
 
             st.download_button(
                 "Download annual returns CSV",
                 data=annual_df.to_csv(index=False),
                 file_name="annual_returns_summary.csv",
                 mime="text/csv",
-                use_container_width=True,
+                width="stretch",
             )
             st.download_button(
                 "Download annual stats CSV",
                 data=annual_summary.to_csv(index=False),
                 file_name="annual_return_stats.csv",
                 mime="text/csv",
-                use_container_width=True,
+                width="stretch",
             )
     with tab4:
         stress = result["stress_tests"]
         if stress.empty:
             st.info("The backtest window does not overlap the configured stress scenarios.")
         else:
-            st.dataframe(stress, use_container_width=True)
+            st.dataframe(stress, width="stretch")
     with tab5:
         governance = result["governance"]
         if governance.empty:
             st.info("Governance checks are not available.")
         else:
-            st.dataframe(governance, use_container_width=True, hide_index=True)
+            st.dataframe(governance, width="stretch", hide_index=True)
 
 
 def render_framework_notes() -> None:
@@ -1948,7 +1970,7 @@ def render_backtest_records_page() -> None:
         title="CAGR vs Max Drawdown",
     )
     scatter.update_layout(xaxis_tickformat=".0%", yaxis_tickformat=".0%")
-    st.plotly_chart(scatter, use_container_width=True)
+    st.plotly_chart(scatter, width="stretch")
 
     sharpe_chart = filtered.copy()
     sharpe_chart = sharpe_chart.loc[sharpe_chart["sharpe"].notna()].copy()
@@ -1984,7 +2006,7 @@ def render_backtest_records_page() -> None:
             yaxis_title="Sharpe",
             xaxis={"categoryorder": "array", "categoryarray": sharpe_chart["run_label"].tolist()},
         )
-        st.plotly_chart(sharpe_fig, use_container_width=True)
+        st.plotly_chart(sharpe_fig, width="stretch")
 
     display = filtered.copy()
     preferred_order = [
@@ -2018,13 +2040,13 @@ def render_backtest_records_page() -> None:
     for column in ["sharpe", "sortino"]:
         if column in display.columns:
             display[column] = display[column].map(lambda x: "-" if pd.isna(x) else f"{x:.2f}")
-    st.dataframe(display, use_container_width=True, hide_index=True)
+    st.dataframe(display, width="stretch", hide_index=True)
     st.download_button(
         "Download backtest records CSV",
         data=records.to_csv(index=False),
         file_name="backtest_records.csv",
         mime="text/csv",
-        use_container_width=True,
+        width="stretch",
     )
 
 
@@ -2048,7 +2070,7 @@ def render_retirement_page(forward_test_result: Dict[str, object] | None) -> Non
     source_name = source_result.get("strategy") or source_result.get("source") or "Latest rolling forward test"
     st.info(f"Retirement source: {source_name}")
     if selected_strategy_result:
-        if st.button("Clear Strategy Guide source and use latest rolling forward test", use_container_width=True):
+        if st.button("Clear Strategy Guide source and use latest rolling forward test", width="stretch"):
             st.session_state.retirement_strategy_result = None
             st.rerun()
 
@@ -2085,7 +2107,7 @@ def render_retirement_page(forward_test_result: Dict[str, object] | None) -> Non
 
     block_size = st.slider("Bootstrap block size (months)", min_value=1, max_value=24, value=12)
 
-    if st.button("Run retirement test", use_container_width=True):
+    if st.button("Run retirement test", width="stretch"):
         with st.spinner("Running retirement survival simulation..."):
             bootstrap_sustainable = find_sustainable_monthly_withdrawal(
                 monthly_returns=monthly_returns,
@@ -2166,11 +2188,11 @@ def render_retirement_page(forward_test_result: Dict[str, object] | None) -> Non
             xaxis_title="Month",
             yaxis_title="Portfolio value",
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
         withdrawal_schedule = monte_carlo_result["gross_withdrawals"].quantile(0.5, axis=1).rename("Median Withdrawal").reset_index()
         withdrawal_schedule.columns = ["Month", "Median Withdrawal"]
-        st.dataframe(withdrawal_schedule.head(24), use_container_width=True, hide_index=True)
+        st.dataframe(withdrawal_schedule.head(24), width="stretch", hide_index=True)
         st.caption("Table above shows the first 24 months of the inflation-adjusted median withdrawal schedule from the Monte Carlo retirement test.")
 
 
@@ -2250,9 +2272,9 @@ def main() -> None:
 
     action_col1, action_col2, action_col3 = st.columns([1, 1, 2])
     with action_col1:
-        download_clicked = st.button("Download market data", use_container_width=True)
+        download_clicked = st.button("Download market data", width="stretch")
     with action_col2:
-        clear_clicked = st.button("Clear results", use_container_width=True)
+        clear_clicked = st.button("Clear results", width="stretch")
     with action_col3:
         st.caption("Workflow: download -> optional fundamental refresh -> one-shot optimization -> rolling forward test")
 
@@ -2304,7 +2326,7 @@ def main() -> None:
 
     run_col1, run_col2 = st.columns(2)
     with run_col1:
-        if st.button("Run one-shot optimization", use_container_width=True):
+        if st.button("Run one-shot optimization", width="stretch"):
             if controls["alpha_cfg"].use_fundamental_factors:
                 with st.spinner("Fetching fundamental metrics from yfinance..."):
                     st.session_state.fundamentals = cached_fundamentals(tuple(controls["selected"]))
@@ -2321,7 +2343,7 @@ def main() -> None:
                 )
                 st.session_state.one_shot_signature = current_run_signature
     with run_col2:
-        if st.button("Run rolling forward test", use_container_width=True):
+        if st.button("Run rolling forward test", width="stretch"):
             if controls["alpha_cfg"].use_fundamental_factors:
                 with st.spinner("Fetching fundamental metrics from yfinance..."):
                     st.session_state.fundamentals = cached_fundamentals(tuple(controls["selected"]))
@@ -2369,7 +2391,7 @@ def main() -> None:
         with save_col1:
             save_clicked = st.button(
                 "Save backtest record",
-                use_container_width=True,
+                width="stretch",
                 disabled=already_saved,
             )
         with save_col2:
