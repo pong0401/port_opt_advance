@@ -12,8 +12,8 @@ on:
           - "false"
           - "true"
   schedule:
-    # 00:30 UTC is 07:30 Asia/Bangkok, safely after the prior US trading day's close.
-    - cron: "30 0 * * 2-6"
+    # 03:30 UTC is 10:30 Asia/Bangkok, late enough for Yahoo Finance's prior US close data to settle.
+    - cron: "30 3 * * 2-6"
 
 permissions:
   contents: write
