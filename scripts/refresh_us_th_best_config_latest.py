@@ -26,7 +26,7 @@ STOCKS_ONLY_LATEST_WEIGHTS_FILE = "us_th_stocks_only_latest_asset_weights_live_t
 LIVE_LATEST_METADATA_FILE = "us_th_side_trigger_latest_asset_weights_live_metadata.json"
 BEST_ASSET_LIVE_LATEST_WEIGHTS_FILE = "us_th_best_asset_sweep_latest_effective_weights_live_thb.csv"
 SHARE_CLASS_REPRESENTATIVES = {
-    "GOOG": "GOOGL",
+    "GOOGL": "GOOG",
 }
 
 
@@ -76,14 +76,11 @@ def _current_best_universe() -> list[str]:
 
 
 def _dedupe_share_classes(tickers: list[str]) -> list[str]:
-    ticker_set = set(tickers)
     deduped: list[str] = []
     for ticker in tickers:
-        representative = SHARE_CLASS_REPRESENTATIVES.get(ticker)
-        if representative and representative in ticker_set:
-            continue
-        if ticker not in deduped:
-            deduped.append(ticker)
+        representative = SHARE_CLASS_REPRESENTATIVES.get(ticker, ticker)
+        if representative not in deduped:
+            deduped.append(representative)
     return deduped
 
 
