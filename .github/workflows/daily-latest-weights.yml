@@ -83,5 +83,5 @@ jobs:
           git add result/us_th_side_trigger_latest_asset_weights_live_thb.csv
           git add -f result/us_th_stocks_only_latest_asset_weights_live_thb.csv
           git add data/precomputed
-          git diff --cached --quiet || git commit -m "Refresh latest portfolio weights [skip ci]"
+          git diff --cached --quiet || git commit -m "Refresh latest portfolio weights"
           git push
