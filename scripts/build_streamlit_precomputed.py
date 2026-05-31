@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 from pathlib import Path
 
 import numpy as np
@@ -23,6 +24,87 @@ LOOKAHEAD_SERIES_NAMES = {
     "Side trigger realloc to active stock side, fee+slippage (with Gold/BTC 60/30/10)",
 }
 
+HANDOFF_CURVE_SOURCES = [
+    {
+        "label": "S&P 500 buy and hold",
+        "path": ("..", "dynamic_port_opt", "result", "best_param_step1_sp500_buy_hold_curve.csv"),
+        "column": "S&P 500 Buy Hold",
+        "family": "BEST_PARAM_S&P_PORT_OPT_ADVANCE",
+    },
+    {
+        "label": "Monthly allocation SPY/Gold/BTC/BIL 35/40/10/15",
+        "path": ("..", "dynamic_port_opt", "result", "best_param_step2_multi_asset_best_curves.csv"),
+        "column": "SPY/Gold/BTC/BIL/IEF/VXUS/TIP 35/40/10/15/0/0/0",
+        "family": "BEST_PARAM_S&P_PORT_OPT_ADVANCE",
+    },
+    {
+        "label": "Managed futures overlay Core/DBMF 85/15",
+        "path": ("..", "dynamic_port_opt", "result", "best_param_step2b_core_dbmf_best_curves.csv"),
+        "column": "Step2Core/DBMF 85/15",
+        "family": "BEST_PARAM_S&P_PORT_OPT_ADVANCE",
+    },
+    {
+        "label": "Daily-exposure allocation SPY/Gold/BTC/BIL 35/30/10/25",
+        "path": ("..", "dynamic_port_opt", "result", "best_param_step3b_daily_exposure_multi_asset_best_curves.csv"),
+        "column": "Exposed SPY/Gold/BTC + BIL/IEF/VXUS/TIP 35/30/10/25/0/0/0",
+        "family": "BEST_PARAM_S&P_PORT_OPT_ADVANCE",
+    },
+    {
+        "label": "US stock only Dynamic HMM Copula [mean_variance] [with momentum] max10 PIT reselect",
+        "path": ("..", "dynamic_port_opt", "result", "pit_reselect_step1_stock_only_momentum_objective_maxweight_curves_thb.csv"),
+        "column": "US stock only Dynamic HMM Copula [mean_variance] [with momentum] max10 PIT reselect",
+        "family": "PIT_RESELECT_BY_STEP_HANDOFF",
+    },
+    {
+        "label": "Best stock sleeve + EQUITY/GOLD/BTC 55/40/5",
+        "path": ("..", "dynamic_port_opt", "result", "pit_reselect_step2_1_from_step1_momentum_equity_gold_btc_bil_allocation_curves_thb.csv"),
+        "column": "Best stock sleeve + EQUITY/GOLD/BTC 55/40/5",
+        "family": "PIT_RESELECT_BY_STEP_HANDOFF",
+    },
+    {
+        "label": "Stocks+Gold+BTC+BIL one-model Static Copula [mean_variance] PIT reselect",
+        "path": ("..", "dynamic_port_opt", "result", "pit_reselect_step2_2_from_step1_momentum_all_assets_with_bil_one_model_curves_thb.csv"),
+        "column": "Stocks+Gold+BTC+BIL one-model Static Copula [mean_variance] PIT reselect",
+        "family": "PIT_RESELECT_BY_STEP_HANDOFF",
+    },
+    {
+        "label": "Stocks+Gold+BTC+BIL one-model capped Static Copula [mean_variance] PIT reselect",
+        "path": ("..", "dynamic_port_opt", "result", "pit_reselect_step2_3_from_step1_momentum_all_assets_with_bil_capped_from_2_1_curves_thb.csv"),
+        "column": "Stocks+Gold+BTC+BIL one-model capped Static Copula [mean_variance] PIT reselect",
+        "family": "PIT_RESELECT_BY_STEP_HANDOFF",
+    },
+    {
+        "label": "Best stock assets + Gold/BTC/BIL/IEF reoptimized Dynamic HMM Copula [US stock only] [mean_variance] max10 PIT reselect",
+        "path": ("..", "dynamic_port_opt", "result", "pit_reselect_step2_4_from_step1_momentum_best_stock_assets_gold_btc_bil_ief_reoptimized_curves_thb.csv"),
+        "column": "Best stock assets + Gold/BTC/BIL/IEF reoptimized Dynamic HMM Copula [US stock only] [mean_variance] max10 PIT reselect",
+        "family": "PIT_RESELECT_BY_STEP_HANDOFF",
+    },
+    {
+        "label": "S&P trend daily exposure on Step 2.4 PIT reselect",
+        "path": ("..", "dynamic_port_opt", "result", "pit_reselect_step2_5_daily_exposure_on_step2_4_curves_thb.csv"),
+        "column": "S&P trend MA300 below0.50",
+        "family": "PIT_RESELECT_BY_STEP_HANDOFF",
+    },
+]
+
+HANDOFF_SUPPORT_FILES = [
+    {
+        "source": ("..", "dynamic_port_opt", "result", "best_param_step3_daily_exposure_best_exposure_history.csv"),
+        "target": "best_param_step3_daily_exposure_best_exposure_history.csv",
+        "description": "Latest daily exposure signal history for Strategy A daily-exposure allocation.",
+    },
+    {
+        "source": ("..", "dynamic_port_opt", "result", "pit_reselect_step2_5_latest_effective_security_weights_thb.csv"),
+        "target": "pit_reselect_step2_5_latest_effective_security_weights_thb.csv",
+        "description": "Latest effective security weights for PIT daily exposure strategy.",
+    },
+    {
+        "source": ("..", "dynamic_port_opt", "result", "pit_reselect_step2_5_latest_effective_sleeve_weights_thb.csv"),
+        "target": "pit_reselect_step2_5_latest_effective_sleeve_weights_thb.csv",
+        "description": "Latest effective sleeve weights for PIT daily exposure strategy.",
+    },
+]
+
 
 def _repo_path(*parts: str) -> Path:
     return PROJECT_ROOT.joinpath(*parts)
@@ -38,6 +120,106 @@ def _read_curve_csv(path: Path) -> pd.DataFrame:
     return frame.sort_index()
 
 
+def _read_curve_column(path: Path, column: str) -> pd.Series:
+    frame = _read_curve_csv(path)
+    if column not in frame.columns:
+        raise KeyError(f"{column!r} was not found in {path}")
+    return frame[column].dropna().astype(float).sort_index()
+
+
+def _copy_support_files() -> list[dict[str, str]]:
+    copied: list[dict[str, str]] = []
+    for item in HANDOFF_SUPPORT_FILES:
+        source = _repo_path(*item["source"])
+        target = OUT_DIR / str(item["target"])
+        if not source.exists():
+            continue
+        shutil.copy2(source, target)
+        copied.append(
+            {
+                "source": str(Path(*item["source"])),
+                "target": str(target.relative_to(PROJECT_ROOT)),
+                "description": str(item["description"]),
+            }
+        )
+    return copied
+
+
+def _latest_sp_trend_exposure() -> dict[str, object]:
+    overlay_path = PROJECT_ROOT / "data" / "cache" / "dynamic_factor_copula" / "overlay_compare_prices.parquet"
+    if not overlay_path.exists():
+        return {}
+    overlay = pd.read_parquet(overlay_path).sort_index()
+    if "SPY" not in overlay.columns:
+        return {}
+    price = overlay["SPY"].dropna().astype(float).sort_index()
+    if price.empty:
+        return {}
+    ma_period = 300
+    below_exposure = 0.50
+    min_periods = max(20, int(ma_period * 0.20))
+    ma = price.rolling(ma_period, min_periods=min_periods).mean()
+    close_signal = pd.Series(1.0, index=price.index, dtype=float)
+    close_signal.loc[price < ma] = below_exposure
+    close_signal.loc[ma.isna()] = 1.0
+    effective = close_signal.shift(1).ffill().fillna(1.0)
+    effective_date = effective.index.max()
+    source_candidates = close_signal.index[close_signal.index < effective_date]
+    source_date = source_candidates.max() if len(source_candidates) else effective_date
+    return {
+        "exposure": float(effective.loc[effective_date]),
+        "effective_date": pd.Timestamp(effective_date).date().isoformat(),
+        "source_close_date": pd.Timestamp(source_date).date().isoformat(),
+        "latest_cache_trading_date": pd.Timestamp(price.index.max()).date().isoformat(),
+        "rule": f"S&P trend MA{ma_period} below{below_exposure:.2f}",
+    }
+
+
+def _refresh_latest_effective_weight_files() -> None:
+    exposure = _latest_sp_trend_exposure()
+    if not exposure:
+        return
+    exposure_value = float(exposure["exposure"])
+    security_path = OUT_DIR / "pit_reselect_step2_5_latest_effective_security_weights_thb.csv"
+    if security_path.exists():
+        security = pd.read_csv(security_path)
+        if not security.empty:
+            if "Raw Step 2.4 Weight" not in security.columns:
+                old_exposure = pd.to_numeric(security.get("Daily Exposure", 1.0), errors="coerce").replace(0.0, np.nan)
+                security["Raw Step 2.4 Weight"] = pd.to_numeric(security["Effective Weight"], errors="coerce").div(old_exposure).fillna(0.0)
+            raw_weight = pd.to_numeric(security["Raw Step 2.4 Weight"], errors="coerce").fillna(0.0)
+            security["Daily Exposure"] = exposure_value
+            security["Effective Weight"] = raw_weight * exposure_value
+            security["Effective Weight %"] = security["Effective Weight"] * 100.0
+            security["Raw Step 2.4 Weight %"] = raw_weight * 100.0
+            security["Last Exposure Date"] = str(exposure["effective_date"])
+            security["Signal Source Close Date"] = str(exposure["source_close_date"])
+            security["Latest Cache Trading Date"] = str(exposure["latest_cache_trading_date"])
+            security["Exposure Source Column"] = "S&P trend"
+            security["Daily Exposure Variant"] = "S&P trend"
+            security["Latest Cache Note"] = (
+                "Daily exposure is recalculated locally from the latest cached SPY close. "
+                "Because the rule is lag-1, the effective exposure date uses the prior close signal."
+            )
+            security.to_csv(security_path, index=False)
+
+    sleeve_path = OUT_DIR / "pit_reselect_step2_5_latest_effective_sleeve_weights_thb.csv"
+    if sleeve_path.exists():
+        sleeve = pd.read_csv(sleeve_path)
+        if not sleeve.empty:
+            if "Raw Step 2.4 Weight" not in sleeve.columns:
+                sleeve["Raw Step 2.4 Weight"] = pd.to_numeric(sleeve.get("Effective Weight", 0.0), errors="coerce").fillna(0.0)
+            raw_weight = pd.to_numeric(sleeve["Raw Step 2.4 Weight"], errors="coerce").fillna(0.0)
+            sleeve["Effective Weight"] = raw_weight * exposure_value
+            sleeve["Effective Weight %"] = sleeve["Effective Weight"] * 100.0
+            sleeve["Date"] = str(exposure["effective_date"])
+            sleeve["Signal Source Close Date"] = str(exposure["source_close_date"])
+            sleeve["Daily Exposure"] = exposure_value
+            sleeve["Daily Exposure Variant"] = "S&P trend"
+            sleeve["Exposure Source Column"] = "S&P trend"
+            sleeve.to_csv(sleeve_path, index=False)
+
+
 def _curve_from_returns(returns: pd.Series) -> pd.Series:
     clean = returns.dropna()
     curve = pd.Series(np.nan, index=returns.index, dtype=float)
@@ -49,6 +231,21 @@ def _curve_from_returns(returns: pd.Series) -> pd.Series:
 
 def _returns_from_curve(curve: pd.Series) -> pd.Series:
     return curve.astype(float).pct_change(fill_method=None).fillna(0.0)
+
+
+def _align_return_starts(returns: pd.DataFrame) -> tuple[pd.DataFrame, str]:
+    first_dates = []
+    for column in returns.columns:
+        valid = returns[column].dropna()
+        if not valid.empty:
+            first_dates.append(valid.index.min())
+    if not first_dates:
+        return returns, ""
+    common_start = max(first_dates)
+    aligned = returns.loc[returns.index >= common_start].copy()
+    if not aligned.empty:
+        aligned.iloc[0] = 0.0
+    return aligned, pd.Timestamp(common_start).date().isoformat()
 
 
 def _metrics(curve: pd.Series) -> dict[str, float]:
@@ -332,24 +529,32 @@ def main() -> None:
             if name not in strategy_returns:
                 strategy_returns[name] = _returns_from_curve(curves[column])
 
+    handoff_sources_used: list[dict[str, str]] = []
+    for source in HANDOFF_CURVE_SOURCES:
+        path = _repo_path(*source["path"])
+        if not path.exists():
+            continue
+        curve = _read_curve_column(path, source["column"])
+        strategy_returns[source["label"]] = _returns_from_curve(curve)
+        handoff_sources_used.append(
+            {
+                "strategy": source["label"],
+                "family": source["family"],
+                "path": str(Path(*source["path"])),
+                "column": source["column"],
+                "source_start": curve.index.min().date().isoformat(),
+                "source_end": curve.index.max().date().isoformat(),
+            }
+        )
+
     returns = pd.DataFrame(strategy_returns).sort_index().loc[overlay.index.min() : overlay.index.max()]
+    returns, common_start = _align_return_starts(returns)
+    if common_start:
+        sleeve_returns = sleeve_returns.loc[pd.Timestamp(common_start) :].copy()
     curves = returns.apply(_curve_from_returns)
     returns.to_parquet(OUT_DIR / "streamlit_10y_strategy_returns.parquet")
     curves.to_parquet(OUT_DIR / "streamlit_10y_strategy_curves.parquet")
     sleeve_returns.to_parquet(OUT_DIR / "streamlit_10y_sleeve_returns.parquet")
-
-    source_metrics = _read_source_metrics(
-        [
-            _repo_path("result", "us_th_side_trigger_reallocation_summary_thb.csv"),
-            _repo_path("result", "strategy_b_weekly_exposure_test_summary.csv"),
-            _repo_path("result", "us_th_best_asset_sweep_fee_realloc_summary_thb.csv"),
-            _repo_path("result", "us_th_stocks_only_vs_gold_btc_side_trigger_comparison_thb.csv"),
-            _repo_path("..", "dynamic_port_opt", "result", "us_th_side_trigger_reallocation_summary_thb.csv"),
-            _repo_path("..", "dynamic_port_opt", "result", "us_th_gold_btc_blended_summary_thb.csv"),
-            _repo_path("..", "dynamic_port_opt", "result", "us_th_best_asset_sweep_fee_realloc_summary_thb.csv"),
-            _repo_path("..", "dynamic_port_opt", "result", "us_th_stocks_only_vs_gold_btc_side_trigger_comparison_thb.csv"),
-        ]
-    )
 
     rows = []
     for strategy in curves.columns:
@@ -359,21 +564,27 @@ def main() -> None:
             "End": curves[strategy].dropna().index.max().date().isoformat(),
             **_metrics(curves[strategy]),
         }
-        row.update(source_metrics.get(strategy, {}))
         rows.append(row)
     summary = pd.DataFrame(rows).sort_values(["Sharpe", "CAGR"], ascending=[False, False])
     summary.to_csv(OUT_DIR / "streamlit_10y_strategy_summary.csv", index=False)
 
+    support_files = _copy_support_files()
+    _refresh_latest_effective_weight_files()
+
     metadata = {
         "generated_at": pd.Timestamp.now(tz="Asia/Bangkok").isoformat(),
-        "data_start": overlay.index.min().date().isoformat(),
+        "data_start": common_start or overlay.index.min().date().isoformat(),
+        "raw_data_start": overlay.index.min().date().isoformat(),
         "data_end": overlay.index.max().date().isoformat(),
         "currency": "THB",
         "notes": [
             "This is a frozen deploy-friendly performance dataset.",
             "It stores strategy/sleeve return series, not raw stock-level cache.",
             "Latest rebalance weights are intentionally not included.",
+            "Strategy returns are trimmed to a shared start date before metrics are recalculated.",
         ],
+        "handoff_curve_sources": handoff_sources_used,
+        "handoff_support_files": support_files,
         "files": {
             "returns": "data/precomputed/streamlit_10y_strategy_returns.parquet",
             "curves": "data/precomputed/streamlit_10y_strategy_curves.parquet",

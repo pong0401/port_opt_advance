@@ -404,6 +404,93 @@ STRATEGY_B_GUIDE_CONFIGS = {
     },
 }
 
+SNP_GUIDE_CONFIGS = {
+    "S&P 500 buy and hold": {
+        "series": "S&P 500 buy and hold",
+        "blend_weights": {"SPY": 100.0},
+        "description": "Best-param Step 1 benchmark from BEST_PARAM_S&P_PORT_OPT_ADVANCE.md. Holds S&P 500 continuously with no daily exposure overlay.",
+        "setting": "BEST_PARAM Step 1 / S&P 500 100% / no daily exposure",
+    },
+    "Monthly allocation SPY/Gold/BTC/BIL 35/40/10/15": {
+        "series": "Monthly allocation SPY/Gold/BTC/BIL 35/40/10/15",
+        "blend_weights": {"SPY": 35.0, "GOLD": 40.0, "BTC": 10.0, "BIL": 15.0},
+        "description": "Best-param Step 2 winner. Monthly allocation with active weights SPY 35%, Gold 40%, BTC 10%, and BIL 15%.",
+        "setting": "BEST_PARAM Step 2 / Monthly rebalance / SPY 35% / Gold 40% / BTC 10% / BIL 15%",
+    },
+    "Managed futures overlay Core/DBMF 85/15": {
+        "series": "Managed futures overlay Core/DBMF 85/15",
+        "blend_weights": {"Step 2 Core": 85.0, "DBMF": 15.0},
+        "description": "Best-param Step 2B winner. Blends the Step 2 core allocation with DBMF managed-futures overlay.",
+        "setting": "BEST_PARAM Step 2B / Core 85% / DBMF 15%",
+    },
+    "Daily-exposure allocation SPY/Gold/BTC/BIL 35/30/10/25": {
+        "series": "Daily-exposure allocation SPY/Gold/BTC/BIL 35/30/10/25",
+        "blend_weights": {
+            "SPY_DAILY_EXPOSURE": 35.0,
+            "GOLD_DAILY_EXPOSURE": 30.0,
+            "BTC_DAILY_EXPOSURE": 10.0,
+            "BIL": 25.0,
+        },
+        "daily_exposure_signals": {
+            "SPY_DAILY_EXPOSURE": {
+                "file": "data/precomputed/best_param_step3_daily_exposure_best_exposure_history.csv",
+                "column": "S&P 500 MA300 below0.50",
+            },
+            "GOLD_DAILY_EXPOSURE": {
+                "file": "data/precomputed/best_param_step3_daily_exposure_best_exposure_history.csv",
+                "column": "Gold MA50 below1.00",
+            },
+            "BTC_DAILY_EXPOSURE": {
+                "file": "data/precomputed/best_param_step3_daily_exposure_best_exposure_history.csv",
+                "column": "BTC MA50 below0.00",
+            },
+        },
+        "description": "Best-param Step 3B winner. Applies lagged daily exposure signals to SPY, Gold, and BTC, then holds BIL as the defensive sleeve.",
+        "setting": "BEST_PARAM Step 3B / daily exposure lag-1 / SPY 35% / Gold 30% / BTC 10% / BIL 25%",
+    },
+}
+
+STRATEGY_B_GUIDE_CONFIGS = {
+    "US stock-only dynamic model with momentum": {
+        "series": "US stock only Dynamic HMM Copula [mean_variance] [with momentum] max10 PIT reselect",
+        "description": "This is the stock-only base model. At every monthly rebalance it gets the point-in-time S&P 500 membership for that date, ranks the active names by trailing liquidity, keeps 30 US stocks, builds momentum-aware clustering features, fits a Dynamic HMM Copula regime model, and optimizes with a mean-variance objective. Each stock is capped at 10% so the portfolio cannot concentrate in only a few names. No Gold, BTC, BIL, IEF, Thai stocks, or daily exposure overlay is applied here.",
+        "setting": "US stocks only / point-in-time membership / monthly full reselect / top 30 liquid names / Dynamic HMM Copula / momentum on / mean-variance objective / max 10% per stock / no overlay assets / no daily exposure",
+    },
+    "Best stock sleeve with Gold and BTC allocation": {
+        "series": "Best stock sleeve + EQUITY/GOLD/BTC 55/40/5",
+        "blend_weights": {"EQUITY": 55.0, "GOLD": 40.0, "BTC": 5.0},
+        "description": "This combines the best stock sleeve with fixed overlay assets. The stock sleeve comes from the PIT-reselected US dynamic model, then the portfolio is allocated monthly to Equity 55%, Gold 40%, and BTC 5%. It is a simple sleeve blend: the stock model decides which stocks belong in the Equity sleeve, while Gold and BTC are held as separate allocation sleeves. BIL is not used in this winning mix, and there is no daily exposure reduction.",
+        "setting": "Best PIT stock sleeve / monthly sleeve allocation / Equity 55% / Gold 40% / BTC 5% / no BIL / no IEF / no daily exposure",
+    },
+    "Stocks, Gold, BTC, and BIL in one static model": {
+        "series": "Stocks+Gold+BTC+BIL one-model Static Copula [mean_variance] PIT reselect",
+        "description": "This puts stocks, Gold, BTC, and BIL into one optimizer instead of using fixed sleeves. At every rebalance it still performs full point-in-time stock reselection from the eligible universe, then adds the overlay assets into the same covariance/regime optimization problem. The model is Static Copula with momentum enabled and a mean-variance objective. BIL is available as a defensive asset inside the optimizer rather than as a fixed cash sleeve.",
+        "setting": "One combined optimizer / PIT stock reselect every rebalance / Static Copula / momentum on / mean-variance objective / stocks + Gold + BTC + BIL / no separate daily exposure",
+    },
+    "Capped one-model portfolio using stock, Gold, BTC, and BIL": {
+        "series": "Stocks+Gold+BTC+BIL one-model capped Static Copula [mean_variance] PIT reselect",
+        "latest_weights_file": "../dynamic_port_opt/result/pit_reselect_step2_3_from_step1_momentum_all_assets_with_bil_capped_from_2_1_latest_weights_thb.csv",
+        "latest_weights_strategy": "Stocks+Gold+BTC+BIL one-model capped Static Copula [mean_variance] PIT reselect",
+        "description": "This is also a single optimizer containing stocks, Gold, BTC, and BIL, but the overlay caps are copied from the fixed-sleeve winner so the optimizer cannot over-allocate to the side assets. Stock names are still reselected point-in-time every rebalance. The model is Static Copula with momentum and mean-variance optimization. The cap structure is US stock 10% per name, Thai stock 10% per name if present, Gold up to 40%, BTC up to 5%, and BIL controlled by the optimizer.",
+        "setting": "One combined optimizer with caps / PIT stock reselect every rebalance / Static Copula / momentum on / mean-variance objective / stock cap 10% / Gold cap 40% / BTC cap 5% / BIL available / no daily exposure",
+    },
+    "Reoptimized dynamic portfolio with Gold, BTC, BIL, and IEF": {
+        "series": "Best stock assets + Gold/BTC/BIL/IEF reoptimized Dynamic HMM Copula [US stock only] [mean_variance] max10 PIT reselect",
+        "latest_weights_file": "../dynamic_port_opt/result/pit_reselect_step2_4_from_step1_momentum_best_stock_assets_gold_btc_bil_ief_reoptimized_latest_weights_thb.csv",
+        "latest_weights_strategy": "Best stock assets + Gold/BTC/BIL/IEF reoptimized Dynamic HMM Copula [US stock only] [mean_variance] max10 PIT reselect",
+        "description": "This starts from the best PIT stock selection process, then reoptimizes the selected stocks together with Gold, BTC, BIL, and IEF. It uses the Dynamic HMM Copula model, momentum, and mean-variance objective. The latest stock universe is freshly selected from point-in-time S&P membership and trailing liquidity, then overlay assets are added to the same optimization. Caps are stock 10% per name, Gold 30%, BTC 10%, BIL 50%, and IEF 30%. No daily exposure is applied in this version.",
+        "setting": "Fresh PIT stock reselect / Dynamic HMM Copula / momentum on / mean-variance objective / selected US stocks + Gold + BTC + BIL + IEF / stock cap 10% / Gold cap 30% / BTC cap 10% / BIL cap 50% / IEF cap 30% / no daily exposure",
+    },
+    "S&P trend daily exposure on reoptimized PIT portfolio": {
+        "series": "S&P trend daily exposure on Step 2.4 PIT reselect",
+        "latest_weights_file": "data/precomputed/pit_reselect_step2_5_latest_effective_security_weights_thb.csv",
+        "description": "This is the daily-exposure version of the reoptimized PIT portfolio. First, the underlying portfolio is freshly reselected and reoptimized using the Dynamic HMM Copula process with selected US stocks plus Gold, BTC, BIL, and IEF. After that optimization is done, a lagged S&P 500 trend signal is applied to the whole portfolio. The signal is based on S&P 500 trend, shifted by one trading session so the close signal is only used after it is known. When the signal reduces exposure, every optimized security weight is scaled down together and the unused part is effectively cash. Asset-level Gold, BTC, BIL, and IEF daily exposure tests are not applied inside this winner; the winning overlay is portfolio-level only.",
+        "setting": "Fresh PIT stock reselect / Dynamic HMM Copula / momentum on / mean-variance objective / selected US stocks + Gold + BTC + BIL + IEF / then apply lagged S&P trend exposure to the whole portfolio / reduced exposure becomes cash / latest weights loaded from local precomputed effective-security file",
+    },
+}
+
+DEFAULT_STRATEGY_B_GUIDE_CONFIG = "S&P trend daily exposure on reoptimized PIT portfolio"
+
 
 def ensure_data_dir() -> None:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
@@ -858,7 +945,7 @@ def render_market_overview(bundle: Dict[str, pd.DataFrame]) -> None:
             xaxis_title="Date",
             yaxis_title="Price",
         )
-        st.plotly_chart(regime_fig, width="stretch")
+        st.plotly_chart(regime_fig, use_container_width=True)
 
     if not missing.empty:
         st.warning(f"Missing tickers from yfinance: {', '.join(missing['Ticker'].tolist())}")
@@ -873,7 +960,7 @@ def render_metrics_table(metrics: pd.DataFrame, percent_rows: List[str]) -> None
         lambda row: f"{row['Value']:.2%}" if row["Metric"] in percent_rows else f"{row['Value']:.2f}",
         axis=1,
     )
-    st.dataframe(display[["Metric", "Formatted"]], width="stretch", hide_index=True)
+    st.dataframe(display[["Metric", "Formatted"]], use_container_width=True, hide_index=True)
 
 
 def build_annual_return_summary(
@@ -1079,7 +1166,7 @@ def _resolved_project_path(path_text: str) -> Path:
 def _asset_group(asset: str) -> str:
     if asset == "CASH":
         return "Cash"
-    if asset in {"US Equity", "US Equity sleeve"}:
+    if asset in {"US Equity", "US Equity sleeve", "EQUITY", "Equity sleeve"}:
         return "US Equity"
     if asset in {"TH Equity", "TH Equity sleeve"}:
         return "TH Equity"
@@ -1089,6 +1176,10 @@ def _asset_group(asset: str) -> str:
         return "Gold"
     if asset in {"BTC", "BTC-USD"}:
         return "BTC"
+    if asset in {"BIL", "IEF", "DBMF", "KMLM", "Core", "Step 2 Core"}:
+        return "Defensive/Alternatives"
+    if asset in {"GC=F"}:
+        return "Gold"
     if asset.endswith(".BK"):
         return "TH Equity"
     return "US Equity"
@@ -1164,12 +1255,36 @@ def _latest_strategy_a_exposure_factor(
     return factor, f"{factor:.0%}; inferred from latest sleeve return"
 
 
+def _latest_config_exposure_factor(config: dict, sleeve_col: str, sleeves: pd.DataFrame) -> tuple[float, str]:
+    signal_map = config.get("daily_exposure_signals", {})
+    signal = signal_map.get(sleeve_col) if isinstance(signal_map, dict) else None
+    if signal:
+        signal_path = _resolved_project_path(str(signal.get("file", "")))
+        signal_col = str(signal.get("column", ""))
+        if signal_path.exists() and signal_col:
+            exposure = pd.read_csv(signal_path)
+            date_col = "Date" if "Date" in exposure.columns else exposure.columns[0]
+            exposure[date_col] = pd.to_datetime(exposure[date_col], errors="coerce")
+            exposure = exposure.dropna(subset=[date_col]).set_index(date_col).sort_index()
+            if signal_col in exposure.columns:
+                latest = exposure[signal_col].dropna().tail(1)
+                if not latest.empty:
+                    factor = float(np.clip(latest.iloc[0], 0.0, 1.0))
+                    detail = f"{factor:.0%}; {latest.index[-1].date()} close signal, applied next day"
+                    return factor, detail
+    return _latest_strategy_a_exposure_factor(sleeve_col, sleeves)
+
+
 def latest_weight_rows(label: str, config: dict, sleeves: pd.DataFrame) -> tuple[pd.DataFrame, str]:
     latest_weights_file = config.get("latest_weights_file")
     if latest_weights_file:
         latest_path = _resolved_project_path(str(latest_weights_file))
         if latest_path.exists():
             latest = pd.read_csv(latest_path)
+            if config.get("latest_weights_strategy") and "Strategy" in latest.columns:
+                latest = latest.loc[latest["Strategy"].astype(str).eq(str(config["latest_weights_strategy"]))]
+            if config.get("latest_weights_model") and "Model" in latest.columns:
+                latest = latest.loc[latest["Model"].astype(str).eq(str(config["latest_weights_model"]))]
             if not latest.empty and "Asset" in latest.columns and "Date" in latest.columns:
                 rows = latest.copy()
                 if "Portfolio Exposure %" in rows.columns:
@@ -1183,12 +1298,76 @@ def latest_weight_rows(label: str, config: dict, sleeves: pd.DataFrame) -> tuple
                 if rows.empty or "Portfolio %" not in rows.columns:
                     return pd.DataFrame(), ""
                 if "Sleeve" in rows.columns:
-                    rows["Group"] = rows["Sleeve"].replace({"Overlay": "Gold/BTC"})
+                    rows["Group"] = rows["Sleeve"].replace({"Overlay": "Gold/BTC"}).map(_asset_group)
                 else:
                     rows["Group"] = rows["Asset"].map(_asset_group)
                 rows["Daily Exposure"] = np.where(rows["Asset"].eq("CASH"), "Cash after overlay", exposure_label)
+                exposure_signal = config.get("latest_portfolio_exposure_signal")
+                if isinstance(exposure_signal, dict):
+                    signal_path = _resolved_project_path(str(exposure_signal.get("file", "")))
+                    signal_col = str(exposure_signal.get("column", ""))
+                    if signal_path.exists() and signal_col:
+                        exposure = pd.read_csv(signal_path)
+                        date_col = "Date" if "Date" in exposure.columns else exposure.columns[0]
+                        exposure[date_col] = pd.to_datetime(exposure[date_col], errors="coerce")
+                        exposure = exposure.dropna(subset=[date_col]).set_index(date_col).sort_index()
+                        if signal_col in exposure.columns:
+                            latest_signal = exposure[signal_col].dropna().tail(1)
+                            if not latest_signal.empty:
+                                factor = float(np.clip(latest_signal.iloc[0], 0.0, 1.0))
+                                rows["Portfolio %"] = rows["Portfolio %"].astype(float) * factor
+                                rows["Daily Exposure"] = np.where(
+                                    rows["Asset"].eq("CASH"),
+                                    "Cash after overlay",
+                                    f"{factor:.0%}; {latest_signal.index[-1].date()} close signal, applied next day",
+                                )
+                                cash_pct = max(100.0 - float(rows["Portfolio %"].sum()), 0.0)
+                                if cash_pct > 1e-10:
+                                    rows = pd.concat(
+                                        [
+                                            rows,
+                                            pd.DataFrame(
+                                                [
+                                                    {
+                                                        "Asset": "CASH",
+                                                        "Portfolio %": cash_pct,
+                                                        "Date": latest_signal.index[-1].date().isoformat(),
+                                                        "Group": "Cash",
+                                                        "Daily Exposure": "Cash after overlay",
+                                                    }
+                                                ]
+                                            ),
+                                        ],
+                                        ignore_index=True,
+                                    )
                 rows = rows.sort_values("Portfolio %", ascending=False)
                 latest_date = str(rows["Date"].iloc[0])
+                return rows[["Asset", "Group", "Daily Exposure", "Portfolio %"]], latest_date
+            if not latest.empty and {"Asset", "Effective Weight %"}.issubset(latest.columns):
+                rows = latest.copy()
+                rows["Portfolio %"] = rows["Effective Weight %"].astype(float)
+                if "Sleeve" in rows.columns:
+                    rows["Group"] = rows["Sleeve"].map(_asset_group)
+                else:
+                    rows["Group"] = rows["Asset"].map(_asset_group)
+                if {"Daily Exposure", "Last Exposure Date"}.issubset(rows.columns):
+                    def _format_effective_exposure(row: pd.Series) -> str:
+                        source_date = row.get("Signal Source Close Date", "")
+                        source_text = f"; source close {source_date}" if pd.notna(source_date) and str(source_date) else ""
+                        return (
+                            f"{float(row['Daily Exposure']):.0%}; "
+                            f"effective {row['Last Exposure Date']}{source_text}; applied after optimization"
+                        )
+
+                    rows["Daily Exposure"] = rows.apply(_format_effective_exposure, axis=1)
+                else:
+                    rows["Daily Exposure"] = "Effective after latest exposure"
+                rows = rows.sort_values("Portfolio %", ascending=False)
+                latest_date = ""
+                for column in ["Latest Cache Trading Date", "Last Exposure Date", "Last Rebalance Date"]:
+                    if column in rows.columns and rows[column].notna().any():
+                        latest_date = str(rows[column].dropna().iloc[0])
+                        break
                 return rows[["Asset", "Group", "Daily Exposure", "Portfolio %"]], latest_date
 
     exposure_file = config.get("exposure_file")
@@ -1226,6 +1405,7 @@ def latest_weight_rows(label: str, config: dict, sleeves: pd.DataFrame) -> tuple
         "SPY": ("SPY", "S&P 500"),
         "US Equity": ("US Equity sleeve", "US Equity"),
         "TH Equity": ("TH Equity sleeve", "TH Equity"),
+        "EQUITY": ("Equity sleeve", "Equity sleeve"),
         "GOLD": ("GOLD", "Gold"),
         "BTC": ("BTC", "BTC"),
     }
@@ -1263,7 +1443,7 @@ def latest_weight_rows(label: str, config: dict, sleeves: pd.DataFrame) -> tuple
         raw_col, asset_name = raw_lookup.get(sleeve_col, (sleeve_col, sleeve_col))
         base_weight = float(percent_weight) / 100.0
         if str(sleeve_col).endswith("_DAILY_EXPOSURE"):
-            factor, detail = _latest_strategy_a_exposure_factor(str(sleeve_col), sleeves)
+            factor, detail = _latest_config_exposure_factor(config, str(sleeve_col), sleeves)
         else:
             factor = 1.0
             detail = "100%; no daily exposure overlay"
@@ -1291,6 +1471,22 @@ def latest_weight_rows(label: str, config: dict, sleeves: pd.DataFrame) -> tuple
     overlay = _load_overlay_prices_for_exposure()
     if expanded_stock_rows and not stock_weights.empty and "Date" in stock_weights.columns:
         latest_date = str(stock_weights["Date"].dropna().iloc[0])
+    elif config.get("daily_exposure_signals"):
+        signal_dates = []
+        for signal in config.get("daily_exposure_signals", {}).values():
+            signal_path = _resolved_project_path(str(signal.get("file", "")))
+            signal_col = str(signal.get("column", ""))
+            if not signal_path.exists() or not signal_col:
+                continue
+            exposure = pd.read_csv(signal_path)
+            date_col = "Date" if "Date" in exposure.columns else exposure.columns[0]
+            exposure[date_col] = pd.to_datetime(exposure[date_col], errors="coerce")
+            exposure = exposure.dropna(subset=[date_col]).set_index(date_col).sort_index()
+            if signal_col in exposure.columns:
+                latest_signal = exposure[signal_col].dropna().tail(1)
+                if not latest_signal.empty:
+                    signal_dates.append(latest_signal.index[-1])
+        latest_date = max(signal_dates).date().isoformat() if signal_dates else ""
     elif not overlay.empty:
         latest_date = overlay.index.max().date().isoformat()
     else:
@@ -1427,12 +1623,14 @@ def render_strategy_guide_page() -> None:
     data_cols[3].metric("Strategies", f"{len(summary):,}")
     st.info(
         "Daily exposure overlay means the strategy can change effective exposure every trading day from risk/trend signals. "
-        "Strategy A applies the overlay to S&P/Gold/BTC sleeves. Strategy B applies daily risk triggers to the US and Thai stock sides; "
-        "the reduced stock exposure either moves to the active stock market or stays in cash, depending on the selected config."
+        "Strategy A now uses the best-param handoff from dynamic_port_opt. Strategy B now uses the PIT reselect by-step handoff. "
+        "Port-growth curves are copied from the referenced precompute files and trimmed to the same start date before metrics are recalculated."
     )
 
     left_default = best_sharpe_config_name(SNP_GUIDE_CONFIGS, summary)
-    right_default = best_sharpe_config_name(STRATEGY_B_GUIDE_CONFIGS, summary, require_weight_details=True)
+    right_default = DEFAULT_STRATEGY_B_GUIDE_CONFIG
+    if right_default not in STRATEGY_B_GUIDE_CONFIGS:
+        right_default = best_sharpe_config_name(STRATEGY_B_GUIDE_CONFIGS, summary, require_weight_details=True)
     defaults_version = f"best-sharpe:{left_default}|{right_default}"
     if st.session_state.get("guide_defaults_version") != defaults_version:
         st.session_state.pop("guide_left_config", None)
@@ -1441,7 +1639,7 @@ def render_strategy_guide_page() -> None:
 
     left_panel, right_panel = st.columns(2)
     with left_panel:
-        st.markdown("**Strategy A: S&P 10Y Base**")
+        st.markdown("**Strategy A: Best Param S&P Port Opt Advance**")
         left_options = list(SNP_GUIDE_CONFIGS.keys())
         left_initial = st.session_state.get("guide_left_config", left_default)
         if left_initial not in SNP_GUIDE_CONFIGS:
@@ -1457,7 +1655,7 @@ def render_strategy_guide_page() -> None:
         st.info(left_config["description"])
 
     with right_panel:
-        st.markdown("**Strategy B: US/TH Precomputed Clustering**")
+        st.markdown("**Strategy B: PIT Reselect By Step**")
         right_options = list(STRATEGY_B_GUIDE_CONFIGS.keys())
         right_initial = st.session_state.get("guide_right_config", right_default)
         if right_initial not in STRATEGY_B_GUIDE_CONFIGS:
@@ -1548,7 +1746,7 @@ def render_strategy_guide_page() -> None:
         margin=dict(l=56, r=32, t=64, b=96),
         legend=dict(orientation="h", yanchor="top", y=-0.22, xanchor="left", x=0.0),
     )
-    st.plotly_chart(chart, width="stretch")
+    st.plotly_chart(chart, use_container_width=True)
     st.caption(f"Chart legend: Strategy A = {left_choice}; Strategy B = {right_choice}.")
     st.caption("Metrics below are calculated from the displayed, same-start-date chart curves; source metrics are used only when no curve is available.")
 
@@ -1573,13 +1771,23 @@ def render_strategy_guide_page() -> None:
         row_cols[4].write(row["Total Return"])
         latest_weights, latest_date = latest_weight_rows(raw_label, raw_config, sleeves)
         action_cols = row_cols[5].columns(2)
-        if action_cols[0].button("Latest weights", key=f"weights_compare_{raw_label}", width="stretch", disabled=latest_weights.empty):
+        if action_cols[0].button(
+            "Latest weights",
+            key=f"weights_compare_{raw_label}",
+            use_container_width=True,
+            disabled=latest_weights.empty,
+        ):
             latest_weights, latest_date = latest_weight_rows(raw_label, raw_config, sleeves)
             st.session_state.strategy_latest_weights = latest_weights
             st.session_state.strategy_latest_weights_label = raw_label
             st.session_state.strategy_latest_weights_date = latest_date
             st.session_state.strategy_latest_weights_metadata = latest_weight_metadata(raw_config)
-        if action_cols[1].button("Retire", key=f"retire_compare_{raw_label}", width="stretch", disabled=raw_curve.empty):
+        if action_cols[1].button(
+            "Retire",
+            key=f"retire_compare_{raw_label}",
+            use_container_width=True,
+            disabled=raw_curve.empty,
+        ):
             st.session_state.retirement_strategy_result = strategy_curve_to_result(raw_label, raw_curve["PortValue"])
             st.session_state.app_page = "Retirement"
             st.rerun()
@@ -1604,15 +1812,15 @@ def render_strategy_guide_page() -> None:
             if "Strategy B:" in latest_label:
                 if has_daily_overlay:
                     st.caption(
-                        f"As of {latest_date}; Strategy B stock model and daily/weekly exposure were precomputed by the scheduled refresh job. "
-                        f"Only latest weights are refreshed; historical backtest metrics and curves stay frozen. "
+                        f"As of {latest_date}; Strategy B weights are read from the PIT precompute latest-weight file and scaled by the latest daily exposure signal when applicable. "
+                        f"Historical metrics and curves come from the shared-start precompute dataset. "
                         f"Values are effective portfolio weights after exposure overlay.{calculated_text}"
                     )
                 else:
                     st.caption(
                         f"As of {latest_date}; this Strategy B config has no daily exposure overlay. "
-                        f"Latest weights use the refreshed stock model holdings scaled to the selected US/TH/Gold/BTC sleeves. "
-                        f"Historical backtest metrics and curves stay frozen.{calculated_text}"
+                        f"Latest weights are read from the PIT precompute file. "
+                        f"Historical metrics and curves come from the shared-start precompute dataset.{calculated_text}"
                     )
             else:
                 st.caption(
@@ -1628,65 +1836,16 @@ def render_strategy_guide_page() -> None:
         summary_cols[1].metric("Cash after overlay", f"{cash_pct:.2f}%")
         summary_cols[2].metric("Total portfolio", f"{total_pct:.2f}%")
         display_weights["Portfolio %"] = display_weights["Portfolio %"].map(lambda value: f"{value:.2f}%")
-        st.dataframe(display_weights, width="stretch", hide_index=True)
+        st.dataframe(display_weights, use_container_width=True, hide_index=True)
     if right_notes:
         st.info(" ".join(dict.fromkeys(right_notes)))
 
-    explanation = pd.DataFrame(
-        [
-            {
-                "Strategy family": "S&P buy & hold",
-                "How it works": "Holds SPY continuously. In this dataset, USD assets are converted to THB for apples-to-apples comparison with SET strategies.",
-            },
-            {
-                "Strategy family": "S&P daily exposure",
-                "How it works": "Uses SPY trend, drawdown, and VIX caps to reduce exposure during weak or volatile regimes.",
-            },
-            {
-                "Strategy family": "S&P / Gold / BTC",
-                "How it works": "Combines sleeve returns with quarterly strategic rebalancing. The sandbox below lets you test custom sleeve weights.",
-            },
-            {
-                "Strategy family": "Top liquidity PIT",
-                "How it works": "At each monthly rebalance, selects active S&P 500 or SET100 members from point-in-time membership, ranks by trailing liquidity, then equal-weights the top names.",
-            },
-            {
-                "Strategy family": "Vol clustering / HMM",
-                "How it works": "Uses precomputed notebook model series: static copula, static HMM, dynamic HMM, and US/TH side-trigger variants. These are frozen research outputs for fast web comparison.",
-            },
-        ]
-    )
-    st.markdown("**Strategy Principles**")
-    st.dataframe(explanation, width="stretch", hide_index=True)
-
-    realistic_summary = summary[~summary["Strategy"].str.contains("no cost", case=False, na=False)].copy()
-    display = realistic_summary.copy()
-    percent_cols = ["Total Return", "CAGR", "Annual Vol", "Max Drawdown", "Hit Rate"]
-    ratio_cols = ["Sharpe", "Sortino"]
-    for column in percent_cols:
-        if column in display.columns:
-            display[column] = display[column].map(lambda value: "-" if pd.isna(value) else f"{value:.2%}")
-    for column in ratio_cols:
-        if column in display.columns:
-            display[column] = display[column].map(lambda value: "-" if pd.isna(value) else f"{value:.3f}")
-    st.markdown("**Performance Ranking**")
-    st.dataframe(display, width="stretch", hide_index=True)
-
-    explained_names = [name for name in realistic_summary["Strategy"].tolist() if name in STRATEGY_EXPLANATIONS]
-    if explained_names:
-        st.markdown("**Named Strategy Details**")
-        detail_rows = [
-            {"Strategy": name, "Explanation": STRATEGY_EXPLANATIONS[name]}
-            for name in explained_names
-        ]
-        st.dataframe(pd.DataFrame(detail_rows), width="stretch", hide_index=True)
-
     st.download_button(
-        "Download strategy summary CSV",
-        data=summary.to_csv(index=False),
-        file_name="streamlit_10y_strategy_summary.csv",
+        "Download selected chart strategies CSV",
+        data=metric_rows.to_csv(index=False),
+        file_name="selected_strategy_chart_metrics.csv",
         mime="text/csv",
-        width="stretch",
+        use_container_width=True,
     )
 
 
@@ -1709,23 +1868,23 @@ def render_one_shot(result: Dict[str, object]) -> None:
 
     left, right = st.columns([1.1, 1.2])
     with left:
-        st.dataframe(weights, width="stretch", hide_index=True)
+        st.dataframe(weights, use_container_width=True, hide_index=True)
         pie_weights = weights[weights["Invested Weight"] > 0]
         pie = px.pie(pie_weights, names="Ticker", values="Invested Weight", title="Invested weights")
-        st.plotly_chart(pie, width="stretch")
+        st.plotly_chart(pie, use_container_width=True)
     with right:
         fig = go.Figure()
         fig.add_trace(go.Scatter(x=curve.index, y=curve["PortValue"], mode="lines", name="Portfolio"))
         fig.update_layout(title="In-sample portfolio value", xaxis_title="Date", yaxis_title="Portfolio value")
-        st.plotly_chart(fig, width="stretch")
-        st.dataframe(result["factor_exposure"], width="stretch")
+        st.plotly_chart(fig, use_container_width=True)
+        st.dataframe(result["factor_exposure"], use_container_width=True)
 
     render_metrics_table(
         result["metrics"],
         percent_rows=["Total Return", "CAGR", "Annual Volatility", "Max Drawdown", "Hit Rate"],
     )
     st.caption("Alpha ranking below shows the full universe score before portfolio construction. `in_candidate_set` and `selected_for_portfolio` mark the two-stage selection flow.")
-    st.dataframe(result["alpha_table"], width="stretch")
+    st.dataframe(result["alpha_table"], use_container_width=True)
 
 
 def render_forward_test(result: Dict[str, object]) -> None:
@@ -1739,7 +1898,7 @@ def render_forward_test(result: Dict[str, object]) -> None:
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=curve.index, y=curve["PortValue"], mode="lines", name="Forward test"))
     fig.update_layout(title="Portfolio value through rolling re-optimization", xaxis_title="Date", yaxis_title="Portfolio value")
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
     render_metrics_table(
         result["metrics"],
@@ -1750,7 +1909,7 @@ def render_forward_test(result: Dict[str, object]) -> None:
 
     tab1, tab2, tab3, tab4, tab5 = st.tabs(["Rebalances", "Weights", "Annual Returns", "Stress Tests", "Governance"])
     with tab1:
-        st.dataframe(result["rebalance_report"], width="stretch")
+        st.dataframe(result["rebalance_report"], use_container_width=True)
     with tab2:
         if result["weight_history"].empty:
             st.info("No weight history captured.")
@@ -1784,11 +1943,11 @@ def render_forward_test(result: Dict[str, object]) -> None:
                 barmode="stack",
                 yaxis_tickformat=".0%",
             )
-            st.plotly_chart(stacked, width="stretch")
+            st.plotly_chart(stacked, use_container_width=True)
 
             display_weights = weight_history.copy()
             display_weights["Weight"] = display_weights["Weight"].map(lambda x: f"{x:.2%}")
-            st.dataframe(display_weights, width="stretch", hide_index=True)
+            st.dataframe(display_weights, use_container_width=True, hide_index=True)
     with tab3:
         if annual_df.empty:
             st.info("à¸¢à¸±à¸‡à¸¡à¸µà¸‚à¹‰à¸­à¸¡à¸¹à¸¥à¹„à¸¡à¹ˆà¸žà¸­à¸ªà¸³à¸«à¸£à¸±à¸šà¸ªà¸£à¸¸à¸› annual return à¸£à¸²à¸¢à¸›à¸µ")
@@ -1811,7 +1970,7 @@ def render_forward_test(result: Dict[str, object]) -> None:
             )
             annual_chart.update_traces(textposition="outside", hovertemplate="Year %{x}<br>%{fullData.name}: %{y:.2%}<extra></extra>")
             annual_chart.update_layout(yaxis_title="Return (%)", yaxis_tickformat=".0%")
-            st.plotly_chart(annual_chart, width="stretch")
+            st.plotly_chart(annual_chart, use_container_width=True)
 
             if "Benchmark" in annual_df.columns:
                 active_chart = px.bar(
@@ -1827,7 +1986,7 @@ def render_forward_test(result: Dict[str, object]) -> None:
                     hovertemplate="Year %{x}<br>Active return %{y:.2%}<extra></extra>",
                 )
                 active_chart.update_layout(yaxis_title="Active Return (%)", yaxis_tickformat=".0%")
-                st.plotly_chart(active_chart, width="stretch")
+                st.plotly_chart(active_chart, use_container_width=True)
 
             best_row = annual_df.loc[annual_df["Portfolio"].idxmax()]
             worst_row = annual_df.loc[annual_df["Portfolio"].idxmin()]
@@ -1845,40 +2004,40 @@ def render_forward_test(result: Dict[str, object]) -> None:
                 lambda row: f"{row['Statistic']} ({row['Label']})" if str(row["Label"]).strip() else row["Statistic"],
                 axis=1,
             )
-            st.dataframe(summary_display, width="stretch", hide_index=True)
+            st.dataframe(summary_display, use_container_width=True, hide_index=True)
 
             annual_table = annual_df.copy()
             for column in ["Portfolio", "Benchmark", "Active"]:
                 if column in annual_table.columns:
                     annual_table[column] = annual_table[column].map(lambda x: "-" if pd.isna(x) else f"{x:.2%}")
-            st.dataframe(annual_table, width="stretch", hide_index=True)
+            st.dataframe(annual_table, use_container_width=True, hide_index=True)
 
             st.download_button(
                 "Download annual returns CSV",
                 data=annual_df.to_csv(index=False),
                 file_name="annual_returns_summary.csv",
                 mime="text/csv",
-                width="stretch",
+                use_container_width=True,
             )
             st.download_button(
                 "Download annual stats CSV",
                 data=annual_summary.to_csv(index=False),
                 file_name="annual_return_stats.csv",
                 mime="text/csv",
-                width="stretch",
+                use_container_width=True,
             )
     with tab4:
         stress = result["stress_tests"]
         if stress.empty:
             st.info("The backtest window does not overlap the configured stress scenarios.")
         else:
-            st.dataframe(stress, width="stretch")
+            st.dataframe(stress, use_container_width=True)
     with tab5:
         governance = result["governance"]
         if governance.empty:
             st.info("Governance checks are not available.")
         else:
-            st.dataframe(governance, width="stretch", hide_index=True)
+            st.dataframe(governance, use_container_width=True, hide_index=True)
 
 
 def render_framework_notes() -> None:
@@ -1970,7 +2129,7 @@ def render_backtest_records_page() -> None:
         title="CAGR vs Max Drawdown",
     )
     scatter.update_layout(xaxis_tickformat=".0%", yaxis_tickformat=".0%")
-    st.plotly_chart(scatter, width="stretch")
+    st.plotly_chart(scatter, use_container_width=True)
 
     sharpe_chart = filtered.copy()
     sharpe_chart = sharpe_chart.loc[sharpe_chart["sharpe"].notna()].copy()
@@ -2006,7 +2165,7 @@ def render_backtest_records_page() -> None:
             yaxis_title="Sharpe",
             xaxis={"categoryorder": "array", "categoryarray": sharpe_chart["run_label"].tolist()},
         )
-        st.plotly_chart(sharpe_fig, width="stretch")
+        st.plotly_chart(sharpe_fig, use_container_width=True)
 
     display = filtered.copy()
     preferred_order = [
@@ -2040,13 +2199,13 @@ def render_backtest_records_page() -> None:
     for column in ["sharpe", "sortino"]:
         if column in display.columns:
             display[column] = display[column].map(lambda x: "-" if pd.isna(x) else f"{x:.2f}")
-    st.dataframe(display, width="stretch", hide_index=True)
+    st.dataframe(display, use_container_width=True, hide_index=True)
     st.download_button(
         "Download backtest records CSV",
         data=records.to_csv(index=False),
         file_name="backtest_records.csv",
         mime="text/csv",
-        width="stretch",
+        use_container_width=True,
     )
 
 
@@ -2070,7 +2229,7 @@ def render_retirement_page(forward_test_result: Dict[str, object] | None) -> Non
     source_name = source_result.get("strategy") or source_result.get("source") or "Latest rolling forward test"
     st.info(f"Retirement source: {source_name}")
     if selected_strategy_result:
-        if st.button("Clear Strategy Guide source and use latest rolling forward test", width="stretch"):
+        if st.button("Clear Strategy Guide source and use latest rolling forward test", use_container_width=True):
             st.session_state.retirement_strategy_result = None
             st.rerun()
 
@@ -2107,7 +2266,7 @@ def render_retirement_page(forward_test_result: Dict[str, object] | None) -> Non
 
     block_size = st.slider("Bootstrap block size (months)", min_value=1, max_value=24, value=12)
 
-    if st.button("Run retirement test", width="stretch"):
+    if st.button("Run retirement test", use_container_width=True):
         with st.spinner("Running retirement survival simulation..."):
             bootstrap_sustainable = find_sustainable_monthly_withdrawal(
                 monthly_returns=monthly_returns,
@@ -2188,11 +2347,11 @@ def render_retirement_page(forward_test_result: Dict[str, object] | None) -> Non
             xaxis_title="Month",
             yaxis_title="Portfolio value",
         )
-        st.plotly_chart(fig, width="stretch")
+        st.plotly_chart(fig, use_container_width=True)
 
         withdrawal_schedule = monte_carlo_result["gross_withdrawals"].quantile(0.5, axis=1).rename("Median Withdrawal").reset_index()
         withdrawal_schedule.columns = ["Month", "Median Withdrawal"]
-        st.dataframe(withdrawal_schedule.head(24), width="stretch", hide_index=True)
+        st.dataframe(withdrawal_schedule.head(24), use_container_width=True, hide_index=True)
         st.caption("Table above shows the first 24 months of the inflation-adjusted median withdrawal schedule from the Monte Carlo retirement test.")
 
 
@@ -2272,9 +2431,9 @@ def main() -> None:
 
     action_col1, action_col2, action_col3 = st.columns([1, 1, 2])
     with action_col1:
-        download_clicked = st.button("Download market data", width="stretch")
+        download_clicked = st.button("Download market data", use_container_width=True)
     with action_col2:
-        clear_clicked = st.button("Clear results", width="stretch")
+        clear_clicked = st.button("Clear results", use_container_width=True)
     with action_col3:
         st.caption("Workflow: download -> optional fundamental refresh -> one-shot optimization -> rolling forward test")
 
@@ -2326,7 +2485,7 @@ def main() -> None:
 
     run_col1, run_col2 = st.columns(2)
     with run_col1:
-        if st.button("Run one-shot optimization", width="stretch"):
+        if st.button("Run one-shot optimization", use_container_width=True):
             if controls["alpha_cfg"].use_fundamental_factors:
                 with st.spinner("Fetching fundamental metrics from yfinance..."):
                     st.session_state.fundamentals = cached_fundamentals(tuple(controls["selected"]))
@@ -2343,7 +2502,7 @@ def main() -> None:
                 )
                 st.session_state.one_shot_signature = current_run_signature
     with run_col2:
-        if st.button("Run rolling forward test", width="stretch"):
+        if st.button("Run rolling forward test", use_container_width=True):
             if controls["alpha_cfg"].use_fundamental_factors:
                 with st.spinner("Fetching fundamental metrics from yfinance..."):
                     st.session_state.fundamentals = cached_fundamentals(tuple(controls["selected"]))
@@ -2391,7 +2550,7 @@ def main() -> None:
         with save_col1:
             save_clicked = st.button(
                 "Save backtest record",
-                width="stretch",
+                use_container_width=True,
                 disabled=already_saved,
             )
         with save_col2:

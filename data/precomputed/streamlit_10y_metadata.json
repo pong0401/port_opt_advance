@@ -1,12 +1,113 @@
 {
-  "generated_at": "2026-05-26T18:30:00.360146+07:00",
-  "data_start": "2016-05-25",
-  "data_end": "2026-05-25",
+  "generated_at": "2026-05-31T19:44:11.869686+07:00",
+  "data_start": "2019-05-09",
+  "raw_data_start": "2016-05-28",
+  "data_end": "2026-05-28",
   "currency": "THB",
   "notes": [
     "This is a frozen deploy-friendly performance dataset.",
     "It stores strategy/sleeve return series, not raw stock-level cache.",
-    "Latest rebalance weights are intentionally not included."
+    "Latest rebalance weights are intentionally not included.",
+    "Strategy returns are trimmed to a shared start date before metrics are recalculated."
+  ],
+  "handoff_curve_sources": [
+    {
+      "strategy": "S&P 500 buy and hold",
+      "family": "BEST_PARAM_S&P_PORT_OPT_ADVANCE",
+      "path": "..\\dynamic_port_opt\\result\\best_param_step1_sp500_buy_hold_curve.csv",
+      "column": "S&P 500 Buy Hold",
+      "source_start": "2016-01-04",
+      "source_end": "2026-04-29"
+    },
+    {
+      "strategy": "Monthly allocation SPY/Gold/BTC/BIL 35/40/10/15",
+      "family": "BEST_PARAM_S&P_PORT_OPT_ADVANCE",
+      "path": "..\\dynamic_port_opt\\result\\best_param_step2_multi_asset_best_curves.csv",
+      "column": "SPY/Gold/BTC/BIL/IEF/VXUS/TIP 35/40/10/15/0/0/0",
+      "source_start": "2016-01-05",
+      "source_end": "2026-04-28"
+    },
+    {
+      "strategy": "Managed futures overlay Core/DBMF 85/15",
+      "family": "BEST_PARAM_S&P_PORT_OPT_ADVANCE",
+      "path": "..\\dynamic_port_opt\\result\\best_param_step2b_core_dbmf_best_curves.csv",
+      "column": "Step2Core/DBMF 85/15",
+      "source_start": "2019-05-09",
+      "source_end": "2026-04-28"
+    },
+    {
+      "strategy": "Daily-exposure allocation SPY/Gold/BTC/BIL 35/30/10/25",
+      "family": "BEST_PARAM_S&P_PORT_OPT_ADVANCE",
+      "path": "..\\dynamic_port_opt\\result\\best_param_step3b_daily_exposure_multi_asset_best_curves.csv",
+      "column": "Exposed SPY/Gold/BTC + BIL/IEF/VXUS/TIP 35/30/10/25/0/0/0",
+      "source_start": "2016-01-04",
+      "source_end": "2026-04-28"
+    },
+    {
+      "strategy": "US stock only Dynamic HMM Copula [mean_variance] [with momentum] max10 PIT reselect",
+      "family": "PIT_RESELECT_BY_STEP_HANDOFF",
+      "path": "..\\dynamic_port_opt\\result\\pit_reselect_step1_stock_only_momentum_objective_maxweight_curves_thb.csv",
+      "column": "US stock only Dynamic HMM Copula [mean_variance] [with momentum] max10 PIT reselect",
+      "source_start": "2017-12-29",
+      "source_end": "2026-04-29"
+    },
+    {
+      "strategy": "Best stock sleeve + EQUITY/GOLD/BTC 55/40/5",
+      "family": "PIT_RESELECT_BY_STEP_HANDOFF",
+      "path": "..\\dynamic_port_opt\\result\\pit_reselect_step2_1_from_step1_momentum_equity_gold_btc_bil_allocation_curves_thb.csv",
+      "column": "Best stock sleeve + EQUITY/GOLD/BTC 55/40/5",
+      "source_start": "2018-01-02",
+      "source_end": "2026-04-29"
+    },
+    {
+      "strategy": "Stocks+Gold+BTC+BIL one-model Static Copula [mean_variance] PIT reselect",
+      "family": "PIT_RESELECT_BY_STEP_HANDOFF",
+      "path": "..\\dynamic_port_opt\\result\\pit_reselect_step2_2_from_step1_momentum_all_assets_with_bil_one_model_curves_thb.csv",
+      "column": "Stocks+Gold+BTC+BIL one-model Static Copula [mean_variance] PIT reselect",
+      "source_start": "2017-12-29",
+      "source_end": "2026-04-29"
+    },
+    {
+      "strategy": "Stocks+Gold+BTC+BIL one-model capped Static Copula [mean_variance] PIT reselect",
+      "family": "PIT_RESELECT_BY_STEP_HANDOFF",
+      "path": "..\\dynamic_port_opt\\result\\pit_reselect_step2_3_from_step1_momentum_all_assets_with_bil_capped_from_2_1_curves_thb.csv",
+      "column": "Stocks+Gold+BTC+BIL one-model capped Static Copula [mean_variance] PIT reselect",
+      "source_start": "2017-12-29",
+      "source_end": "2026-04-29"
+    },
+    {
+      "strategy": "Best stock assets + Gold/BTC/BIL/IEF reoptimized Dynamic HMM Copula [US stock only] [mean_variance] max10 PIT reselect",
+      "family": "PIT_RESELECT_BY_STEP_HANDOFF",
+      "path": "..\\dynamic_port_opt\\result\\pit_reselect_step2_4_from_step1_momentum_best_stock_assets_gold_btc_bil_ief_reoptimized_curves_thb.csv",
+      "column": "Best stock assets + Gold/BTC/BIL/IEF reoptimized Dynamic HMM Copula [US stock only] [mean_variance] max10 PIT reselect",
+      "source_start": "2017-12-29",
+      "source_end": "2026-04-29"
+    },
+    {
+      "strategy": "S&P trend daily exposure on Step 2.4 PIT reselect",
+      "family": "PIT_RESELECT_BY_STEP_HANDOFF",
+      "path": "..\\dynamic_port_opt\\result\\pit_reselect_step2_5_daily_exposure_on_step2_4_curves_thb.csv",
+      "column": "S&P trend MA300 below0.50",
+      "source_start": "2017-12-29",
+      "source_end": "2026-04-29"
+    }
+  ],
+  "handoff_support_files": [
+    {
+      "source": "..\\dynamic_port_opt\\result\\best_param_step3_daily_exposure_best_exposure_history.csv",
+      "target": "data\\precomputed\\best_param_step3_daily_exposure_best_exposure_history.csv",
+      "description": "Latest daily exposure signal history for Strategy A daily-exposure allocation."
+    },
+    {
+      "source": "..\\dynamic_port_opt\\result\\pit_reselect_step2_5_latest_effective_security_weights_thb.csv",
+      "target": "data\\precomputed\\pit_reselect_step2_5_latest_effective_security_weights_thb.csv",
+      "description": "Latest effective security weights for PIT daily exposure strategy."
+    },
+    {
+      "source": "..\\dynamic_port_opt\\result\\pit_reselect_step2_5_latest_effective_sleeve_weights_thb.csv",
+      "target": "data\\precomputed\\pit_reselect_step2_5_latest_effective_sleeve_weights_thb.csv",
+      "description": "Latest effective sleeve weights for PIT daily exposure strategy."
+    }
   ],
   "files": {
     "returns": "data/precomputed/streamlit_10y_strategy_returns.parquet",
