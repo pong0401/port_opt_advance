@@ -2295,6 +2295,41 @@ def render_retirement_page(forward_test_result: Dict[str, object] | None) -> Non
         safe_annual = safe_monthly * 12.0
         bootstrap_safe_annual = bootstrap_safe_monthly * 12.0
         initial_withdrawal_rate = safe_annual / initial_portfolio if initial_portfolio > 0 else 0.0
+        horizon_months = int(retirement_years * 12)
+        monthly_inflation = (1.0 + annual_inflation) ** (1.0 / 12.0) - 1.0
+        months = np.arange(horizon_months + 1)
+
+        def no_investment_schedule(initial_monthly_spending: float) -> tuple[pd.Series, pd.Series, pd.Series, pd.Series]:
+            spending_values = np.zeros(horizon_months + 1, dtype=float)
+            income_values = np.zeros(horizon_months + 1, dtype=float)
+            if horizon_months >= 1:
+                spending_values[1:] = initial_monthly_spending * (1.0 + monthly_inflation) ** np.arange(horizon_months)
+                income_values[1:] = monthly_income
+            inflated = pd.Series(spending_values, index=months, name="Inflated Monthly Spending")
+            income = pd.Series(income_values, index=months, name="Other Income")
+            net_need = (inflated - income).clip(lower=0.0).rename("Net Cash Need")
+            balance = (initial_portfolio - net_need.cumsum()).clip(lower=0.0).rename("No-Investment Balance")
+            return inflated, income, net_need, balance
+
+        low_spending = 0.0
+        high_spending = max(initial_portfolio, monthly_income + initial_portfolio / max(horizon_months, 1), 1.0)
+        for _ in range(60):
+            _, _, _, test_balance = no_investment_schedule(high_spending)
+            if float(test_balance.iloc[-1]) <= 0.0:
+                break
+            high_spending *= 2.0
+        for _ in range(80):
+            mid_spending = (low_spending + high_spending) / 2.0
+            _, _, _, test_balance = no_investment_schedule(mid_spending)
+            if float(test_balance.iloc[-1]) > 0.0:
+                low_spending = mid_spending
+            else:
+                high_spending = mid_spending
+
+        no_invest_safe_monthly = high_spending
+        inflated_spending, other_income, net_cash_need, no_invest_balance = no_investment_schedule(no_invest_safe_monthly)
+        no_invest_ending = float(no_invest_balance.iloc[-1])
+        cumulative_inflated_spending = float(inflated_spending.iloc[1:].sum()) if len(inflated_spending) > 1 else 0.0
 
         m1, m2, m3 = st.columns(3)
         m1.metric("MC safe monthly withdrawal", f"{safe_monthly:,.0f}")
@@ -2312,6 +2347,11 @@ def render_retirement_page(forward_test_result: Dict[str, object] | None) -> Non
         s1.metric("MC median ending value", f"{float(final_values.quantile(0.5)):,.0f}")
         s2.metric("MC 10th pct ending value", f"{float(final_values.quantile(0.1)):,.0f}")
         s3.metric("Bootstrap safe annual", f"{bootstrap_safe_annual:,.0f}")
+
+        n1, n2, n3 = st.columns(3)
+        n1.metric("No-invest first-month spending", f"{no_invest_safe_monthly:,.0f}")
+        n2.metric("No-invest ending value", f"{no_invest_ending:,.0f}")
+        n3.metric("No-invest inflated spending total", f"{cumulative_inflated_spending:,.0f}")
 
         safe_paths = monte_carlo_result["simulated_paths"]
         surviving_final_values = final_values[final_values > 0]
@@ -2332,6 +2372,16 @@ def render_retirement_page(forward_test_result: Dict[str, object] | None) -> Non
         fig.add_trace(go.Scatter(x=percentile_df["Month"], y=percentile_df["P10"], mode="lines", name="P10"))
         fig.add_trace(go.Scatter(x=percentile_df["Month"], y=percentile_df["Median"], mode="lines", name="Median"))
         fig.add_trace(go.Scatter(x=percentile_df["Month"], y=percentile_df["P90"], mode="lines", name="P90"))
+        fig.add_trace(
+            go.Scatter(
+                x=no_invest_balance.index,
+                y=no_invest_balance.values,
+                mode="lines",
+                name="No investment: spend + inflation",
+                line={"dash": "dash", "color": "#64748b"},
+                hovertemplate="Month %{x}<br>No-invest balance=%{y:,.0f}<extra></extra>",
+            )
+        )
         if not lowest_survivor_path.empty:
             fig.add_trace(
                 go.Scatter(
@@ -2349,10 +2399,57 @@ def render_retirement_page(forward_test_result: Dict[str, object] | None) -> Non
         )
         st.plotly_chart(fig, use_container_width=True)
 
-        withdrawal_schedule = monte_carlo_result["gross_withdrawals"].quantile(0.5, axis=1).rename("Median Withdrawal").reset_index()
-        withdrawal_schedule.columns = ["Month", "Median Withdrawal"]
-        st.dataframe(withdrawal_schedule.head(24), use_container_width=True, hide_index=True)
-        st.caption("Table above shows the first 24 months of the inflation-adjusted median withdrawal schedule from the Monte Carlo retirement test.")
+        withdrawal_schedule = monte_carlo_result["gross_withdrawals"].quantile(0.5, axis=1).rename("Monthly with invest").reset_index()
+        withdrawal_schedule.columns = ["Month", "Monthly with invest"]
+        invest_income_schedule = pd.Series(other_income.values, index=other_income.index, name="Other Income with invest").reset_index()
+        invest_income_schedule.columns = ["Month", "Other Income with invest"]
+        invest_balance_schedule = safe_paths.quantile(0.5, axis=1).rename("Invest port remain").reset_index()
+        invest_balance_schedule.columns = ["Month", "Invest port remain"]
+        no_invest_schedule = pd.DataFrame(
+            {
+                "Month": no_invest_balance.index,
+                "Monthly no invest": inflated_spending.values,
+                "Other Income": other_income.values,
+                "No-invest port remain": no_invest_balance.values,
+            }
+        )
+        comparison_schedule = (
+            withdrawal_schedule.merge(invest_income_schedule, on="Month", how="outer")
+            .merge(invest_balance_schedule, on="Month", how="outer")
+            .merge(no_invest_schedule, on="Month", how="outer")
+            .sort_values("Month")
+        )
+        money_cols = [
+            "Monthly with invest",
+            "Other Income with invest",
+            "Invest port remain",
+            "Monthly no invest",
+            "Other Income",
+            "No-invest port remain",
+        ]
+        display_columns = ["Month"] + money_cols
+        display_schedule = comparison_schedule.loc[:, display_columns].head(24).copy()
+        for column in money_cols:
+            if column in display_schedule.columns:
+                display_schedule[column] = display_schedule[column].map(lambda value: "-" if pd.isna(value) else f"{value:,.0f}")
+        display_schedule.columns = pd.MultiIndex.from_tuples(
+            [
+                ("", "Month"),
+                ("Invest", "Monthly with invest"),
+                ("Invest", "Other Income"),
+                ("Invest", "Invest port remain"),
+                ("No invest", "Monthly no invest"),
+                ("No invest", "Other Income"),
+                ("No invest", "No-invest port remain"),
+            ]
+        )
+        st.dataframe(display_schedule, use_container_width=True, hide_index=True)
+        st.caption(
+            "Table shows the first 24 months. Invest columns come from the Monte Carlo safe-withdrawal simulation: "
+            "Monthly with invest is the median withdrawal and Invest port remain is the median portfolio value. "
+            "No invest columns assume the initial portfolio is held as cash, earns 0%, and pays the maximum calculated first-month spending "
+            "that rises with inflation and lasts through the selected retirement horizon after other income."
+        )
 
 
 def main() -> None:
