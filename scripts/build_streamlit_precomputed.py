@@ -7,6 +7,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from share_class_utils import drop_duplicate_share_classes_available
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 OUT_DIR = PROJECT_ROOT / "data" / "precomputed"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -74,6 +76,12 @@ HANDOFF_CURVE_SOURCES = [
         "family": "PIT_RESELECT_BY_STEP_HANDOFF",
     },
     {
+        "label": "Mean Covariance Gold30 stock-cap sweep stockcap8 mom_63 + asset-level daily exposure",
+        "path": ("..", "dynamic_port_opt", "result", "mean_covariance_stock_cap_sweep_daily_exposure_curves.csv"),
+        "column": "Mean Covariance Gold30 stock-cap sweep stockcap8 mom_63 + asset-level daily exposure",
+        "family": "PIT_RESELECT_BY_STEP_HANDOFF",
+    },
+    {
         "label": "Best stock assets + Gold/BTC/BIL/IEF reoptimized Dynamic HMM Copula [US stock only] [mean_variance] max10 PIT reselect",
         "path": ("..", "dynamic_port_opt", "result", "pit_reselect_step2_4_from_step1_momentum_best_stock_assets_gold_btc_bil_ief_reoptimized_curves_thb.csv"),
         "column": "Best stock assets + Gold/BTC/BIL/IEF reoptimized Dynamic HMM Copula [US stock only] [mean_variance] max10 PIT reselect",
@@ -102,6 +110,31 @@ HANDOFF_SUPPORT_FILES = [
         "source": ("..", "dynamic_port_opt", "result", "pit_reselect_step2_5_latest_effective_sleeve_weights_thb.csv"),
         "target": "pit_reselect_step2_5_latest_effective_sleeve_weights_thb.csv",
         "description": "Latest effective sleeve weights for PIT daily exposure strategy.",
+    },
+    {
+        "source": ("..", "dynamic_port_opt", "result", "mean_covariance_stock_cap_sweep_daily_exposure_curves.csv"),
+        "target": "mean_covariance_stock_cap_sweep_daily_exposure_curves.csv",
+        "description": "Step 2.3b-4 mean-covariance Gold30 stock-cap 8 asset-level daily-exposure curves copied for standalone review.",
+    },
+    {
+        "source": ("..", "dynamic_port_opt", "result", "mean_covariance_stock_cap_sweep_daily_exposure_summary.csv"),
+        "target": "mean_covariance_stock_cap_sweep_daily_exposure_summary.csv",
+        "description": "Step 2.3b-4 mean-covariance Gold30 stock-cap sweep summary copied for standalone review.",
+    },
+    {
+        "source": ("..", "dynamic_port_opt", "result", "mean_covariance_gold30_asset_daily_latest_effective_weights.csv"),
+        "target": "mean_covariance_gold30_asset_daily_latest_effective_weights.csv",
+        "description": "Step 2.3b handoff recommended latest effective security weights.",
+    },
+    {
+        "source": ("..", "dynamic_port_opt", "result", "mean_covariance_gold30_asset_daily_recheck_today_meta.csv"),
+        "target": "mean_covariance_gold30_asset_daily_recheck_today_meta.csv",
+        "description": "Step 2.3b latest effective weight metadata.",
+    },
+    {
+        "source": ("..", "dynamic_port_opt", "result", "mean_covariance_gold30_asset_daily_recheck_today_sleeve_weights.csv"),
+        "target": "mean_covariance_gold30_asset_daily_recheck_today_sleeve_weights.csv",
+        "description": "Step 2.3b latest effective sleeve weights.",
     },
 ]
 
@@ -388,7 +421,10 @@ def _pit_equal_weight_returns(
         train_start = rebalance_date - pd.DateOffset(days=252)
         train_prices = prices.loc[(prices.index > train_start) & (prices.index <= rebalance_date)]
         train_volumes = volumes.loc[train_prices.index]
-        active = [ticker for ticker in _active_members(intervals, rebalance_date) if ticker in prices.columns]
+        active = drop_duplicate_share_classes_available(
+            (ticker for ticker in _active_members(intervals, rebalance_date) if ticker in prices.columns),
+            prices.columns,
+        )
         if active:
             availability = train_prices[active].notna().mean()
             liquidity = (train_prices[active].ffill() * train_volumes[active]).median()

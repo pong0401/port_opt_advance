@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-05-31T19:44:11.869686+07:00",
+  "generated_at": "2026-06-01T19:51:47.413644+07:00",
   "data_start": "2019-05-09",
-  "raw_data_start": "2016-05-28",
-  "data_end": "2026-05-28",
+  "raw_data_start": "2016-06-01",
+  "data_end": "2026-06-01",
   "currency": "THB",
   "notes": [
     "This is a frozen deploy-friendly performance dataset.",
@@ -76,6 +76,14 @@
       "source_end": "2026-04-29"
     },
     {
+      "strategy": "Mean Covariance Gold30 stock-cap sweep stockcap8 mom_63 + asset-level daily exposure",
+      "family": "PIT_RESELECT_BY_STEP_HANDOFF",
+      "path": "..\\dynamic_port_opt\\result\\mean_covariance_stock_cap_sweep_daily_exposure_curves.csv",
+      "column": "Mean Covariance Gold30 stock-cap sweep stockcap8 mom_63 + asset-level daily exposure",
+      "source_start": "2018-01-02",
+      "source_end": "2026-04-29"
+    },
+    {
       "strategy": "Best stock assets + Gold/BTC/BIL/IEF reoptimized Dynamic HMM Copula [US stock only] [mean_variance] max10 PIT reselect",
       "family": "PIT_RESELECT_BY_STEP_HANDOFF",
       "path": "..\\dynamic_port_opt\\result\\pit_reselect_step2_4_from_step1_momentum_best_stock_assets_gold_btc_bil_ief_reoptimized_curves_thb.csv",
@@ -107,6 +115,31 @@
       "source": "..\\dynamic_port_opt\\result\\pit_reselect_step2_5_latest_effective_sleeve_weights_thb.csv",
       "target": "data\\precomputed\\pit_reselect_step2_5_latest_effective_sleeve_weights_thb.csv",
       "description": "Latest effective sleeve weights for PIT daily exposure strategy."
+    },
+    {
+      "source": "..\\dynamic_port_opt\\result\\mean_covariance_stock_cap_sweep_daily_exposure_curves.csv",
+      "target": "data\\precomputed\\mean_covariance_stock_cap_sweep_daily_exposure_curves.csv",
+      "description": "Step 2.3b-4 mean-covariance Gold30 stock-cap 8 asset-level daily-exposure curves copied for standalone review."
+    },
+    {
+      "source": "..\\dynamic_port_opt\\result\\mean_covariance_stock_cap_sweep_daily_exposure_summary.csv",
+      "target": "data\\precomputed\\mean_covariance_stock_cap_sweep_daily_exposure_summary.csv",
+      "description": "Step 2.3b-4 mean-covariance Gold30 stock-cap sweep summary copied for standalone review."
+    },
+    {
+      "source": "..\\dynamic_port_opt\\result\\mean_covariance_gold30_asset_daily_latest_effective_weights.csv",
+      "target": "data\\precomputed\\mean_covariance_gold30_asset_daily_latest_effective_weights.csv",
+      "description": "Step 2.3b handoff recommended latest effective security weights."
+    },
+    {
+      "source": "..\\dynamic_port_opt\\result\\mean_covariance_gold30_asset_daily_recheck_today_meta.csv",
+      "target": "data\\precomputed\\mean_covariance_gold30_asset_daily_recheck_today_meta.csv",
+      "description": "Step 2.3b latest effective weight metadata."
+    },
+    {
+      "source": "..\\dynamic_port_opt\\result\\mean_covariance_gold30_asset_daily_recheck_today_sleeve_weights.csv",
+      "target": "data\\precomputed\\mean_covariance_gold30_asset_daily_recheck_today_sleeve_weights.csv",
+      "description": "Step 2.3b latest effective sleeve weights."
     }
   ],
   "files": {

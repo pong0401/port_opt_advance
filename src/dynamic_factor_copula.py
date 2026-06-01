@@ -58,6 +58,43 @@ DEFAULT_UNIVERSE = [
     "ADBE",
     "COST",
 ]
+SHARE_CLASS_REPRESENTATIVES = {
+    "GOOGL": "GOOG",
+}
+
+
+def canonical_share_class(ticker: str) -> str:
+    clean = str(ticker).upper()
+    return SHARE_CLASS_REPRESENTATIVES.get(clean, clean)
+
+
+def drop_duplicate_share_classes(tickers: Sequence[str]) -> List[str]:
+    deduped: List[str] = []
+    seen: set[str] = set()
+    for ticker in tickers:
+        canonical = canonical_share_class(str(ticker))
+        if canonical in seen:
+            continue
+        seen.add(canonical)
+        deduped.append(canonical)
+    return deduped
+
+
+def drop_duplicate_share_classes_available(tickers: Sequence[str], available: Iterable[str]) -> List[str]:
+    available_set = {str(ticker).upper() for ticker in available}
+    deduped: List[str] = []
+    seen: set[str] = set()
+    for ticker in tickers:
+        clean = str(ticker).upper()
+        canonical = canonical_share_class(clean)
+        selected = canonical if canonical in available_set else clean
+        if selected not in available_set or canonical in seen:
+            continue
+        seen.add(canonical)
+        deduped.append(selected)
+    return deduped
+
+
 THAI_SYMBOL_EXCLUDE = {
     "BANKING.BK",
     "COMMERCE.BK",
@@ -353,7 +390,7 @@ def select_universe(
 ) -> List[str]:
     preferred = list(preferred or DEFAULT_UNIVERSE)
     start_ts = pd.Timestamp(start_date)
-    candidate_pool = [ticker for ticker in preferred if ticker in prices.columns]
+    candidate_pool = drop_duplicate_share_classes_available(preferred, prices.columns)
     if not candidate_pool:
         candidate_pool = [ticker for ticker in prices.columns if ticker not in {"benchmark", "vol_proxy"}]
 
@@ -382,7 +419,7 @@ def select_point_in_time_universe(
     n_assets: int,
     min_history_ratio: float = 0.90,
 ) -> List[str]:
-    candidates = [ticker for ticker in candidate_tickers if ticker in prices_window.columns]
+    candidates = drop_duplicate_share_classes_available(list(candidate_tickers), prices_window.columns)
     if not candidates:
         return []
     availability = prices_window[candidates].notna().mean()
@@ -769,15 +806,20 @@ def optimize_portfolio(
     max_weight: float = 0.18,
     risk_aversion: float = 8.0,
     objective_mode: str = "mean_variance",
+    asset_caps: Optional[Dict[str, float]] = None,
 ) -> pd.Series:
     assets = cov.index
     cov = cov.apply(pd.to_numeric, errors="coerce").fillna(0.0).astype(float)
     cov_matrix = cov.to_numpy(dtype=float)
     mu = momentum_signal.reindex(assets).fillna(momentum_signal.median() if not momentum_signal.empty else 0.0).to_numpy()
     mu = np.clip(mu, np.nanpercentile(mu, 10), np.nanpercentile(mu, 90)) if len(mu) else mu
-    n_assets = len(assets)
-    x0 = np.repeat(1.0 / n_assets, n_assets)
-    bounds = [(0.0, max_weight) for _ in range(n_assets)]
+    caps = pd.Series(max_weight, index=assets, dtype=float)
+    if asset_caps:
+        caps.update(pd.Series(asset_caps, dtype=float).reindex(assets).dropna())
+    if float(caps.sum()) < 1.0 - EPSILON:
+        raise ValueError("Portfolio caps must sum to at least 100%.")
+    x0 = caps / caps.sum()
+    bounds = [(0.0, float(caps.loc[asset])) for asset in assets]
     constraints = [{"type": "eq", "fun": lambda x: np.sum(x) - 1.0}]
 
     if objective_mode == "risk_parity_mom_tilt":
@@ -791,15 +833,16 @@ def optimize_portfolio(
         weights = (base * tilt).clip(lower=0.0)
         weights = weights / weights.sum()
         for _ in range(len(weights) * 2):
-            over_mask = weights > max_weight
+            over_mask = weights > caps
             if not over_mask.any():
                 break
-            excess = float((weights[over_mask] - max_weight).sum())
-            weights.loc[over_mask] = max_weight
-            under_mask = weights < max_weight - 1e-12
+            excess = float((weights[over_mask] - caps[over_mask]).sum())
+            weights.loc[over_mask] = caps[over_mask]
+            under_mask = weights < caps - 1e-12
             if not under_mask.any():
                 break
-            weights.loc[under_mask] = weights.loc[under_mask] + excess * (weights.loc[under_mask] / weights.loc[under_mask].sum())
+            capacity = (caps - weights).clip(lower=0.0)
+            weights.loc[under_mask] = weights.loc[under_mask] + excess * (capacity.loc[under_mask] / capacity.loc[under_mask].sum())
             weights = weights / weights.sum()
         return weights / weights.sum()
 

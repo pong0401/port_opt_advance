@@ -17,6 +17,7 @@ for path in [SRC, SCRIPTS]:
 
 from dynamic_factor_copula import default_paths  # noqa: E402
 import run_us_th_best_config as best_config  # noqa: E402
+from share_class_utils import drop_duplicate_share_classes_available  # noqa: E402
 
 
 YF_CACHE_DIR = PROJECT_ROOT / "data" / "cache" / "dynamic_factor_copula" / ".yfinance"
@@ -25,11 +26,6 @@ LIVE_CASH_DRAG_LATEST_WEIGHTS_FILE = "us_th_side_trigger_cash_drag_latest_asset_
 STOCKS_ONLY_LATEST_WEIGHTS_FILE = "us_th_stocks_only_latest_asset_weights_live_thb.csv"
 LIVE_LATEST_METADATA_FILE = "us_th_side_trigger_latest_asset_weights_live_metadata.json"
 BEST_ASSET_LIVE_LATEST_WEIGHTS_FILE = "us_th_best_asset_sweep_latest_effective_weights_live_thb.csv"
-SHARE_CLASS_REPRESENTATIVES = {
-    "GOOGL": "GOOG",
-}
-
-
 def _download_latest(tickers: list[str], start: str, end: str) -> tuple[pd.DataFrame, pd.DataFrame]:
     price_frames: list[pd.Series] = []
     volume_frames: list[pd.Series] = []
@@ -69,19 +65,12 @@ def _current_best_universe() -> list[str]:
     weight_file = PROJECT_ROOT / "result" / "us_th_best_asset_sweep_dynamic_weight_history_thb.csv"
     if weight_file.exists():
         frame = pd.read_csv(weight_file, index_col=0)
-        return _dedupe_share_classes([column for column in frame.columns if column not in {"GOLD", "BTC", "CASH"}])
+        columns = [column for column in frame.columns if column not in {"GOLD", "BTC", "CASH"}]
+        return drop_duplicate_share_classes_available(columns, columns)
     exposure_file = PROJECT_ROOT / "result" / "us_th_side_trigger_daily_asset_exposure_realloc_stock_thb.csv"
     frame = pd.read_csv(exposure_file, index_col=0)
-    return _dedupe_share_classes([column for column in frame.columns if column not in {"GOLD", "BTC", "CASH"}])
-
-
-def _dedupe_share_classes(tickers: list[str]) -> list[str]:
-    deduped: list[str] = []
-    for ticker in tickers:
-        representative = SHARE_CLASS_REPRESENTATIVES.get(ticker, ticker)
-        if representative not in deduped:
-            deduped.append(representative)
-    return deduped
+    columns = [column for column in frame.columns if column not in {"GOLD", "BTC", "CASH"}]
+    return drop_duplicate_share_classes_available(columns, columns)
 
 
 def _write_live_latest_weights(

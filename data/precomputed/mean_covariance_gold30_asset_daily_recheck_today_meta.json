@@ -1,0 +1,13 @@
+{
+  "Date": "2026-05-29",
+  "Strategy": "Mean Covariance Gold30 stock cap 8 mom_63 + asset-level daily exposure",
+  "Train Start": "2024-06-21",
+  "Train End": "2026-05-29",
+  "Lookback Days": 504,
+  "Selected US Assets": 30,
+  "Stock Exposure": 1.0,
+  "Gold Exposure": 1.0,
+  "BTC Exposure": 0.0,
+  "Weight Timing Note": "Fresh standalone recheck from latest common close in cache; signals are lagged by one session.",
+  "calculated_at": "2026-06-01T20:40:35.903750+07:00"
+}

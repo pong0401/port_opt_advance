@@ -1,0 +1,2 @@
+Date,Strategy,Train Start,Train End,Lookback Days,Selected US Assets,Stock Exposure,Gold Exposure,BTC Exposure,Weight Timing Note
+2026-05-29,Mean Covariance Gold30 stock cap 8 mom_63 + asset-level daily exposure,2024-06-21,2026-05-29,504,30,1.0,1.0,0.0,Fresh standalone recheck from latest common close in cache; signals are lagged by one session.

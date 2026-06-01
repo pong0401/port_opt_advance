@@ -405,25 +405,25 @@ STRATEGY_B_GUIDE_CONFIGS = {
 }
 
 SNP_GUIDE_CONFIGS = {
-    "S&P 500 buy and hold": {
+    "S&P 500 hold: 100% SPY, no daily exposure": {
         "series": "S&P 500 buy and hold",
         "blend_weights": {"SPY": 100.0},
-        "description": "Best-param Step 1 benchmark from BEST_PARAM_S&P_PORT_OPT_ADVANCE.md. Holds S&P 500 continuously with no daily exposure overlay.",
-        "setting": "BEST_PARAM Step 1 / S&P 500 100% / no daily exposure",
+        "description": "This is the plain S&P benchmark. The portfolio holds SPY at 100% through the whole test, with no Gold, BTC, BIL, managed futures, or daily exposure overlay. It is useful as the clean reference for asking whether the more complex rules actually add value.",
+        "setting": "Asset mix: SPY 100%. Rebalance: no scheduled rebalance needed because it is a single sleeve. Daily exposure: none; effective exposure stays 100% every trading day. Test source: BEST_PARAM S&P handoff Step 1 curve, then trimmed to the shared chart start date and metrics recalculated.",
     },
-    "Monthly allocation SPY/Gold/BTC/BIL 35/40/10/15": {
+    "Monthly multi-asset allocation: SPY 35%, Gold 40%, BTC 10%, BIL 15%": {
         "series": "Monthly allocation SPY/Gold/BTC/BIL 35/40/10/15",
         "blend_weights": {"SPY": 35.0, "GOLD": 40.0, "BTC": 10.0, "BIL": 15.0},
-        "description": "Best-param Step 2 winner. Monthly allocation with active weights SPY 35%, Gold 40%, BTC 10%, and BIL 15%.",
-        "setting": "BEST_PARAM Step 2 / Monthly rebalance / SPY 35% / Gold 40% / BTC 10% / BIL 15%",
+        "description": "This is a fixed-sleeve multi-asset portfolio. It allocates 35% to SPY, 40% to Gold, 10% to BTC, and 15% to BIL, then rebalances monthly back to those target weights. There is no trend filter in this version: if the market is open, each sleeve stays invested at its target allocation after the monthly rebalance.",
+        "setting": "Asset mix: SPY 35% / Gold 40% / BTC 10% / BIL 15%. Rebalance: monthly to fixed target weights. Daily exposure: none; all sleeves remain active. Test source: BEST_PARAM S&P handoff Step 2 curve, then trimmed to the shared chart start date and metrics recalculated.",
     },
-    "Managed futures overlay Core/DBMF 85/15": {
+    "Core plus managed futures: Step 2 core 85%, DBMF 15%": {
         "series": "Managed futures overlay Core/DBMF 85/15",
         "blend_weights": {"Step 2 Core": 85.0, "DBMF": 15.0},
-        "description": "Best-param Step 2B winner. Blends the Step 2 core allocation with DBMF managed-futures overlay.",
-        "setting": "BEST_PARAM Step 2B / Core 85% / DBMF 15%",
+        "description": "This adds managed futures diversification on top of the monthly multi-asset core. The core sleeve is the Step 2 SPY/Gold/BTC/BIL allocation and gets 85% of the portfolio, while DBMF gets 15%. The purpose is to add a trend-following alternatives sleeve without changing the core sleeve rules.",
+        "setting": "Asset mix: Step 2 core 85% / DBMF 15%. Rebalance: monthly blend back to 85/15. Daily exposure: none inside this displayed strategy; DBMF is held as its own sleeve. Test source: BEST_PARAM S&P handoff Step 2B curve, then trimmed to the shared chart start date and metrics recalculated.",
     },
-    "Daily-exposure allocation SPY/Gold/BTC/BIL 35/30/10/25": {
+    "Daily exposure multi-asset allocation: SPY 35%, Gold 30%, BTC 10%, BIL 25%": {
         "series": "Daily-exposure allocation SPY/Gold/BTC/BIL 35/30/10/25",
         "blend_weights": {
             "SPY_DAILY_EXPOSURE": 35.0,
@@ -445,8 +445,8 @@ SNP_GUIDE_CONFIGS = {
                 "column": "BTC MA50 below0.00",
             },
         },
-        "description": "Best-param Step 3B winner. Applies lagged daily exposure signals to SPY, Gold, and BTC, then holds BIL as the defensive sleeve.",
-        "setting": "BEST_PARAM Step 3B / daily exposure lag-1 / SPY 35% / Gold 30% / BTC 10% / BIL 25%",
+        "description": "This is the daily-exposure version of the S&P-side strategy. The base allocation is SPY 35%, Gold 30%, BTC 10%, and BIL 25%. SPY, Gold, and BTC each have their own close-based trend signal, shifted by one trading session so the strategy only acts after the signal is known. If a sleeve is cut by its signal, the reduced part is treated as cash exposure while BIL remains the defensive sleeve.",
+        "setting": "Asset mix before exposure: SPY 35% / Gold 30% / BTC 10% / BIL 25%. Rebalance: quarterly fixed-weight rebalance in the precomputed sleeve return engine. Daily exposure: lag-1 trend signals; SPY uses MA300 below 0.50, Gold uses MA50 below 1.00, BTC uses MA50 below 0.00. Test source: BEST_PARAM S&P handoff Step 3B curve, then trimmed to the shared chart start date and metrics recalculated.",
     },
 }
 
@@ -474,6 +474,14 @@ STRATEGY_B_GUIDE_CONFIGS = {
         "description": "This is also a single optimizer containing stocks, Gold, BTC, and BIL, but the overlay caps are copied from the fixed-sleeve winner so the optimizer cannot over-allocate to the side assets. Stock names are still reselected point-in-time every rebalance. The model is Static Copula with momentum and mean-variance optimization. The cap structure is US stock 10% per name, Thai stock 10% per name if present, Gold up to 40%, BTC up to 5%, and BIL controlled by the optimizer.",
         "setting": "One combined optimizer with caps / PIT stock reselect every rebalance / Static Copula / momentum on / mean-variance objective / stock cap 10% / Gold cap 40% / BTC cap 5% / BIL available / no daily exposure",
     },
+    "Mean Covariance Gold30 stock cap 8 with asset-level daily exposure": {
+        "series": "Mean Covariance Gold30 stock-cap sweep stockcap8 mom_63 + asset-level daily exposure",
+        "latest_weights_file": "data/precomputed/mean_covariance_gold30_asset_daily_latest_effective_weights.csv",
+        "latest_weights_metadata_file": "data/precomputed/mean_covariance_gold30_asset_daily_recheck_today_meta.json",
+        "latest_weights_strategy": "Mean Covariance Gold30 stock cap 8 mom_63 + asset-level daily exposure",
+        "description": "This chart uses the default Strategy B from the PIT handoff: Mean Covariance Gold30 with an 8% stock max weight, mean-variance objective, and 63-day momentum input. It does not use Thai stocks. At each latest-weight refresh it selects the point-in-time S&P 500 universe, ranks liquidity, keeps 30 US stocks, and optimizes the selected stocks together with Gold, BTC, and BIL using a sample covariance model. Latest-weight caps are 8% per US stock, Gold up to 30%, BTC up to 5%, and BIL 0%. After the optimizer chooses raw weights, asset-level daily exposure is applied: US stocks follow the lagged S&P trend signal, Gold follows the lagged Gold trend signal, BTC follows the lagged BTC trend signal, and any reduced exposure becomes cash.",
+        "setting": "Default Strategy B / no Thai stocks / PIT S&P 500 membership / top 30 liquid US names / sample covariance model / mean variance objective + mom_63 / stock cap 8% / Gold cap 30% / BTC cap 5% / BIL cap 0% / asset-level lag-1 daily exposure / reduced exposure to cash / latest weights generated locally for standalone web deployment",
+    },
     "Reoptimized dynamic portfolio with Gold, BTC, BIL, and IEF": {
         "series": "Best stock assets + Gold/BTC/BIL/IEF reoptimized Dynamic HMM Copula [US stock only] [mean_variance] max10 PIT reselect",
         "latest_weights_file": "../dynamic_port_opt/result/pit_reselect_step2_4_from_step1_momentum_best_stock_assets_gold_btc_bil_ief_reoptimized_latest_weights_thb.csv",
@@ -489,7 +497,7 @@ STRATEGY_B_GUIDE_CONFIGS = {
     },
 }
 
-DEFAULT_STRATEGY_B_GUIDE_CONFIG = "S&P trend daily exposure on reoptimized PIT portfolio"
+DEFAULT_STRATEGY_B_GUIDE_CONFIG = "Mean Covariance Gold30 stock cap 8 with asset-level daily exposure"
 
 
 def ensure_data_dir() -> None:
@@ -1164,7 +1172,7 @@ def _resolved_project_path(path_text: str) -> Path:
 
 
 def _asset_group(asset: str) -> str:
-    if asset == "CASH":
+    if asset in {"CASH", "Cash / Reduced Exposure"}:
         return "Cash"
     if asset in {"US Equity", "US Equity sleeve", "EQUITY", "Equity sleeve"}:
         return "US Equity"
@@ -1285,7 +1293,12 @@ def latest_weight_rows(label: str, config: dict, sleeves: pd.DataFrame) -> tuple
                 latest = latest.loc[latest["Strategy"].astype(str).eq(str(config["latest_weights_strategy"]))]
             if config.get("latest_weights_model") and "Model" in latest.columns:
                 latest = latest.loc[latest["Model"].astype(str).eq(str(config["latest_weights_model"]))]
-            if not latest.empty and "Asset" in latest.columns and "Date" in latest.columns:
+            if (
+                not latest.empty
+                and "Asset" in latest.columns
+                and "Date" in latest.columns
+                and ("Portfolio Exposure %" in latest.columns or "Portfolio Weight" in latest.columns)
+            ):
                 rows = latest.copy()
                 if "Portfolio Exposure %" in rows.columns:
                     rows = rows.rename(columns={"Portfolio Exposure %": "Portfolio %"})
@@ -1360,11 +1373,13 @@ def latest_weight_rows(label: str, config: dict, sleeves: pd.DataFrame) -> tuple
                         )
 
                     rows["Daily Exposure"] = rows.apply(_format_effective_exposure, axis=1)
+                    rows.loc[rows["Group"].eq("Cash"), "Daily Exposure"] = "Cash after overlay"
                 else:
                     rows["Daily Exposure"] = "Effective after latest exposure"
+                    rows.loc[rows["Group"].eq("Cash"), "Daily Exposure"] = "Cash after overlay"
                 rows = rows.sort_values("Portfolio %", ascending=False)
                 latest_date = ""
-                for column in ["Latest Cache Trading Date", "Last Exposure Date", "Last Rebalance Date"]:
+                for column in ["Latest Cache Trading Date", "Last Exposure Date", "Last Rebalance Date", "Date"]:
                     if column in rows.columns and rows[column].notna().any():
                         latest_date = str(rows[column].dropna().iloc[0])
                         break
@@ -1514,6 +1529,7 @@ def refresh_live_latest_weights(config: dict) -> tuple[bool, str]:
     scripts = [
         root / "scripts" / "refresh_overlay_latest.py",
         root / "scripts" / "refresh_us_th_best_config_latest.py",
+        root / "scripts" / "refresh_mean_covariance_asset_daily_latest.py",
     ]
     for script in scripts:
         if not script.exists():
@@ -1828,8 +1844,9 @@ def render_strategy_guide_page() -> None:
                     f"Values are effective portfolio weights after daily exposure overlay.{calculated_text}"
                 )
         display_weights = latest_table.copy()
-        cash_pct = float(latest_table.loc[latest_table["Asset"].eq("CASH"), "Portfolio %"].sum())
-        active_pct = float(latest_table.loc[~latest_table["Asset"].eq("CASH"), "Portfolio %"].sum())
+        cash_mask = latest_table["Asset"].eq("CASH") | latest_table["Group"].eq("Cash")
+        cash_pct = float(latest_table.loc[cash_mask, "Portfolio %"].sum())
+        active_pct = float(latest_table.loc[~cash_mask, "Portfolio %"].sum())
         total_pct = float(latest_table["Portfolio %"].sum())
         summary_cols = st.columns(3)
         summary_cols[0].metric("Active exposure", f"{active_pct:.2f}%")

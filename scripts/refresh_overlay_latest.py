@@ -11,7 +11,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 CACHE_DIR = PROJECT_ROOT / "data" / "cache" / "dynamic_factor_copula"
 CACHE_FILE = CACHE_DIR / "overlay_compare_prices.parquet"
 YF_CACHE_DIR = CACHE_DIR / ".yfinance"
-TICKERS = ["SPY", "GC=F", "BTC-USD", "^VIX", "USDTHB=X"]
+TICKERS = ["SPY", "GC=F", "BTC-USD", "BIL", "IEF", "^VIX", "USDTHB=X"]
 
 
 def _close_frame(raw: pd.DataFrame) -> pd.DataFrame:

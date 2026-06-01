@@ -1,0 +1,2 @@
+window,benchmark,vol_proxy,eval_start,eval_end,download_start,download_end,ticker_count,price_rows,price_cols
+20Y,SPY,^VIX,2006-05-04,2026-05-04,2003-02-04,2026-05-04,935,5848,707
