@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-01T19:51:47.413644+07:00",
+  "generated_at": "2026-06-03T16:22:45.897968+07:00",
   "data_start": "2019-05-09",
   "raw_data_start": "2016-06-01",
   "data_end": "2026-06-01",
@@ -84,6 +84,14 @@
       "source_end": "2026-04-29"
     },
     {
+      "strategy": "Tactical TH/Gold/BTC 65/25/10 Gold crash protection",
+      "family": "PIT_RESELECT_BY_STEP_HANDOFF",
+      "path": "..\\dynamic_port_opt\\result\\us_th_tactical_perf_momentum_gold_crash_protection_sweep_curves_thb.csv",
+      "column": "Gold25 crash DD252 warn-8%/exp50% crash-20%/exp50% recover-5% panic-30%/MA200/mom63->0",
+      "source_start": "2006-12-29",
+      "source_end": "2026-04-29"
+    },
+    {
       "strategy": "Best stock assets + Gold/BTC/BIL/IEF reoptimized Dynamic HMM Copula [US stock only] [mean_variance] max10 PIT reselect",
       "family": "PIT_RESELECT_BY_STEP_HANDOFF",
       "path": "..\\dynamic_port_opt\\result\\pit_reselect_step2_4_from_step1_momentum_best_stock_assets_gold_btc_bil_ief_reoptimized_curves_thb.csv",
@@ -92,7 +100,7 @@
       "source_end": "2026-04-29"
     },
     {
-      "strategy": "S&P trend daily exposure on Step 2.4 PIT reselect",
+      "strategy": "S&P trend daily exposure on reoptimized PIT portfolio",
       "family": "PIT_RESELECT_BY_STEP_HANDOFF",
       "path": "..\\dynamic_port_opt\\result\\pit_reselect_step2_5_daily_exposure_on_step2_4_curves_thb.csv",
       "column": "S&P trend MA300 below0.50",
@@ -140,6 +148,21 @@
       "source": "..\\dynamic_port_opt\\result\\mean_covariance_gold30_asset_daily_recheck_today_sleeve_weights.csv",
       "target": "data\\precomputed\\mean_covariance_gold30_asset_daily_recheck_today_sleeve_weights.csv",
       "description": "Step 2.3b latest effective sleeve weights."
+    },
+    {
+      "source": "..\\dynamic_port_opt\\result\\us_th_tactical_perf_momentum_gold_crash_protection_sweep_thb.csv",
+      "target": "data\\precomputed\\us_th_tactical_perf_momentum_gold_crash_protection_sweep_thb.csv",
+      "description": "US/TH Tactical Final Best Sharpe summary copied for standalone review."
+    },
+    {
+      "source": "..\\dynamic_port_opt\\result\\us_th_tactical_perf_momentum_gold_crash_protection_sweep_curves_thb.csv",
+      "target": "data\\precomputed\\us_th_tactical_perf_momentum_gold_crash_protection_sweep_curves_thb.csv",
+      "description": "US/TH Tactical Final Best Sharpe curves copied for standalone review."
+    },
+    {
+      "source": "..\\dynamic_port_opt\\result\\us_th_tactical_perf_momentum_gold_crash_protection_sweep_weight_history_thb.csv",
+      "target": "data\\precomputed\\us_th_tactical_perf_momentum_gold_crash_protection_sweep_weight_history_thb.csv",
+      "description": "US/TH Tactical Final Best Sharpe historical effective sleeve weights."
     }
   ],
   "files": {
