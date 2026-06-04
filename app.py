@@ -123,6 +123,7 @@ DEFAULT_GROUPS = ["US Liquid Leaders", "Gold-Silver Diversified", "Thailand SET1
 LEGACY_DEFAULT_GROUPS = ["US Liquid Leaders", "Gold-Silver Diversified"]
 DATA_DIR = Path(__file__).resolve().parent / "data"
 PRECOMPUTED_DIR = DATA_DIR / "precomputed"
+MIN_LATEST_WEIGHT_DISPLAY_PCT = 1.0
 BACKTEST_RECORDS_FILE = DATA_DIR / "backtest_records.csv"
 BACKTEST_RECORD_COLUMNS = [
     "run_id",
@@ -486,6 +487,15 @@ STRATEGY_B_GUIDE_CONFIGS = {
         "description": "This is the new Strategy B best-Sharpe candidate from the PIT handoff. The portfolio starts with an Equity/Gold/BTC mix of 65%/25%/10%. The equity sleeve is split tactically between US and Thailand: the TH weight inside the equity sleeve can rise to 30% when the monthly SET-vs-SPY THB relative-return rule is positive, otherwise equity stays in US. US and TH stock sleeves are reselected point-in-time from S&P 500 and SET100 membership, keep the top 30 liquid names, and use a mean-covariance optimizer with mean-variance objective, 63-day momentum signal, and 8% cap per stock. Daily exposure is lagged by one session: US follows SPY MA300 below 50%, TH follows SET MA200 below 0%, Gold uses drawdown crash protection, BTC follows MA50 below 0%. Reduced exposure becomes Cash / Reduced Exposure.",
         "setting": "Strategy B final best Sharpe / Equity 65% / Gold 25% / BTC 10% / TH tactical cap 30% inside equity / monthly SET-vs-SPY THB relative-return binary rule lb1 entry0 exit0 hold0 confirm1 / US PIT S&P500 top30 / TH PIT SET100 top30 / mean covariance / mean-variance + mom_63 / stock cap 8% / US SPY MA300 below50% / TH SET MA200 below0% / Gold DD252 warn -8% to 50%, crash -20% to 50%, panic -30% plus below MA200 plus mom63<0 to 0%, recover -5% / BTC MA50 below0% / latest weights generated locally for standalone deployment",
         "metrics": {"CAGR": 0.2400, "Sharpe": 1.3835, "Max Drawdown": -0.1906, "Total Return": 5.3316},
+    },
+    "One-model US cap 70% / TH cap 30% with daily exposure": {
+        "series": "One-model US cap 70% / TH cap 30% + daily exposure",
+        "latest_weights_file": "data/precomputed/us_th_tactical_one_model_us70_th30_latest_effective_weights_thb.csv",
+        "latest_weights_metadata_file": "data/precomputed/us_th_tactical_one_model_us70_th30_latest_meta.json",
+        "latest_weights_strategy": "One-model US cap 70% / TH cap 30% + daily exposure",
+        "description": "This Strategy B candidate comes from the PIT reselect handoff asymmetric group-cap grid. It uses one combined optimizer for US stocks, Thai stocks, Gold, and BTC instead of fixed sleeves. At each rebalance the US side uses point-in-time S&P 500 membership, the TH side uses point-in-time SET100 membership only when the monthly SET-vs-SPY THB relative-return tactical signal is on, and the optimizer also includes Gold and BTC. The model keeps the top 30 liquid US names and top 30 liquid Thai names when eligible, uses a sample mean-covariance optimizer with mean-variance objective and 63-day momentum input, caps each stock at 8%, caps the aggregate US stock group at 70%, caps the aggregate TH stock group at 30%, caps Gold at 30%, and caps BTC at 10%. Daily exposure is applied after optimization with lagged close signals: US stocks follow SPY MA300 below 50%, TH stocks follow SET MA200 below 0%, Gold uses the drawdown crash-protection rule, and BTC follows MA50 below 0%. Any reduced exposure becomes Cash / Reduced Exposure. Latest weights are regenerated from this repo's current cache for standalone deployment.",
+        "setting": "One combined optimizer / PIT S&P500 top30 / PIT SET100 top30 when TH tactical signal is active / mean covariance / mean-variance + mom_63 / stock cap 8% / US group cap 70% / TH group cap 30% / Gold cap 30% / BTC cap 10% / TH tactical eligibility from monthly SET-vs-SPY THB relative-return binary rule lb1 entry0 exit0 hold0 confirm1 / US SPY MA300 below50% / TH SET MA200 below0% / Gold DD252 warn -8% to 50%, crash -20% to 50%, panic -30% plus below MA200 plus mom63<0 to 0%, recover -5% / BTC MA50 below0% / latest weights generated locally for standalone deployment",
+        "metrics": {"CAGR": 0.1919, "Sharpe": 0.9447, "Max Drawdown": -0.2163},
     },
     "Mean Covariance Gold30 stock cap 8 with asset-level daily exposure": {
         "series": "Mean Covariance Gold30 stock-cap sweep stockcap8 mom_63 + asset-level daily exposure",
@@ -1309,6 +1319,14 @@ def _latest_config_exposure_factor(config: dict, sleeve_col: str, sleeves: pd.Da
     return _latest_strategy_a_exposure_factor(sleeve_col, sleeves)
 
 
+def _filter_latest_weight_rows(rows: pd.DataFrame) -> pd.DataFrame:
+    if rows.empty or "Portfolio %" not in rows.columns:
+        return rows
+    portfolio_pct = pd.to_numeric(rows["Portfolio %"], errors="coerce").fillna(0.0)
+    filtered = rows.loc[portfolio_pct >= MIN_LATEST_WEIGHT_DISPLAY_PCT].copy()
+    return filtered if not filtered.empty else rows.copy()
+
+
 def latest_weight_rows(label: str, config: dict, sleeves: pd.DataFrame) -> tuple[pd.DataFrame, str]:
     latest_weights_file = config.get("latest_weights_file")
     if latest_weights_file:
@@ -1381,7 +1399,8 @@ def latest_weight_rows(label: str, config: dict, sleeves: pd.DataFrame) -> tuple
                                     )
                 rows = rows.sort_values("Portfolio %", ascending=False)
                 latest_date = str(rows["Date"].iloc[0])
-                return rows[["Asset", "Group", "Daily Exposure", "Portfolio %"]], latest_date
+                display_rows = _filter_latest_weight_rows(rows[["Asset", "Group", "Daily Exposure", "Portfolio %"]])
+                return display_rows, latest_date
             if not latest.empty and {"Asset", "Effective Weight %"}.issubset(latest.columns):
                 rows = latest.copy()
                 rows["Portfolio %"] = rows["Effective Weight %"].astype(float)
@@ -1409,7 +1428,8 @@ def latest_weight_rows(label: str, config: dict, sleeves: pd.DataFrame) -> tuple
                     if column in rows.columns and rows[column].notna().any():
                         latest_date = str(rows[column].dropna().iloc[0])
                         break
-                return rows[["Asset", "Group", "Daily Exposure", "Portfolio %"]], latest_date
+                display_rows = _filter_latest_weight_rows(rows[["Asset", "Group", "Daily Exposure", "Portfolio %"]])
+                return display_rows, latest_date
 
     exposure_file = config.get("exposure_file")
     if exposure_file:
@@ -1424,7 +1444,8 @@ def latest_weight_rows(label: str, config: dict, sleeves: pd.DataFrame) -> tuple
             rows["Group"] = rows["Asset"].map(_asset_group)
             rows["Daily Exposure"] = np.where(rows["Asset"].eq("CASH"), "Cash after overlay", "Active after overlay")
             rows = rows.sort_values("Portfolio %", ascending=False)
-            return rows[["Asset", "Group", "Daily Exposure", "Portfolio %"]], pd.Timestamp(latest_date).date().isoformat()
+            display_rows = _filter_latest_weight_rows(rows[["Asset", "Group", "Daily Exposure", "Portfolio %"]])
+            return display_rows, pd.Timestamp(latest_date).date().isoformat()
 
     weight_map = config.get("blend_weights")
     if not weight_map:
@@ -1547,7 +1568,8 @@ def latest_weight_rows(label: str, config: dict, sleeves: pd.DataFrame) -> tuple
         latest_date = max(signal_dates).date().isoformat() if signal_dates else ""
     else:
         latest_date = sleeves.index.max().date().isoformat() if not sleeves.empty else ""
-    return pd.DataFrame(rows).sort_values("Portfolio %", ascending=False), latest_date
+    display_rows = pd.DataFrame(rows).sort_values("Portfolio %", ascending=False)
+    return _filter_latest_weight_rows(display_rows), latest_date
 
 
 def latest_weight_metadata(config: dict) -> dict:
@@ -1571,6 +1593,9 @@ def refresh_live_latest_weights(config: dict) -> tuple[bool, str]:
         root / "scripts" / "refresh_overlay_latest.py",
         root / "scripts" / "refresh_us_th_best_config_latest.py",
         root / "scripts" / "refresh_mean_covariance_asset_daily_latest.py",
+        root / "scripts" / "refresh_pit_step2_5_daily_exposure_latest.py",
+        root / "scripts" / "refresh_us_th_tactical_final_best_latest.py",
+        root / "scripts" / "refresh_us_th_tactical_one_model_us70_th30_latest.py",
     ]
     for script in scripts:
         if not script.exists():

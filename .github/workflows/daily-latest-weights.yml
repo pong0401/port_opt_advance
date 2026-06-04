@@ -70,6 +70,9 @@ jobs:
       - name: Refresh Strategy B final best Sharpe latest weights
         run: python scripts/refresh_us_th_tactical_final_best_latest.py
 
+      - name: Refresh one-model US70 TH30 daily exposure latest weights
+        run: python scripts/refresh_us_th_tactical_one_model_us70_th30_latest.py
+
       - name: Rebuild frozen backtest dataset
         if: github.event_name == 'workflow_dispatch' && inputs.run_backtest == 'true'
         run: |
@@ -102,6 +105,10 @@ jobs:
           git add -f result/us_th_tactical_perf_momentum_final_best_latest_effective_sleeve_weights_thb.csv
           git add -f result/us_th_tactical_perf_momentum_final_best_latest_meta.csv
           git add -f result/us_th_tactical_perf_momentum_final_best_latest_meta.json
+          git add -f result/us_th_tactical_one_model_us70_th30_latest_effective_weights_thb.csv
+          git add -f result/us_th_tactical_one_model_us70_th30_latest_sleeve_weights_thb.csv
+          git add -f result/us_th_tactical_one_model_us70_th30_latest_meta.csv
+          git add -f result/us_th_tactical_one_model_us70_th30_latest_meta.json
           git add data/precomputed
           git diff --cached --quiet || git commit -m "Refresh latest portfolio weights"
           git push

@@ -88,6 +88,12 @@ HANDOFF_CURVE_SOURCES = [
         "family": "PIT_RESELECT_BY_STEP_HANDOFF",
     },
     {
+        "label": "One-model US cap 70% / TH cap 30% + daily exposure",
+        "path": ("..", "dynamic_port_opt", "result", "us_th_tactical_perf_momentum_one_model_gold30_btc10_th_signal_asym_group_cap_grid_us70_80_th30_40_curves_thb.csv"),
+        "column": "One-model US cap 70% / TH cap 30% + daily exposure",
+        "family": "PIT_RESELECT_BY_STEP_HANDOFF",
+    },
+    {
         "label": "Best stock assets + Gold/BTC/BIL/IEF reoptimized Dynamic HMM Copula [US stock only] [mean_variance] max10 PIT reselect",
         "path": ("..", "dynamic_port_opt", "result", "pit_reselect_step2_4_from_step1_momentum_best_stock_assets_gold_btc_bil_ief_reoptimized_curves_thb.csv"),
         "column": "Best stock assets + Gold/BTC/BIL/IEF reoptimized Dynamic HMM Copula [US stock only] [mean_variance] max10 PIT reselect",
@@ -156,6 +162,21 @@ HANDOFF_SUPPORT_FILES = [
         "source": ("..", "dynamic_port_opt", "result", "us_th_tactical_perf_momentum_gold_crash_protection_sweep_weight_history_thb.csv"),
         "target": "us_th_tactical_perf_momentum_gold_crash_protection_sweep_weight_history_thb.csv",
         "description": "US/TH Tactical Final Best Sharpe historical effective sleeve weights.",
+    },
+    {
+        "source": ("..", "dynamic_port_opt", "result", "us_th_tactical_perf_momentum_one_model_gold30_btc10_th_signal_asym_group_cap_grid_us70_80_th30_40_summary_thb.csv"),
+        "target": "us_th_tactical_perf_momentum_one_model_gold30_btc10_th_signal_asym_group_cap_grid_us70_80_th30_40_summary_thb.csv",
+        "description": "One-model US70/TH30 asymmetric group-cap grid summary copied for standalone review.",
+    },
+    {
+        "source": ("..", "dynamic_port_opt", "result", "us_th_tactical_perf_momentum_one_model_gold30_btc10_th_signal_asym_group_cap_grid_us70_80_th30_40_curves_thb.csv"),
+        "target": "us_th_tactical_perf_momentum_one_model_gold30_btc10_th_signal_asym_group_cap_grid_us70_80_th30_40_curves_thb.csv",
+        "description": "One-model US70/TH30 asymmetric group-cap grid curves copied for standalone review.",
+    },
+    {
+        "source": ("..", "dynamic_port_opt", "result", "us_th_tactical_perf_momentum_one_model_gold30_btc10_th_signal_asym_group_cap_grid_us70_80_th30_40_grouped_weight_history_thb.csv"),
+        "target": "us_th_tactical_perf_momentum_one_model_gold30_btc10_th_signal_asym_group_cap_grid_us70_80_th30_40_grouped_weight_history_thb.csv",
+        "description": "One-model US70/TH30 asymmetric group-cap grid grouped weight history.",
     },
 ]
 
