@@ -1894,19 +1894,22 @@ def render_strategy_guide_page() -> None:
             if "Strategy B:" in latest_label:
                 if has_daily_overlay:
                     st.caption(
-                        f"As of {latest_date}; Strategy B weights are read from the PIT precompute latest-weight file and scaled by the latest daily exposure signal when applicable. "
+                        f"Latest weight date: {latest_date}. This is the effective market/weight date, not the refresh runtime. "
+                        f"Strategy B weights are read from the PIT precompute latest-weight file and scaled by the latest daily exposure signal when applicable. "
                         f"Historical metrics and curves come from the shared-start precompute dataset. "
                         f"Values are effective portfolio weights after exposure overlay.{calculated_text}"
                     )
                 else:
                     st.caption(
-                        f"As of {latest_date}; this Strategy B config has no daily exposure overlay. "
+                        f"Latest weight date: {latest_date}. This is the effective market/weight date, not the refresh runtime. "
+                        f"This Strategy B config has no daily exposure overlay. "
                         f"Latest weights are read from the PIT precompute file. "
                         f"Historical metrics and curves come from the shared-start precompute dataset.{calculated_text}"
                     )
             else:
                 st.caption(
-                    f"As of {latest_date}; latest overlay signals use the precomputed SPY/Gold/BTC/VIX/USDTHB dataset. "
+                    f"Latest weight date: {latest_date}. This is the effective market/weight date, not the refresh runtime. "
+                    f"Latest overlay signals use the precomputed SPY/Gold/BTC/VIX/USDTHB dataset. "
                     f"Values are effective portfolio weights after daily exposure overlay.{calculated_text}"
                 )
         display_weights = latest_table.copy()
