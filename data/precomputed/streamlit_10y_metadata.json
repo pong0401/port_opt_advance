@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-04T17:20:40.690263+07:00",
-  "data_start": "2019-05-09",
+  "generated_at": "2026-06-04T17:48:16.202410+07:00",
+  "data_start": "2018-01-02",
   "raw_data_start": "2016-06-01",
   "data_end": "2026-06-01",
   "currency": "THB",
@@ -25,14 +25,6 @@
       "path": "..\\dynamic_port_opt\\result\\best_param_step2_multi_asset_best_curves.csv",
       "column": "SPY/Gold/BTC/BIL/IEF/VXUS/TIP 35/40/10/15/0/0/0",
       "source_start": "2016-01-05",
-      "source_end": "2026-04-28"
-    },
-    {
-      "strategy": "Managed futures overlay Core/DBMF 85/15",
-      "family": "BEST_PARAM_S&P_PORT_OPT_ADVANCE",
-      "path": "..\\dynamic_port_opt\\result\\best_param_step2b_core_dbmf_best_curves.csv",
-      "column": "Step2Core/DBMF 85/15",
-      "source_start": "2019-05-09",
       "source_end": "2026-04-28"
     },
     {

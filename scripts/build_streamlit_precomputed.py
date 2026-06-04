@@ -40,12 +40,6 @@ HANDOFF_CURVE_SOURCES = [
         "family": "BEST_PARAM_S&P_PORT_OPT_ADVANCE",
     },
     {
-        "label": "Managed futures overlay Core/DBMF 85/15",
-        "path": ("..", "dynamic_port_opt", "result", "best_param_step2b_core_dbmf_best_curves.csv"),
-        "column": "Step2Core/DBMF 85/15",
-        "family": "BEST_PARAM_S&P_PORT_OPT_ADVANCE",
-    },
-    {
         "label": "Daily-exposure allocation SPY/Gold/BTC/BIL 35/30/10/25",
         "path": ("..", "dynamic_port_opt", "result", "best_param_step3b_daily_exposure_multi_asset_best_curves.csv"),
         "column": "Exposed SPY/Gold/BTC + BIL/IEF/VXUS/TIP 35/30/10/25/0/0/0",

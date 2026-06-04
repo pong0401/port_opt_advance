@@ -419,15 +419,6 @@ SNP_GUIDE_CONFIGS = {
         "description": "This is a fixed-sleeve multi-asset portfolio. It allocates 35% to SPY, 40% to Gold, 10% to BTC, and 15% to BIL, then rebalances monthly back to those target weights. There is no trend filter in this version: if the market is open, each sleeve stays invested at its target allocation after the monthly rebalance.",
         "setting": "Asset mix: SPY 35% / Gold 40% / BTC 10% / BIL 15%. Rebalance: monthly to fixed target weights. Daily exposure: none; all sleeves remain active. Test source: BEST_PARAM S&P handoff monthly-allocation curve, then trimmed to the shared chart start date and metrics recalculated.",
     },
-    "Core plus managed futures: multi-asset core 85%, DBMF 15%": {
-        "series": "Managed futures overlay Core/DBMF 85/15",
-        "blend_weights": {"Multi-asset core": 85.0, "DBMF": 15.0},
-        "nested_blend_weights": {
-            "Multi-asset core": {"SPY": 35.0, "GOLD": 40.0, "BTC": 10.0, "BIL": 15.0},
-        },
-        "description": "This adds managed futures diversification on top of the monthly multi-asset core. The core sleeve is the SPY/Gold/BTC/BIL allocation and gets 85% of the portfolio, while DBMF gets 15%. The purpose is to add a trend-following alternatives sleeve without changing the core sleeve rules.",
-        "setting": "Asset mix: multi-asset core 85% / DBMF 15%. Rebalance: monthly blend back to 85/15. Daily exposure: none inside this displayed strategy; DBMF is held as its own sleeve. Test source: BEST_PARAM S&P handoff managed-futures curve, then trimmed to the shared chart start date and metrics recalculated.",
-    },
     "Daily exposure multi-asset allocation: SPY 35%, Gold 30%, BTC 10%, BIL 25%": {
         "series": "Daily-exposure allocation SPY/Gold/BTC/BIL 35/30/10/25",
         "blend_weights": {
@@ -454,6 +445,12 @@ SNP_GUIDE_CONFIGS = {
         "setting": "Asset mix before exposure: SPY 35% / Gold 30% / BTC 10% / BIL 25%. Rebalance: quarterly fixed-weight rebalance in the precomputed sleeve return engine. Daily exposure: lag-1 trend signals; SPY uses MA300 below 0.50, Gold uses MA50 below 1.00, BTC uses MA50 below 0.00. Test source: BEST_PARAM S&P handoff Step 3B curve, then trimmed to the shared chart start date and metrics recalculated.",
     },
 }
+
+ACTIVE_STRATEGY_B_GUIDE_NAMES = [
+    "One-model US cap 70% / TH cap 30% with daily exposure",
+    "US/TH tactical final best Sharpe 65/25/10 with Gold crash protection",
+    "Best stock sleeve with Gold and BTC allocation",
+]
 
 STRATEGY_B_GUIDE_CONFIGS = {
     "US stock-only dynamic model with momentum": {
@@ -520,7 +517,13 @@ STRATEGY_B_GUIDE_CONFIGS = {
     },
 }
 
-DEFAULT_STRATEGY_B_GUIDE_CONFIG = "US/TH tactical final best Sharpe 65/25/10 with Gold crash protection"
+STRATEGY_B_GUIDE_CONFIGS = {
+    name: STRATEGY_B_GUIDE_CONFIGS[name]
+    for name in ACTIVE_STRATEGY_B_GUIDE_NAMES
+    if name in STRATEGY_B_GUIDE_CONFIGS
+}
+
+DEFAULT_STRATEGY_B_GUIDE_CONFIG = "One-model US cap 70% / TH cap 30% with daily exposure"
 
 
 def ensure_data_dir() -> None:
@@ -1592,8 +1595,6 @@ def refresh_live_latest_weights(config: dict) -> tuple[bool, str]:
     scripts = [
         root / "scripts" / "refresh_overlay_latest.py",
         root / "scripts" / "refresh_us_th_best_config_latest.py",
-        root / "scripts" / "refresh_mean_covariance_asset_daily_latest.py",
-        root / "scripts" / "refresh_pit_step2_5_daily_exposure_latest.py",
         root / "scripts" / "refresh_us_th_tactical_final_best_latest.py",
         root / "scripts" / "refresh_us_th_tactical_one_model_us70_th30_latest.py",
     ]

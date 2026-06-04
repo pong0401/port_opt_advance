@@ -61,12 +61,6 @@ jobs:
       - name: Refresh Strategy B latest weights
         run: python scripts/refresh_us_th_best_config_latest.py
 
-      - name: Refresh PIT Step 2.3b latest weights
-        run: python scripts/refresh_mean_covariance_asset_daily_latest.py
-
-      - name: Refresh PIT Step 2.5 latest daily exposure
-        run: python scripts/refresh_pit_step2_5_daily_exposure_latest.py
-
       - name: Refresh Strategy B final best Sharpe latest weights
         run: python scripts/refresh_us_th_tactical_final_best_latest.py
 
@@ -94,13 +88,6 @@ jobs:
           git add result/us_th_side_trigger_latest_asset_weights_live_metadata.json
           git add result/us_th_side_trigger_latest_asset_weights_live_thb.csv
           git add -f result/us_th_stocks_only_latest_asset_weights_live_thb.csv
-          git add result/mean_covariance_gold30_asset_daily_latest_effective_weights.csv
-          git add result/mean_covariance_gold30_asset_daily_recheck_today_meta.csv
-          git add result/mean_covariance_gold30_asset_daily_recheck_today_meta.json
-          git add result/mean_covariance_gold30_asset_daily_recheck_today_sleeve_weights.csv
-          git add result/mean_covariance_gold30_asset_daily_recheck_today_weights.csv
-          git add data/precomputed/pit_reselect_step2_5_latest_effective_security_weights_thb.csv
-          git add data/precomputed/pit_reselect_step2_5_latest_effective_sleeve_weights_thb.csv
           git add -f result/us_th_tactical_perf_momentum_final_best_latest_effective_security_weights_thb.csv
           git add -f result/us_th_tactical_perf_momentum_final_best_latest_effective_sleeve_weights_thb.csv
           git add -f result/us_th_tactical_perf_momentum_final_best_latest_meta.csv
