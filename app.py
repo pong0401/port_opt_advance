@@ -412,15 +412,35 @@ SNP_GUIDE_CONFIGS = {
         "blend_weights": {"SPY": 100.0},
         "description": "This is the plain S&P benchmark. The portfolio holds SPY at 100% through the whole test, with no Gold, BTC, BIL, managed futures, or daily exposure overlay. It is useful as the clean reference for asking whether the more complex rules actually add value.",
         "setting": "Asset mix: SPY 100%. Rebalance: no scheduled rebalance needed because it is a single sleeve. Daily exposure: none; effective exposure stays 100% every trading day. Test source: BEST_PARAM S&P handoff Step 1 curve, then trimmed to the shared chart start date and metrics recalculated.",
+        "guide_bullets": [
+            "Plain S&P benchmark: holds SPY at 100% through the full test.",
+            "No Gold, BTC, BIL, managed futures, or overlay sleeves are used.",
+            "Single-sleeve portfolio, so no scheduled rebalance is needed.",
+            "Used as the clean reference for checking whether more complex rules add value.",
+        ],
+        "daily_exposure_bullets": [
+            "No daily exposure overlay is applied.",
+            "Effective SPY exposure stays 100% every trading day.",
+        ],
     },
     "Monthly multi-asset allocation: SPY 35%, Gold 40%, BTC 10%, BIL 15%": {
         "series": "Monthly allocation SPY/Gold/BTC/BIL 35/40/10/15",
         "blend_weights": {"SPY": 35.0, "GOLD": 40.0, "BTC": 10.0, "BIL": 15.0},
         "description": "This is a fixed-sleeve multi-asset portfolio. It allocates 35% to SPY, 40% to Gold, 10% to BTC, and 15% to BIL, then rebalances monthly back to those target weights. There is no trend filter in this version: if the market is open, each sleeve stays invested at its target allocation after the monthly rebalance.",
         "setting": "Asset mix: SPY 35% / Gold 40% / BTC 10% / BIL 15%. Rebalance: monthly to fixed target weights. Daily exposure: none; all sleeves remain active. Test source: BEST_PARAM S&P handoff monthly-allocation curve, then trimmed to the shared chart start date and metrics recalculated.",
+        "guide_bullets": [
+            "Fixed-sleeve multi-asset allocation: SPY 35%, Gold 40%, BTC 10%, BIL 15%.",
+            "Rebalances monthly back to the target sleeve weights.",
+            "BIL is held as a fixed defensive sleeve, not as residual cash from a signal.",
+            "Used as the monthly-allocation baseline against daily-exposure variants.",
+        ],
+        "daily_exposure_bullets": [
+            "No daily exposure overlay is applied.",
+            "SPY, Gold, BTC, and BIL remain active at their target sleeve weights after each monthly rebalance.",
+        ],
     },
-    "Daily exposure multi-asset allocation: SPY 35%, Gold 30%, BTC 10%, BIL 25%": {
-        "series": "Daily-exposure allocation SPY/Gold/BTC/BIL 35/30/10/25",
+    "Gold-DD fixed daily-exposure allocation: SPY 35%, Gold 30%, BTC 10%, BIL 25%": {
+        "series": "Gold-DD fixed daily-exposure allocation SPY/Gold/BTC/BIL 35/30/10/25",
         "blend_weights": {
             "SPY_DAILY_EXPOSURE": 35.0,
             "GOLD_DAILY_EXPOSURE": 30.0,
@@ -433,16 +453,30 @@ SNP_GUIDE_CONFIGS = {
                 "column": "S&P 500 MA300 below0.50",
             },
             "GOLD_DAILY_EXPOSURE": {
-                "file": "data/precomputed/best_param_step3_daily_exposure_best_exposure_history.csv",
-                "column": "Gold MA50 below1.00",
+                "file": "data/precomputed/best_param_step3c_gold_drawdown_exposure_history.csv",
+                "column": "Gold DD warn-8%->50% crash-20%->25%",
             },
             "BTC_DAILY_EXPOSURE": {
                 "file": "data/precomputed/best_param_step3_daily_exposure_best_exposure_history.csv",
                 "column": "BTC MA50 below0.00",
             },
         },
-        "description": "This is the daily-exposure version of the S&P-side strategy. The base allocation is SPY 35%, Gold 30%, BTC 10%, and BIL 25%. SPY, Gold, and BTC each have their own close-based trend signal, shifted by one trading session so the strategy only acts after the signal is known. If a sleeve is cut by its signal, the reduced part is treated as cash exposure while BIL remains the defensive sleeve.",
-        "setting": "Asset mix before exposure: SPY 35% / Gold 30% / BTC 10% / BIL 25%. Rebalance: quarterly fixed-weight rebalance in the precomputed sleeve return engine. Daily exposure: lag-1 trend signals; SPY uses MA300 below 0.50, Gold uses MA50 below 1.00, BTC uses MA50 below 0.00. Test source: BEST_PARAM S&P handoff Step 3B curve, then trimmed to the shared chart start date and metrics recalculated.",
+        "description": "This replaces the Step 3B daily-exposure allocation with the Step 3C Gold-DD fixed version from the BEST_PARAM S&P handoff. The base allocation is still SPY 35%, Gold 30%, BTC 10%, and BIL 25%, but Gold now uses drawdown protection instead of the old no-op MA50 trend exposure.",
+        "setting": "Asset mix before exposure: SPY 35% / Gold 30% / BTC 10% / BIL 25%. Rebalance: fixed-weight sleeve rebalance in the precomputed engine. Daily exposure: lag-1 signals; SPY uses MA300 below 0.50, Gold uses DD warn -8% to 50% and crash -20% to 25%, BTC uses MA50 below 0.00. Test source: BEST_PARAM S&P handoff Step 3C Gold-DD fixed curve, then trimmed to the shared chart start date and metrics recalculated.",
+        "guide_bullets": [
+            "Base allocation before overlay: SPY 35%, Gold 30%, BTC 10%, BIL 25%.",
+            "Uses the Step 3C Gold-DD fixed curve from the BEST_PARAM S&P Port Opt Advance handoff.",
+            "Keeps the same fixed allocation as Step 3B, but replaces Gold's no-op trend exposure with a drawdown rule.",
+            "BIL stays as the fixed defensive sleeve and is not cut by the trend overlay.",
+            "Test source is `best_param_step3c_gold_drawdown_best_fixed_curve.csv`, trimmed to the shared chart start date.",
+        ],
+        "daily_exposure_bullets": [
+            "Signals are close-based and shifted by one trading session, so the strategy only trades after the signal is known.",
+            "SPY sleeve: uses the S&P 500 MA300 signal; when price is below MA300, exposure is reduced to 50%.",
+            "Gold sleeve: uses drawdown protection; drawdown at or below -8% cuts exposure to 50%, and drawdown at or below -20% cuts exposure to 25%.",
+            "BTC sleeve: uses the BTC MA50 signal; when price is below MA50, exposure is reduced to 0%.",
+            "Any reduced SPY/Gold/BTC sleeve weight becomes cash exposure; BIL remains separate defensive exposure.",
+        ],
     },
 }
 
@@ -463,6 +497,16 @@ STRATEGY_B_GUIDE_CONFIGS = {
         "blend_weights": {"EQUITY": 55.0, "GOLD": 40.0, "BTC": 5.0},
         "description": "This combines the best stock sleeve with fixed overlay assets. The stock sleeve comes from the PIT-reselected US dynamic model, then the portfolio is allocated monthly to Equity 55%, Gold 40%, and BTC 5%. It is a simple sleeve blend: the stock model decides which stocks belong in the Equity sleeve, while Gold and BTC are held as separate allocation sleeves. BIL is not used in this winning mix, and there is no daily exposure reduction.",
         "setting": "Best PIT stock sleeve / monthly sleeve allocation / Equity 55% / Gold 40% / BTC 5% / no BIL / no IEF / no daily exposure",
+        "guide_bullets": [
+            "Combines the best PIT-reselected US stock sleeve with fixed overlay assets.",
+            "Monthly sleeve allocation: Equity 55%, Gold 40%, BTC 5%.",
+            "The stock model chooses the Equity sleeve constituents; Gold and BTC are held as separate sleeves.",
+            "BIL and IEF are not used in this winning mix.",
+        ],
+        "daily_exposure_bullets": [
+            "No daily exposure reduction is applied.",
+            "Equity, Gold, and BTC remain invested at their monthly sleeve targets until the next rebalance.",
+        ],
     },
     "Stocks, Gold, BTC, and BIL in one static model": {
         "series": "Stocks+Gold+BTC+BIL one-model Static Copula [mean_variance] PIT reselect",
@@ -483,6 +527,22 @@ STRATEGY_B_GUIDE_CONFIGS = {
         "latest_weights_strategy": "Final Best Sharpe Tactical TH/Gold/BTC 65/25/10 Gold crash protection",
         "description": "This is the new Strategy B best-Sharpe candidate from the PIT handoff. The portfolio starts with an Equity/Gold/BTC mix of 65%/25%/10%. The equity sleeve is split tactically between US and Thailand: the TH weight inside the equity sleeve can rise to 30% when the monthly SET-vs-SPY THB relative-return rule is positive, otherwise equity stays in US. US and TH stock sleeves are reselected point-in-time from S&P 500 and SET100 membership, keep the top 30 liquid names, and use a mean-covariance optimizer with mean-variance objective, 63-day momentum signal, and 8% cap per stock. Daily exposure is lagged by one session: US follows SPY MA300 below 50%, TH follows SET MA200 below 0%, Gold uses drawdown crash protection, BTC follows MA50 below 0%. Reduced exposure becomes Cash / Reduced Exposure.",
         "setting": "Strategy B final best Sharpe / Equity 65% / Gold 25% / BTC 10% / TH tactical cap 30% inside equity / monthly SET-vs-SPY THB relative-return binary rule lb1 entry0 exit0 hold0 confirm1 / US PIT S&P500 top30 / TH PIT SET100 top30 / mean covariance / mean-variance + mom_63 / stock cap 8% / US SPY MA300 below50% / TH SET MA200 below0% / Gold DD252 warn -8% to 50%, crash -20% to 50%, panic -30% plus below MA200 plus mom63<0 to 0%, recover -5% / BTC MA50 below0% / latest weights generated locally for standalone deployment",
+        "guide_bullets": [
+            "Best-Sharpe Strategy B candidate from the PIT handoff.",
+            "Base sleeve mix: Equity 65%, Gold 25%, BTC 10%.",
+            "Equity can shift toward Thailand up to 30% of the equity sleeve when the monthly SET-vs-SPY THB relative-return rule is positive.",
+            "US and TH stock sleeves are reselected point-in-time from S&P 500 and SET100 membership, keeping the top 30 liquid names.",
+            "Optimizer uses sample mean covariance, mean-variance objective, 63-day momentum input, and 8% cap per stock.",
+            "Latest weights are generated locally from this repo's current cache for standalone deployment.",
+        ],
+        "daily_exposure_bullets": [
+            "All daily exposure signals are lagged by one trading session before returns are applied.",
+            "US equity sleeve: SPY MA300 signal; below-threshold exposure is reduced to 50%.",
+            "Thai equity sleeve: SET MA200 signal; below-threshold exposure is reduced to 0%.",
+            "Gold sleeve: 252-day drawdown crash protection; warn at -8% cuts to 50%, crash at -20% cuts to 50%, panic cuts to 0% when drawdown is below -30% and Gold is also below MA200 with negative 63-day momentum.",
+            "BTC sleeve: BTC MA50 signal; below-threshold exposure is reduced to 0%.",
+            "Reduced exposure is reported as Cash / Reduced Exposure.",
+        ],
         "metrics": {"CAGR": 0.2400, "Sharpe": 1.3835, "Max Drawdown": -0.1906, "Total Return": 5.3316},
     },
     "One-model US cap 70% / TH cap 30% with daily exposure": {
@@ -492,6 +552,22 @@ STRATEGY_B_GUIDE_CONFIGS = {
         "latest_weights_strategy": "One-model US cap 70% / TH cap 30% + daily exposure",
         "description": "This Strategy B candidate comes from the PIT reselect handoff asymmetric group-cap grid. It uses one combined optimizer for US stocks, Thai stocks, Gold, and BTC instead of fixed sleeves. At each rebalance the US side uses point-in-time S&P 500 membership, the TH side uses point-in-time SET100 membership only when the monthly SET-vs-SPY THB relative-return tactical signal is on, and the optimizer also includes Gold and BTC. The model keeps the top 30 liquid US names and top 30 liquid Thai names when eligible, uses a sample mean-covariance optimizer with mean-variance objective and 63-day momentum input, caps each stock at 8%, caps the aggregate US stock group at 70%, caps the aggregate TH stock group at 30%, caps Gold at 30%, and caps BTC at 10%. Daily exposure is applied after optimization with lagged close signals: US stocks follow SPY MA300 below 50%, TH stocks follow SET MA200 below 0%, Gold uses the drawdown crash-protection rule, and BTC follows MA50 below 0%. Any reduced exposure becomes Cash / Reduced Exposure. Latest weights are regenerated from this repo's current cache for standalone deployment.",
         "setting": "One combined optimizer / PIT S&P500 top30 / PIT SET100 top30 when TH tactical signal is active / mean covariance / mean-variance + mom_63 / stock cap 8% / US group cap 70% / TH group cap 30% / Gold cap 30% / BTC cap 10% / TH tactical eligibility from monthly SET-vs-SPY THB relative-return binary rule lb1 entry0 exit0 hold0 confirm1 / US SPY MA300 below50% / TH SET MA200 below0% / Gold DD252 warn -8% to 50%, crash -20% to 50%, panic -30% plus below MA200 plus mom63<0 to 0%, recover -5% / BTC MA50 below0% / latest weights generated locally for standalone deployment",
+        "guide_bullets": [
+            "One combined optimizer for US stocks, Thai stocks, Gold, and BTC instead of fixed sleeves.",
+            "US universe uses point-in-time S&P 500 membership and keeps the top 30 liquid names.",
+            "Thai universe uses point-in-time SET100 membership only when the monthly TH tactical signal is active, then keeps the top 30 liquid names.",
+            "Optimizer uses sample mean covariance, mean-variance objective, and 63-day momentum input.",
+            "Caps: each stock 8%, US stock group 70%, Thai stock group 30%, Gold 30%, BTC 10%.",
+            "Latest weights are regenerated from this repo's current cache for standalone deployment.",
+        ],
+        "daily_exposure_bullets": [
+            "Daily exposure is applied after optimization, using lagged close signals.",
+            "US stocks: SPY MA300 signal; below-threshold exposure is reduced to 50%.",
+            "Thai stocks: SET MA200 signal; below-threshold exposure is reduced to 0%.",
+            "Gold: 252-day drawdown crash protection with warn -8% to 50%, crash -20% to 50%, and panic -30% plus below MA200 plus negative 63-day momentum to 0%.",
+            "BTC: BTC MA50 signal; below-threshold exposure is reduced to 0%.",
+            "Any reduced exposure becomes Cash / Reduced Exposure.",
+        ],
         "metrics": {"CAGR": 0.1919, "Sharpe": 0.9447, "Max Drawdown": -0.2163},
     },
     "Mean Covariance Gold30 stock cap 8 with asset-level daily exposure": {
@@ -1588,6 +1664,40 @@ def latest_weight_metadata(config: dict) -> dict:
         return {}
 
 
+def _fallback_strategy_guide_bullets(config: dict) -> list[str]:
+    description = str(config.get("description", "")).strip()
+    return [description] if description else []
+
+
+def _fallback_daily_exposure_bullets(config: dict) -> list[str]:
+    setting = str(config.get("setting", ""))
+    description = str(config.get("description", ""))
+    combined = f"{setting} {description}".lower()
+    if "no daily exposure" in combined or "daily exposure: none" in combined:
+        return ["No daily exposure overlay is applied."]
+    if "daily exposure" not in combined and "exposure" not in combined:
+        return ["No explicit daily exposure overlay is documented for this strategy."]
+
+    bullets = ["Daily exposure overlay is used; review the strategy setting for the exact signal names and thresholds."]
+    if "lag-1" in combined or "lagged" in combined or "shifted by one" in combined:
+        bullets.append("Signals are lagged by one trading session so the strategy only acts after the signal is known.")
+    if "cash" in combined or "reduced exposure" in combined:
+        bullets.append("Reduced exposure is treated as cash or Cash / Reduced Exposure.")
+    return bullets
+
+
+def render_strategy_guide_notes(config: dict) -> None:
+    guide_bullets = config.get("guide_bullets") or _fallback_strategy_guide_bullets(config)
+    exposure_bullets = config.get("daily_exposure_bullets") or _fallback_daily_exposure_bullets(config)
+    sections = []
+    if guide_bullets:
+        sections.append("**Strategy setup**\n\n" + "\n".join(f"- {bullet}" for bullet in guide_bullets))
+    if exposure_bullets:
+        sections.append("**Daily exposure rules**\n\n" + "\n".join(f"- {bullet}" for bullet in exposure_bullets))
+    if sections:
+        st.info("\n\n".join(sections))
+
+
 def refresh_live_latest_weights(config: dict) -> tuple[bool, str]:
     if not config.get("latest_weights_file"):
         return True, ""
@@ -1734,8 +1844,7 @@ def render_strategy_guide_page() -> None:
             key="guide_left_config",
         )
         left_config = SNP_GUIDE_CONFIGS[left_choice]
-        st.caption(left_config["setting"])
-        st.info(left_config["description"])
+        render_strategy_guide_notes(left_config)
 
     with right_panel:
         st.markdown("**Strategy B: PIT Reselect Strategies**")
@@ -1751,8 +1860,7 @@ def render_strategy_guide_page() -> None:
             key="guide_right_config",
         )
         right_config = STRATEGY_B_GUIDE_CONFIGS[right_choice]
-        st.caption(right_config["setting"])
-        st.info(right_config["description"])
+        render_strategy_guide_notes(right_config)
 
     selected_pair = (left_choice, right_choice)
     if st.session_state.get("strategy_guide_selected_pair") != selected_pair:

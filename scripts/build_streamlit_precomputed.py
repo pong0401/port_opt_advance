@@ -40,9 +40,9 @@ HANDOFF_CURVE_SOURCES = [
         "family": "BEST_PARAM_S&P_PORT_OPT_ADVANCE",
     },
     {
-        "label": "Daily-exposure allocation SPY/Gold/BTC/BIL 35/30/10/25",
-        "path": ("..", "dynamic_port_opt", "result", "best_param_step3b_daily_exposure_multi_asset_best_curves.csv"),
-        "column": "Exposed SPY/Gold/BTC + BIL/IEF/VXUS/TIP 35/30/10/25/0/0/0",
+        "label": "Gold-DD fixed daily-exposure allocation SPY/Gold/BTC/BIL 35/30/10/25",
+        "path": ("..", "dynamic_port_opt", "result", "best_param_step3c_gold_drawdown_best_fixed_curve.csv"),
+        "column": "Best Gold-DD fixed 35/30/10/25",
         "family": "BEST_PARAM_S&P_PORT_OPT_ADVANCE",
     },
     {
@@ -105,7 +105,12 @@ HANDOFF_SUPPORT_FILES = [
     {
         "source": ("..", "dynamic_port_opt", "result", "best_param_step3_daily_exposure_best_exposure_history.csv"),
         "target": "best_param_step3_daily_exposure_best_exposure_history.csv",
-        "description": "Latest daily exposure signal history for Strategy A daily-exposure allocation.",
+        "description": "Latest SPY/BTC daily exposure signal history for Strategy A Gold-DD fixed daily-exposure allocation.",
+    },
+    {
+        "source": ("..", "dynamic_port_opt", "result", "best_param_step3c_gold_drawdown_exposure_history.csv"),
+        "target": "best_param_step3c_gold_drawdown_exposure_history.csv",
+        "description": "Latest Gold drawdown exposure signal history for Strategy A Gold-DD fixed daily-exposure allocation.",
     },
     {
         "source": ("..", "dynamic_port_opt", "result", "pit_reselect_step2_5_latest_effective_security_weights_thb.csv"),
