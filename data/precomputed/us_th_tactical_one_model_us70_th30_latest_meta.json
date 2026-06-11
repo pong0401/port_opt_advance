@@ -1,5 +1,5 @@
 {
-  "Date": "2026-06-10",
+  "Date": "2026-06-11",
   "Strategy": "One-model US cap 70% / TH cap 30% + daily exposure",
   "Case": "US cap 70% / TH cap 30%",
   "Model": "one combined mean-covariance optimizer",
@@ -11,14 +11,14 @@
   "TH Tactical Active Weight": 0.0,
   "Selected US Assets": 30,
   "Selected TH Assets": 0,
-  "US Internal Weight Date": "2026-06-10",
-  "TH Internal Weight Date": "2026-06-10",
-  "Train Start": "2025-01-23",
-  "Train End": "2026-06-10",
+  "US Internal Weight Date": "2026-06-11",
+  "TH Internal Weight Date": "2026-06-11",
+  "Train Start": "2025-01-24",
+  "Train End": "2026-06-11",
   "US Daily Exposure": 1.0,
   "TH Daily Exposure": 1.0,
   "Gold Daily Exposure": 0.5,
   "BTC Daily Exposure": 0.0,
   "Latest Weight Source": "Standalone refresh from this repo's current data/cache; no static latest-weight file is read from dynamic_port_opt.",
-  "calculated_at": "2026-06-10T12:04:45.652546+07:00"
+  "calculated_at": "2026-06-11T12:08:18.992040+07:00"
 }
