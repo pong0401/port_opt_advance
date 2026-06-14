@@ -22,5 +22,5 @@
   "Japan Yahoo Missing Codes": "",
   "Overlay Cache End": "2026-06-13",
   "Latest Weight Source": "Standalone refresh from this repo's current data/cache and Yahoo Finance latest JP prices; no static latest-weight file is read from dynamic_port_opt. Effective date is capped at the common latest date across Yahoo JP prices and overlay assets.",
-  "calculated_at": "2026-06-14T21:39:00.092603+07:00"
+  "calculated_at": "2026-06-14T21:44:04.810923+07:00"
 }

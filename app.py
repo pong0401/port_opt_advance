@@ -1436,7 +1436,12 @@ def _filter_latest_weight_rows(rows: pd.DataFrame) -> pd.DataFrame:
     if rows.empty or "Portfolio %" not in rows.columns:
         return rows
     portfolio_pct = pd.to_numeric(rows["Portfolio %"], errors="coerce").fillna(0.0)
-    filtered = rows.loc[portfolio_pct >= MIN_LATEST_WEIGHT_DISPLAY_PCT].copy()
+    if "Target % before exposure" in rows.columns:
+        target_pct = pd.to_numeric(rows["Target % before exposure"], errors="coerce").fillna(0.0)
+        filter_pct = pd.concat([portfolio_pct, target_pct], axis=1).max(axis=1)
+    else:
+        filter_pct = portfolio_pct
+    filtered = rows.loc[filter_pct >= MIN_LATEST_WEIGHT_DISPLAY_PCT].copy()
     return filtered if not filtered.empty else rows.copy()
 
 
@@ -1517,6 +1522,9 @@ def latest_weight_rows(label: str, config: dict, sleeves: pd.DataFrame) -> tuple
             if not latest.empty and {"Asset", "Effective Weight %"}.issubset(latest.columns):
                 rows = latest.copy()
                 rows["Portfolio %"] = rows["Effective Weight %"].astype(float)
+                has_target_weight = "Target Weight %" in rows.columns
+                if has_target_weight:
+                    rows["Target % before exposure"] = rows["Target Weight %"].astype(float)
                 if "Sleeve" in rows.columns:
                     rows["Group"] = rows["Sleeve"].map(_asset_group)
                 else:
@@ -1541,7 +1549,11 @@ def latest_weight_rows(label: str, config: dict, sleeves: pd.DataFrame) -> tuple
                     if column in rows.columns and rows[column].notna().any():
                         latest_date = str(rows[column].dropna().iloc[0])
                         break
-                display_rows = _filter_latest_weight_rows(rows[["Asset", "Group", "Daily Exposure", "Portfolio %"]])
+                display_cols = ["Asset", "Group", "Daily Exposure"]
+                if has_target_weight:
+                    display_cols.append("Target % before exposure")
+                display_cols.append("Portfolio %")
+                display_rows = _filter_latest_weight_rows(rows[display_cols])
                 return display_rows, latest_date
 
     exposure_file = config.get("exposure_file")
@@ -2070,6 +2082,10 @@ def render_strategy_guide_page() -> None:
         summary_cols[0].metric("Active exposure", f"{active_pct:.2f}%")
         summary_cols[1].metric("Cash after overlay", f"{cash_pct:.2f}%")
         summary_cols[2].metric("Total portfolio", f"{total_pct:.2f}%")
+        if "Target % before exposure" in display_weights.columns:
+            display_weights["Target % before exposure"] = display_weights["Target % before exposure"].map(
+                lambda value: f"{value:.2f}%"
+            )
         display_weights["Portfolio %"] = display_weights["Portfolio %"].map(lambda value: f"{value:.2f}%")
         st.dataframe(display_weights, use_container_width=True, hide_index=True)
     if right_notes:

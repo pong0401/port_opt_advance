@@ -354,6 +354,7 @@ def _security_rows(
     rows: list[dict[str, object]] = []
     for sleeve, weights in [("US Equity", us_internal), ("TH Equity", th_internal)]:
         for asset, internal_weight in weights.items():
+            target_weight = float(internal_weight * raw_sleeve.get(sleeve, 0.0))
             rows.append(
                 {
                     "Asset": asset,
@@ -361,6 +362,7 @@ def _security_rows(
                     "Sleeve": sleeve,
                     "Internal Weight": float(internal_weight),
                     "Raw Sleeve Weight": float(raw_sleeve.get(sleeve, 0.0)),
+                    "Target Weight": target_weight,
                     "Effective Weight": float(internal_weight * effective_sleeve.get(sleeve, 0.0)),
                     "Daily Exposure": float(exposure.get(sleeve, 1.0)),
                 }
@@ -368,6 +370,7 @@ def _security_rows(
     for asset, internal_weight in jp_internal.items():
         asset_code = str(asset)
         asset_name = jp_name_map.get(asset_code, asset_code)
+        target_weight = float(internal_weight * raw_sleeve.get("JP Equity", 0.0))
         rows.append(
             {
                 "Asset": asset_name,
@@ -375,11 +378,13 @@ def _security_rows(
                 "Sleeve": "JP Equity",
                 "Internal Weight": float(internal_weight),
                 "Raw Sleeve Weight": float(raw_sleeve.get("JP Equity", 0.0)),
+                "Target Weight": target_weight,
                 "Effective Weight": float(internal_weight * effective_sleeve.get("JP Equity", 0.0)),
                 "Daily Exposure": float(exposure.get("JP Equity", 1.0)),
             }
         )
     for asset, sleeve in [("GC=F", "Gold"), ("BTC-USD", "BTC"), ("Cash / Reduced Exposure", "Cash / Reduced Exposure")]:
+        target_weight = float(raw_sleeve.get(sleeve, 0.0))
         rows.append(
             {
                 "Asset": asset,
@@ -387,17 +392,20 @@ def _security_rows(
                 "Sleeve": sleeve,
                 "Internal Weight": 1.0,
                 "Raw Sleeve Weight": float(raw_sleeve.get(sleeve, 0.0)),
+                "Target Weight": target_weight,
                 "Effective Weight": float(effective_sleeve.get(sleeve, 0.0)),
                 "Daily Exposure": float(exposure.get(sleeve, 1.0)),
             }
         )
     frame = pd.DataFrame(rows)
+    frame["Target Weight %"] = frame["Target Weight"].mul(100.0)
     frame["Effective Weight %"] = frame["Effective Weight"].mul(100.0)
     frame["Date"] = as_of.date().isoformat()
     frame["Strategy"] = strategy
     frame["Last Exposure Date"] = as_of.date().isoformat()
     frame["Signal Source Close Date"] = source_date
-    return frame.loc[frame["Effective Weight"].abs().gt(1e-12)].sort_values("Effective Weight", ascending=False)
+    keep = frame["Effective Weight"].abs().gt(1e-12) | frame["Target Weight"].abs().gt(1e-12)
+    return frame.loc[keep].sort_values(["Effective Weight", "Target Weight"], ascending=False)
 
 
 def _build_outputs(
