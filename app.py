@@ -481,6 +481,7 @@ SNP_GUIDE_CONFIGS = {
 }
 
 ACTIVE_STRATEGY_B_GUIDE_NAMES = [
+    "US/TH/JP index signal + JP optimized top10 cap15 + weekly exposure + Gold DD252",
     "One-model US cap 70% / TH cap 30% with daily exposure",
     "US/TH tactical final best Sharpe 65/25/10 with Gold crash protection",
     "Best stock sleeve with Gold and BTC allocation",
@@ -569,6 +570,35 @@ STRATEGY_B_GUIDE_CONFIGS = {
             "Any reduced exposure becomes Cash / Reduced Exposure.",
         ],
         "metrics": {"CAGR": 0.1919, "Sharpe": 0.9447, "Max Drawdown": -0.2163},
+    },
+    "US/TH/JP index signal + JP optimized top10 cap15 + weekly exposure + Gold DD252": {
+        "series": "JP optimized min_vol_mom_tilt top10 cap15 weekly exposure with Gold DD252",
+        "latest_weights_file": "data/precomputed/us_th_jp_optimized_minvol_top10_cap15_weekly_latest_effective_weights_thb.csv",
+        "latest_weights_metadata_file": "data/precomputed/us_th_jp_optimized_minvol_top10_cap15_latest_meta.json",
+        "latest_weights_strategy": "JP optimized min_vol_mom_tilt top10 cap15% Stock60/Gold30/BTC10 Index signal leaves inactive equity in cash + weekly exposure all assets + gold drawdown 252d warn10 crash20",
+        "description": "strategy นี้เป็น US/Thailand/Japan candidate จาก PIT handoff ที่เปลี่ยน Japan sleeve จาก equal-selected เป็น optimized sleeve. Base allocation คือ Equity 60%, Gold 30%, BTC 10%; equity ของแต่ละประเทศรับได้สูงสุดหนึ่งในสามของ equity budget ตาม lagged index score และส่วนที่ inactive อยู่ใน Cash / Reduced Exposure. US และ TH ใช้ PIT optimized sleeve ส่วน JP ใช้ PIT universe top 10 แล้ว optimize แบบ min_vol_mom_tilt โดย cap น้ำหนักภายในหุ้น JP ที่ 15%. Exposure ใช้ weekly W-FRI ที่ sample จาก daily signal แบบ lag-1 และ Gold ใช้ drawdown protection 252 วัน",
+        "setting": "US/TH/JP index signal / Equity 60% / Gold 30% / BTC 10% / inactive country equity to cash / US PIT optimized sleeve / TH PIT optimized sleeve / JP PIT optimized min_vol_mom_tilt top10 cap15% / JP covariance lookback 120 trading days / min train 40 days / momentum 63 days / concentration penalty 0.01 / weekly W-FRI exposure sampled from lagged daily signals / US SPY MA300 below50% / TH SET MA200 below0% / JP MA120 below0% / Gold DD252 warn -10% เหลือ 75%, crash -20% เหลือ 50%, panic -30% พร้อมต่ำกว่า MA200 และ mom63<0 เหลือ 0%, recover -5% / BTC MA50 below0% / latest weights generated locally from current cache",
+        "guide_bullets": [
+            "Base sleeve mix: Equity 60%, Gold 30%, BTC 10%.",
+            "Universe ของ Equity คือ US PIT optimized sleeve, Thailand PIT optimized sleeve และ Japan PIT optimized sleeve.",
+            "JP sleeve ใช้ Japan PIT universe, เลือก top 10 ตาม monthly PIT rank แล้ว optimize ด้วย objective `min_vol_mom_tilt`.",
+            "JP internal optimizer ใช้ covariance lookback 120 trading days, minimum training history 40 วัน, momentum tilt 63 วัน, concentration penalty 0.01 และ cap หุ้น JP รายตัวไม่เกิน 15% ภายใน JP sleeve.",
+            "JP internal weights ถูกใช้แบบ 1-session lag ใน backtest; ถ้า history ไม่พอจะ fallback เป็น equal weight เฉพาะรอบนั้น.",
+            "Country allocation ใช้ lagged index scores โดยแต่ละประเทศรับหนึ่งในสามของ equity budget คูณ signal score ของตัวเอง.",
+            "Inactive equity อยู่ใน Cash / Reduced Exposure แทนการโยกไปประเทศที่ยัง active.",
+            "Latest weights คำนวณใหม่จาก cache ใน repo นี้; effective date ถูกจำกัดด้วยวันที่ล่าสุดร่วมกันระหว่าง Japan PIT cache และ overlay assets.",
+            "ราคาหุ้น JP ย้อนหลังมาจาก J-Quants API daily bars ที่ cache ไว้ใน `data/cache/dynamic_factor_copula/japan_daily_bars.parquet`; ชื่อหุ้น JP มาจาก J-Quants equity master cache.",
+        ],
+        "daily_exposure_bullets": [
+            "ใช้ weekly exposure โดย sample daily exposure signal ที่ lag แล้วทุก W-FRI และ forward-fill ระหว่าง weekly updates.",
+            "Raw daily exposure signals เป็น close-based และ shift 1 trading session ก่อนใช้งาน เพื่อหลีกเลี่ยง lookahead.",
+            "US Equity exposure: SPY ต่ำกว่า MA300 จะลด exposure เหลือ 50%.",
+            "TH Equity exposure: SET ต่ำกว่า MA200 จะลด exposure เหลือ 0%.",
+            "JP Equity exposure: Japan signal price ต่ำกว่า MA120 จะลด exposure เหลือ 0%.",
+            "Gold exposure: DD252 warn ที่ -10% ลด exposure เหลือ 75%, crash ที่ -20% ลดเหลือ 50%, panic ลดได้ถึง 0% ถ้า drawdown ต่ำกว่า -30%, Gold ต่ำกว่า MA200 และ momentum 63 วันติดลบ; recover เมื่อ drawdown ดีขึ้นถึง -5%.",
+            "BTC exposure: BTC ต่ำกว่า MA50 จะลด exposure เหลือ 0%; reduced exposure ทั้งหมดอยู่ใน Cash / Reduced Exposure.",
+        ],
+        "metrics": {"CAGR": 0.3003, "Sharpe": 2.1295, "Max Drawdown": -0.0692},
     },
     "Mean Covariance Gold30 stock cap 8 with asset-level daily exposure": {
         "series": "Mean Covariance Gold30 stock-cap sweep stockcap8 mom_63 + asset-level daily exposure",
@@ -1280,6 +1310,8 @@ def _asset_group(asset: str) -> str:
         return "US Equity"
     if asset in {"TH Equity", "TH Equity sleeve"}:
         return "TH Equity"
+    if asset in {"JP Equity", "JP Equity sleeve"}:
+        return "JP Equity"
     if asset in {"SPY", "S&P 500"}:
         return "US Equity"
     if asset in {"GOLD", "Gold"}:
@@ -1292,6 +1324,8 @@ def _asset_group(asset: str) -> str:
         return "Gold"
     if asset.endswith(".BK"):
         return "TH Equity"
+    if re.fullmatch(r"\d{4,5}", str(asset)):
+        return "JP Equity"
     return "US Equity"
 
 
@@ -1817,7 +1851,7 @@ def render_strategy_guide_page() -> None:
     st.info(
         "Daily exposure overlay means the strategy can change effective exposure every trading day from risk/trend signals. "
         "Strategy A now uses the best-param handoff from dynamic_port_opt. Strategy B now uses the PIT reselect handoff. "
-        "Port-growth curves are copied from the referenced precompute files and trimmed to the same start date before metrics are recalculated."
+        "Port-growth curves keep their own available history; only the selected chart pair is trimmed to a shared window before chart metrics are recalculated."
     )
 
     left_default = best_sharpe_config_name(SNP_GUIDE_CONFIGS, summary)
@@ -1989,7 +2023,7 @@ def render_strategy_guide_page() -> None:
         latest_metadata = st.session_state.get("strategy_latest_weights_metadata", {})
         exposure_text = latest_table["Daily Exposure"].astype(str)
         has_daily_overlay = (
-            exposure_text.str.contains("overlay|signal", case=False, na=False)
+            exposure_text.str.contains("overlay|signal|exposure|applied after optimization", case=False, na=False)
             & ~exposure_text.str.contains("no daily exposure overlay", case=False, na=False)
         ).any()
         latest_heading = "Latest Daily Exposure Weights" if has_daily_overlay else "Latest Weights"
@@ -2000,26 +2034,32 @@ def render_strategy_guide_page() -> None:
             if generated_at:
                 calculated_at = pd.Timestamp(generated_at)
                 calculated_text = f" Calculated at {calculated_at.strftime('%Y-%m-%d %H:%M:%S %Z')} from the latest refreshed dataset."
+            jp_source_text = ""
+            if latest_metadata.get("Japan Price Source"):
+                jp_source_text = (
+                    f" ราคาหุ้น JP ย้อนหลังใช้ {latest_metadata.get('Japan Price Source')} "
+                    f"ชื่อหุ้น JP ใช้ {latest_metadata.get('Japan Name Source', 'local Japan master cache')}"
+                )
             if "Strategy B:" in latest_label:
                 if has_daily_overlay:
                     st.caption(
                         f"Latest weight date: {latest_date}. This is the effective market/weight date, not the refresh runtime. "
                         f"Strategy B weights are read from the PIT precompute latest-weight file and scaled by the latest daily exposure signal when applicable. "
                         f"Historical metrics and curves come from the shared-start precompute dataset. "
-                        f"Values are effective portfolio weights after exposure overlay.{calculated_text}"
+                        f"Values are effective portfolio weights after exposure overlay.{calculated_text}{jp_source_text}"
                     )
                 else:
                     st.caption(
                         f"Latest weight date: {latest_date}. This is the effective market/weight date, not the refresh runtime. "
                         f"This Strategy B config has no daily exposure overlay. "
                         f"Latest weights are read from the PIT precompute file. "
-                        f"Historical metrics and curves come from the shared-start precompute dataset.{calculated_text}"
+                        f"Historical metrics and curves come from the shared-start precompute dataset.{calculated_text}{jp_source_text}"
                     )
             else:
                 st.caption(
                     f"Latest weight date: {latest_date}. This is the effective market/weight date, not the refresh runtime. "
                     f"Latest overlay signals use the precomputed SPY/Gold/BTC/VIX/USDTHB dataset. "
-                    f"Values are effective portfolio weights after daily exposure overlay.{calculated_text}"
+                    f"Values are effective portfolio weights after daily exposure overlay.{calculated_text}{jp_source_text}"
                 )
         display_weights = latest_table.copy()
         cash_mask = latest_table["Asset"].eq("CASH") | latest_table["Group"].eq("Cash")
@@ -2430,8 +2470,8 @@ def render_retirement_page(forward_test_result: Dict[str, object] | None) -> Non
 
     monthly_values = curve["PortValue"].resample("ME").last().dropna()
     monthly_returns = monthly_values.pct_change().dropna()
-    if len(monthly_returns) < 24:
-        st.warning("Retirement simulation needs more monthly history. Try a longer backtest window first.")
+    if len(monthly_returns) < 12:
+        st.warning("ต้องมีประวัติผลตอบแทนรายเดือนอย่างน้อย 12 เดือนก่อน จึงจะรัน retirement simulation ได้")
         return
 
     source_cagr = metric_value(metrics, "CAGR")
@@ -2445,21 +2485,22 @@ def render_retirement_page(forward_test_result: Dict[str, object] | None) -> Non
     s3.metric("Source Total Return", "-" if pd.isna(source_total_return) else f"{source_total_return:.2%}")
     s4.metric("Source Max Drawdown", "-" if pd.isna(source_max_drawdown) else f"{source_max_drawdown:.2%}")
     st.caption(
-        "Retirement simulation source: the latest rolling forward test in this session. "
-        "Monte Carlo draws monthly returns from the latest forward test CAGR and annual volatility."
+        "Retirement simulation ใช้ประวัติผลตอบแทนรายเดือนจาก source ที่เลือกในหน้านี้ "
+        "ส่วน Monte Carlo ใช้ CAGR และ volatility ของ source เดียวกัน"
     )
 
     col1, col2, col3 = st.columns(3)
     initial_portfolio = col1.number_input("Initial portfolio", min_value=1000.0, value=1_000_000.0, step=50_000.0)
     retirement_years = col2.slider("Retirement horizon (years)", min_value=5, max_value=50, value=30)
-    target_success_rate = col3.slider("Target survival rate", min_value=0.50, max_value=1.00, value=0.90, step=0.01)
+    target_success_rate = col3.slider("Target survival rate", min_value=0.50, max_value=1.00, value=0.97, step=0.01)
 
     col5, col6, col7 = st.columns(3)
     annual_inflation = col5.slider("Annual inflation", min_value=0.00, max_value=0.10, value=0.03, step=0.005)
     monthly_income = col6.number_input("Monthly pension / other income", min_value=0.0, value=0.0, step=1000.0)
     num_scenarios = col7.slider("Simulation scenarios", min_value=200, max_value=5000, value=1000, step=100)
 
-    block_size = st.slider("Bootstrap block size (months)", min_value=1, max_value=24, value=12)
+    max_block_size = max(1, min(24, len(monthly_returns)))
+    block_size = st.slider("Bootstrap block size (months)", min_value=1, max_value=max_block_size, value=min(12, max_block_size))
 
     if st.button("Run retirement test", use_container_width=True):
         with st.spinner("Running retirement survival simulation..."):

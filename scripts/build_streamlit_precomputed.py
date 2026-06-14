@@ -88,6 +88,12 @@ HANDOFF_CURVE_SOURCES = [
         "family": "PIT_RESELECT_BY_STEP_HANDOFF",
     },
     {
+        "label": "JP optimized min_vol_mom_tilt top10 cap15 weekly exposure with Gold DD252",
+        "path": ("..", "dynamic_port_opt", "result", "us_th_jp_optimized_sleeve_sweep_curves_thb.csv"),
+        "column": "JP optimized min_vol_mom_tilt top10 cap15% Stock60/Gold30/BTC10 Index signal leaves inactive equity in cash + weekly exposure all assets + gold drawdown 252d warn10 crash20",
+        "family": "PIT_RESELECT_BY_STEP_HANDOFF",
+    },
+    {
         "label": "Best stock assets + Gold/BTC/BIL/IEF reoptimized Dynamic HMM Copula [US stock only] [mean_variance] max10 PIT reselect",
         "path": ("..", "dynamic_port_opt", "result", "pit_reselect_step2_4_from_step1_momentum_best_stock_assets_gold_btc_bil_ief_reoptimized_curves_thb.csv"),
         "column": "Best stock assets + Gold/BTC/BIL/IEF reoptimized Dynamic HMM Copula [US stock only] [mean_variance] max10 PIT reselect",
@@ -176,6 +182,26 @@ HANDOFF_SUPPORT_FILES = [
         "source": ("..", "dynamic_port_opt", "result", "us_th_tactical_perf_momentum_one_model_gold30_btc10_th_signal_asym_group_cap_grid_us70_80_th30_40_grouped_weight_history_thb.csv"),
         "target": "us_th_tactical_perf_momentum_one_model_gold30_btc10_th_signal_asym_group_cap_grid_us70_80_th30_40_grouped_weight_history_thb.csv",
         "description": "One-model US70/TH30 asymmetric group-cap grid grouped weight history.",
+    },
+    {
+        "source": ("..", "dynamic_port_opt", "result", "us_th_jp_optimized_sleeve_sweep_focus_summary_thb.csv"),
+        "target": "us_th_jp_optimized_sleeve_sweep_focus_summary_thb.csv",
+        "description": "US/TH/JP JP-optimized sleeve selected-candidate summary.",
+    },
+    {
+        "source": ("..", "dynamic_port_opt", "result", "us_th_jp_optimized_sleeve_sweep_curves_thb.csv"),
+        "target": "us_th_jp_optimized_sleeve_sweep_curves_thb.csv",
+        "description": "US/TH/JP JP-optimized sleeve curves.",
+    },
+    {
+        "source": ("..", "dynamic_port_opt", "result", "us_th_jp_optimized_sleeve_sweep_weight_history_thb.csv"),
+        "target": "us_th_jp_optimized_sleeve_sweep_weight_history_thb.csv",
+        "description": "US/TH/JP JP-optimized sleeve top-level weight history.",
+    },
+    {
+        "source": ("..", "dynamic_port_opt", "result", "us_th_jp_optimized_sleeve_sweep_jp_internal_weight_history.csv"),
+        "target": "us_th_jp_optimized_sleeve_sweep_jp_internal_weight_history.csv",
+        "description": "US/TH/JP JP-optimized sleeve internal Japan stock weights.",
     },
 ]
 
@@ -625,9 +651,6 @@ def main() -> None:
         )
 
     returns = pd.DataFrame(strategy_returns).sort_index().loc[overlay.index.min() : overlay.index.max()]
-    returns, common_start = _align_return_starts(returns)
-    if common_start:
-        sleeve_returns = sleeve_returns.loc[pd.Timestamp(common_start) :].copy()
     curves = returns.apply(_curve_from_returns)
     returns.to_parquet(OUT_DIR / "streamlit_10y_strategy_returns.parquet")
     curves.to_parquet(OUT_DIR / "streamlit_10y_strategy_curves.parquet")
@@ -650,7 +673,7 @@ def main() -> None:
 
     metadata = {
         "generated_at": pd.Timestamp.now(tz="Asia/Bangkok").isoformat(),
-        "data_start": common_start or overlay.index.min().date().isoformat(),
+        "data_start": overlay.index.min().date().isoformat(),
         "raw_data_start": overlay.index.min().date().isoformat(),
         "data_end": overlay.index.max().date().isoformat(),
         "currency": "THB",
@@ -658,7 +681,7 @@ def main() -> None:
             "This is a frozen deploy-friendly performance dataset.",
             "It stores strategy/sleeve return series, not raw stock-level cache.",
             "Latest rebalance weights are intentionally not included.",
-            "Strategy returns are trimmed to a shared start date before metrics are recalculated.",
+            "Strategy return series keep their own available history; the app trims only the selected chart pair to a shared date window.",
         ],
         "handoff_curve_sources": handoff_sources_used,
         "handoff_support_files": support_files,

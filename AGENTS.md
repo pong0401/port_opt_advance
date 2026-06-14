@@ -2,31 +2,38 @@
 
 ## Adding a New Strategy
 
-Every time a new strategy is added, do all four items below before considering the handoff complete:
+ทุกครั้งที่เพิ่ม strategy ใหม่ ต้องทำทุกข้อด้านล่างให้ครบก่อนถือว่างานส่งมอบเสร็จ:
 
-1. Add the strategy to precompute with the same evaluation period/alignment rules as the existing strategies in the same family.
-2. Add a standalone latest-weight refresh path that recalculates the latest weights from this repo's current data/cache. Do not depend on static latest-weight files from `dynamic_port_opt` for deployed runtime behavior.
-3. Add the latest-weight refresh script and output files to the daily GitHub Action that updates latest weights.
-4. Add a detailed user-facing strategy explanation in the app/docs, including the strategy settings, universe, optimizer/model, rebalance/timing rules, daily exposure rules, caps, and where latest weights come from.
-5. Make the latest-weight display hide asset rows with portfolio weight below `1%` for every strategy, unless the user explicitly asks to inspect small residual positions. Apply this consistently to all newly added and existing strategy latest-weight tables.
+1. เพิ่ม strategy เข้า precompute โดยใช้ evaluation period และ alignment rules เดียวกับ strategy เดิมใน family เดียวกัน
+2. เพิ่ม standalone latest-weight refresh path ที่คำนวณ latest weights ใหม่จาก data/cache ปัจจุบันของ repo นี้ ห้ามพึ่ง static latest-weight files จาก `dynamic_port_opt` สำหรับ deployed runtime behavior
+3. เพิ่ม latest-weight refresh script และ output files เข้า daily GitHub Action ที่ใช้ update latest weights
+4. เพิ่มคำอธิบาย strategy แบบ user-facing ใน app/docs เป็นภาษาไทย โดยใส่ strategy settings, universe, optimizer/model, rebalance/timing rules, daily exposure rules, caps และ latest weights มาจากไหน คำ technical เช่น optimizer, rebalance, signal, exposure, drawdown, cache ใช้ภาษาอังกฤษหรือทับศัพท์ได้ถ้าอ่านง่ายกว่า
+5. ทำให้ latest-weight display ซ่อน asset rows ที่ portfolio weight ต่ำกว่า `1%` สำหรับทุก strategy ยกเว้น user ขอ inspect small residual positions โดยตรง ต้องใช้ rule นี้ให้สม่ำเสมอทั้ง strategy ใหม่และ strategy เดิม
 
 ## Strategy Description Style
 
-When adding or updating user-facing strategy descriptions in the app/docs:
+เมื่อเพิ่มหรือแก้คำอธิบาย strategy แบบ user-facing ใน app/docs:
 
-1. Write descriptions as readable bullet sections, not one long paragraph.
-2. Separate the explanation into at least:
+1. เขียนคำอธิบายเป็น bullet sections ที่อ่านง่าย ไม่เขียนเป็น paragraph ยาวก้อนเดียว
+2. แยกคำอธิบายอย่างน้อยเป็น:
    - `Strategy setup`
    - `Daily exposure rules`
-3. In `Strategy setup`, include the base allocation or sleeve mix, universe, selection rules, optimizer/model, objective, rebalance schedule, caps, and latest-weight source.
-4. In `Daily exposure rules`, explicitly state whether daily exposure is used. If it is used, include:
-   - signal timing, especially lag-1 or next-session execution
-   - each asset/sleeve signal and threshold
-   - what exposure becomes when the signal is risk-off
-   - whether reduced exposure becomes cash, BIL, another sleeve, or `Cash / Reduced Exposure`
-5. Do not duplicate the same explanation in a gray caption and an info box. Prefer the bullet info box for user-facing detail.
-6. Keep no-overlay strategies explicit: say that no daily exposure overlay is applied and that sleeves remain active until the next rebalance.
+3. ใน `Strategy setup` ต้องมี base allocation หรือ sleeve mix, universe, selection rules, optimizer/model, objective, rebalance schedule, caps และ latest-weight source
+4. ใน `Daily exposure rules` ต้องบอกชัดว่าใช้ daily exposure หรือไม่ ถ้าใช้ ต้องมี:
+   - signal timing โดยเฉพาะ lag-1 หรือ next-session execution
+   - signal และ threshold ของแต่ละ asset/sleeve
+   - เมื่อ signal เป็น risk-off แล้ว exposure เหลือเท่าไร
+   - reduced exposure ไปอยู่ cash, BIL, sleeve อื่น หรือ `Cash / Reduced Exposure`
+5. ห้าม duplicate คำอธิบายเดียวกันทั้งใน gray caption และ info box ให้ใช้ bullet info box เป็นหลักสำหรับรายละเอียด user-facing
+6. สำหรับ strategy ที่ไม่มี overlay ต้องเขียนให้ชัดว่าไม่มี daily exposure overlay และ sleeves ยัง active จนถึง rebalance ถัดไป
+
+## Chart Display Rules
+
+1. Chart ที่แสดง performance ของ strategy ต้องแสดงข้อมูลเต็มเท่าที่ strategy นั้นมีให้มากที่สุดเป็น default ห้ามตัด history ทั้ง dataset ให้สั้นลงเพียงเพราะมี strategy บางตัวที่ข้อมูลสั้นกว่า
+2. ถ้า user เลือกเปรียบเทียบ strategy หลายตัวใน chart เดียวกัน ให้ปรับช่วงเวลาให้เท่ากันเฉพาะคู่หรือชุด strategy ที่กำลังแสดงอยู่เท่านั้น
+3. ถ้า strategy ที่เลือกมีข้อมูลน้อยกว่า เช่น strategy ที่มี Japan PIT history สั้นกว่า ให้ตัด chart ของ strategy อื่นใน chart เดียวกันให้ตรงกับช่วงเวลาของ strategy ที่ข้อมูลสั้นกว่า เพื่อให้ metrics และ visual comparison อยู่บน window เดียวกัน
+4. การตัดช่วงเวลาเพื่อ comparison ต้องไม่เปลี่ยน precomputed return history ต้นฉบับของ strategy อื่น และต้องไม่ทำให้ strategy ที่ไม่ได้ถูกเลือกใน chart สูญเสีย history เต็มของตัวเอง
 
 ## SET100 Updates
 
-Use `https://www.set.or.th/api/set/index/set100/composition?lang=th` as the source URL when updating the latest SET100 composition.
+ใช้ `https://www.set.or.th/api/set/index/set100/composition?lang=th` เป็น source URL เมื่อ update latest SET100 composition

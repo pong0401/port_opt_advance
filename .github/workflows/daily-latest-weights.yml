@@ -53,6 +53,9 @@ jobs:
           test -f data/cache/portopt_optimizer_proof/20Y/volumes.parquet
           test -f data/cache/dynamic_factor_copula/extra_prices.parquet
           test -f data/cache/dynamic_factor_copula/extra_volumes.parquet
+          test -f data/cache/dynamic_factor_copula/japan_daily_bars.parquet
+          test -f data/cache/dynamic_factor_copula/japan_master_history.parquet
+          test -f data/cache/dynamic_factor_copula/japan_pit_universe_history.parquet
           test -f result/us_th_best_asset_sweep_dynamic_weight_history_thb.csv
 
       - name: Refresh latest overlay data
@@ -66,6 +69,9 @@ jobs:
 
       - name: Refresh one-model US70 TH30 daily exposure latest weights
         run: python scripts/refresh_us_th_tactical_one_model_us70_th30_latest.py
+
+      - name: Refresh US/TH/JP index-signal latest weights
+        run: python scripts/refresh_us_th_jp_index_signal_latest.py
 
       - name: Rebuild frozen backtest dataset
         if: github.event_name == 'workflow_dispatch' && inputs.run_backtest == 'true'
@@ -96,6 +102,10 @@ jobs:
           git add -f result/us_th_tactical_one_model_us70_th30_latest_sleeve_weights_thb.csv
           git add -f result/us_th_tactical_one_model_us70_th30_latest_meta.csv
           git add -f result/us_th_tactical_one_model_us70_th30_latest_meta.json
+          git add -f result/us_th_jp_optimized_minvol_top10_cap15_weekly_latest_effective_weights_thb.csv
+          git add -f result/us_th_jp_optimized_minvol_top10_cap15_weekly_latest_sleeve_weights_thb.csv
+          git add -f result/us_th_jp_optimized_minvol_top10_cap15_latest_meta.csv
+          git add -f result/us_th_jp_optimized_minvol_top10_cap15_latest_meta.json
           git add data/precomputed
           git diff --cached --quiet || git commit -m "Refresh latest portfolio weights"
           git push

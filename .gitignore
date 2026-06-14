@@ -13,6 +13,9 @@ data/cache/*
 !data/cache/dynamic_factor_copula/overlay_compare_prices.parquet
 !data/cache/dynamic_factor_copula/extra_prices.parquet
 !data/cache/dynamic_factor_copula/extra_volumes.parquet
+!data/cache/dynamic_factor_copula/japan_daily_bars.parquet
+!data/cache/dynamic_factor_copula/japan_master_history.parquet
+!data/cache/dynamic_factor_copula/japan_pit_universe_history.parquet
 !data/cache/portopt_optimizer_proof/
 !data/cache/portopt_optimizer_proof/20Y/
 !data/cache/portopt_optimizer_proof/20Y/benchmark.parquet
@@ -28,6 +31,10 @@ result/*
 !result/us_th_side_trigger_daily_asset_exposure_realloc_stock_thb.csv
 !result/us_th_side_trigger_latest_asset_weights_live_metadata.json
 !result/us_th_side_trigger_latest_asset_weights_live_thb.csv
+!result/us_th_jp_optimized_minvol_top10_cap15_weekly_latest_effective_weights_thb.csv
+!result/us_th_jp_optimized_minvol_top10_cap15_weekly_latest_sleeve_weights_thb.csv
+!result/us_th_jp_optimized_minvol_top10_cap15_latest_meta.csv
+!result/us_th_jp_optimized_minvol_top10_cap15_latest_meta.json
 notebook/
 
 repo_function_walkthrough.ipynb

@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-06-07T12:13:00.476540+07:00",
-  "data_start": "2018-01-02",
-  "raw_data_start": "2016-06-01",
-  "data_end": "2026-06-01",
+  "generated_at": "2026-06-14T21:26:49.726440+07:00",
+  "data_start": "2016-06-06",
+  "raw_data_start": "2016-06-06",
+  "data_end": "2026-06-06",
   "currency": "THB",
   "notes": [
     "This is a frozen deploy-friendly performance dataset.",
     "It stores strategy/sleeve return series, not raw stock-level cache.",
     "Latest rebalance weights are intentionally not included.",
-    "Strategy returns are trimmed to a shared start date before metrics are recalculated."
+    "Strategy return series keep their own available history; the app trims only the selected chart pair to a shared date window."
   ],
   "handoff_curve_sources": [
     {
@@ -90,6 +90,14 @@
       "column": "One-model US cap 70% / TH cap 30% + daily exposure",
       "source_start": "2006-12-29",
       "source_end": "2026-04-29"
+    },
+    {
+      "strategy": "JP optimized min_vol_mom_tilt top10 cap15 weekly exposure with Gold DD252",
+      "family": "PIT_RESELECT_BY_STEP_HANDOFF",
+      "path": "..\\dynamic_port_opt\\result\\us_th_jp_optimized_sleeve_sweep_curves_thb.csv",
+      "column": "JP optimized min_vol_mom_tilt top10 cap15% Stock60/Gold30/BTC10 Index signal leaves inactive equity in cash + weekly exposure all assets + gold drawdown 252d warn10 crash20",
+      "source_start": "2024-07-01",
+      "source_end": "2026-01-30"
     },
     {
       "strategy": "Best stock assets + Gold/BTC/BIL/IEF reoptimized Dynamic HMM Copula [US stock only] [mean_variance] max10 PIT reselect",
@@ -183,6 +191,26 @@
       "source": "..\\dynamic_port_opt\\result\\us_th_tactical_perf_momentum_one_model_gold30_btc10_th_signal_asym_group_cap_grid_us70_80_th30_40_grouped_weight_history_thb.csv",
       "target": "data\\precomputed\\us_th_tactical_perf_momentum_one_model_gold30_btc10_th_signal_asym_group_cap_grid_us70_80_th30_40_grouped_weight_history_thb.csv",
       "description": "One-model US70/TH30 asymmetric group-cap grid grouped weight history."
+    },
+    {
+      "source": "..\\dynamic_port_opt\\result\\us_th_jp_optimized_sleeve_sweep_focus_summary_thb.csv",
+      "target": "data\\precomputed\\us_th_jp_optimized_sleeve_sweep_focus_summary_thb.csv",
+      "description": "US/TH/JP JP-optimized sleeve selected-candidate summary."
+    },
+    {
+      "source": "..\\dynamic_port_opt\\result\\us_th_jp_optimized_sleeve_sweep_curves_thb.csv",
+      "target": "data\\precomputed\\us_th_jp_optimized_sleeve_sweep_curves_thb.csv",
+      "description": "US/TH/JP JP-optimized sleeve curves."
+    },
+    {
+      "source": "..\\dynamic_port_opt\\result\\us_th_jp_optimized_sleeve_sweep_weight_history_thb.csv",
+      "target": "data\\precomputed\\us_th_jp_optimized_sleeve_sweep_weight_history_thb.csv",
+      "description": "US/TH/JP JP-optimized sleeve top-level weight history."
+    },
+    {
+      "source": "..\\dynamic_port_opt\\result\\us_th_jp_optimized_sleeve_sweep_jp_internal_weight_history.csv",
+      "target": "data\\precomputed\\us_th_jp_optimized_sleeve_sweep_jp_internal_weight_history.csv",
+      "description": "US/TH/JP JP-optimized sleeve internal Japan stock weights."
     }
   ],
   "files": {
