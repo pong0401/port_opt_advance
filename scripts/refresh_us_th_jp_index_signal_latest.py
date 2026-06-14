@@ -36,7 +36,6 @@ WEEKLY_STRATEGY = (
 EQUITY_BUDGET = 0.60
 GOLD_WEIGHT = 0.30
 BTC_WEIGHT = 0.10
-JP_INDEX_PROXY = "13060"
 JP_ASSETS = 10
 JP_CAP = 0.15
 JP_OBJECTIVE = "min_vol_mom_tilt"
@@ -129,7 +128,7 @@ def _download_yahoo_close(ticker_map: dict[str, str], start: pd.Timestamp, end: 
 
 def _load_japan_prices_from_yahoo(universe: pd.DataFrame, overlay_end: pd.Timestamp) -> tuple[pd.DataFrame, str, list[str]]:
     selected_codes, universe_entry_date = _latest_japan_universe_codes(universe, overlay_end)
-    wanted = list(dict.fromkeys(selected_codes + [JP_INDEX_PROXY]))
+    wanted = list(dict.fromkeys(selected_codes))
     ticker_map = {code: _jquants_code_to_yahoo(code) for code in wanted}
     start = overlay_end - pd.Timedelta(days=JP_YAHOO_LOOKBACK_DAYS)
     prices = _download_yahoo_close(ticker_map, start=start, end=overlay_end)
@@ -165,11 +164,20 @@ def _load_japan_name_map(as_of: pd.Timestamp) -> dict[str, str]:
     return output
 
 
-def _japan_signal_price(prices: pd.DataFrame, universe: pd.DataFrame) -> pd.Series:
-    if JP_INDEX_PROXY in prices.columns and prices[JP_INDEX_PROXY].dropna().shape[0] >= 40:
-        return prices[JP_INDEX_PROXY].rename("JP index proxy")
-    selected = sorted(universe["Code"].dropna().astype(str).str.strip().unique().tolist())
-    return prices.reindex(columns=[ticker for ticker in selected if ticker in prices.columns]).mean(axis=1).rename("JP PIT proxy signal")
+def _japan_signal_price(
+    prices: pd.DataFrame,
+    universe: pd.DataFrame,
+    jp_internal: pd.Series | None = None,
+    as_of: pd.Timestamp | None = None,
+) -> pd.Series:
+    if jp_internal is not None and not jp_internal.empty:
+        weights = jp_internal.reindex(prices.columns).dropna()
+        weights = weights.loc[weights.gt(0.0)]
+        if not weights.empty:
+            return prices.reindex(columns=weights.index).mul(weights, axis=1).sum(axis=1).rename("JP optimized basket signal")
+    selected, _ = _latest_japan_universe_codes(universe, as_of)
+    selected = [ticker for ticker in selected if ticker in prices.columns]
+    return prices.reindex(columns=selected).mean(axis=1).rename("JP latest basket signal")
 
 
 def _momentum_signal(train_returns: pd.DataFrame) -> pd.Series:
@@ -459,9 +467,10 @@ def main() -> None:
     overlay_end = pd.Timestamp(overlay.dropna().index.max())
     jp_universe = _load_japan_universe()
     jp_prices, jp_universe_entry_date, jp_missing_yahoo = _load_japan_prices_from_yahoo(jp_universe, overlay_end)
-    jp_signal = _japan_signal_price(jp_prices, jp_universe)
     common_end = min(overlay_end, pd.Timestamp(jp_prices.dropna(how="all").index.max()))
     as_of = pd.Timestamp(common_end)
+    jp_internal, jp_internal_date = _latest_japan_internal_weights(jp_prices, jp_universe, as_of)
+    jp_signal = _japan_signal_price(jp_prices, jp_universe, jp_internal=jp_internal, as_of=as_of)
 
     signal_prices = pd.DataFrame(
         {
@@ -504,7 +513,6 @@ def main() -> None:
     ).ffill().fillna(1.0).clip(0.0, 1.0)
     weekly_exposure = _weekly_exposure(daily_exposure)
     weekly_latest = weekly_exposure.loc[:as_of].iloc[-1]
-    jp_internal, jp_internal_date = _latest_japan_internal_weights(jp_prices, jp_universe, as_of)
     jp_name_map = _load_japan_name_map(as_of)
     us_internal, th_internal, us_internal_date, th_internal_date = _latest_us_th_internal_weights(overlay, as_of)
     source_date = _source_close_date(signal_prices.index, as_of)
@@ -533,7 +541,7 @@ def main() -> None:
                 "Base Allocation": "Equity 60%; Gold 30%; BTC 10%",
                 "Universe": "US PIT optimized sleeve, TH PIT optimized sleeve, JP PIT optimized sleeve, Gold, BTC",
                 "JP Optimizer": "min_vol_mom_tilt; top 10 PIT names; max 15% internal weight; 120 trading-day covariance lookback; minimum 40 training days; 63-day momentum tilt; concentration penalty 0.01; fallback equal weight for insufficient history.",
-                "Japan Price Source": "Yahoo Finance daily adjusted close, downloaded at refresh time only for latest JP top10 universe plus 1306.T proxy.",
+                "Japan Price Source": "Yahoo Finance daily adjusted close, downloaded at refresh time only for latest JP top10 universe. JP exposure uses the optimized basket signal, not 1306.T.",
                 "Japan Name Source": "J-Quants API equity master cached locally at data/cache/dynamic_factor_copula/japan_master_history.parquet.",
                 "Equity Signal Rule": "US SPY MA300 + mom63; TH SET MA200 + mom63; JP Nikkei/proxy MA120 + mom63; scores shifted by one session",
                 "Weekly Exposure": "Samples the already-lagged daily exposure on W-FRI and forward-fills. US SPY MA300 below50%; TH SET MA200 below0%; JP MA120 below0%; Gold DD252 warn-10%->75%, crash-20%->50%, panic-30% + below MA200 + mom63<0 -> 0%, recover-5%; BTC MA50 below0%.",
