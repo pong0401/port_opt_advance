@@ -587,7 +587,7 @@ STRATEGY_B_GUIDE_CONFIGS = {
             "Country allocation ใช้ lagged index scores โดยแต่ละประเทศรับหนึ่งในสามของ equity budget คูณ signal score ของตัวเอง.",
             "Inactive equity อยู่ใน Cash / Reduced Exposure แทนการโยกไปประเทศที่ยัง active.",
             "Latest weights คำนวณใหม่จาก cache ใน repo นี้; effective date ถูกจำกัดด้วยวันที่ล่าสุดร่วมกันระหว่าง Japan PIT cache และ overlay assets.",
-            "ราคาหุ้น JP ย้อนหลังมาจาก J-Quants API daily bars ที่ cache ไว้ใน `data/cache/dynamic_factor_copula/japan_daily_bars.parquet`; ชื่อหุ้น JP มาจาก J-Quants equity master cache.",
+            "ราคาหุ้น JP สำหรับ latest weight ดึงจาก Yahoo Finance เฉพาะหุ้น JP top 10 ล่าสุดและ 1306.T proxy ในหน้าต่างข้อมูลสั้นพอสำหรับ optimizer/exposure; ชื่อหุ้น JP มาจาก J-Quants equity master cache.",
         ],
         "daily_exposure_bullets": [
             "ใช้ weekly exposure โดย sample daily exposure signal ที่ lag แล้วทุก W-FRI และ forward-fill ระหว่าง weekly updates.",

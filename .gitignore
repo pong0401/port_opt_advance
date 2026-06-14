@@ -10,10 +10,10 @@ yf_test_cache/
 data/backtest_records.csv
 data/cache/*
 !data/cache/dynamic_factor_copula/
+data/cache/dynamic_factor_copula/*
 !data/cache/dynamic_factor_copula/overlay_compare_prices.parquet
 !data/cache/dynamic_factor_copula/extra_prices.parquet
 !data/cache/dynamic_factor_copula/extra_volumes.parquet
-!data/cache/dynamic_factor_copula/japan_daily_bars.parquet
 !data/cache/dynamic_factor_copula/japan_master_history.parquet
 !data/cache/dynamic_factor_copula/japan_pit_universe_history.parquet
 !data/cache/portopt_optimizer_proof/

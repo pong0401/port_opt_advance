@@ -53,7 +53,6 @@ jobs:
           test -f data/cache/portopt_optimizer_proof/20Y/volumes.parquet
           test -f data/cache/dynamic_factor_copula/extra_prices.parquet
           test -f data/cache/dynamic_factor_copula/extra_volumes.parquet
-          test -f data/cache/dynamic_factor_copula/japan_daily_bars.parquet
           test -f data/cache/dynamic_factor_copula/japan_master_history.parquet
           test -f data/cache/dynamic_factor_copula/japan_pit_universe_history.parquet
           test -f result/us_th_best_asset_sweep_dynamic_weight_history_thb.csv

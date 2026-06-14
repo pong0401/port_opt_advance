@@ -6,8 +6,8 @@ import sys
 
 import numpy as np
 import pandas as pd
-import pyarrow.parquet as pq
 from scipy.optimize import minimize
+import yfinance as yf
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -44,6 +44,8 @@ JP_LOOKBACK_DAYS = 120
 JP_INITIAL_TRAIN_DAYS = 40
 JP_CONCENTRATION_PENALTY = 0.01
 EPSILON = 1e-12
+JP_YAHOO_LOOKBACK_DAYS = 550
+YF_CACHE_DIR = ROOT / "data" / "cache" / "dynamic_factor_copula" / ".yfinance"
 
 
 def _load_overlay() -> pd.DataFrame:
@@ -61,31 +63,80 @@ def _load_overlay() -> pd.DataFrame:
     return overlay[required].ffill()
 
 
-def _load_japan_prices() -> tuple[pd.DataFrame, pd.DataFrame]:
+def _jquants_code_to_yahoo(code: str) -> str:
+    clean = str(code).strip()
+    if clean.endswith("0") and len(clean) >= 5:
+        clean = clean[:-1]
+    return f"{clean}.T"
+
+
+def _load_japan_universe() -> pd.DataFrame:
     paths = default_paths(ROOT)
     universe_file = paths.local_cache_root / "japan_pit_universe_history.parquet"
-    bars_file = paths.local_cache_root / "japan_daily_bars.parquet"
     if not universe_file.exists():
         raise FileNotFoundError(f"Missing Japan PIT universe file: {universe_file}")
-    if not bars_file.exists():
-        raise FileNotFoundError(f"Missing Japan daily bars cache: {bars_file}")
 
     universe = pd.read_parquet(universe_file)
     universe["entry_date"] = pd.to_datetime(universe["entry_date"], errors="coerce")
     universe["Code"] = universe["Code"].astype(str).str.strip()
-    wanted = set(universe["Code"].dropna().unique())
-    wanted.add(JP_INDEX_PROXY)
+    return universe
 
-    schema_cols = set(pq.ParquetFile(bars_file).schema.names)
-    close_col = next((column for column in ["AdjC", "Close", "C"] if column in schema_cols), None)
-    if close_col is None:
-        raise ValueError(f"No close column found in {bars_file}")
-    bars = pd.read_parquet(bars_file, columns=["Date", "Code", close_col])
-    bars["Date"] = pd.to_datetime(bars["Date"], errors="coerce")
-    bars["Code"] = bars["Code"].astype(str).str.strip()
-    bars = bars.loc[bars["Code"].isin(wanted)].dropna(subset=["Date", "Code"])
-    prices = bars.pivot_table(index="Date", columns="Code", values=close_col, aggfunc="last").sort_index().ffill()
-    return prices, universe
+
+def _latest_japan_universe_codes(universe: pd.DataFrame, as_of: pd.Timestamp | None = None) -> tuple[list[str], str]:
+    rows = universe.dropna(subset=["entry_date"]).copy()
+    if as_of is not None:
+        rows = rows.loc[rows["entry_date"] <= as_of]
+    rows = rows.sort_values(["entry_date", "rank"])
+    if rows.empty:
+        return [], ""
+    latest_entry = rows["entry_date"].max()
+    codes = rows.loc[rows["entry_date"].eq(latest_entry), "Code"].dropna().astype(str).str.strip().tolist()
+    return codes[:JP_ASSETS], pd.Timestamp(latest_entry).date().isoformat()
+
+
+def _download_yahoo_close(ticker_map: dict[str, str], start: pd.Timestamp, end: pd.Timestamp) -> pd.DataFrame:
+    if not ticker_map:
+        return pd.DataFrame()
+    YF_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    try:
+        yf.set_tz_cache_location(str(YF_CACHE_DIR))
+    except Exception:
+        pass
+
+    frames: list[pd.Series] = []
+    for code, ticker in ticker_map.items():
+        raw = yf.download(
+            ticker,
+            start=start.date().isoformat(),
+            end=(end + pd.Timedelta(days=1)).date().isoformat(),
+            auto_adjust=True,
+            progress=False,
+            threads=False,
+        )
+        if raw.empty:
+            continue
+        close = raw["Close"]
+        if isinstance(close, pd.DataFrame):
+            close = close.iloc[:, 0]
+        close = close.dropna().astype(float).rename(code)
+        frames.append(close)
+    if not frames:
+        return pd.DataFrame()
+    prices = pd.concat(frames, axis=1).sort_index().ffill()
+    prices.index = pd.to_datetime(prices.index).tz_localize(None)
+    return prices
+
+
+def _load_japan_prices_from_yahoo(universe: pd.DataFrame, overlay_end: pd.Timestamp) -> tuple[pd.DataFrame, str, list[str]]:
+    selected_codes, universe_entry_date = _latest_japan_universe_codes(universe, overlay_end)
+    wanted = list(dict.fromkeys(selected_codes + [JP_INDEX_PROXY]))
+    ticker_map = {code: _jquants_code_to_yahoo(code) for code in wanted}
+    start = overlay_end - pd.Timedelta(days=JP_YAHOO_LOOKBACK_DAYS)
+    prices = _download_yahoo_close(ticker_map, start=start, end=overlay_end)
+    missing = [code for code in wanted if code not in prices.columns or prices[code].dropna().empty]
+    if selected_codes and not any(code in prices.columns and prices[code].dropna().shape[0] >= JP_INITIAL_TRAIN_DAYS for code in selected_codes):
+        raise RuntimeError("Yahoo Finance returned no usable Japan stock prices for latest JP universe.")
+    return prices, universe_entry_date, missing
 
 
 def _load_japan_name_map(as_of: pd.Timestamp) -> dict[str, str]:
@@ -179,21 +230,16 @@ def _latest_japan_internal_weights(
     universe: pd.DataFrame,
     as_of: pd.Timestamp,
 ) -> tuple[pd.Series, str]:
-    rows = universe.dropna(subset=["entry_date"])
-    rows = rows.loc[rows["entry_date"] <= as_of].sort_values(["entry_date", "rank"])
-    if rows.empty:
-        return pd.Series(dtype=float), ""
-    latest_entry = rows["entry_date"].max()
-    eligible = [ticker for ticker in rows.loc[rows["entry_date"].eq(latest_entry), "Code"].tolist() if ticker in prices.columns]
-    eligible = eligible[:JP_ASSETS]
+    eligible, universe_entry_date = _latest_japan_universe_codes(universe, as_of)
+    eligible = [ticker for ticker in eligible if ticker in prices.columns]
     if not eligible:
-        return pd.Series(dtype=float), pd.Timestamp(latest_entry).date().isoformat()
+        return pd.Series(dtype=float), ""
     returns = prices.pct_change(fill_method=None).replace([np.inf, -np.inf], np.nan)
-    train_end_pos = returns.index.searchsorted(latest_entry, side="left")
+    train_end_pos = returns.index.searchsorted(as_of, side="right")
     train_start_pos = max(0, train_end_pos - JP_LOOKBACK_DAYS)
     train_returns = returns.iloc[train_start_pos:train_end_pos].fillna(0.0).reindex(columns=eligible)
     weights = _optimized_japan_weights(train_returns, eligible)
-    return weights.sort_index(), pd.Timestamp(latest_entry).date().isoformat()
+    return weights.sort_index(), as_of.date().isoformat()
 
 
 def _latest_us_th_internal_weights(overlay: pd.DataFrame, as_of: pd.Timestamp) -> tuple[pd.Series, pd.Series, str, str]:
@@ -402,9 +448,11 @@ def _write_outputs(weekly_security: pd.DataFrame, weekly_sleeve: pd.DataFrame, m
 
 def main() -> None:
     overlay = _load_overlay()
-    jp_prices, jp_universe = _load_japan_prices()
+    overlay_end = pd.Timestamp(overlay.dropna().index.max())
+    jp_universe = _load_japan_universe()
+    jp_prices, jp_universe_entry_date, jp_missing_yahoo = _load_japan_prices_from_yahoo(jp_universe, overlay_end)
     jp_signal = _japan_signal_price(jp_prices, jp_universe)
-    common_end = min(pd.Timestamp(overlay.dropna().index.max()), pd.Timestamp(jp_prices.dropna(how="all").index.max()))
+    common_end = min(overlay_end, pd.Timestamp(jp_prices.dropna(how="all").index.max()))
     as_of = pd.Timestamp(common_end)
 
     signal_prices = pd.DataFrame(
@@ -477,7 +525,7 @@ def main() -> None:
                 "Base Allocation": "Equity 60%; Gold 30%; BTC 10%",
                 "Universe": "US PIT optimized sleeve, TH PIT optimized sleeve, JP PIT optimized sleeve, Gold, BTC",
                 "JP Optimizer": "min_vol_mom_tilt; top 10 PIT names; max 15% internal weight; 120 trading-day covariance lookback; minimum 40 training days; 63-day momentum tilt; concentration penalty 0.01; fallback equal weight for insufficient history.",
-                "Japan Price Source": "J-Quants API daily bars cached locally at data/cache/dynamic_factor_copula/japan_daily_bars.parquet.",
+                "Japan Price Source": "Yahoo Finance daily adjusted close, downloaded at refresh time only for latest JP top10 universe plus 1306.T proxy.",
                 "Japan Name Source": "J-Quants API equity master cached locally at data/cache/dynamic_factor_copula/japan_master_history.parquet.",
                 "Equity Signal Rule": "US SPY MA300 + mom63; TH SET MA200 + mom63; JP Nikkei/proxy MA120 + mom63; scores shifted by one session",
                 "Weekly Exposure": "Samples the already-lagged daily exposure on W-FRI and forward-fills. US SPY MA300 below50%; TH SET MA200 below0%; JP MA120 below0%; Gold DD252 warn-10%->75%, crash-20%->50%, panic-30% + below MA200 + mom63<0 -> 0%, recover-5%; BTC MA50 below0%.",
@@ -488,9 +536,11 @@ def main() -> None:
                 "US Internal Weight Date": us_internal_date,
                 "TH Internal Weight Date": th_internal_date,
                 "JP Internal Weight Date": jp_internal_date,
-                "Japan Cache End": pd.Timestamp(jp_prices.dropna(how="all").index.max()).date().isoformat(),
+                "JP Universe Entry Date": jp_universe_entry_date,
+                "Japan Yahoo Price End": pd.Timestamp(jp_prices.dropna(how="all").index.max()).date().isoformat(),
+                "Japan Yahoo Missing Codes": ",".join(jp_missing_yahoo),
                 "Overlay Cache End": pd.Timestamp(overlay.dropna().index.max()).date().isoformat(),
-                "Latest Weight Source": "Standalone refresh from this repo's current data/cache; no static latest-weight file is read from dynamic_port_opt. Effective date is capped at the common latest date across Japan PIT cache and overlay assets.",
+                "Latest Weight Source": "Standalone refresh from this repo's current data/cache and Yahoo Finance latest JP prices; no static latest-weight file is read from dynamic_port_opt. Effective date is capped at the common latest date across Yahoo JP prices and overlay assets.",
             }
         ]
     )
