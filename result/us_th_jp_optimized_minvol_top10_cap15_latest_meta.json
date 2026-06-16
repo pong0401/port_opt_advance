@@ -1,5 +1,5 @@
 {
-  "Date": "2026-06-12",
+  "Date": "2026-06-16",
   "Strategy": "JP optimized min_vol_mom_tilt top10 cap15% Stock60/Gold30/BTC10 Index signal leaves inactive equity in cash + weekly exposure all assets + gold drawdown 252d warn10 crash20",
   "JP Sleeve Mode": "JP optimized min_vol_mom_tilt top10 cap15%",
   "Model": "Index-signal sleeve allocation; inactive equity remains cash",
@@ -13,14 +13,14 @@
   "US Score": 1.0,
   "TH Score": 1.0,
   "JP Score": 1.0,
-  "Gold DD252": -0.2079384631938629,
-  "US Internal Weight Date": "2026-06-12",
-  "TH Internal Weight Date": "2026-06-12",
-  "JP Internal Weight Date": "2026-06-12",
+  "Gold DD252": -0.18240450426240784,
+  "US Internal Weight Date": "2026-06-16",
+  "TH Internal Weight Date": "2026-06-16",
+  "JP Internal Weight Date": "2026-06-16",
   "JP Universe Entry Date": "2026-03-02",
-  "Japan Yahoo Price End": "2026-06-12",
+  "Japan Yahoo Price End": "2026-06-16",
   "Japan Yahoo Missing Codes": "",
-  "Overlay Cache End": "2026-06-13",
+  "Overlay Cache End": "2026-06-16",
   "Latest Weight Source": "Standalone refresh from this repo's current data/cache and Yahoo Finance latest JP prices; no static latest-weight file is read from dynamic_port_opt. Effective date is capped at the common latest date across Yahoo JP prices and overlay assets.",
-  "calculated_at": "2026-06-14T21:48:19.461216+07:00"
+  "calculated_at": "2026-06-16T12:20:16.104952+07:00"
 }
