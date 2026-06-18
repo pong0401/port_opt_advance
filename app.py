@@ -629,7 +629,7 @@ STRATEGY_B_GUIDE_CONFIGS = {
     if name in STRATEGY_B_GUIDE_CONFIGS
 }
 
-DEFAULT_STRATEGY_B_GUIDE_CONFIG = "One-model US cap 70% / TH cap 30% with daily exposure"
+DEFAULT_STRATEGY_B_GUIDE_CONFIG = "US/TH tactical final best Sharpe 65/25/10 with Gold crash protection"
 
 
 def ensure_data_dir() -> None:
@@ -2028,6 +2028,17 @@ def render_strategy_guide_page() -> None:
             st.session_state.retirement_strategy_result = strategy_curve_to_result(raw_label, raw_curve["PortValue"])
             st.session_state.app_page = "Retirement"
             st.rerun()
+    latest_label_in_state = st.session_state.get("strategy_latest_weights_label")
+    current_compare_labels = {left_label, right_label}
+    if latest_label_in_state and latest_label_in_state not in current_compare_labels:
+        for key in [
+            "strategy_latest_weights",
+            "strategy_latest_weights_label",
+            "strategy_latest_weights_date",
+            "strategy_latest_weights_metadata",
+        ]:
+            st.session_state.pop(key, None)
+
     latest_table = st.session_state.get("strategy_latest_weights")
     if isinstance(latest_table, pd.DataFrame) and not latest_table.empty:
         latest_label = st.session_state.get("strategy_latest_weights_label", "Selected strategy")
