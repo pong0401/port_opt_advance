@@ -482,9 +482,10 @@ SNP_GUIDE_CONFIGS = {
 
 ACTIVE_STRATEGY_B_GUIDE_NAMES = [
     "US/TH/JP index signal + JP optimized top10 cap15 + weekly exposure + Gold DD252",
-    "One-model US cap 70% / TH cap 30% with daily exposure",
     "US/TH tactical final best Sharpe 65/25/10 with Gold crash protection",
-    "Best stock sleeve with Gold and BTC allocation",
+    "One-model US cap 70% / TH cap 30% with daily exposure",
+    "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure",
+    "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure",
 ]
 
 STRATEGY_B_GUIDE_CONFIGS = {
@@ -493,21 +494,62 @@ STRATEGY_B_GUIDE_CONFIGS = {
         "description": "This is the stock-only base model. At every monthly rebalance it gets the point-in-time S&P 500 membership for that date, ranks the active names by trailing liquidity, keeps 30 US stocks, builds momentum-aware clustering features, fits a Dynamic HMM Copula regime model, and optimizes with a mean-variance objective. Each stock is capped at 10% so the portfolio cannot concentrate in only a few names. No Gold, BTC, BIL, IEF, Thai stocks, or daily exposure overlay is applied here.",
         "setting": "US stocks only / point-in-time membership / monthly full reselect / top 30 liquid names / Dynamic HMM Copula / momentum on / mean-variance objective / max 10% per stock / no overlay assets / no daily exposure",
     },
-    "Best stock sleeve with Gold and BTC allocation": {
-        "series": "Best stock sleeve + EQUITY/GOLD/BTC 55/40/5",
-        "blend_weights": {"EQUITY": 55.0, "GOLD": 40.0, "BTC": 5.0},
-        "description": "This combines the best stock sleeve with fixed overlay assets. The stock sleeve comes from the PIT-reselected US dynamic model, then the portfolio is allocated monthly to Equity 55%, Gold 40%, and BTC 5%. It is a simple sleeve blend: the stock model decides which stocks belong in the Equity sleeve, while Gold and BTC are held as separate allocation sleeves. BIL is not used in this winning mix, and there is no daily exposure reduction.",
-        "setting": "Best PIT stock sleeve / monthly sleeve allocation / Equity 55% / Gold 40% / BTC 5% / no BIL / no IEF / no daily exposure",
+    "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure": {
+        "series": "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure",
+        "latest_weights_file": "data/precomputed/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_latest_effective_weights_thb.csv",
+        "latest_weights_metadata_file": "data/precomputed/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_latest_meta.json",
+        "latest_weights_strategy": "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure",
+        "description": "Strategy B best sleeve ตัวนี้เปลี่ยนเป็น one-model US/TH optimizer จาก PIT handoff: เลือกหุ้น US top 50 และ SET100 top 50, จำกัดหุ้นรายตัว 5%, ใส่ concentration penalty 0.02 และใช้ daily exposure overlay ของ US, TH, Gold, BTC. Latest weights คำนวณใหม่จาก cache ของ repo นี้ ไม่อ่าน static latest-weight จาก dynamic_port_opt.",
+        "setting": "One-model US cap 70% / TH cap 30% / PIT S&P 500 top50 + PIT SET100 top50 / stock cap 5% / concentration penalty 0.02 / Gold cap 30% / BTC cap 10% / monthly rebalance / daily exposure overlay / reduced exposure to Cash",
         "guide_bullets": [
-            "Combines the best PIT-reselected US stock sleeve with fixed overlay assets.",
-            "Monthly sleeve allocation: Equity 55%, Gold 40%, BTC 5%.",
-            "The stock model chooses the Equity sleeve constituents; Gold and BTC are held as separate sleeves.",
-            "BIL and IEF are not used in this winning mix.",
+            "Strategy setup",
+            "Base allocation เป็น one combined optimizer ครอบ US equity, Thai equity, Gold และ BTC; US group cap 70%, TH group cap 30%, Gold cap 30%, BTC cap 10%.",
+            "Universe คือ PIT S&P 500 top 50 และ PIT SET100 top 50 จาก liquidity/rank cache; Thai sleeve จะมีน้ำหนักเมื่อ TH tactical signal active.",
+            "Selection rules ใช้ PIT universe ตาม evaluation/alignment rules ของ PIT_RESELECT_BY_STEP_HANDOFF family; ลด duplicate share classes ก่อน optimize.",
+            "Optimizer/model คือ sample mean-covariance optimizer พร้อม mean-variance objective, mom_63 signal และ concentration penalty 0.02.",
+            "Rebalance schedule เป็น monthly rebalance ตาม PIT handoff family; weights ใน backtest ใช้หลังวัน rebalance เพื่อหลีกเลี่ยง same-close lookahead.",
+            "Caps: stock รายตัวไม่เกิน 5%, US group cap 70%, TH group cap 30%, Gold cap 30%, BTC cap 10%. BIL ไม่ได้เป็น asset ใน optimizer.",
+            "Latest weights คำนวณใหม่จาก data/cache ของ repo นี้ผ่าน standalone refresh script ไม่อ่าน static latest-weight file จาก dynamic_port_opt.",
         ],
         "daily_exposure_bullets": [
-            "No daily exposure reduction is applied.",
-            "Equity, Gold, and BTC remain invested at their monthly sleeve targets until the next rebalance.",
+            "Daily exposure rules",
+            "ใช้ daily exposure overlay หลัง optimizer โดย signal ถูก lag 1 trading session หรือใช้ close signal ที่รู้แล้วสำหรับ next-session execution.",
+            "US equity ใช้ SPY MA300; ถ้าต่ำกว่า MA300 exposure เหลือ 50%.",
+            "Thai equity ใช้ SET MA200; ถ้าต่ำกว่า MA200 exposure เหลือ 0%.",
+            "Gold ใช้ DD252 crash protection: warn -8% เหลือ 50%, crash -20% เหลือ 50%, panic -30% พร้อม Gold ต่ำกว่า MA200 และ mom63 < 0 เหลือ 0%, recover เมื่อ drawdown ดีขึ้นถึง -5%.",
+            "BTC ใช้ BTC MA50; ถ้าต่ำกว่า MA50 exposure เหลือ 0%.",
+            "Reduced exposure จากทุก asset/sleeve ไปอยู่ `Cash / Reduced Exposure`; ไม่มีการโยกน้ำหนักที่ถูกลดไป sleeve อื่น.",
         ],
+        "metrics": {"CAGR": 0.1977, "Sharpe": 1.0179, "Max Drawdown": -0.1801},
+    },
+    "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure": {
+        "series": "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure",
+        "latest_weights_file": "data/precomputed/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_ai_tech_cap25_latest_effective_weights_thb.csv",
+        "latest_weights_metadata_file": "data/precomputed/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_ai_tech_cap25_latest_meta.json",
+        "latest_weights_strategy": "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure",
+        "description": "Strategy B ตัวนี้เป็น one-model US/TH optimizer จาก PIT handoff ที่ต่อยอดจาก stockcap5 penalty0.02 assets50 โดยเพิ่ม strict AI-tech theme cap 25% เพื่อคุมการกระจุกตัวในหุ้น AI/semiconductor/mega-cap tech bucket. Latest weights คำนวณใหม่จาก cache ของ repo นี้ ไม่อ่าน static latest-weight จาก dynamic_port_opt.",
+        "setting": "One-model US cap 70% / TH cap 30% / PIT S&P 500 top50 + PIT SET100 top50 / stock cap 5% / concentration penalty 0.02 / strict AI-tech cap 25% / Gold cap 30% / BTC cap 10% / monthly rebalance / daily exposure overlay / reduced exposure to Cash",
+        "guide_bullets": [
+            "Strategy setup",
+            "Base allocation เป็น one combined optimizer ครอบ US equity, Thai equity, Gold และ BTC; US group cap 70%, TH group cap 30%, Gold cap 30%, BTC cap 10%.",
+            "Universe คือ PIT S&P 500 top 50 และ PIT SET100 top 50 จาก liquidity/rank cache; Thai sleeve จะมีน้ำหนักเมื่อ TH tactical signal active.",
+            "Selection rules ใช้ PIT universe ตาม evaluation/alignment rules ของ PIT_RESELECT_BY_STEP_HANDOFF family; ลด duplicate share classes ก่อน optimize.",
+            "Optimizer/model คือ sample mean-covariance optimizer พร้อม mean-variance objective, mom_63 signal และ concentration penalty 0.02.",
+            "Theme guardrail: strict AI-tech bucket คือ AAPL, AMD, GOOG, GOOGL, INTC, MU, NVDA, QCOM, TXN และ raw optimizer weight รวมของกลุ่มนี้ไม่เกิน 25%.",
+            "Rebalance schedule เป็น monthly rebalance ตาม PIT handoff family; weights ใน backtest ใช้หลังวัน rebalance เพื่อหลีกเลี่ยง same-close lookahead.",
+            "Caps: stock รายตัวไม่เกิน 5%, strict AI-tech theme cap 25%, US group cap 70%, TH group cap 30%, Gold cap 30%, BTC cap 10%. BIL ไม่ได้เป็น asset ใน optimizer.",
+            "Latest weights คำนวณใหม่จาก data/cache ของ repo นี้ผ่าน standalone refresh script ไม่อ่าน static latest-weight file จาก dynamic_port_opt.",
+        ],
+        "daily_exposure_bullets": [
+            "Daily exposure rules",
+            "ใช้ daily exposure overlay หลัง optimizer โดย signal ถูก lag 1 trading session หรือใช้ close signal ที่รู้แล้วสำหรับ next-session execution.",
+            "US equity ใช้ SPY MA300; ถ้าต่ำกว่า MA300 exposure เหลือ 50%.",
+            "Thai equity ใช้ SET MA200; ถ้าต่ำกว่า MA200 exposure เหลือ 0%.",
+            "Gold ใช้ DD252 crash protection: warn -8% เหลือ 50%, crash -20% เหลือ 50%, panic -30% พร้อม Gold ต่ำกว่า MA200 และ mom63 < 0 เหลือ 0%, recover เมื่อ drawdown ดีขึ้นถึง -5%.",
+            "BTC ใช้ BTC MA50; ถ้าต่ำกว่า MA50 exposure เหลือ 0%.",
+            "Reduced exposure จากทุก asset/sleeve ไปอยู่ Cash / Reduced Exposure; ไม่มีการโยกน้ำหนักที่ถูกลดไป sleeve อื่น.",
+        ],
+        "metrics": {"CAGR": 0.1959, "Sharpe": 1.0083, "Max Drawdown": -0.1801},
     },
     "Stocks, Gold, BTC, and BIL in one static model": {
         "series": "Stocks+Gold+BTC+BIL one-model Static Copula [mean_variance] PIT reselect",
@@ -629,7 +671,7 @@ STRATEGY_B_GUIDE_CONFIGS = {
     if name in STRATEGY_B_GUIDE_CONFIGS
 }
 
-DEFAULT_STRATEGY_B_GUIDE_CONFIG = "US/TH tactical final best Sharpe 65/25/10 with Gold crash protection"
+DEFAULT_STRATEGY_B_GUIDE_CONFIG = "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure"
 
 
 def ensure_data_dir() -> None:
@@ -1436,12 +1478,7 @@ def _filter_latest_weight_rows(rows: pd.DataFrame) -> pd.DataFrame:
     if rows.empty or "Portfolio %" not in rows.columns:
         return rows
     portfolio_pct = pd.to_numeric(rows["Portfolio %"], errors="coerce").fillna(0.0)
-    if "Target % before exposure" in rows.columns:
-        target_pct = pd.to_numeric(rows["Target % before exposure"], errors="coerce").fillna(0.0)
-        filter_pct = pd.concat([portfolio_pct, target_pct], axis=1).max(axis=1)
-    else:
-        filter_pct = portfolio_pct
-    filtered = rows.loc[filter_pct >= MIN_LATEST_WEIGHT_DISPLAY_PCT].copy()
+    filtered = rows.loc[portfolio_pct >= MIN_LATEST_WEIGHT_DISPLAY_PCT].copy()
     return filtered if not filtered.empty else rows.copy()
 
 

@@ -287,8 +287,14 @@ def main() -> None:
                 "Case": CASE,
                 "Model": "one combined mean-covariance optimizer",
                 "Objective": "mean_variance + mom_63 + concentration penalty",
-                "Universe": "PIT S&P 500 top30, PIT SET100 top30 when TH tactical signal is active, Gold, BTC",
-                "Caps": "stock 8%; US group 70%; TH group 30%; Gold 30%; BTC 10%",
+                "Universe": (
+                    f"PIT S&P 500 top{US_ASSETS}, PIT SET100 top{TH_ASSETS} "
+                    "when TH tactical signal is active, Gold, BTC"
+                ),
+                "Caps": (
+                    f"stock {STOCK_CAP:.0%}; US group {US_GROUP_CAP:.0%}; "
+                    f"TH group {TH_GROUP_CAP:.0%}; Gold {GOLD_CAP:.0%}; BTC {BTC_CAP:.0%}"
+                ),
                 "Daily Exposure": "US SPY MA300 below50%; TH SET MA200 below0%; Gold crash protection; BTC MA50 below0%; reduced exposure to cash",
                 "TH Tactical Rule": "monthly SET-vs-SPY THB relative-return binary lb1 entry0 exit0 hold0 confirm1",
                 "TH Tactical Active Weight": th_signal_weight,

@@ -10,6 +10,18 @@
 4. เพิ่มคำอธิบาย strategy แบบ user-facing ใน app/docs เป็นภาษาไทย โดยใส่ strategy settings, universe, optimizer/model, rebalance/timing rules, daily exposure rules, caps และ latest weights มาจากไหน คำ technical เช่น optimizer, rebalance, signal, exposure, drawdown, cache ใช้ภาษาอังกฤษหรือทับศัพท์ได้ถ้าอ่านง่ายกว่า
 5. ทำให้ latest-weight display ซ่อน asset rows ที่ portfolio weight ต่ำกว่า `1%` สำหรับทุก strategy ยกเว้น user ขอ inspect small residual positions โดยตรง ต้องใช้ rule นี้ให้สม่ำเสมอทั้ง strategy ใหม่และ strategy เดิม
 
+## Replacing an Existing Strategy
+
+เมื่อ replace strategy เดิมด้วย strategy ใหม่ ต้องทำให้ครบทั้ง backend behavior และ user-facing label ก่อนถือว่างานเสร็จ:
+
+1. เปลี่ยน backend series/source/precompute ให้ชี้ไป strategy ใหม่จริง
+2. เปลี่ยน dropdown/display label หรือ config key ที่ user เห็นใน app ให้เป็นชื่อ strategy ใหม่ ห้ามเหลือ label เก่าถ้า user ตั้งใจให้ replace ไม่ใช่เพิ่ม alias
+3. เปลี่ยน active/default strategy list ที่ใช้สร้าง options ให้ใช้ชื่อใหม่ และตรวจว่า state/default เก่าไม่ดึง label เดิมกลับมา
+4. เปลี่ยน latest-weight file, metadata file, latest_weights_strategy และ output path ให้ตรงกับ strategy ใหม่
+5. เปลี่ยน user-facing description/settings/docs ให้ตรงกับ strategy ใหม่ รวม Strategy setup และ Daily exposure rules ตามกฎด้านล่าง
+6. ถ้าจำเป็นต้องรองรับ state เก่า ให้ทำ migration/alias แบบมองไม่เห็น user แต่อย่าให้ dropdown แสดงชื่อ strategy เก่า
+7. smoke test หลังแก้ โดย import app หรือรัน check ที่เทียบเท่า แล้ว assert ว่า dropdown options ไม่มีชื่อ strategy เก่า และมีชื่อ strategy ใหม่
+
 ## Strategy Description Style
 
 เมื่อเพิ่มหรือแก้คำอธิบาย strategy แบบ user-facing ใน app/docs:

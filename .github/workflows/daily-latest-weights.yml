@@ -69,6 +69,12 @@ jobs:
       - name: Refresh one-model US70 TH30 daily exposure latest weights
         run: python scripts/refresh_us_th_tactical_one_model_us70_th30_latest.py
 
+      - name: Refresh stockcap5 assets50 Strategy B latest weights
+        run: python scripts/refresh_us_th_one_model_us70_th30_stockcap5_assets50_latest.py
+
+      - name: Refresh stockcap5 assets50 AI-tech cap25 Strategy B latest weights
+        run: python scripts/refresh_us_th_one_model_us70_th30_theme_cap25_latest.py
+
       - name: Refresh US/TH/JP index-signal latest weights
         run: python scripts/refresh_us_th_jp_index_signal_latest.py
 
@@ -101,6 +107,14 @@ jobs:
           git add -f result/us_th_tactical_one_model_us70_th30_latest_sleeve_weights_thb.csv
           git add -f result/us_th_tactical_one_model_us70_th30_latest_meta.csv
           git add -f result/us_th_tactical_one_model_us70_th30_latest_meta.json
+          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_latest_effective_weights_thb.csv
+          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_latest_sleeve_weights_thb.csv
+          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_latest_meta.csv
+          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_latest_meta.json
+          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_ai_tech_cap25_latest_effective_weights_thb.csv
+          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_ai_tech_cap25_latest_sleeve_weights_thb.csv
+          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_ai_tech_cap25_latest_meta.csv
+          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_ai_tech_cap25_latest_meta.json
           git add -f result/us_th_jp_optimized_minvol_top10_cap15_weekly_latest_effective_weights_thb.csv
           git add -f result/us_th_jp_optimized_minvol_top10_cap15_weekly_latest_sleeve_weights_thb.csv
           git add -f result/us_th_jp_optimized_minvol_top10_cap15_latest_meta.csv

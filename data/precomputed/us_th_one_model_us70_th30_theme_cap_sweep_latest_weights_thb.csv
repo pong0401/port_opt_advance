@@ -1,0 +1,127 @@
+Asset,Effective Weight,Date,Strategy,Case
+GC=F,0.04999999999999957,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 Baseline + daily exposure,Baseline
+Cash / Reduced Exposure,0.04999999999999949,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 Baseline + daily exposure,Baseline
+MRK,0.04999999999999919,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 Baseline + daily exposure,Baseline
+XOM,0.04999999999999919,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 Baseline + daily exposure,Baseline
+COST,0.04999999999999919,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 Baseline + daily exposure,Baseline
+TXN,0.04999999999999919,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 Baseline + daily exposure,Baseline
+MU,0.04999999999999919,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 Baseline + daily exposure,Baseline
+AMAT,0.04999999999999919,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 Baseline + daily exposure,Baseline
+LRCX,0.04999999999999919,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 Baseline + daily exposure,Baseline
+JNJ,0.04999999999999919,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 Baseline + daily exposure,Baseline
+INTC,0.04999999999999919,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 Baseline + daily exposure,Baseline
+GEV,0.04999999999999919,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 Baseline + daily exposure,Baseline
+CVX,0.04999999999999919,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 Baseline + daily exposure,Baseline
+WMT,0.04999999999999919,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 Baseline + daily exposure,Baseline
+PTTEP.BK,0.043426048869313866,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 Baseline + daily exposure,Baseline
+BCP.BK,0.043182126931276654,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 Baseline + daily exposure,Baseline
+TOP.BK,0.042983136001881535,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 Baseline + daily exposure,Baseline
+HANA.BK,0.04270822681171579,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 Baseline + daily exposure,Baseline
+DELTA.BK,0.04268297533146539,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 Baseline + daily exposure,Baseline
+IVL.BK,0.042667985255470296,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 Baseline + daily exposure,Baseline
+PTTGC.BK,0.04234950079888244,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 Baseline + daily exposure,Baseline
+AMAT,0.04999999999999976,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 40% + daily exposure,AI-tech cap 40%
+CVX,0.04999999999999976,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 40% + daily exposure,AI-tech cap 40%
+COST,0.04999999999999911,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 40% + daily exposure,AI-tech cap 40%
+TXN,0.0499999999999987,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 40% + daily exposure,AI-tech cap 40%
+Cash / Reduced Exposure,0.04999999999999849,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 40% + daily exposure,AI-tech cap 40%
+LRCX,0.049999999999998344,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 40% + daily exposure,AI-tech cap 40%
+GC=F,0.049999999999998324,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 40% + daily exposure,AI-tech cap 40%
+JNJ,0.04999999999999829,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 40% + daily exposure,AI-tech cap 40%
+INTC,0.04999999999999809,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 40% + daily exposure,AI-tech cap 40%
+MRK,0.04999999999999789,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 40% + daily exposure,AI-tech cap 40%
+WMT,0.049999999999997845,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 40% + daily exposure,AI-tech cap 40%
+MU,0.049999999999997824,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 40% + daily exposure,AI-tech cap 40%
+GEV,0.04999999999999707,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 40% + daily exposure,AI-tech cap 40%
+XOM,0.04999999999999449,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 40% + daily exposure,AI-tech cap 40%
+PTTEP.BK,0.043426048335899255,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 40% + daily exposure,AI-tech cap 40%
+BCP.BK,0.043182126397882145,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 40% + daily exposure,AI-tech cap 40%
+TOP.BK,0.04298313546847702,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 40% + daily exposure,AI-tech cap 40%
+HANA.BK,0.04270823001211417,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 40% + daily exposure,AI-tech cap 40%
+DELTA.BK,0.042682974798037135,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 40% + daily exposure,AI-tech cap 40%
+IVL.BK,0.04266798472211018,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 40% + daily exposure,AI-tech cap 40%
+PTTGC.BK,0.04234950026547202,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 40% + daily exposure,AI-tech cap 40%
+AMAT,0.049999999999999205,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 35% + daily exposure,AI-tech cap 35%
+MRK,0.049999999999999205,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 35% + daily exposure,AI-tech cap 35%
+XOM,0.049999999999999205,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 35% + daily exposure,AI-tech cap 35%
+COST,0.049999999999999205,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 35% + daily exposure,AI-tech cap 35%
+TXN,0.049999999999999205,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 35% + daily exposure,AI-tech cap 35%
+MU,0.049999999999999205,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 35% + daily exposure,AI-tech cap 35%
+WMT,0.049999999999999205,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 35% + daily exposure,AI-tech cap 35%
+LRCX,0.049999999999999205,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 35% + daily exposure,AI-tech cap 35%
+JNJ,0.049999999999999205,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 35% + daily exposure,AI-tech cap 35%
+INTC,0.049999999999999205,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 35% + daily exposure,AI-tech cap 35%
+GEV,0.049999999999999205,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 35% + daily exposure,AI-tech cap 35%
+CVX,0.04999999999999904,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 35% + daily exposure,AI-tech cap 35%
+GC=F,0.04999999999999883,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 35% + daily exposure,AI-tech cap 35%
+Cash / Reduced Exposure,0.04999999999999882,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 35% + daily exposure,AI-tech cap 35%
+PTTEP.BK,0.04342604940273568,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 35% + daily exposure,AI-tech cap 35%
+BCP.BK,0.043182127464671455,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 35% + daily exposure,AI-tech cap 35%
+TOP.BK,0.042983132801521315,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 35% + daily exposure,AI-tech cap 35%
+HANA.BK,0.04270822734507031,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 35% + daily exposure,AI-tech cap 35%
+DELTA.BK,0.04268297586489651,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 35% + daily exposure,AI-tech cap 35%
+IVL.BK,0.04266798578882024,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 35% + daily exposure,AI-tech cap 35%
+PTTGC.BK,0.04234950133228902,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 35% + daily exposure,AI-tech cap 35%
+Cash / Reduced Exposure,0.05000000000000049,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 30% + daily exposure,AI-tech cap 30%
+GC=F,0.05000000000000033,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 30% + daily exposure,AI-tech cap 30%
+MRK,0.04999999999999673,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 30% + daily exposure,AI-tech cap 30%
+XOM,0.04999999999999673,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 30% + daily exposure,AI-tech cap 30%
+COST,0.04999999999999673,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 30% + daily exposure,AI-tech cap 30%
+TXN,0.04999999999999673,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 30% + daily exposure,AI-tech cap 30%
+MU,0.04999999999999673,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 30% + daily exposure,AI-tech cap 30%
+AMAT,0.04999999999999673,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 30% + daily exposure,AI-tech cap 30%
+LRCX,0.04999999999999673,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 30% + daily exposure,AI-tech cap 30%
+JNJ,0.04999999999999673,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 30% + daily exposure,AI-tech cap 30%
+INTC,0.04999999999999673,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 30% + daily exposure,AI-tech cap 30%
+GEV,0.04999999999999673,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 30% + daily exposure,AI-tech cap 30%
+CVX,0.04999999999999673,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 30% + daily exposure,AI-tech cap 30%
+WMT,0.04999999999999673,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 30% + daily exposure,AI-tech cap 30%
+PTTEP.BK,0.04342604833591794,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 30% + daily exposure,AI-tech cap 30%
+BCP.BK,0.04318212639788418,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 30% + daily exposure,AI-tech cap 30%
+TOP.BK,0.04298313546848935,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 30% + daily exposure,AI-tech cap 30%
+HANA.BK,0.04270823001208903,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 30% + daily exposure,AI-tech cap 30%
+DELTA.BK,0.042682974798076596,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 30% + daily exposure,AI-tech cap 30%
+IVL.BK,0.04266798472208287,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 30% + daily exposure,AI-tech cap 30%
+PTTGC.BK,0.04234950026549749,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 30% + daily exposure,AI-tech cap 30%
+AMAT,0.04999999999999904,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure,AI-tech cap 25%
+MRK,0.04999999999999904,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure,AI-tech cap 25%
+XOM,0.04999999999999904,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure,AI-tech cap 25%
+COST,0.04999999999999904,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure,AI-tech cap 25%
+TXN,0.04999999999999904,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure,AI-tech cap 25%
+MU,0.04999999999999904,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure,AI-tech cap 25%
+WMT,0.04999999999999904,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure,AI-tech cap 25%
+LRCX,0.04999999999999904,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure,AI-tech cap 25%
+JNJ,0.04999999999999904,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure,AI-tech cap 25%
+INTC,0.04999999999999904,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure,AI-tech cap 25%
+GEV,0.04999999999999904,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure,AI-tech cap 25%
+CVX,0.04999999999999904,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure,AI-tech cap 25%
+GC=F,0.04999999999999872,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure,AI-tech cap 25%
+Cash / Reduced Exposure,0.04999999999999871,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure,AI-tech cap 25%
+PTTEP.BK,0.04342604940269506,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure,AI-tech cap 25%
+BCP.BK,0.04318212746466607,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure,AI-tech cap 25%
+TOP.BK,0.04298313280150933,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure,AI-tech cap 25%
+HANA.BK,0.04270822734511882,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure,AI-tech cap 25%
+DELTA.BK,0.04268297586485855,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure,AI-tech cap 25%
+IVL.BK,0.04266798578887478,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure,AI-tech cap 25%
+PTTGC.BK,0.0423495013322844,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure,AI-tech cap 25%
+XOM,0.04999999999999932,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 20% + daily exposure,AI-tech cap 20%
+GC=F,0.04999999999999908,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 20% + daily exposure,AI-tech cap 20%
+Cash / Reduced Exposure,0.049999999999999045,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 20% + daily exposure,AI-tech cap 20%
+MU,0.04999999999999898,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 20% + daily exposure,AI-tech cap 20%
+COST,0.049999999999998816,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 20% + daily exposure,AI-tech cap 20%
+INTC,0.04999999999999862,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 20% + daily exposure,AI-tech cap 20%
+TXN,0.04999999999999823,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 20% + daily exposure,AI-tech cap 20%
+WMT,0.049999999999998115,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 20% + daily exposure,AI-tech cap 20%
+MRK,0.049999999999997886,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 20% + daily exposure,AI-tech cap 20%
+JNJ,0.04999999999999773,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 20% + daily exposure,AI-tech cap 20%
+AMAT,0.04999999999999758,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 20% + daily exposure,AI-tech cap 20%
+LRCX,0.04999999999999753,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 20% + daily exposure,AI-tech cap 20%
+GEV,0.049999999999997005,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 20% + daily exposure,AI-tech cap 20%
+CVX,0.04999999999999667,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 20% + daily exposure,AI-tech cap 20%
+PTTEP.BK,0.04342604833579872,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 20% + daily exposure,AI-tech cap 20%
+BCP.BK,0.04318212639784089,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 20% + daily exposure,AI-tech cap 20%
+TOP.BK,0.04298313546845142,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 20% + daily exposure,AI-tech cap 20%
+HANA.BK,0.042708230012174386,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 20% + daily exposure,AI-tech cap 20%
+DELTA.BK,0.04268297479801709,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 20% + daily exposure,AI-tech cap 20%
+IVL.BK,0.042667984722180786,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 20% + daily exposure,AI-tech cap 20%
+PTTGC.BK,0.042349500265520104,2026-04-29,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 20% + daily exposure,AI-tech cap 20%
