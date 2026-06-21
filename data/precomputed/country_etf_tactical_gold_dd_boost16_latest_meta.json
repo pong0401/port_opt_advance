@@ -1,0 +1,17 @@
+{
+  "Strategy": "Country ETF tactical + Gold DD boost 16",
+  "Latest Cache Trading Date": "2026-06-18",
+  "Last Rebalance Date": "2026-06-18",
+  "Base Mix": "SPY 45%, Gold 30%, BTC 10%, BIL 15%",
+  "Base Momentum Selected": "EWY",
+  "Country ETF Universe": "country_only",
+  "Country Bucket": 0.08,
+  "Country Top N": 2,
+  "Country ETF Selected": "EWY,EWT",
+  "Gold Boost": 0.16,
+  "Gold Boost Active": false,
+  "SPY Exposure": 1.0,
+  "Gold Exposure": 0.5,
+  "BTC Exposure": 0.0,
+  "Latest Weight Source": "Standalone refresh from this repo's current yfinance-backed country ETF cache and overlay prices; no static latest-weight file is read from dynamic_port_opt."
+}

@@ -78,6 +78,9 @@ jobs:
       - name: Refresh US/TH/JP index-signal latest weights
         run: python scripts/refresh_us_th_jp_index_signal_latest.py
 
+      - name: Refresh Country ETF tactical latest weights
+        run: python scripts/refresh_country_etf_tactical_latest.py
+
       - name: Rebuild frozen backtest dataset
         if: github.event_name == 'workflow_dispatch' && inputs.run_backtest == 'true'
         run: |
@@ -119,6 +122,11 @@ jobs:
           git add -f result/us_th_jp_optimized_minvol_top10_cap15_weekly_latest_sleeve_weights_thb.csv
           git add -f result/us_th_jp_optimized_minvol_top10_cap15_latest_meta.csv
           git add -f result/us_th_jp_optimized_minvol_top10_cap15_latest_meta.json
+          git add -f result/country_etf_tactical_gold_dd_boost16_latest_effective_weights.csv
+          git add -f result/country_etf_tactical_gold_dd_boost16_latest_sleeve_weights.csv
+          git add -f result/country_etf_tactical_gold_dd_boost16_latest_meta.csv
+          git add -f result/country_etf_tactical_gold_dd_boost16_latest_meta.json
+          git add -f data/cache/dynamic_factor_copula/country_etf_tactical_latest_prices.parquet
           git add data/precomputed
           git diff --cached --quiet || git commit -m "Refresh latest portfolio weights"
           git push

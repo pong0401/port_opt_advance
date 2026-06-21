@@ -124,6 +124,12 @@ LEGACY_DEFAULT_GROUPS = ["US Liquid Leaders", "Gold-Silver Diversified"]
 DATA_DIR = Path(__file__).resolve().parent / "data"
 PRECOMPUTED_DIR = DATA_DIR / "precomputed"
 MIN_LATEST_WEIGHT_DISPLAY_PCT = 1.0
+COUNTRY_ETF_ASSETS = {
+    "EWC", "EWA", "EWW", "EWZ", "ARGT", "ECH", "EPU", "GXG",
+    "EWG", "EWU", "EWQ", "EWL", "EWP", "EWI", "EWN", "EWD", "EDEN", "EIRL", "NORW", "EPOL", "GREK", "TUR",
+    "EWJ", "DXJ", "EWT", "EWY", "INDA", "EPI", "MCHI", "KWEB", "EWS", "EWM", "EIDO", "VNM", "THD", "ENZL",
+    "PAK", "KSA", "QAT", "UAE", "EIS", "EZA", "EGPT",
+}
 BACKTEST_RECORDS_FILE = DATA_DIR / "backtest_records.csv"
 BACKTEST_RECORD_COLUMNS = [
     "run_id",
@@ -439,45 +445,34 @@ SNP_GUIDE_CONFIGS = {
             "SPY, Gold, BTC, and BIL remain active at their target sleeve weights after each monthly rebalance.",
         ],
     },
-    "Gold-DD fixed daily-exposure allocation: SPY 35%, Gold 30%, BTC 10%, BIL 25%": {
-        "series": "Gold-DD fixed daily-exposure allocation SPY/Gold/BTC/BIL 35/30/10/25",
-        "blend_weights": {
-            "SPY_DAILY_EXPOSURE": 35.0,
-            "GOLD_DAILY_EXPOSURE": 30.0,
-            "BTC_DAILY_EXPOSURE": 10.0,
-            "BIL": 25.0,
-        },
-        "daily_exposure_signals": {
-            "SPY_DAILY_EXPOSURE": {
-                "file": "data/precomputed/best_param_step3_daily_exposure_best_exposure_history.csv",
-                "column": "S&P 500 MA300 below0.50",
-            },
-            "GOLD_DAILY_EXPOSURE": {
-                "file": "data/precomputed/best_param_step3c_gold_drawdown_exposure_history.csv",
-                "column": "Gold DD warn-8%->50% crash-20%->25%",
-            },
-            "BTC_DAILY_EXPOSURE": {
-                "file": "data/precomputed/best_param_step3_daily_exposure_best_exposure_history.csv",
-                "column": "BTC MA50 below0.00",
-            },
-        },
-        "description": "This replaces the Step 3B daily-exposure allocation with the Step 3C Gold-DD fixed version from the BEST_PARAM S&P handoff. The base allocation is still SPY 35%, Gold 30%, BTC 10%, and BIL 25%, but Gold now uses drawdown protection instead of the old no-op MA50 trend exposure.",
-        "setting": "Asset mix before exposure: SPY 35% / Gold 30% / BTC 10% / BIL 25%. Rebalance: fixed-weight sleeve rebalance in the precomputed engine. Daily exposure: lag-1 signals; SPY uses MA300 below 0.50, Gold uses DD warn -8% to 50% and crash -20% to 25%, BTC uses MA50 below 0.00. Test source: BEST_PARAM S&P handoff Step 3C Gold-DD fixed curve, then trimmed to the shared chart start date and metrics recalculated.",
+    "Country ETF tactical + Gold DD boost 16": {
+        "series": "Country ETF tactical + Gold DD boost 16",
+        "latest_weights_file": "data/precomputed/country_etf_tactical_gold_dd_boost16_latest_effective_weights.csv",
+        "latest_weights_metadata_file": "data/precomputed/country_etf_tactical_gold_dd_boost16_latest_meta.json",
+        "latest_weights_strategy": "Country ETF tactical + Gold DD boost 16",
+        "description": "Strategy A winner จาก BEST_PARAM S&P handoff Step 4: เริ่มจาก core SPY/Gold/BTC/BIL 45/30/10/15 แล้วให้ ETF momentum core หนึ่งตัวรับได้ 15% จาก SPY, เพิ่ม country ETF tactical satellite 8% เลือก top 2 จาก country ETF universe ที่มี history ประมาณ 10 ปี และใช้ Gold DD boost 16% จาก SPY เมื่อ SPY risk-off. Latest weights คำนวณใหม่ใน repo นี้จาก yfinance-backed country ETF cache ไม่อ่าน static latest-weight file จาก dynamic_port_opt.",
+        "setting": "Core SPY 45% / Gold 30% / BTC 10% / BIL 15% / base momentum ETF bucket 15% funded from SPY / country ETF tactical bucket 8% top 2 funded from SPY / monthly rebalance / country universe requires about 10 years of history / SPY MA300 below50% / Gold DD252 warn -8% to 50%, crash -20% to 50% / BTC MA50 below0% / Gold boost 16% funded from SPY when SPY is below MA200 or SPY DD252 <= -8% / latest weights generated locally from current cache",
         "guide_bullets": [
-            "Base allocation before overlay: SPY 35%, Gold 30%, BTC 10%, BIL 25%.",
-            "Uses the Step 3C Gold-DD fixed curve from the BEST_PARAM S&P Port Opt Advance handoff.",
-            "Keeps the same fixed allocation as Step 3B, but replaces Gold's no-op trend exposure with a drawdown rule.",
-            "BIL stays as the fixed defensive sleeve and is not cut by the trend overlay.",
-            "Test source is `best_param_step3c_gold_drawdown_best_fixed_curve.csv`, trimmed to the shared chart start date.",
+            "Strategy setup",
+            "Base allocation ก่อน tactical sleeves: SPY 45%, Gold 30%, BTC 10%, BIL 15%.",
+            "Base momentum sleeve: เลือก ETF momentum core top 1 จาก SPMO, MTUM, SCHG, XLK, EWY, EWJ, INDA แล้ว fund 15% จาก SPY ถ้า momentum/trend ผ่าน rule.",
+            "Country ETF sleeve: เลือก country ETF top 2 ด้วย monthly momentum rank จาก country-only universe และให้ bucket รวม 8% funded from SPY.",
+            "Universe ของ country ETF ต้องมี usable price history ประมาณ 10 ปี; winner ล่าสุดใน handoff คือ EWZ และ NORW ณ 2026-04-29.",
+            "Optimizer/model เป็น rules-based monthly momentum allocation ไม่ใช่ mean-variance optimizer; objective ของ sweep คือเลือก parameter ที่ Sharpe ดีสุดใน BEST_PARAM S&P family.",
+            "Rebalance schedule เป็น monthly month-end selection แล้วถือ weight ไปถึงเดือนถัดไป; signals ใช้ close-based lag-1/next-session execution.",
+            "Caps: country ETF satellite รวม 8%, top 2 เท่ากันตัวละ 4%; base momentum ETF 15%; Gold base 30% และ boost เพิ่มได้ 16% จาก SPY; SPY floor หลัง fund/boost ไม่น้อยกว่า 20%; BTC 10%; BIL 15% base.",
+            "Latest weights คำนวณใหม่จาก cache ใน repo นี้ผ่าน `scripts/refresh_country_etf_tactical_latest.py`; historical curve มาจาก BEST_PARAM S&P Step 4 handoff column `current_best country_only bucket8% top2 boost16`.",
         ],
         "daily_exposure_bullets": [
-            "Signals are close-based and shifted by one trading session, so the strategy only trades after the signal is known.",
-            "SPY sleeve: uses the S&P 500 MA300 signal; when price is below MA300, exposure is reduced to 50%.",
-            "Gold sleeve: uses drawdown protection; drawdown at or below -8% cuts exposure to 50%, and drawdown at or below -20% cuts exposure to 25%.",
-            "BTC sleeve: uses the BTC MA50 signal; when price is below MA50, exposure is reduced to 0%.",
-            "Any reduced SPY/Gold/BTC sleeve weight becomes cash exposure; BIL remains separate defensive exposure.",
+            "Daily exposure rules",
+            "ใช้ daily exposure overlay กับ SPY, Gold และ BTC; country ETF, base momentum ETF และ BIL ถือเต็มตาม target หลัง monthly rebalance.",
+            "Signal timing เป็น close-based lag-1: ใช้สัญญาณจาก close ที่รู้แล้วไปใช้กับ next session เพื่อลด lookahead.",
+            "SPY exposure: ถ้า SPY ต่ำกว่า MA300 จะลด exposure เหลือ 50%; ส่วนที่ลดไปอยู่ Cash / Reduced Exposure.",
+            "Gold exposure: ใช้ DD252; drawdown <= -8% ลด exposure เหลือ 50% และ drawdown <= -20% ยังอยู่ที่ 50%; ส่วนที่ลดไปอยู่ Cash / Reduced Exposure.",
+            "BTC exposure: ถ้า BTC ต่ำกว่า MA50 จะลด exposure เหลือ 0%; ส่วนที่ลดไปอยู่ Cash / Reduced Exposure.",
+            "Gold boost rule แยกจาก daily exposure: ถ้า SPY ต่ำกว่า MA200 หรือ SPY DD252 <= -8% ณ rebalance จะเพิ่ม Gold 16% โดย fund จาก SPY ก่อนนำ daily exposure ไปใช้.",
         ],
-    },
+    }
 }
 
 ACTIVE_STRATEGY_B_GUIDE_NAMES = [
@@ -1354,6 +1349,8 @@ def _asset_group(asset: str) -> str:
         return "TH Equity"
     if asset in {"JP Equity", "JP Equity sleeve"}:
         return "JP Equity"
+    if asset == "Country ETF" or asset in COUNTRY_ETF_ASSETS:
+        return "Country ETF"
     if asset in {"SPY", "S&P 500"}:
         return "US Equity"
     if asset in {"GOLD", "Gold"}:
