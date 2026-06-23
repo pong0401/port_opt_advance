@@ -1479,6 +1479,12 @@ def _filter_latest_weight_rows(rows: pd.DataFrame) -> pd.DataFrame:
     return filtered if not filtered.empty else rows.copy()
 
 
+def _latest_weight_display_columns(rows: pd.DataFrame) -> list[str]:
+    priority_cols = ["Asset", "Portfolio %"]
+    return [col for col in priority_cols if col in rows.columns] + [
+        col for col in rows.columns if col not in priority_cols
+    ]
+
 def latest_weight_rows(label: str, config: dict, sleeves: pd.DataFrame) -> tuple[pd.DataFrame, str]:
     latest_weights_file = config.get("latest_weights_file")
     if latest_weights_file:
@@ -2132,6 +2138,7 @@ def render_strategy_guide_page() -> None:
                 lambda value: f"{value:.2f}%"
             )
         display_weights["Portfolio %"] = display_weights["Portfolio %"].map(lambda value: f"{value:.2f}%")
+        display_weights = display_weights[_latest_weight_display_columns(display_weights)]
         st.dataframe(display_weights, use_container_width=True, hide_index=True)
     if right_notes:
         st.info(" ".join(dict.fromkeys(right_notes)))
