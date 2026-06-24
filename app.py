@@ -494,7 +494,7 @@ STRATEGY_B_GUIDE_CONFIGS = {
         "latest_weights_file": "data/precomputed/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_latest_effective_weights_thb.csv",
         "latest_weights_metadata_file": "data/precomputed/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_latest_meta.json",
         "latest_weights_strategy": "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure",
-        "description": "Strategy B best sleeve ตัวนี้เปลี่ยนเป็น one-model US/TH optimizer จาก PIT handoff: เลือกหุ้น US top 50 และ SET100 top 50, จำกัดหุ้นรายตัว 5%, ใส่ concentration penalty 0.02 และใช้ daily exposure overlay ของ US, TH, Gold, BTC. Latest weights คำนวณใหม่จาก cache ของ repo นี้ ไม่อ่าน static latest-weight จาก dynamic_port_opt.",
+        "description": "Strategy B best sleeve ตัวนี้เปลี่ยนเป็น one-model US/TH optimizer จาก PIT handoff: เลือกหุ้น US top 50 และ SET100 top 50, จำกัดหุ้นรายตัว 5%, ใส่ concentration penalty 0.02 และใช้ daily exposure overlay ของ US, TH, Gold, BTC. Latest weights คำนวณใหม่จาก fresh yfinance panel ตอนรัน ไม่อ่าน static latest-weight จาก dynamic_port_opt.",
         "setting": "One-model US cap 70% / TH cap 30% / PIT S&P 500 top50 + PIT SET100 top50 / stock cap 5% / concentration penalty 0.02 / Gold cap 30% / BTC cap 10% / monthly rebalance / daily exposure overlay / reduced exposure to Cash",
         "guide_bullets": [
             "Strategy setup",
@@ -504,7 +504,7 @@ STRATEGY_B_GUIDE_CONFIGS = {
             "Optimizer/model คือ sample mean-covariance optimizer พร้อม mean-variance objective, mom_63 signal และ concentration penalty 0.02.",
             "Rebalance schedule เป็น monthly rebalance ตาม PIT handoff family; weights ใน backtest ใช้หลังวัน rebalance เพื่อหลีกเลี่ยง same-close lookahead.",
             "Caps: stock รายตัวไม่เกิน 5%, US group cap 70%, TH group cap 30%, Gold cap 30%, BTC cap 10%. BIL ไม่ได้เป็น asset ใน optimizer.",
-            "Latest weights คำนวณใหม่จาก data/cache ของ repo นี้ผ่าน standalone refresh script ไม่อ่าน static latest-weight file จาก dynamic_port_opt.",
+            "Latest weights คำนวณใหม่จาก fresh yfinance panel ผ่าน standalone refresh script ไม่อ่าน static latest-weight file จาก dynamic_port_opt.",
         ],
         "daily_exposure_bullets": [
             "Daily exposure rules",
@@ -522,7 +522,7 @@ STRATEGY_B_GUIDE_CONFIGS = {
         "latest_weights_file": "data/precomputed/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_ai_tech_cap25_latest_effective_weights_thb.csv",
         "latest_weights_metadata_file": "data/precomputed/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_ai_tech_cap25_latest_meta.json",
         "latest_weights_strategy": "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure",
-        "description": "Strategy B ตัวนี้เป็น one-model US/TH optimizer จาก PIT handoff ที่ต่อยอดจาก stockcap5 penalty0.02 assets50 โดยเพิ่ม strict AI-tech theme cap 25% เพื่อคุมการกระจุกตัวในหุ้น AI/semiconductor/mega-cap tech bucket. Latest weights คำนวณใหม่จาก cache ของ repo นี้ ไม่อ่าน static latest-weight จาก dynamic_port_opt.",
+        "description": "Strategy B ตัวนี้เป็น one-model US/TH optimizer จาก PIT handoff ที่ต่อยอดจาก stockcap5 penalty0.02 assets50 โดยเพิ่ม strict AI-tech theme cap 25% เพื่อคุมการกระจุกตัวในหุ้น AI/semiconductor/mega-cap tech bucket. Latest weights คำนวณใหม่จาก fresh yfinance panel ตอนรัน ไม่อ่าน static latest-weight จาก dynamic_port_opt.",
         "setting": "One-model US cap 70% / TH cap 30% / PIT S&P 500 top50 + PIT SET100 top50 / stock cap 5% / concentration penalty 0.02 / strict AI-tech cap 25% / Gold cap 30% / BTC cap 10% / monthly rebalance / daily exposure overlay / reduced exposure to Cash",
         "guide_bullets": [
             "Strategy setup",
@@ -533,7 +533,7 @@ STRATEGY_B_GUIDE_CONFIGS = {
             "Theme guardrail: strict AI-tech bucket คือ AAPL, AMD, GOOG, GOOGL, INTC, MU, NVDA, QCOM, TXN และ raw optimizer weight รวมของกลุ่มนี้ไม่เกิน 25%.",
             "Rebalance schedule เป็น monthly rebalance ตาม PIT handoff family; weights ใน backtest ใช้หลังวัน rebalance เพื่อหลีกเลี่ยง same-close lookahead.",
             "Caps: stock รายตัวไม่เกิน 5%, strict AI-tech theme cap 25%, US group cap 70%, TH group cap 30%, Gold cap 30%, BTC cap 10%. BIL ไม่ได้เป็น asset ใน optimizer.",
-            "Latest weights คำนวณใหม่จาก data/cache ของ repo นี้ผ่าน standalone refresh script ไม่อ่าน static latest-weight file จาก dynamic_port_opt.",
+            "Latest weights คำนวณใหม่จาก fresh yfinance panel ผ่าน standalone refresh script ไม่อ่าน static latest-weight file จาก dynamic_port_opt.",
         ],
         "daily_exposure_bullets": [
             "Daily exposure rules",
@@ -2119,9 +2119,15 @@ def render_strategy_guide_page() -> None:
                         f"Historical metrics and curves come from the shared-start precompute dataset.{calculated_text}{jp_source_text}"
                     )
             else:
+                latest_source = str(latest_metadata.get("Latest Weight Source", "")).strip()
+                source_text = (
+                    f" Latest weight source: {latest_source}"
+                    if latest_source
+                    else " Latest overlay signals use the precomputed SPY/Gold/BTC/VIX/USDTHB dataset."
+                )
                 st.caption(
                     f"Latest weight date: {latest_date}. This is the effective market/weight date, not the refresh runtime. "
-                    f"Latest overlay signals use the precomputed SPY/Gold/BTC/VIX/USDTHB dataset. "
+                    f"{source_text} "
                     f"Values are effective portfolio weights after daily exposure overlay.{calculated_text}{jp_source_text}"
                 )
         display_weights = latest_table.copy()

@@ -20,7 +20,6 @@ from dynamic_factor_copula import (  # noqa: E402
     build_momentum_signal,
     compute_feature_table,
     default_paths,
-    load_cached_market_data,
     select_point_in_time_universe,
 )
 from refresh_us_th_tactical_final_best_latest import (  # noqa: E402
@@ -31,11 +30,9 @@ from refresh_us_th_tactical_final_best_latest import (  # noqa: E402
     TH_ASSETS,
     US_ASSETS,
     _active_members,
-    _all_available_members,
     _close_trend_exposure,
+    _fresh_us_th_panel,
     _gold_crash_protection_exposure,
-    _latest_common_close,
-    _load_overlay,
     _source_close_date,
     _th_tactical_weight,
 )
@@ -165,21 +162,15 @@ def _write_outputs(security: pd.DataFrame, sleeve: pd.DataFrame, meta: pd.DataFr
 
 
 def main() -> None:
-    paths = default_paths(ROOT)
-    overlay = _load_overlay()
-    as_of = _latest_common_close(overlay)
+    default_paths(ROOT).result_dir.mkdir(parents=True, exist_ok=True)
+    fresh_prices, fresh_volumes, benchmark, vol_proxy, us_all, th_all, overlay, as_of, fresh_start = _fresh_us_th_panel()
 
-    us_all = _all_available_members("us")
-    th_all = _all_available_members("th")
     us_active = _active_members("us", as_of, us_all)
     th_active = _active_members("th", as_of, th_all)
-    cached = load_cached_market_data(paths, tickers=list(dict.fromkeys(us_active + th_active)))
-    fx = overlay["USDTHB=X"].reindex(cached["prices"].index).ffill()
-
-    us_prices = cached["prices"].reindex(columns=us_active).mul(fx, axis=0).loc[START_DATE:as_of].ffill()
-    th_prices = cached["prices"].reindex(columns=th_active).loc[START_DATE:as_of].ffill()
-    us_volumes = cached["volumes"].reindex(us_prices.index).reindex(columns=us_active).fillna(0.0)
-    th_volumes = cached["volumes"].reindex(th_prices.index).reindex(columns=th_active).fillna(0.0)
+    us_prices = fresh_prices.reindex(columns=us_active).loc[START_DATE:as_of].ffill()
+    th_prices = fresh_prices.reindex(columns=th_active).loc[START_DATE:as_of].ffill()
+    us_volumes = fresh_volumes.reindex(us_prices.index).reindex(columns=us_active).fillna(0.0)
+    th_volumes = fresh_volumes.reindex(th_prices.index).reindex(columns=th_active).fillna(0.0)
 
     us_selected, us_internal_date = _select_stock_group(us_prices, us_volumes, us_active, US_ASSETS, as_of)
     th_signal_weight = _th_tactical_weight(overlay, as_of)
@@ -203,8 +194,8 @@ def main() -> None:
     train_index = train_dates[max(0, loc - LOOKBACK_DAYS + 1) : loc + 1]
     returns = prices.pct_change(fill_method=None).replace([np.inf, -np.inf], np.nan)
     train_returns = returns.reindex(train_index)
-    benchmark = (overlay["SPY"] * overlay["USDTHB=X"]).reindex(train_index).ffill().rename("benchmark")
-    vol_proxy = overlay["^VIX"].reindex(train_index).ffill().rename("vol_proxy")
+    benchmark = benchmark.reindex(train_index).ffill().rename("benchmark")
+    vol_proxy = vol_proxy.reindex(train_index).ffill().rename("vol_proxy")
 
     raw_weights = _optimize_one_model(
         train_returns,
@@ -308,7 +299,11 @@ def main() -> None:
                 "TH Daily Exposure": float(exposures["TH Equity"]),
                 "Gold Daily Exposure": float(exposures["Gold"]),
                 "BTC Daily Exposure": float(exposures["BTC"]),
-                "Latest Weight Source": "Standalone refresh from this repo's current data/cache; no static latest-weight file is read from dynamic_port_opt.",
+                "Latest Weight Source": (
+                    "Standalone refresh from a fresh yfinance panel at run time; "
+                    "no static latest-weight file is read from dynamic_port_opt."
+                ),
+                "Fresh Start Date": fresh_start,
             }
         ]
     )
