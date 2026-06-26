@@ -1,0 +1,69 @@
+Date,Asset,Effective Weight,Strategy,Variant,Rebalance Date,Sleeve
+2026-06-26,Cash / Reduced Exposure,0.19999999999999862,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 25% each + daily exposure,all_segments,2026-05-31,Cash / Reduced Exposure
+2026-06-26,GC=F,0.09999999999999935,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 25% each + daily exposure,all_segments,2026-05-31,Gold
+2026-06-26,TSLA,0.04999999999999982,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 25% each + daily exposure,all_segments,2026-05-31,US Equity
+2026-06-26,HOOD,0.04999999999999982,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 25% each + daily exposure,all_segments,2026-05-31,US Equity
+2026-06-26,AMZN,0.04999999999999982,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 25% each + daily exposure,all_segments,2026-05-31,US Equity
+2026-06-26,META,0.04999999999999982,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 25% each + daily exposure,all_segments,2026-05-31,US Equity
+2026-06-26,BA,0.04999999999999973,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 25% each + daily exposure,all_segments,2026-05-31,US Equity
+2026-06-26,GS,0.04999999999999965,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 25% each + daily exposure,all_segments,2026-05-31,US Equity
+2026-06-26,LLY,0.04999999999999954,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 25% each + daily exposure,all_segments,2026-05-31,US Equity
+2026-06-26,UNH,0.04999999999999935,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 25% each + daily exposure,all_segments,2026-05-31,US Equity
+2026-06-26,GOOG,0.04999999999999917,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 25% each + daily exposure,all_segments,2026-05-31,US Equity
+2026-06-26,QCOM,0.04300908336833338,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 25% each + daily exposure,all_segments,2026-05-31,US Equity
+2026-06-26,CRWD,0.042526746486373015,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 25% each + daily exposure,all_segments,2026-05-31,US Equity
+2026-06-26,ORCL,0.04236262663130999,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 25% each + daily exposure,all_segments,2026-05-31,US Equity
+2026-06-26,INTC,0.041347128114134234,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 25% each + daily exposure,all_segments,2026-05-31,US Equity
+2026-06-26,AMD,0.040505237628884326,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 25% each + daily exposure,all_segments,2026-05-31,US Equity
+2026-06-26,MU,0.04024917777096521,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 25% each + daily exposure,all_segments,2026-05-31,US Equity
+2026-06-26,Cash / Reduced Exposure,0.19999999999999862,US/TH one-model stockcap5 penalty0.02 assets50 all US and TH segments cap 25% each + daily exposure,all_us_plus_th_segments,2026-05-31,Cash / Reduced Exposure
+2026-06-26,GC=F,0.09999999999999935,US/TH one-model stockcap5 penalty0.02 assets50 all US and TH segments cap 25% each + daily exposure,all_us_plus_th_segments,2026-05-31,Gold
+2026-06-26,TSLA,0.04999999999999982,US/TH one-model stockcap5 penalty0.02 assets50 all US and TH segments cap 25% each + daily exposure,all_us_plus_th_segments,2026-05-31,US Equity
+2026-06-26,HOOD,0.04999999999999982,US/TH one-model stockcap5 penalty0.02 assets50 all US and TH segments cap 25% each + daily exposure,all_us_plus_th_segments,2026-05-31,US Equity
+2026-06-26,AMZN,0.04999999999999982,US/TH one-model stockcap5 penalty0.02 assets50 all US and TH segments cap 25% each + daily exposure,all_us_plus_th_segments,2026-05-31,US Equity
+2026-06-26,META,0.04999999999999982,US/TH one-model stockcap5 penalty0.02 assets50 all US and TH segments cap 25% each + daily exposure,all_us_plus_th_segments,2026-05-31,US Equity
+2026-06-26,BA,0.04999999999999973,US/TH one-model stockcap5 penalty0.02 assets50 all US and TH segments cap 25% each + daily exposure,all_us_plus_th_segments,2026-05-31,US Equity
+2026-06-26,GS,0.04999999999999965,US/TH one-model stockcap5 penalty0.02 assets50 all US and TH segments cap 25% each + daily exposure,all_us_plus_th_segments,2026-05-31,US Equity
+2026-06-26,LLY,0.04999999999999954,US/TH one-model stockcap5 penalty0.02 assets50 all US and TH segments cap 25% each + daily exposure,all_us_plus_th_segments,2026-05-31,US Equity
+2026-06-26,UNH,0.04999999999999935,US/TH one-model stockcap5 penalty0.02 assets50 all US and TH segments cap 25% each + daily exposure,all_us_plus_th_segments,2026-05-31,US Equity
+2026-06-26,GOOG,0.04999999999999917,US/TH one-model stockcap5 penalty0.02 assets50 all US and TH segments cap 25% each + daily exposure,all_us_plus_th_segments,2026-05-31,US Equity
+2026-06-26,QCOM,0.04300908336833338,US/TH one-model stockcap5 penalty0.02 assets50 all US and TH segments cap 25% each + daily exposure,all_us_plus_th_segments,2026-05-31,US Equity
+2026-06-26,CRWD,0.042526746486373015,US/TH one-model stockcap5 penalty0.02 assets50 all US and TH segments cap 25% each + daily exposure,all_us_plus_th_segments,2026-05-31,US Equity
+2026-06-26,ORCL,0.04236262663130999,US/TH one-model stockcap5 penalty0.02 assets50 all US and TH segments cap 25% each + daily exposure,all_us_plus_th_segments,2026-05-31,US Equity
+2026-06-26,INTC,0.041347128114134234,US/TH one-model stockcap5 penalty0.02 assets50 all US and TH segments cap 25% each + daily exposure,all_us_plus_th_segments,2026-05-31,US Equity
+2026-06-26,AMD,0.040505237628884326,US/TH one-model stockcap5 penalty0.02 assets50 all US and TH segments cap 25% each + daily exposure,all_us_plus_th_segments,2026-05-31,US Equity
+2026-06-26,MU,0.04024917777096521,US/TH one-model stockcap5 penalty0.02 assets50 all US and TH segments cap 25% each + daily exposure,all_us_plus_th_segments,2026-05-31,US Equity
+2026-06-26,Cash / Reduced Exposure,0.19999999999999962,US/TH one-model stockcap5 penalty0.02 assets50 IT segment cap 25% + daily exposure,it_only,2026-05-31,Cash / Reduced Exposure
+2026-06-26,GC=F,0.09999999999999998,US/TH one-model stockcap5 penalty0.02 assets50 IT segment cap 25% + daily exposure,it_only,2026-05-31,Gold
+2026-06-26,GS,0.04999999999999989,US/TH one-model stockcap5 penalty0.02 assets50 IT segment cap 25% + daily exposure,it_only,2026-05-31,US Equity
+2026-06-26,AMZN,0.04999999999999989,US/TH one-model stockcap5 penalty0.02 assets50 IT segment cap 25% + daily exposure,it_only,2026-05-31,US Equity
+2026-06-26,META,0.04999999999999989,US/TH one-model stockcap5 penalty0.02 assets50 IT segment cap 25% + daily exposure,it_only,2026-05-31,US Equity
+2026-06-26,BA,0.04999999999999989,US/TH one-model stockcap5 penalty0.02 assets50 IT segment cap 25% + daily exposure,it_only,2026-05-31,US Equity
+2026-06-26,UNH,0.04999999999999989,US/TH one-model stockcap5 penalty0.02 assets50 IT segment cap 25% + daily exposure,it_only,2026-05-31,US Equity
+2026-06-26,GOOG,0.04999999999999989,US/TH one-model stockcap5 penalty0.02 assets50 IT segment cap 25% + daily exposure,it_only,2026-05-31,US Equity
+2026-06-26,LLY,0.049999999999999836,US/TH one-model stockcap5 penalty0.02 assets50 IT segment cap 25% + daily exposure,it_only,2026-05-31,US Equity
+2026-06-26,HOOD,0.04999999999999976,US/TH one-model stockcap5 penalty0.02 assets50 IT segment cap 25% + daily exposure,it_only,2026-05-31,US Equity
+2026-06-26,TSLA,0.04999999999999927,US/TH one-model stockcap5 penalty0.02 assets50 IT segment cap 25% + daily exposure,it_only,2026-05-31,US Equity
+2026-06-26,QCOM,0.04300908373156627,US/TH one-model stockcap5 penalty0.02 assets50 IT segment cap 25% + daily exposure,it_only,2026-05-31,US Equity
+2026-06-26,CRWD,0.04252674687977195,US/TH one-model stockcap5 penalty0.02 assets50 IT segment cap 25% + daily exposure,it_only,2026-05-31,US Equity
+2026-06-26,ORCL,0.04236262703468762,US/TH one-model stockcap5 penalty0.02 assets50 IT segment cap 25% + daily exposure,it_only,2026-05-31,US Equity
+2026-06-26,INTC,0.04134713373514633,US/TH one-model stockcap5 penalty0.02 assets50 IT segment cap 25% + daily exposure,it_only,2026-05-31,US Equity
+2026-06-26,AMD,0.04050523165136962,US/TH one-model stockcap5 penalty0.02 assets50 IT segment cap 25% + daily exposure,it_only,2026-05-31,US Equity
+2026-06-26,MU,0.04024917696745526,US/TH one-model stockcap5 penalty0.02 assets50 IT segment cap 25% + daily exposure,it_only,2026-05-31,US Equity
+2026-06-26,Cash / Reduced Exposure,0.19999999999999962,US/TH one-model stockcap5 penalty0.02 assets50 IT and TH segments cap 25% each + daily exposure,it_plus_th_segments,2026-05-31,Cash / Reduced Exposure
+2026-06-26,GC=F,0.09999999999999998,US/TH one-model stockcap5 penalty0.02 assets50 IT and TH segments cap 25% each + daily exposure,it_plus_th_segments,2026-05-31,Gold
+2026-06-26,GS,0.04999999999999989,US/TH one-model stockcap5 penalty0.02 assets50 IT and TH segments cap 25% each + daily exposure,it_plus_th_segments,2026-05-31,US Equity
+2026-06-26,AMZN,0.04999999999999989,US/TH one-model stockcap5 penalty0.02 assets50 IT and TH segments cap 25% each + daily exposure,it_plus_th_segments,2026-05-31,US Equity
+2026-06-26,META,0.04999999999999989,US/TH one-model stockcap5 penalty0.02 assets50 IT and TH segments cap 25% each + daily exposure,it_plus_th_segments,2026-05-31,US Equity
+2026-06-26,BA,0.04999999999999989,US/TH one-model stockcap5 penalty0.02 assets50 IT and TH segments cap 25% each + daily exposure,it_plus_th_segments,2026-05-31,US Equity
+2026-06-26,UNH,0.04999999999999989,US/TH one-model stockcap5 penalty0.02 assets50 IT and TH segments cap 25% each + daily exposure,it_plus_th_segments,2026-05-31,US Equity
+2026-06-26,GOOG,0.04999999999999989,US/TH one-model stockcap5 penalty0.02 assets50 IT and TH segments cap 25% each + daily exposure,it_plus_th_segments,2026-05-31,US Equity
+2026-06-26,LLY,0.049999999999999836,US/TH one-model stockcap5 penalty0.02 assets50 IT and TH segments cap 25% each + daily exposure,it_plus_th_segments,2026-05-31,US Equity
+2026-06-26,HOOD,0.04999999999999976,US/TH one-model stockcap5 penalty0.02 assets50 IT and TH segments cap 25% each + daily exposure,it_plus_th_segments,2026-05-31,US Equity
+2026-06-26,TSLA,0.04999999999999927,US/TH one-model stockcap5 penalty0.02 assets50 IT and TH segments cap 25% each + daily exposure,it_plus_th_segments,2026-05-31,US Equity
+2026-06-26,QCOM,0.04300908373156627,US/TH one-model stockcap5 penalty0.02 assets50 IT and TH segments cap 25% each + daily exposure,it_plus_th_segments,2026-05-31,US Equity
+2026-06-26,CRWD,0.04252674687977195,US/TH one-model stockcap5 penalty0.02 assets50 IT and TH segments cap 25% each + daily exposure,it_plus_th_segments,2026-05-31,US Equity
+2026-06-26,ORCL,0.04236262703468762,US/TH one-model stockcap5 penalty0.02 assets50 IT and TH segments cap 25% each + daily exposure,it_plus_th_segments,2026-05-31,US Equity
+2026-06-26,INTC,0.04134713373514633,US/TH one-model stockcap5 penalty0.02 assets50 IT and TH segments cap 25% each + daily exposure,it_plus_th_segments,2026-05-31,US Equity
+2026-06-26,AMD,0.04050523165136962,US/TH one-model stockcap5 penalty0.02 assets50 IT and TH segments cap 25% each + daily exposure,it_plus_th_segments,2026-05-31,US Equity
+2026-06-26,MU,0.04024917696745526,US/TH one-model stockcap5 penalty0.02 assets50 IT and TH segments cap 25% each + daily exposure,it_plus_th_segments,2026-05-31,US Equity

@@ -481,6 +481,7 @@ ACTIVE_STRATEGY_B_GUIDE_NAMES = [
     "One-model US cap 70% / TH cap 30% with daily exposure",
     "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure",
     "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure",
+    "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 combined segment cap 25% + daily exposure",
 ]
 
 STRATEGY_B_GUIDE_CONFIGS = {
@@ -545,6 +546,35 @@ STRATEGY_B_GUIDE_CONFIGS = {
             "Reduced exposure จากทุก asset/sleeve ไปอยู่ Cash / Reduced Exposure; ไม่มีการโยกน้ำหนักที่ถูกลดไป sleeve อื่น.",
         ],
         "metrics": {"CAGR": 0.1959, "Sharpe": 1.0083, "Max Drawdown": -0.1801},
+    },
+    "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 combined segment cap 25% + daily exposure": {
+        "series": "US/TH one-model stockcap5 penalty0.02 assets50 all US and TH segments cap 25% each + daily exposure",
+        "latest_weights_file": "data/precomputed/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_segment_cap25_latest_effective_weights_thb.csv",
+        "latest_weights_metadata_file": "data/precomputed/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_segment_cap25_latest_meta.json",
+        "latest_weights_strategy": "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 combined segment cap 25% + daily exposure",
+        "description": "Strategy B ตัวนี้เป็น one-model US/TH optimizer จาก PIT combined segment-cap handoff: ใช้ stockcap5 penalty0.02 assets50 เดิม แต่เปลี่ยน guardrail จาก hard-coded AI-tech bucket เป็น segment cap แบบรวม US+TH ทุก normalized segment ไม่เกิน 25%. Latest weights คำนวณใหม่ใน repo นี้จาก fresh/current cache และ segment files ใน data/ ไม่อ่าน static latest-weight file จาก dynamic_port_opt.",
+        "setting": "One-model US cap 70% / TH cap 30% / PIT S&P 500 top50 + PIT SET100 top50 / stock cap 5% / concentration penalty 0.02 / combined normalized US+TH segment cap 25% / Gold cap 30% / BTC cap 10% / monthly rebalance / daily exposure overlay / reduced exposure to Cash",
+        "guide_bullets": [
+            "Strategy setup",
+            "Base allocation เป็น one combined optimizer ครอบ US equity, Thai equity, Gold และ BTC; US group cap 70%, TH group cap 30%, Gold cap 30%, BTC cap 10%.",
+            "Universe คือ PIT S&P 500 top 50 และ PIT SET100 top 50 จาก liquidity/rank cache; Thai sleeve จะมีน้ำหนักเมื่อ TH tactical signal active.",
+            "Selection rules ใช้ PIT universe ตาม evaluation/alignment rules ของ PIT_RESELECT_BY_STEP_HANDOFF family; ลด duplicate share classes ก่อน optimize.",
+            "Optimizer/model คือ sample mean-covariance optimizer พร้อม mean-variance objective, mom_63 signal และ concentration penalty 0.02.",
+            "Segment guardrail ใช้ data/us_segment.csv และ data/set100_segment.xls; Thai Industry ถูก normalize เป็น US-style segment ก่อนรวม US+TH ใน bucket เดียวกัน.",
+            "Caps: stock รายตัวไม่เกิน 5%, combined normalized segment cap 25%, US group cap 70%, TH group cap 30%, Gold cap 30%, BTC cap 10%. BIL ไม่ได้เป็น asset ใน optimizer.",
+            "Rebalance schedule เป็น monthly rebalance ตาม PIT handoff family; weights ใน backtest ใช้หลังวัน rebalance เพื่อหลีกเลี่ยง same-close lookahead.",
+            "Latest weights คำนวณใหม่ผ่าน scripts/refresh_us_th_one_model_us70_th30_segment_cap25_latest.py จาก repo data/cache ปัจจุบันและ segment files ใน repo นี้.",
+        ],
+        "daily_exposure_bullets": [
+            "Daily exposure rules",
+            "ใช้ daily exposure overlay หลัง optimizer โดย signal ถูก lag 1 trading session หรือใช้ close signal ที่รู้แล้วสำหรับ next-session execution.",
+            "US equity ใช้ SPY MA300; ถ้าต่ำกว่า MA300 exposure เหลือ 50%.",
+            "Thai equity ใช้ SET MA200; ถ้าต่ำกว่า MA200 exposure เหลือ 0%.",
+            "Gold ใช้ DD252 crash protection: warn -8% เหลือ 50%, crash -20% เหลือ 50%, panic -30% พร้อม Gold ต่ำกว่า MA200 และ mom63 < 0 เหลือ 0%, recover เมื่อ drawdown ดีขึ้นถึง -5%.",
+            "BTC ใช้ BTC MA50; ถ้าต่ำกว่า MA50 exposure เหลือ 0%.",
+            "Reduced exposure จากทุก asset/sleeve ไปอยู่ Cash / Reduced Exposure; ไม่มีการโยกน้ำหนักที่ถูกลดไป sleeve อื่น.",
+        ],
+        "metrics": {"CAGR": 0.1433, "Sharpe": 0.8840, "Max Drawdown": -0.2005},
     },
     "Stocks, Gold, BTC, and BIL in one static model": {
         "series": "Stocks+Gold+BTC+BIL one-model Static Copula [mean_variance] PIT reselect",
@@ -1791,8 +1821,7 @@ def refresh_live_latest_weights(config: dict) -> tuple[bool, str]:
     scripts = [
         root / "scripts" / "refresh_overlay_latest.py",
         root / "scripts" / "refresh_us_th_best_config_latest.py",
-        root / "scripts" / "refresh_us_th_tactical_final_best_latest.py",
-        root / "scripts" / "refresh_us_th_tactical_one_model_us70_th30_latest.py",
+        root / "scripts" / "refresh_us_th_strategy_b_latest.py",
     ]
     for script in scripts:
         if not script.exists():
@@ -1855,6 +1884,18 @@ def config_has_weight_details(config: dict) -> bool:
             return True
     return bool(config.get("blend_weights"))
 
+
+
+def latest_weight_source_fingerprint(config: dict) -> tuple[tuple[str, int], ...]:
+    fingerprints: list[tuple[str, int]] = []
+    for file_key in ["latest_weights_file", "latest_weights_metadata_file", "exposure_file"]:
+        file_name = config.get(file_key)
+        if not file_name:
+            continue
+        path = _resolved_project_path(str(file_name))
+        if path.exists():
+            fingerprints.append((str(path), path.stat().st_mtime_ns))
+    return tuple(fingerprints)
 
 def best_sharpe_config_name(configs: dict[str, dict], summary: pd.DataFrame, require_weight_details: bool = False) -> str:
     best_name = next(iter(configs))
@@ -2059,6 +2100,7 @@ def render_strategy_guide_page() -> None:
             st.session_state.strategy_latest_weights_label = raw_label
             st.session_state.strategy_latest_weights_date = latest_date
             st.session_state.strategy_latest_weights_metadata = latest_weight_metadata(raw_config)
+            st.session_state.strategy_latest_weights_fingerprint = latest_weight_source_fingerprint(raw_config)
         if action_cols[1].button(
             "Retire",
             key=f"retire_compare_{raw_label}",
@@ -2078,6 +2120,22 @@ def render_strategy_guide_page() -> None:
             "strategy_latest_weights_metadata",
         ]:
             st.session_state.pop(key, None)
+
+    label_to_config = {left_label: left_config, right_label: right_config}
+    latest_label_in_state = st.session_state.get("strategy_latest_weights_label")
+    if latest_label_in_state in label_to_config:
+        current_fingerprint = latest_weight_source_fingerprint(label_to_config[latest_label_in_state])
+        if st.session_state.get("strategy_latest_weights_fingerprint") != current_fingerprint:
+            refreshed_weights, refreshed_date = latest_weight_rows(
+                latest_label_in_state,
+                label_to_config[latest_label_in_state],
+                sleeves,
+            )
+            if not refreshed_weights.empty:
+                st.session_state.strategy_latest_weights = refreshed_weights
+                st.session_state.strategy_latest_weights_date = refreshed_date
+                st.session_state.strategy_latest_weights_metadata = latest_weight_metadata(label_to_config[latest_label_in_state])
+                st.session_state.strategy_latest_weights_fingerprint = current_fingerprint
 
     latest_table = st.session_state.get("strategy_latest_weights")
     if isinstance(latest_table, pd.DataFrame) and not latest_table.empty:

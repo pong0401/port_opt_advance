@@ -100,6 +100,12 @@ HANDOFF_CURVE_SOURCES = [
         "family": "PIT_RESELECT_BY_STEP_HANDOFF",
     },
     {
+        "label": "US/TH one-model stockcap5 penalty0.02 assets50 all US and TH segments cap 25% each + daily exposure",
+        "path": ("..", "dynamic_port_opt", "result", "us_th_one_model_us70_th30_segment_cap25_backtest_curves_thb.csv"),
+        "column": "US/TH one-model stockcap5 penalty0.02 assets50 all US and TH segments cap 25% each + daily exposure",
+        "family": "PIT_RESELECT_BY_STEP_HANDOFF",
+    },
+    {
         "label": "JP optimized min_vol_mom_tilt top10 cap15 weekly exposure with Gold DD252",
         "path": ("..", "dynamic_port_opt", "result", "us_th_jp_optimized_sleeve_sweep_curves_thb.csv"),
         "column": "JP optimized min_vol_mom_tilt top10 cap15% Stock60/Gold30/BTC10 Index signal leaves inactive equity in cash + weekly exposure all assets + gold drawdown 252d warn10 crash20",
@@ -234,6 +240,26 @@ HANDOFF_SUPPORT_FILES = [
         "source": ("..", "dynamic_port_opt", "result", "us_th_one_model_us70_th30_theme_cap_sweep_concentration_history_thb.csv"),
         "target": "us_th_one_model_us70_th30_theme_cap_sweep_concentration_history_thb.csv",
         "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 AI-tech cap 25% concentration diagnostics.",
+    },
+    {
+        "source": ("..", "dynamic_port_opt", "result", "us_th_one_model_us70_th30_segment_cap25_backtest_summary_thb.csv"),
+        "target": "us_th_one_model_us70_th30_segment_cap25_backtest_summary_thb.csv",
+        "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 combined segment-cap 25% summary.",
+    },
+    {
+        "source": ("..", "dynamic_port_opt", "result", "us_th_one_model_us70_th30_segment_cap25_backtest_curves_thb.csv"),
+        "target": "us_th_one_model_us70_th30_segment_cap25_backtest_curves_thb.csv",
+        "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 combined segment-cap 25% curves.",
+    },
+    {
+        "source": ("..", "dynamic_port_opt", "result", "us_th_one_model_us70_th30_segment_cap25_backtest_latest_effective_weights_thb.csv"),
+        "target": "us_th_one_model_us70_th30_segment_cap25_backtest_latest_effective_weights_thb.csv",
+        "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 combined segment-cap 25% historical latest effective weights.",
+    },
+    {
+        "source": ("..", "dynamic_port_opt", "result", "us_th_one_model_us70_th30_segment_cap25_backtest_segment_weight_history_thb.csv"),
+        "target": "us_th_one_model_us70_th30_segment_cap25_backtest_segment_weight_history_thb.csv",
+        "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 combined segment-cap 25% segment diagnostics.",
     },
     {
         "source": ("..", "dynamic_port_opt", "result", "us_th_jp_optimized_sleeve_sweep_focus_summary_thb.csv"),
