@@ -313,6 +313,7 @@ def build_latest_outputs(prices: pd.DataFrame, raw_prices: pd.DataFrame) -> tupl
     )
     meta = {
         "Strategy": STRATEGY,
+        "calculated_at": pd.Timestamp.now(tz="Asia/Bangkok").isoformat(),
         "Latest Cache Trading Date": as_of.date().isoformat(),
         "Last Rebalance Date": rebalance_date.date().isoformat(),
         "Base Mix": "SPY 45%, Gold 30%, BTC 10%, BIL 15%",

@@ -1,7 +1,8 @@
 {
   "Strategy": "Country ETF tactical + Gold DD boost 16",
-  "Latest Cache Trading Date": "2026-06-18",
-  "Last Rebalance Date": "2026-06-18",
+  "calculated_at": "2026-07-01T06:29:00.174649+07:00",
+  "Latest Cache Trading Date": "2026-06-30",
+  "Last Rebalance Date": "2026-06-30",
   "Base Mix": "SPY 45%, Gold 30%, BTC 10%, BIL 15%",
   "Base Momentum Selected": "EWY",
   "Country ETF Universe": "country_only",

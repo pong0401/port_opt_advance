@@ -112,9 +112,9 @@ def main(panel: Panel | None = None) -> None:
     )
 
     refresh._write_outputs = _BASE_WRITE_OUTPUTS
-    segment = importlib.import_module("refresh_us_th_one_model_us70_th30_segment_cap25_latest")
+    segment = importlib.import_module("refresh_us_th_one_model_us70_th30_segment_cap30_latest")
     _run_variant(
-        "one-model US70/TH30 stockcap5 assets50 combined segment cap25",
+        "one-model US70/TH30 stockcap5 assets50 US segment cap30",
         panel,
         optimize_one_model=segment._optimize_one_model_with_segment_cap,
         write_outputs=segment._write_outputs_with_segment_meta,

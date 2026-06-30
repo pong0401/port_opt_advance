@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-26T17:38:13.694858+07:00",
+  "generated_at": "2026-06-30T21:10:32.327016+07:00",
   "data_start": "2016-06-18",
   "raw_data_start": "2016-06-18",
   "data_end": "2026-06-18",
@@ -108,10 +108,10 @@
       "source_end": "2026-04-29"
     },
     {
-      "strategy": "US/TH one-model stockcap5 penalty0.02 assets50 all US and TH segments cap 25% each + daily exposure",
+      "strategy": "US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure",
       "family": "PIT_RESELECT_BY_STEP_HANDOFF",
-      "path": "..\\dynamic_port_opt\\result\\us_th_one_model_us70_th30_segment_cap25_backtest_curves_thb.csv",
-      "column": "US/TH one-model stockcap5 penalty0.02 assets50 all US and TH segments cap 25% each + daily exposure",
+      "path": "result\\us_th_one_model_us70_th30_segment_cap30_all_us_segments_backtest_curves_thb.csv",
+      "column": "US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure",
       "source_start": "2017-05-31",
       "source_end": "2026-06-26"
     },
@@ -257,24 +257,24 @@
       "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 AI-tech cap 25% concentration diagnostics."
     },
     {
-      "source": "..\\dynamic_port_opt\\result\\us_th_one_model_us70_th30_segment_cap25_backtest_summary_thb.csv",
-      "target": "data\\precomputed\\us_th_one_model_us70_th30_segment_cap25_backtest_summary_thb.csv",
-      "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 combined segment-cap 25% summary."
+      "source": "result\\us_th_one_model_us70_th30_segment_cap30_all_us_segments_backtest_summary_thb.csv",
+      "target": "data\\precomputed\\us_th_one_model_us70_th30_segment_cap30_all_us_segments_backtest_summary_thb.csv",
+      "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 US segment-cap 30% summary."
     },
     {
-      "source": "..\\dynamic_port_opt\\result\\us_th_one_model_us70_th30_segment_cap25_backtest_curves_thb.csv",
-      "target": "data\\precomputed\\us_th_one_model_us70_th30_segment_cap25_backtest_curves_thb.csv",
-      "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 combined segment-cap 25% curves."
+      "source": "result\\us_th_one_model_us70_th30_segment_cap30_all_us_segments_backtest_curves_thb.csv",
+      "target": "data\\precomputed\\us_th_one_model_us70_th30_segment_cap30_all_us_segments_backtest_curves_thb.csv",
+      "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 US segment-cap 30% curves."
     },
     {
-      "source": "..\\dynamic_port_opt\\result\\us_th_one_model_us70_th30_segment_cap25_backtest_latest_effective_weights_thb.csv",
-      "target": "data\\precomputed\\us_th_one_model_us70_th30_segment_cap25_backtest_latest_effective_weights_thb.csv",
-      "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 combined segment-cap 25% historical latest effective weights."
+      "source": "result\\us_th_one_model_us70_th30_segment_cap30_all_us_segments_backtest_latest_effective_weights_thb.csv",
+      "target": "data\\precomputed\\us_th_one_model_us70_th30_segment_cap30_all_us_segments_backtest_latest_effective_weights_thb.csv",
+      "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 US segment-cap 30% historical latest effective weights."
     },
     {
-      "source": "..\\dynamic_port_opt\\result\\us_th_one_model_us70_th30_segment_cap25_backtest_segment_weight_history_thb.csv",
-      "target": "data\\precomputed\\us_th_one_model_us70_th30_segment_cap25_backtest_segment_weight_history_thb.csv",
-      "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 combined segment-cap 25% segment diagnostics."
+      "source": "result\\us_th_one_model_us70_th30_segment_cap30_all_us_segments_backtest_segment_weight_history_thb.csv",
+      "target": "data\\precomputed\\us_th_one_model_us70_th30_segment_cap30_all_us_segments_backtest_segment_weight_history_thb.csv",
+      "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 US segment-cap 30% segment diagnostics."
     },
     {
       "source": "..\\dynamic_port_opt\\result\\us_th_jp_optimized_sleeve_sweep_focus_summary_thb.csv",

@@ -79,6 +79,7 @@ jobs:
         if: github.event_name == 'workflow_dispatch' && inputs.run_backtest == 'true'
         run: |
           python scripts/run_us_th_best_config.py
+          python scripts/run_us_th_one_model_segment_cap30_backtest.py
           python scripts/build_streamlit_precomputed.py
 
       - name: Commit refreshed outputs
@@ -112,10 +113,10 @@ jobs:
           git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_ai_tech_cap25_latest_sleeve_weights_thb.csv
           git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_ai_tech_cap25_latest_meta.csv
           git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_ai_tech_cap25_latest_meta.json
-          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_segment_cap25_latest_effective_weights_thb.csv
-          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_segment_cap25_latest_sleeve_weights_thb.csv
-          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_segment_cap25_latest_meta.csv
-          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_segment_cap25_latest_meta.json
+          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_segment_cap30_latest_effective_weights_thb.csv
+          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_segment_cap30_latest_sleeve_weights_thb.csv
+          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_segment_cap30_latest_meta.csv
+          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_segment_cap30_latest_meta.json
           git add -f result/us_th_jp_optimized_minvol_top10_cap15_weekly_latest_effective_weights_thb.csv
           git add -f result/us_th_jp_optimized_minvol_top10_cap15_weekly_latest_sleeve_weights_thb.csv
           git add -f result/us_th_jp_optimized_minvol_top10_cap15_latest_meta.csv

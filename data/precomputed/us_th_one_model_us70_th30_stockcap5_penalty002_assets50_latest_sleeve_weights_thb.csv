@@ -1,3 +1,4 @@
 Sleeve,Effective Weight,Raw Optimizer Weight,Daily Exposure,Effective Weight %,Date,Strategy,Case
-US Equity,0.6999999999999952,0.6999999999999952,1.0,69.99999999999952,2026-06-30,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure,US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50
-TH Equity,0.29999999999999793,0.29999999999999793,1.0,29.999999999999794,2026-06-30,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure,US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50
+US Equity,0.6999999999999859,0.6999999999999859,1.0,69.99999999999858,2026-07-01,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure,US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50
+Cash / Reduced Exposure,0.14999999999999902,0.0,1.0,14.999999999999902,2026-07-01,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure,US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50
+Gold,0.14999999999999897,0.29999999999999793,0.5,14.999999999999897,2026-07-01,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure,US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50

@@ -1,0 +1,921 @@
+Date,Strategy,Variant,Segment,Raw Segment Weight
+2017-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.10000000000000002
+2017-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.15000000000000008
+2017-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.15000000000000016
+2017-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.19999999999999954
+2017-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.05000000000000004
+2017-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.04740917897972353
+2017-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.002590821020277199
+2017-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,4.0349214181528085e-16
+2017-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.14999999999999983
+2017-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.15000000000000013
+2017-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.1499999999999999
+2017-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.10000000000000016
+2017-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.050000000000000044
+2017-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.0999999999999999
+2017-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,1.955035547593062e-16
+2017-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,1.2291547900810578e-16
+2017-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.10000000000000034
+2017-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.14999999999999963
+2017-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.24999999999999975
+2017-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.1999999999999996
+2017-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.09999999999999973
+2017-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.04999999999999986
+2017-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.05000000000000059
+2017-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,2.809396674508603e-16
+2017-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,5.447426685953155e-18
+2017-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.20000000000000032
+2017-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.14999999999999988
+2017-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.15
+2017-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.050000000000000086
+2017-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.09999999999999992
+2017-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.021538998899636234
+2017-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,3.470779607446666e-16
+2017-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,2.449030470649322e-16
+2017-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.10000000000000063
+2017-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.20000000000000012
+2017-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.19999999999999948
+2017-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.15269057200084982
+2017-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.1823258116687463
+2017-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,0.03383711228876042
+2017-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.03114650404164347
+2017-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,1.6314605372071274e-16
+2017-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,3.906410183215912e-17
+2017-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.19999999999999965
+2017-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.19270640106576067
+2017-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.04999999999999971
+2017-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.2361569614759954
+2017-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.13319906748718505
+2017-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,0.04413973748090317
+2017-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.04379783249015596
+2017-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,5.498381053379557e-16
+2017-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,1.3329325011113283e-16
+2017-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.1999999999999993
+2017-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.1500000000000001
+2017-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.049999999999999684
+2017-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.29999999999999655
+2017-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.100000000000001
+2017-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.05000000000000084
+2017-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.05000000000000044
+2017-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,1.4313908094264626e-15
+2017-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,7.429150824234142e-16
+2017-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.1000000000000003
+2017-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.19999999999999976
+2017-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.09999999999999995
+2017-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.1000000000000002
+2017-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.050000000000000024
+2017-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.04999999999999994
+2017-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.10000000000000034
+2017-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,2.6426462863049796e-16
+2018-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.25000000000000067
+2018-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.14999999999999916
+2018-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.1999999999999982
+2018-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.19999999999999926
+2018-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.09999999999999908
+2018-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.04999999999999968
+2018-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.05000000000000312
+2018-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,5.590730421079055e-16
+2018-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,3.1767209277285304e-16
+2018-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.21343520920570389
+2018-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.049999999999999815
+2018-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.09272755211579373
+2018-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2999999999999995
+2018-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.10000000000000109
+2018-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.21450819455903097
+2018-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.02932904411947021
+2018-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,3.1535254020233027e-16
+2018-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,3.324178552691021e-16
+2018-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.3498911072474051
+2018-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.3053482325385161
+2018-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.08472217350876726
+2018-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.049999999999999475
+2018-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.07439656263772619
+2018-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.003952129436853581
+2018-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,6.360007921926304e-16
+2018-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,1.3956334228189114e-16
+2018-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,4.50592254623811e-16
+2018-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.1000000000000002
+2018-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.16679892436324453
+2018-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.23430565266964884
+2018-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.09999999999999962
+2018-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.11753390989833652
+2018-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.16484325417792445
+2018-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.07031731979615478
+2018-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.03182852791193304
+2018-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,6.678102309609206e-16
+2018-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.24999999999999928
+2018-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.13104511363499013
+2018-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.10000000000000007
+2018-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.09999999999999991
+2018-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.06895488636500947
+2018-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.05000000000000031
+2018-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,5.028297631838827e-16
+2018-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,6.006442187662899e-17
+2018-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.25000000000000033
+2018-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.04999999999999997
+2018-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.09999999999999994
+2018-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.14999999999999988
+2018-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.050000000000000065
+2018-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.09999999999999994
+2018-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,1.194912861829521e-16
+2018-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,1.856351580038532e-18
+2018-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.1999999999999998
+2018-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.2999999999999996
+2018-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.049999999999999975
+2018-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.04999999999999992
+2018-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.10000000000000049
+2018-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,5.39545801133716e-16
+2018-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,4.507648932069368e-17
+2018-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.0
+2018-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.3659782018314491
+2018-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.16321452706144274
+2018-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.1499999999999999
+2018-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.05000000000000011
+2018-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.04999999999999989
+2018-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.03730853433683094
+2018-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.07313784274067296
+2018-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,7.474263448973774e-17
+2018-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,1.517545783752191e-17
+2018-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2999999999999996
+2018-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.14999999999999997
+2018-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.14999999999999986
+2018-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.05000000000000022
+2018-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.05
+2018-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,2.693986492699558e-16
+2018-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,8.972452215187745e-17
+2018-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,1.1367475294658544e-16
+2018-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.09999999999999971
+2018-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.1500000000000006
+2018-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.05000000000000055
+2018-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.14999999999999944
+2018-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.049999999999999864
+2018-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.19999999999999973
+2018-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.049999999999999815
+2018-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,0.049999999999999815
+2018-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.1499999999999996
+2018-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.10000000000000066
+2018-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.10000000000000023
+2018-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.09999999999999977
+2018-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.1999999999999992
+2018-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.09999999999999959
+2018-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.050000000000000336
+2018-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,4.816215485467011e-16
+2018-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,1.1071130590417374e-16
+2018-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2500000000000003
+2018-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.15000000000000016
+2018-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.09999999999999934
+2018-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.050000000000000044
+2018-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.050000000000000024
+2018-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.05000000000000004
+2018-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.0
+2018-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.0
+2019-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.0999999999999996
+2019-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.1888957524119506
+2019-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.05000000000000078
+2019-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.24999999999999983
+2019-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.049999999999999954
+2019-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.12691358087980004
+2019-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.03419066670825203
+2019-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,1.8394151526856933e-16
+2019-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,2.1612843564750118e-17
+2019-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2999999999999992
+2019-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.10000000000000205
+2019-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.19999999999999943
+2019-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.05000000000000029
+2019-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.1499999999999988
+2019-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,0.05000000000000007
+2019-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.09999999999999921
+2019-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.049999999999999864
+2019-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,4.3254007662636106e-16
+2019-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.09999999999999976
+2019-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2999999999999998
+2019-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.05000000000000002
+2019-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.04999999999999994
+2019-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.050000000000000606
+2019-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.049999999999999926
+2019-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.04999999999999997
+2019-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.05000000000000036
+2019-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.10000000000000019
+2019-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2999999999999996
+2019-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.04999999999999995
+2019-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.1999999999999999
+2019-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.05000000000000031
+2019-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.0
+2019-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.0
+2019-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.0
+2019-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.1
+2019-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.15000000000000005
+2019-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.10000000000000017
+2019-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.19999999999999984
+2019-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.1499999999999998
+2019-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,2.695552960431191e-16
+2019-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,5.630881446941293e-17
+2019-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.0
+2019-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.0499999999999999
+2019-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.09999999999999953
+2019-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.04999999999999977
+2019-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.07614595228087616
+2019-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.11407085140276473
+2019-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,0.03323933481914094
+2019-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.09360279439830561
+2019-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.08808527879377862
+2019-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.027156519285437344
+2019-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Materials,0.0
+2019-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.1220094613922279
+2019-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.19238108426873707
+2019-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.34536343599886005
+2019-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.08990779474964045
+2019-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.12972869028878625
+2019-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.020609533301747727
+2019-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,5.010426397893112e-16
+2019-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,3.736234197850632e-16
+2019-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,1.9475458506448504e-17
+2019-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Materials,0.0
+2019-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.14999999999999983
+2019-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.1000000000000004
+2019-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.19999999999999962
+2019-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.05000000000000022
+2019-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.14999999999999983
+2019-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.05000000000000022
+2019-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Materials,1.2463708551310444e-16
+2019-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,8.8182983155128e-17
+2019-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,4.3318324174503815e-17
+2019-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.10000000000000031
+2019-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.049999999999999954
+2019-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.10000000000000182
+2019-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.19999999999999954
+2019-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.049999999999999926
+2019-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.0999999999999997
+2019-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.09999999999999967
+2019-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,5.4564832408921804e-17
+2019-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.19999999999999987
+2019-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.24999999999999986
+2019-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.09999999999999999
+2019-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.0999999999999997
+2019-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.04999999999999996
+2019-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,6.023934468596199e-16
+2019-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,1.3991342736375328e-16
+2019-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.0
+2019-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2999999999999999
+2019-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.10000000000000003
+2019-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.09999999999999952
+2019-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.09999999999999988
+2019-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.10000000000000042
+2019-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,1.55020973336459e-16
+2019-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,2.6470097469779026e-16
+2019-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,4.790179869489127e-17
+2019-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.050000000000000204
+2019-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.15
+2019-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.09999999999999994
+2019-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.29999999999999954
+2019-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.05000000000000012
+2019-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.05000000000000017
+2019-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,2.028714128819918e-17
+2019-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.0
+2020-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2999999999999996
+2020-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.07705603505062879
+2020-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.049999999999999975
+2020-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.09999999999999988
+2020-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.10000000000000014
+2020-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.04999999999999995
+2020-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.022943964949371436
+2020-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,9.395384393606584e-17
+2020-02-29,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2730518067930916
+2020-02-29,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.05000000000000064
+2020-02-29,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.1
+2020-02-29,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.14999999999999977
+2020-02-29,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.026948193206907462
+2020-02-29,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,7.931209490974096e-16
+2020-02-29,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,2.7521676685661456e-16
+2020-02-29,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,2.406502318867149e-16
+2020-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.049999999999999975
+2020-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.25000000000000006
+2020-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.14999999999999997
+2020-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.1499999999999996
+2020-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.10000000000000012
+2020-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,4.076843853493705e-16
+2020-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,4.936780873738623e-17
+2020-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.0
+2020-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.050000000000000336
+2020-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2999999999999999
+2020-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.09999999999999967
+2020-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.04999999999999993
+2020-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.15000000000000044
+2020-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.04999999999999984
+2020-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,3.599885349294023e-16
+2020-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,7.136409677936929e-17
+2020-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.04999999999999904
+2020-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2499999999999943
+2020-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.11432068920604004
+2020-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.25799373843736884
+2020-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.11853252027334735
+2020-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.04999999999999878
+2020-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.031068437343935232
+2020-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.028084614739316314
+2020-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,2.5709700602844925e-15
+2020-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.18958060573653998
+2020-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2999999999999999
+2020-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.09999999999999866
+2020-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.05000000000000232
+2020-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.08650544654412466
+2020-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,0.08760478090850353
+2020-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.043247658197774125
+2020-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.04306150861305749
+2020-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.0
+2020-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.050000000000000315
+2020-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,0.09999999999999971
+2020-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.09999999999999987
+2020-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.09999999999999971
+2020-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.09999999999999971
+2020-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.29999999999999943
+2020-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.049999999999999954
+2020-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,8.063998467015125e-17
+2020-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.0
+2020-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.09999999999999987
+2020-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.11153828765100472
+2020-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.29999999999999954
+2020-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.10000000000000016
+2020-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.03846171234899536
+2020-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.0
+2020-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.0
+2020-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.0
+2020-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.15000000000000008
+2020-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.05000000000000018
+2020-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.09999999999999996
+2020-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2999999999999994
+2020-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.05000000000000037
+2020-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,3.2520204188528755e-16
+2020-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,1.309510127536274e-16
+2020-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,8.490234977101964e-17
+2020-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.15
+2020-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.04999999999999998
+2020-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.15
+2020-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.10000000000000046
+2020-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.213672040212117
+2020-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.03632795978788226
+2020-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,2.2016801055953778e-16
+2020-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.0
+2020-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.0999999999999999
+2020-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.05000000000000347
+2020-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.17098322558596754
+2020-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.10189894338298856
+2020-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.28037220064470497
+2020-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.14674563038633495
+2020-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.05000000000000023
+2020-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,9.179497529860964e-16
+2020-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,4.6893991674281955e-16
+2020-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.05000000000000058
+2020-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.1292217760166034
+2020-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.33970608839638833
+2020-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.0500000000000032
+2020-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.1243616296572948
+2020-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.05000000000000643
+2020-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.1260606362145913
+2020-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,0.03064986971510666
+2020-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,6.247876490567881e-15
+2021-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.177957067215411
+2021-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.25000000000000044
+2021-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.05000000000000001
+2021-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.10000000000000007
+2021-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.08659216594927902
+2021-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.19768994193070655
+2021-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.03776082490460206
+2021-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,4.482116894996014e-16
+2021-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,1.0592178671565776e-15
+2021-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.1999999999999977
+2021-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.15000000000000166
+2021-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.1999999999999974
+2021-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.09999999999999809
+2021-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.10000000000000243
+2021-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.05000000000000013
+2021-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.050000000000000766
+2021-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,2.584481116945109e-15
+2021-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,2.5700263175549145e-15
+2021-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.14999999999999908
+2021-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.24999999999999958
+2021-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.10000000000000027
+2021-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.09999999999999945
+2021-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.050000000000001155
+2021-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,1.4734223231154203e-15
+2021-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,2.1053029328431836e-16
+2021-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,1.2905536994704447e-16
+2021-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.10000000000000006
+2021-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.14999999999999983
+2021-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.09999999999999987
+2021-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.10000000000000026
+2021-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.09517493321088692
+2021-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.0999999999999998
+2021-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.0048250667891136575
+2021-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.0
+2021-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.10000000000000014
+2021-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.04999999999999998
+2021-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.2999999999999994
+2021-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.1500000000000004
+2021-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.05000000000000053
+2021-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,4.060245236348964e-17
+2021-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,3.7870069077127323e-17
+2021-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.0
+2021-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.09999999999999994
+2021-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.29999999999999966
+2021-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.10000000000000078
+2021-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.04999999999999996
+2021-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.05000000000000005
+2021-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.04999999999999996
+2021-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.04999999999999987
+2021-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,9.605879492287602e-17
+2021-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.29999999999999966
+2021-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.14999999999999997
+2021-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.09999999999999996
+2021-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.050000000000000024
+2021-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.04999999999999998
+2021-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.05000000000000003
+2021-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,1.2632006303219344e-16
+2021-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,1.4093850483862623e-18
+2021-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.30000000000000016
+2021-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.14999999999999994
+2021-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.09999999999999977
+2021-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.0551215334466909
+2021-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.04999999999999998
+2021-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.04487846655330885
+2021-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,2.4887071224261407e-16
+2021-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,8.325282433337115e-17
+2021-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.200000000000001
+2021-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.25000000000000105
+2021-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.09999999999999985
+2021-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.05000000000000017
+2021-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.1499999999999998
+2021-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.049999999999999815
+2021-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.05000000000000025
+2021-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.04999999999999853
+2021-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,2.446688636259674e-16
+2021-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.1499999999999998
+2021-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.20000000000000073
+2021-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.050000000000001016
+2021-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.04999999999999982
+2021-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.09999999999999915
+2021-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.1000000000000004
+2021-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.05000000000000075
+2021-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,4.218899154626942e-16
+2021-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2999999999999991
+2021-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.05000000000000004
+2021-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.15000000000000072
+2021-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.05000000000000001
+2021-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.11049897558936093
+2021-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.03950102441063949
+2021-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,7.921284838586453e-16
+2021-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,2.809292493257623e-16
+2021-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.10000000000000013
+2021-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.29999999999999843
+2021-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.1200116945738503
+2021-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.12998830542614997
+2021-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.050000000000000384
+2021-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,4.816116904415665e-16
+2021-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,7.488737519893482e-17
+2021-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,1.0662327392405704e-17
+2022-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.10000000000000024
+2022-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.27664986706450306
+2022-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.09999999999999998
+2022-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.10000000000000042
+2022-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.04999999999999999
+2022-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.1435603118254856
+2022-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.05000000000000057
+2022-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,0.08675347091949043
+2022-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.04303635019052036
+2022-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.09999999999999963
+2022-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.05000000000000017
+2022-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.16651112943457733
+2022-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.04999999999999998
+2022-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.1493757559367139
+2022-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.09885472681115892
+2022-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,0.03525838781755083
+2022-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,6.875250993854919e-16
+2022-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,1.6495648054940928e-17
+2022-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.20000000000000082
+2022-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.0500000000000004
+2022-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.1499999999999995
+2022-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,0.04999999999999987
+2022-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.14999999999999966
+2022-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.10000000000000028
+2022-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.09999999999999983
+2022-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.0
+2022-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.0
+2022-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.2499999999999956
+2022-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.2
+2022-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.10000000000000003
+2022-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.05000000000000076
+2022-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.0500000000000003
+2022-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,2.7054851827711364e-15
+2022-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,9.537561919109022e-16
+2022-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,9.235505711685875e-17
+2022-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.19999999999999873
+2022-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.2242911649008619
+2022-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.14145550335159768
+2022-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.09999999999999958
+2022-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.0925057270768894
+2022-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,0.041071556760455104
+2022-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.05067604791019452
+2022-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,1.2136593659884309e-15
+2022-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,1.21605391508427e-15
+2022-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.2999999999999965
+2022-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.093257203200685
+2022-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.09999999999999935
+2022-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.1780471218565117
+2022-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.08686207748665244
+2022-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.04183359745615148
+2022-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,2.0781046897984266e-15
+2022-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,1.3034241746049931e-15
+2022-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,2.4308322673195946e-16
+2022-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.09999999999999973
+2022-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.09999999999999991
+2022-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.15000000000000002
+2022-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.10000000000000005
+2022-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.1999999999999994
+2022-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.04999999999999988
+2022-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,1.1287044453030438e-15
+2022-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,3.445584053147477e-16
+2022-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.20000000000000034
+2022-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.10000000000000035
+2022-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.10000000000000002
+2022-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.14999999999999958
+2022-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.049999999999999906
+2022-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.04999999999999972
+2022-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.05000000000000073
+2022-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,2.905299770040881e-16
+2022-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.19999999999999885
+2022-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.07985515182808152
+2022-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.0499999999999998
+2022-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.10602714165096448
+2022-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.1744636385994885
+2022-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.030076287498870154
+2022-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,0.029922920226803224
+2022-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.02965486019579512
+2022-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,2.7585025401037714e-16
+2022-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.24999999999999947
+2022-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.09999999999999996
+2022-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.12511968118332426
+2022-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.05000000000000127
+2022-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.1499999999999999
+2022-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.27488031881667463
+2022-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.04999999999999962
+2022-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,4.777474719282783e-16
+2022-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,4.9359140204688214e-17
+2022-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.09999999999999976
+2022-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.15000000000000044
+2022-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.1000000000000002
+2022-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.1999999999999994
+2022-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.09999999999999981
+2022-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.04999999999999973
+2022-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,6.306414678013068e-16
+2022-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,1.5291427270891273e-16
+2022-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.049999999999999836
+2022-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.04999999999999991
+2022-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.105613641582758
+2022-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.1752956778933257
+2022-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.12854580217374376
+2022-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.07145419782625677
+2022-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.08829046399050355
+2022-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.03080021653341429
+2022-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,0.0
+2023-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.19999999999999957
+2023-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.05000000000000021
+2023-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.19999999999999832
+2023-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2999999999999992
+2023-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.10000000000000044
+2023-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.04999999999999967
+2023-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,7.223747999840744e-16
+2023-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,6.739573014242617e-16
+2023-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,2.534335329897209e-16
+2023-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.14999999999999972
+2023-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.14999999999999977
+2023-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2999999999999999
+2023-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.10000000000000037
+2023-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,1.8881954395859202e-16
+2023-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,3.928421456265734e-17
+2023-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.0
+2023-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.0
+2023-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2999999999999999
+2023-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.0584291788998728
+2023-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.19157082110012766
+2023-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.05000000000000005
+2023-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.09999999999999967
+2023-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,4.657184551185321e-17
+2023-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,1.9810899654846286e-17
+2023-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.0
+2023-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.14999999999999988
+2023-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2999999999999986
+2023-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.10000000000000014
+2023-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.08071006361406625
+2023-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.05000000000000015
+2023-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,6.076890308378381e-16
+2023-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,4.1432295193842546e-16
+2023-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.0
+2023-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.29999999999999927
+2023-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.19999999999999976
+2023-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.050000000000000384
+2023-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.05000000000000063
+2023-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.09999999999999958
+2023-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,6.12035849706499e-16
+2023-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,2.367566109485106e-16
+2023-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,1.3715723148791734e-16
+2023-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2999999999999999
+2023-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.09999999999999962
+2023-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.15000000000000002
+2023-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.050000000000000044
+2023-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.049999999999999926
+2023-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.049999999999999975
+2023-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.0
+2023-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.0
+2023-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.10000000000000087
+2023-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.24999999999999983
+2023-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.14999999999999988
+2023-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.04999999999999996
+2023-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.14999999999999972
+2023-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,5.69051226304087e-17
+2023-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,3.894889030333637e-17
+2023-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,4.483264735739591e-17
+2023-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.1499999999999993
+2023-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.3291188036260425
+2023-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.2626773317164211
+2023-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.08956419045968272
+2023-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.09999999999999963
+2023-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.037318544909359805
+2023-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.030018081057737876
+2023-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,2.2398996108683603e-16
+2023-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,3.7676853236345587e-17
+2023-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.050000000000000294
+2023-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.17893425908390545
+2023-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.14999999999999958
+2023-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.19009879098892704
+2023-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.1956442694243615
+2023-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.09033539180629506
+2023-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.09498728869650994
+2023-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,1.0311748634258264e-15
+2023-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,1.6881915615061423e-16
+2023-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.1999999999999998
+2023-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.10000000000000027
+2023-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.09999999999999998
+2023-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.10000000000000019
+2023-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.050000000000000176
+2023-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.04999999999999985
+2023-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,9.601158419285534e-17
+2023-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,6.563524408959087e-17
+2023-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.3000000000000004
+2023-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.09999999999999994
+2023-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.09999999999999981
+2023-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.10000000000000032
+2023-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.09999999999999953
+2023-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,1.6132368205730315e-16
+2023-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,1.6248388004934633e-16
+2023-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.0
+2023-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.29999999999999905
+2023-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.1999999999999998
+2023-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.09999999999999995
+2023-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.0999999999999996
+2023-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,4.2624468959969593e-16
+2023-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,8.208398037979701e-16
+2023-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,6.695619347666107e-16
+2023-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,6.27782116373135e-16
+2024-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.09999999999999984
+2024-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.04999999999999993
+2024-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2999999999999995
+2024-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.050000000000000044
+2024-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.10000000000000012
+2024-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.10000000000000021
+2024-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,2.076007008409102e-16
+2024-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,6.043457114087608e-17
+2024-02-29,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.15000000000000013
+2024-02-29,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.24999999999999986
+2024-02-29,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.1499999999999991
+2024-02-29,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.04999999999999992
+2024-02-29,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.05000000000000019
+2024-02-29,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,9.76776246587552e-16
+2024-02-29,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,7.586014305100117e-16
+2024-02-29,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,5.220415421076562e-17
+2024-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.05000000000000077
+2024-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.20000000000000007
+2024-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.10000000000000023
+2024-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.1999999999999994
+2024-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.0500000000000004
+2024-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.04999999999999982
+2024-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.04999999999999974
+2024-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,6.035491674110271e-16
+2024-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.2082710613814852
+2024-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.19172893861851387
+2024-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.050000000000001786
+2024-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.04999999999999999
+2024-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.09999999999999959
+2024-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,5.018212796828555e-16
+2024-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,6.909307467192594e-16
+2024-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,6.110622928798633e-17
+2024-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.09999999999999931
+2024-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.09999999999999963
+2024-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.10000000000000091
+2024-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,0.05000000000000027
+2024-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.19999999999999768
+2024-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.04999999999999996
+2024-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.3217461115994245
+2024-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,2.922007218079426e-15
+2024-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,1.888002662932331e-15
+2024-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.100000000000238
+2024-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.30000000000071364
+2024-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.10000000000023794
+2024-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.10000000000023793
+2024-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.10000000000023794
+2024-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,4.8443349057110816e-17
+2024-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.0
+2024-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.0
+2024-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.1000000000000002
+2024-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.24999999999999956
+2024-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.04999999999999995
+2024-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.1960767592739492
+2024-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.04999999999999995
+2024-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.003923240726050921
+2024-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,4.4341811891775296e-16
+2024-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,1.8836172778609044e-16
+2024-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.14999999999999905
+2024-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.10000000000000044
+2024-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.23727332298646003
+2024-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.21981343585247576
+2024-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.21217952157478434
+2024-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.030733719586279542
+2024-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,5.108539095273292e-16
+2024-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,3.711831458424087e-16
+2024-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,7.925581477236373e-17
+2024-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.081163319365328
+2024-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2583014835362429
+2024-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.17085624922616205
+2024-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.2499999999999977
+2024-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.09999999999999931
+2024-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.05000000000000017
+2024-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.08967894787226938
+2024-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,0.0
+2024-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.0
+2024-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.3878200953274835
+2024-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.11659675486064582
+2024-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.09999999999999959
+2024-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.04345458418485676
+2024-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.08429773191390875
+2024-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.043215493927877026
+2024-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.06268146566292561
+2024-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,1.526382084344372e-16
+2024-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,0.0
+2024-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.1999999999999995
+2024-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2500000000000004
+2024-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.05
+2024-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.09999999999999978
+2024-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.10000000000000003
+2024-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,1.7373777541614424e-16
+2024-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,1.0230283059177807e-16
+2024-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,7.38675912729183e-17
+2024-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.25000000000000033
+2024-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.1499999999999999
+2024-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.05000000000000002
+2024-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.05000000000000036
+2024-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.1499999999999997
+2024-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.04999999999999989
+2024-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,2.576282662991059e-17
+2024-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.0
+2025-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.30424461020202753
+2025-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.1499999999999984
+2025-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.14999999999999974
+2025-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2000000000000003
+2025-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.04999999999999981
+2025-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.05000000000000041
+2025-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.05000000000000005
+2025-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,8.945102189158428e-16
+2025-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,0.0
+2025-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.05000000000000024
+2025-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.09999999999999995
+2025-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.05000000000000024
+2025-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.1999999999999989
+2025-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.15000000000000097
+2025-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.05000000000000001
+2025-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.04999999999999978
+2025-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,4.56154299227148e-16
+2025-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2
+2025-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.09999999999999983
+2025-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.14999999999999977
+2025-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.09999999999999983
+2025-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.05000000000000076
+2025-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.04999999999999998
+2025-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,1.3656344082290895e-16
+2025-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,4.3162555474541124e-17
+2025-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.09999999999999966
+2025-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.1424817205438053
+2025-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.049999999999999704
+2025-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.04348547898838347
+2025-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.08618219878398667
+2025-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.08543234884491804
+2025-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,0.042418252838908765
+2025-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,1.4448025023937537e-15
+2025-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,1.4542807432239496e-16
+2025-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.050000000000001175
+2025-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.14999999999999974
+2025-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.14999999999999986
+2025-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.09999999999999962
+2025-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.349999999999998
+2025-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.05000000000000052
+2025-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.05000000000000115
+2025-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,1.463880886521629e-16
+2025-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.0
+2025-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.3000000000000004
+2025-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.07144536038771618
+2025-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.1499999999999996
+2025-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.1785546396122837
+2025-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,1.012678246693932e-15
+2025-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,1.596727234300333e-16
+2025-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,1.0350073530223114e-16
+2025-06-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.0
+2025-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.1500000000000002
+2025-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.049999999999999906
+2025-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.09999999999999983
+2025-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.3
+2025-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.05000000000000023
+2025-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.04999999999999987
+2025-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,2.2818967281472175e-16
+2025-07-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,1.419418618871539e-16
+2025-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.3030209966339956
+2025-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.14153504512509096
+2025-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.14999999999999936
+2025-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.07919052005404582
+2025-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.049999999999999926
+2025-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.07465503985512445
+2025-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.07902243464192332
+2025-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.09394887835587548
+2025-08-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,0.028627085333944487
+2025-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.14999999999999988
+2025-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.05000000000000048
+2025-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2999999999999999
+2025-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.05000000000000006
+2025-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.04999999999999996
+2025-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.09999999999999992
+2025-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.0
+2025-09-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.0
+2025-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.15000000000000066
+2025-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.3000000000000009
+2025-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.0999999999999998
+2025-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.050000000000000024
+2025-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.09999999999999767
+2025-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,4.3357073838879773e-16
+2025-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,3.064880508878172e-16
+2025-10-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,8.160560701361293e-17
+2025-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.34999999999999337
+2025-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.10000000000000066
+2025-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.14999999999999525
+2025-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.05000000000000211
+2025-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.049999999999998546
+2025-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.05000000000000109
+2025-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,4.6056362301300645e-15
+2025-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,2.0926590308762988e-15
+2025-11-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,2.0392391258092066e-15
+2025-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.050000000000000155
+2025-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2500000000000022
+2025-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.14999999999999916
+2025-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.14999999999999994
+2025-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.04999999999999996
+2025-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.04999999999999999
+2025-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,4.0244018297385835e-16
+2025-12-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,1.5222074321127846e-16
+2026-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.14676094146282775
+2026-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.23164649112822308
+2026-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.19999999999999984
+2026-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.22159256740894723
+2026-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,1.6366578324513206e-15
+2026-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,3.780084735399693e-16
+2026-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,2.9646438957382814e-16
+2026-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,4.575937007965143e-16
+2026-01-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,4.1724864343750357e-16
+2026-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.17407910241410818
+2026-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.1499999999999974
+2026-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.09999999999999835
+2026-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.3145249763639729
+2026-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.12247354159400652
+2026-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.03892237962790779
+2026-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,6.0972050868723255e-15
+2026-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,1.5599631020694561e-15
+2026-02-28,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,8.269159767351248e-16
+2026-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.050000000000004166
+2026-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.3487587561779984
+2026-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.04999999999999927
+2026-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.12135447987322354
+2026-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.09999999999999673
+2026-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.09999999999999772
+2026-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.17988676394877065
+2026-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Real Estate,2.045389364906278e-15
+2026-03-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,3.237869362894516e-15
+2026-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.05000000000000002
+2026-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.2999999999999998
+2026-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.05000000000000085
+2026-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,0.049999999999999836
+2026-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.04999999999999998
+2026-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,0.049999999999999906
+2026-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.09999999999999967
+2026-04-30,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.05000000000000025
+2026-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Information Technology,0.29999999999999843
+2026-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Communication Services,0.0719449828116909
+2026-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Financials,0.10000000000000091
+2026-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Industrials,0.050000000000000176
+2026-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Health Care,0.09999999999999927
+2026-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Discretionary,0.07805501718830937
+2026-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Consumer Staples,1.3632851214219462e-15
+2026-05-31,US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure,all_segments,Energy,2.3983261793009857e-16
