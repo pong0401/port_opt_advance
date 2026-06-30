@@ -26,6 +26,8 @@ jobs:
   refresh:
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    env:
+      PYTHONUNBUFFERED: "1"
 
     steps:
       - name: Check out repo
@@ -60,11 +62,12 @@ jobs:
       - name: Refresh latest overlay data
         run: python scripts/refresh_overlay_latest.py
 
-      - name: Refresh Strategy B latest weights
-        run: python scripts/refresh_us_th_best_config_latest.py
-
       - name: Refresh Strategy B shared US/TH latest weights
         run: python scripts/refresh_us_th_strategy_b_latest.py
+
+      - name: Refresh legacy Strategy B latest weights
+        continue-on-error: true
+        run: python scripts/refresh_us_th_best_config_latest.py
 
       - name: Refresh US/TH/JP index-signal latest weights
         run: python scripts/refresh_us_th_jp_index_signal_latest.py
