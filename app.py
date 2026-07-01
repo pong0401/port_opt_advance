@@ -696,7 +696,7 @@ STRATEGY_B_GUIDE_CONFIGS = {
     if name in STRATEGY_B_GUIDE_CONFIGS
 }
 
-DEFAULT_STRATEGY_B_GUIDE_CONFIG = "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure"
+DEFAULT_STRATEGY_B_GUIDE_CONFIG = "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure"
 
 
 def ensure_data_dir() -> None:
@@ -2905,7 +2905,7 @@ def render_rebalance_page() -> None:
     strategy_options = list(weight_configs.keys())
     preferred_strategy = (
         "B - One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 "
-        "assets50 AI-tech cap 25% + daily exposure"
+        "assets50 + daily exposure"
     )
     default_strategy_index = strategy_options.index(preferred_strategy) if preferred_strategy in strategy_options else 0
     with in_cols[0]:
