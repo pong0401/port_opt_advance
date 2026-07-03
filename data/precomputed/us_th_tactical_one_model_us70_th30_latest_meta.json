@@ -1,5 +1,5 @@
 {
-  "Date": "2026-07-01",
+  "Date": "2026-07-03",
   "Strategy": "One-model US cap 70% / TH cap 30% + daily exposure",
   "Case": "US cap 70% / TH cap 30%",
   "Model": "one combined mean-covariance optimizer",
@@ -11,15 +11,15 @@
   "TH Tactical Active Weight": 0.0,
   "Selected US Assets": 30,
   "Selected TH Assets": 0,
-  "US Internal Weight Date": "2026-07-01",
-  "TH Internal Weight Date": "2026-07-01",
-  "Train Start": "2025-02-13",
-  "Train End": "2026-07-01",
+  "US Internal Weight Date": "2026-07-03",
+  "TH Internal Weight Date": "2026-07-03",
+  "Train Start": "2025-02-15",
+  "Train End": "2026-07-03",
   "US Daily Exposure": 1.0,
   "TH Daily Exposure": 1.0,
   "Gold Daily Exposure": 0.5,
   "BTC Daily Exposure": 0.0,
   "Latest Weight Source": "Standalone refresh from a fresh yfinance panel at run time; no static latest-weight file is read from dynamic_port_opt.",
-  "Fresh Start Date": "2024-03-03",
-  "calculated_at": "2026-07-01T06:27:00.607796+07:00"
+  "Fresh Start Date": "2024-03-05",
+  "calculated_at": "2026-07-03T15:11:51.270144+07:00"
 }
