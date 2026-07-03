@@ -103,13 +103,6 @@ def main(panel: Panel | None = None) -> None:
         write_outputs=_BASE_WRITE_OUTPUTS,
     )
 
-    theme = importlib.import_module("refresh_us_th_one_model_us70_th30_theme_cap25_latest")
-    _run_variant(
-        "one-model US70/TH30 stockcap5 assets50 AI-tech cap25",
-        panel,
-        optimize_one_model=theme._optimize_one_model_with_theme_cap,
-        write_outputs=theme._write_outputs_with_theme_meta,
-    )
 
     refresh._write_outputs = _BASE_WRITE_OUTPUTS
     segment = importlib.import_module("refresh_us_th_one_model_us70_th30_segment_cap30_latest")

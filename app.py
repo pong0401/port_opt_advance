@@ -480,7 +480,6 @@ ACTIVE_STRATEGY_B_GUIDE_NAMES = [
     "US/TH tactical final best Sharpe 65/25/10 with Gold crash protection",
     "One-model US cap 70% / TH cap 30% with daily exposure",
     "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure",
-    "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure",
     "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 US segment cap 30% + daily exposure",
 ]
 
@@ -517,35 +516,6 @@ STRATEGY_B_GUIDE_CONFIGS = {
             "Reduced exposure à¸ˆà¸²à¸à¸—à¸¸à¸ asset/sleeve à¹„à¸›à¸­à¸¢à¸¹à¹ˆ `Cash / Reduced Exposure`; à¹„à¸¡à¹ˆà¸¡à¸µà¸à¸²à¸£à¹‚à¸¢à¸à¸™à¹‰à¸³à¸«à¸™à¸±à¸à¸—à¸µà¹ˆà¸–à¸¹à¸à¸¥à¸”à¹„à¸› sleeve à¸­à¸·à¹ˆà¸™.",
         ],
         "metrics": {"CAGR": 0.1977, "Sharpe": 1.0179, "Max Drawdown": -0.1801},
-    },
-    "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure": {
-        "series": "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure",
-        "latest_weights_file": "data/precomputed/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_ai_tech_cap25_latest_effective_weights_thb.csv",
-        "latest_weights_metadata_file": "data/precomputed/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_ai_tech_cap25_latest_meta.json",
-        "latest_weights_strategy": "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure",
-        "description": "Strategy B à¸•à¸±à¸§à¸™à¸µà¹‰à¹€à¸›à¹‡à¸™ one-model US/TH optimizer à¸ˆà¸²à¸ PIT handoff à¸—à¸µà¹ˆà¸•à¹ˆà¸­à¸¢à¸­à¸”à¸ˆà¸²à¸ stockcap5 penalty0.02 assets50 à¹‚à¸”à¸¢à¹€à¸žà¸´à¹ˆà¸¡ strict AI-tech theme cap 25% à¹€à¸žà¸·à¹ˆà¸­à¸„à¸¸à¸¡à¸à¸²à¸£à¸à¸£à¸°à¸ˆà¸¸à¸à¸•à¸±à¸§à¹ƒà¸™à¸«à¸¸à¹‰à¸™ AI/semiconductor/mega-cap tech bucket. Latest weights à¸„à¸³à¸™à¸§à¸“à¹ƒà¸«à¸¡à¹ˆà¸ˆà¸²à¸ fresh yfinance panel à¸•à¸­à¸™à¸£à¸±à¸™ à¹„à¸¡à¹ˆà¸­à¹ˆà¸²à¸™ static latest-weight à¸ˆà¸²à¸ dynamic_port_opt.",
-        "setting": "One-model US cap 70% / TH cap 30% / PIT S&P 500 top50 + PIT SET100 top50 / stock cap 5% / concentration penalty 0.02 / strict AI-tech cap 25% / Gold cap 30% / BTC cap 10% / monthly rebalance / daily exposure overlay / reduced exposure to Cash",
-        "guide_bullets": [
-            "Strategy setup",
-            "Base allocation à¹€à¸›à¹‡à¸™ one combined optimizer à¸„à¸£à¸­à¸š US equity, Thai equity, Gold à¹à¸¥à¸° BTC; US group cap 70%, TH group cap 30%, Gold cap 30%, BTC cap 10%.",
-            "Universe à¸„à¸·à¸­ PIT S&P 500 top 50 à¹à¸¥à¸° PIT SET100 top 50 à¸ˆà¸²à¸ liquidity/rank cache; Thai sleeve à¸ˆà¸°à¸¡à¸µà¸™à¹‰à¸³à¸«à¸™à¸±à¸à¹€à¸¡à¸·à¹ˆà¸­ TH tactical signal active.",
-            "Selection rules à¹ƒà¸Šà¹‰ PIT universe à¸•à¸²à¸¡ evaluation/alignment rules à¸‚à¸­à¸‡ PIT_RESELECT_BY_STEP_HANDOFF family; à¸¥à¸” duplicate share classes à¸à¹ˆà¸­à¸™ optimize.",
-            "Optimizer/model à¸„à¸·à¸­ sample mean-covariance optimizer à¸žà¸£à¹‰à¸­à¸¡ mean-variance objective, mom_63 signal à¹à¸¥à¸° concentration penalty 0.02.",
-            "Theme guardrail: strict AI-tech bucket à¸„à¸·à¸­ AAPL, AMD, GOOG, GOOGL, INTC, MU, NVDA, QCOM, TXN à¹à¸¥à¸° raw optimizer weight à¸£à¸§à¸¡à¸‚à¸­à¸‡à¸à¸¥à¸¸à¹ˆà¸¡à¸™à¸µà¹‰à¹„à¸¡à¹ˆà¹€à¸à¸´à¸™ 25%.",
-            "Rebalance schedule à¹€à¸›à¹‡à¸™ monthly rebalance à¸•à¸²à¸¡ PIT handoff family; weights à¹ƒà¸™ backtest à¹ƒà¸Šà¹‰à¸«à¸¥à¸±à¸‡à¸§à¸±à¸™ rebalance à¹€à¸žà¸·à¹ˆà¸­à¸«à¸¥à¸µà¸à¹€à¸¥à¸µà¹ˆà¸¢à¸‡ same-close lookahead.",
-            "Caps: stock à¸£à¸²à¸¢à¸•à¸±à¸§à¹„à¸¡à¹ˆà¹€à¸à¸´à¸™ 5%, strict AI-tech theme cap 25%, US group cap 70%, TH group cap 30%, Gold cap 30%, BTC cap 10%. BIL à¹„à¸¡à¹ˆà¹„à¸”à¹‰à¹€à¸›à¹‡à¸™ asset à¹ƒà¸™ optimizer.",
-            "Latest weights à¸„à¸³à¸™à¸§à¸“à¹ƒà¸«à¸¡à¹ˆà¸ˆà¸²à¸ fresh yfinance panel à¸œà¹ˆà¸²à¸™ standalone refresh script à¹„à¸¡à¹ˆà¸­à¹ˆà¸²à¸™ static latest-weight file à¸ˆà¸²à¸ dynamic_port_opt.",
-        ],
-        "daily_exposure_bullets": [
-            "Daily exposure rules",
-            "à¹ƒà¸Šà¹‰ daily exposure overlay à¸«à¸¥à¸±à¸‡ optimizer à¹‚à¸”à¸¢ signal à¸–à¸¹à¸ lag 1 trading session à¸«à¸£à¸·à¸­à¹ƒà¸Šà¹‰ close signal à¸—à¸µà¹ˆà¸£à¸¹à¹‰à¹à¸¥à¹‰à¸§à¸ªà¸³à¸«à¸£à¸±à¸š next-session execution.",
-            "US equity à¹ƒà¸Šà¹‰ SPY MA300; à¸–à¹‰à¸²à¸•à¹ˆà¸³à¸à¸§à¹ˆà¸² MA300 exposure à¹€à¸«à¸¥à¸·à¸­ 50%.",
-            "Thai equity à¹ƒà¸Šà¹‰ SET MA200; à¸–à¹‰à¸²à¸•à¹ˆà¸³à¸à¸§à¹ˆà¸² MA200 exposure à¹€à¸«à¸¥à¸·à¸­ 0%.",
-            "Gold à¹ƒà¸Šà¹‰ DD252 crash protection: warn -8% à¹€à¸«à¸¥à¸·à¸­ 50%, crash -20% à¹€à¸«à¸¥à¸·à¸­ 50%, panic -30% à¸žà¸£à¹‰à¸­à¸¡ Gold à¸•à¹ˆà¸³à¸à¸§à¹ˆà¸² MA200 à¹à¸¥à¸° mom63 < 0 à¹€à¸«à¸¥à¸·à¸­ 0%, recover à¹€à¸¡à¸·à¹ˆà¸­ drawdown à¸”à¸µà¸‚à¸¶à¹‰à¸™à¸–à¸¶à¸‡ -5%.",
-            "BTC à¹ƒà¸Šà¹‰ BTC MA50; à¸–à¹‰à¸²à¸•à¹ˆà¸³à¸à¸§à¹ˆà¸² MA50 exposure à¹€à¸«à¸¥à¸·à¸­ 0%.",
-            "Reduced exposure à¸ˆà¸²à¸à¸—à¸¸à¸ asset/sleeve à¹„à¸›à¸­à¸¢à¸¹à¹ˆ Cash / Reduced Exposure; à¹„à¸¡à¹ˆà¸¡à¸µà¸à¸²à¸£à¹‚à¸¢à¸à¸™à¹‰à¸³à¸«à¸™à¸±à¸à¸—à¸µà¹ˆà¸–à¸¹à¸à¸¥à¸”à¹„à¸› sleeve à¸­à¸·à¹ˆà¸™.",
-        ],
-        "metrics": {"CAGR": 0.1959, "Sharpe": 1.0083, "Max Drawdown": -0.1801},
     },
     "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 US segment cap 30% + daily exposure": {
         "series": "US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure",

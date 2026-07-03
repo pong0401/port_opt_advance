@@ -109,10 +109,6 @@ jobs:
           git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_latest_sleeve_weights_thb.csv
           git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_latest_meta.csv
           git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_latest_meta.json
-          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_ai_tech_cap25_latest_effective_weights_thb.csv
-          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_ai_tech_cap25_latest_sleeve_weights_thb.csv
-          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_ai_tech_cap25_latest_meta.csv
-          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_ai_tech_cap25_latest_meta.json
           git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_segment_cap30_latest_effective_weights_thb.csv
           git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_segment_cap30_latest_sleeve_weights_thb.csv
           git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_segment_cap30_latest_meta.csv

@@ -94,12 +94,6 @@ HANDOFF_CURVE_SOURCES = [
         "family": "PIT_RESELECT_BY_STEP_HANDOFF",
     },
     {
-        "label": "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure",
-        "path": ("..", "dynamic_port_opt", "result", "us_th_one_model_us70_th30_theme_cap_sweep_curves_thb.csv"),
-        "column": "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 AI-tech cap 25% + daily exposure",
-        "family": "PIT_RESELECT_BY_STEP_HANDOFF",
-    },
-    {
         "label": "US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure",
         "path": ("result", "us_th_one_model_us70_th30_segment_cap30_all_us_segments_backtest_curves_thb.csv"),
         "column": "US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure",
@@ -220,26 +214,6 @@ HANDOFF_SUPPORT_FILES = [
         "source": ("..", "dynamic_port_opt", "result", "us_th_one_model_us70_th30_concentration_sweep_concentration_history_thb.csv"),
         "target": "us_th_one_model_us70_th30_concentration_sweep_concentration_history_thb.csv",
         "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 concentration diagnostics.",
-    },
-    {
-        "source": ("..", "dynamic_port_opt", "result", "us_th_one_model_us70_th30_theme_cap_sweep_summary_thb.csv"),
-        "target": "us_th_one_model_us70_th30_theme_cap_sweep_summary_thb.csv",
-        "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 AI-tech cap 25% theme sweep summary.",
-    },
-    {
-        "source": ("..", "dynamic_port_opt", "result", "us_th_one_model_us70_th30_theme_cap_sweep_curves_thb.csv"),
-        "target": "us_th_one_model_us70_th30_theme_cap_sweep_curves_thb.csv",
-        "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 AI-tech cap 25% theme sweep curves.",
-    },
-    {
-        "source": ("..", "dynamic_port_opt", "result", "us_th_one_model_us70_th30_theme_cap_sweep_latest_weights_thb.csv"),
-        "target": "us_th_one_model_us70_th30_theme_cap_sweep_latest_weights_thb.csv",
-        "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 AI-tech cap 25% historical latest effective weights.",
-    },
-    {
-        "source": ("..", "dynamic_port_opt", "result", "us_th_one_model_us70_th30_theme_cap_sweep_concentration_history_thb.csv"),
-        "target": "us_th_one_model_us70_th30_theme_cap_sweep_concentration_history_thb.csv",
-        "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 AI-tech cap 25% concentration diagnostics.",
     },
     {
         "source": ("result", "us_th_one_model_us70_th30_segment_cap30_all_us_segments_backtest_summary_thb.csv"),
