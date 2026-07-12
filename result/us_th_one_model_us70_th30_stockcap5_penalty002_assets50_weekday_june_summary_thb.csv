@@ -1,0 +1,2 @@
+Total Return,CAGR,Annual Vol,Sharpe,Sortino,Max Drawdown,Hit Rate,Strategy,Case,Start,End,US Group Cap,TH Group Cap,Stock Cap,Concentration Penalty,US Assets,TH Assets,Gold Cap,BTC Cap,Exposure
+32.63583674454108,0.2018245736814801,0.16283153367218997,1.0268645327837158,1.476625965655301,-0.1785257109189443,0.5421336654213367,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure,Stock cap 5%,2007-12-31,2026-06-30,0.7,0.3,0.05,0.02,50,50,0.3,0.1,daily exposure

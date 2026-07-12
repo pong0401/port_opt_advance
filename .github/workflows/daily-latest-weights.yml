@@ -75,11 +75,14 @@ jobs:
       - name: Refresh Country ETF tactical latest weights
         run: python scripts/refresh_country_etf_tactical_latest.py
 
+      - name: Refresh QQQ global rotation defensive GTAA latest weights
+        run: python scripts/refresh_qqq_combo_gtaa_latest.py
+
       - name: Rebuild frozen backtest dataset
         if: github.event_name == 'workflow_dispatch' && inputs.run_backtest == 'true'
         run: |
           python scripts/run_us_th_best_config.py
-          python scripts/run_us_th_one_model_segment_cap30_backtest.py
+          python scripts/run_us_th_one_model_cap5_weekday_june_precompute.py
           python scripts/build_streamlit_precomputed.py
 
       - name: Commit refreshed outputs
@@ -109,10 +112,12 @@ jobs:
           git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_latest_sleeve_weights_thb.csv
           git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_latest_meta.csv
           git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_latest_meta.json
-          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_segment_cap30_latest_effective_weights_thb.csv
-          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_segment_cap30_latest_sleeve_weights_thb.csv
-          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_segment_cap30_latest_meta.csv
-          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_segment_cap30_latest_meta.json
+          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_weekday_june_summary_thb.csv
+          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_weekday_june_period_compare_thb.csv
+          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_weekday_june_curves_thb.csv
+          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_weekday_june_latest_weights_thb.csv
+          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_weekday_june_effective_weights_thb.csv
+          git add -f result/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_weekday_june_universe_history_thb.csv
           git add -f result/us_th_jp_optimized_minvol_top10_cap15_weekly_latest_effective_weights_thb.csv
           git add -f result/us_th_jp_optimized_minvol_top10_cap15_weekly_latest_sleeve_weights_thb.csv
           git add -f result/us_th_jp_optimized_minvol_top10_cap15_latest_meta.csv
@@ -121,7 +126,12 @@ jobs:
           git add -f result/country_etf_tactical_gold_dd_boost16_latest_sleeve_weights.csv
           git add -f result/country_etf_tactical_gold_dd_boost16_latest_meta.csv
           git add -f result/country_etf_tactical_gold_dd_boost16_latest_meta.json
+          git add -f result/qqq_global_rotation_defensive_gtaa_403030_latest_effective_weights.csv
+          git add -f result/qqq_global_rotation_defensive_gtaa_403030_latest_sleeve_weights.csv
+          git add -f result/qqq_global_rotation_defensive_gtaa_403030_latest_meta.csv
+          git add -f result/qqq_global_rotation_defensive_gtaa_403030_latest_meta.json
           git add -f data/cache/dynamic_factor_copula/country_etf_tactical_latest_prices.parquet
+          git add -f data/cache/dynamic_factor_copula/qqq_combo_gtaa_latest_prices.parquet
           git add data/precomputed
           git diff --cached --quiet || git commit -m "Refresh latest portfolio weights"
           git push

@@ -1,0 +1,173 @@
+{
+  "schema_version": 1,
+  "strategy_id": "us_th_best_asset_sweep_603010_asset_daily",
+  "strategy": "us_th_best_asset_sweep_603010_asset_daily",
+  "market_date": "2026-06-30",
+  "source_file": "data/precomputed/us_th_best_asset_sweep_latest_effective_weights_live_thb.csv",
+  "weight_column": "Portfolio Exposure",
+  "raw_weight_sum": 0.9999999999999992,
+  "visible_weight_sum": 0.9999999999999992,
+  "hidden_below_weight": 0.01,
+  "rows": [
+    {
+      "Date": "2026-06-30",
+      "Asset": "CASH",
+      "Portfolio Exposure": 0.2500000000000001,
+      "Portfolio Exposure %": 25.00000000000001,
+      "Sleeve": "Cash",
+      "Trigger Source": "Uninvested exposure"
+    },
+    {
+      "Date": "2026-06-30",
+      "Asset": "GOLD",
+      "Portfolio Exposure": 0.15,
+      "Portfolio Exposure %": 15.000000000000002,
+      "Sleeve": "Overlay",
+      "Trigger Source": "Gold trend"
+    },
+    {
+      "Date": "2026-06-30",
+      "Asset": "GOOG",
+      "Portfolio Exposure": 0.0359999999999999,
+      "Portfolio Exposure %": 3.5999999999999943,
+      "Sleeve": "US Equity",
+      "Trigger Source": "Dynamic HMM stock sleeve"
+    },
+    {
+      "Date": "2026-06-30",
+      "Asset": "AOT.BK",
+      "Portfolio Exposure": 0.0359999999999999,
+      "Portfolio Exposure %": 3.5999999999999943,
+      "Sleeve": "TH Equity",
+      "Trigger Source": "Dynamic HMM Thai stock sleeve"
+    },
+    {
+      "Date": "2026-06-30",
+      "Asset": "TSLA",
+      "Portfolio Exposure": 0.0359999999999999,
+      "Portfolio Exposure %": 3.5999999999999943,
+      "Sleeve": "US Equity",
+      "Trigger Source": "Dynamic HMM stock sleeve"
+    },
+    {
+      "Date": "2026-06-30",
+      "Asset": "QCOM",
+      "Portfolio Exposure": 0.0359999999999999,
+      "Portfolio Exposure %": 3.5999999999999943,
+      "Sleeve": "US Equity",
+      "Trigger Source": "Dynamic HMM stock sleeve"
+    },
+    {
+      "Date": "2026-06-30",
+      "Asset": "KCE.BK",
+      "Portfolio Exposure": 0.0359999999999999,
+      "Portfolio Exposure %": 3.5999999999999943,
+      "Sleeve": "TH Equity",
+      "Trigger Source": "Dynamic HMM Thai stock sleeve"
+    },
+    {
+      "Date": "2026-06-30",
+      "Asset": "KBANK.BK",
+      "Portfolio Exposure": 0.0359999999999999,
+      "Portfolio Exposure %": 3.5999999999999943,
+      "Sleeve": "TH Equity",
+      "Trigger Source": "Dynamic HMM Thai stock sleeve"
+    },
+    {
+      "Date": "2026-06-30",
+      "Asset": "INTC",
+      "Portfolio Exposure": 0.0359999999999999,
+      "Portfolio Exposure %": 3.5999999999999943,
+      "Sleeve": "US Equity",
+      "Trigger Source": "Dynamic HMM stock sleeve"
+    },
+    {
+      "Date": "2026-06-30",
+      "Asset": "GPSC.BK",
+      "Portfolio Exposure": 0.0359999999999999,
+      "Portfolio Exposure %": 3.5999999999999943,
+      "Sleeve": "TH Equity",
+      "Trigger Source": "Dynamic HMM Thai stock sleeve"
+    },
+    {
+      "Date": "2026-06-30",
+      "Asset": "UNH",
+      "Portfolio Exposure": 0.0359999999999999,
+      "Portfolio Exposure %": 3.5999999999999943,
+      "Sleeve": "US Equity",
+      "Trigger Source": "Dynamic HMM stock sleeve"
+    },
+    {
+      "Date": "2026-06-30",
+      "Asset": "DELTA.BK",
+      "Portfolio Exposure": 0.0359999999999999,
+      "Portfolio Exposure %": 3.5999999999999943,
+      "Sleeve": "TH Equity",
+      "Trigger Source": "Dynamic HMM Thai stock sleeve"
+    },
+    {
+      "Date": "2026-06-30",
+      "Asset": "CBG.BK",
+      "Portfolio Exposure": 0.0359999999999999,
+      "Portfolio Exposure %": 3.5999999999999943,
+      "Sleeve": "TH Equity",
+      "Trigger Source": "Dynamic HMM Thai stock sleeve"
+    },
+    {
+      "Date": "2026-06-30",
+      "Asset": "C",
+      "Portfolio Exposure": 0.0359999999999999,
+      "Portfolio Exposure %": 3.5999999999999943,
+      "Sleeve": "US Equity",
+      "Trigger Source": "Dynamic HMM stock sleeve"
+    },
+    {
+      "Date": "2026-06-30",
+      "Asset": "BGRIM.BK",
+      "Portfolio Exposure": 0.0359999999999999,
+      "Portfolio Exposure %": 3.5999999999999943,
+      "Sleeve": "TH Equity",
+      "Trigger Source": "Dynamic HMM Thai stock sleeve"
+    },
+    {
+      "Date": "2026-06-30",
+      "Asset": "AVGO",
+      "Portfolio Exposure": 0.0359999999999999,
+      "Portfolio Exposure %": 3.5999999999999943,
+      "Sleeve": "US Equity",
+      "Trigger Source": "Dynamic HMM stock sleeve"
+    },
+    {
+      "Date": "2026-06-30",
+      "Asset": "MU",
+      "Portfolio Exposure": 0.0359999999999999,
+      "Portfolio Exposure %": 3.599999999999993,
+      "Sleeve": "US Equity",
+      "Trigger Source": "Dynamic HMM stock sleeve"
+    },
+    {
+      "Date": "2026-06-30",
+      "Asset": "AMD",
+      "Portfolio Exposure": 0.0359999999999998,
+      "Portfolio Exposure %": 3.5999999999999885,
+      "Sleeve": "US Equity",
+      "Trigger Source": "Dynamic HMM stock sleeve"
+    },
+    {
+      "Date": "2026-06-30",
+      "Asset": "BAC",
+      "Portfolio Exposure": 0.0132938917449414,
+      "Portfolio Exposure %": 1.3293891744941468,
+      "Sleeve": "US Equity",
+      "Trigger Source": "Dynamic HMM stock sleeve"
+    },
+    {
+      "Date": "2026-06-30",
+      "Asset": "SCC.BK",
+      "Portfolio Exposure": 0.0107061082550592,
+      "Portfolio Exposure %": 1.070610825505929,
+      "Sleeve": "TH Equity",
+      "Trigger Source": "Dynamic HMM Thai stock sleeve"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "Strategy": "QQQ + global rotation + defensive GTAA 40/30/30",
+  "Date": "2026-07-10",
+  "Latest Cache Trading Date": "2026-07-10",
+  "Last Rebalance Date": "2026-07-10",
+  "Strategy setup": "Base allocation QQQ core 40%, global country/sector rotation 30%, defensive GLD/IEF/TLT 30%; rotation selects top 3 by 6-month momentum among ETFs above MA200; rotation and defensive sleeves use 126-day inverse-vol risk parity; monthly rebalance; no single-name cap beyond sleeve weights; latest weights recomputed from this repo's qqq_combo_gtaa price cache.",
+  "Daily exposure rules": "Every holding uses its own MA200 close signal shifted by one session. If an asset is below MA200, that asset slice is reduced to 0% and the inactive allocation earns BIL via Cash / Reduced Exposure. Signals are evaluated daily between monthly rotation rebalances.",
+  "Rotation Universe": "EWA, EWC, EWG, EWH, EWI, EWJ, EWL, EWM, EWN, EWP, EWQ, EWS, EWD, EWU, EWW, EWY, EWZ, EWT, EEM, EFA, TUR, THD, NORW, EPOL, ARGT, MCHI, GREK, INDA, SMH, XLK, XLE, XLF, XLV, XLI, XLP, XLU, XLB, XLY, IGV, SOXX, VNQ, KRE, IYT, GDX, DBC",
+  "Defensive Universe": "GLD, IEF, TLT",
+  "Selected Rotation": "",
+  "Fee Bps": 17.0,
+  "Latest Weight Source": "Standalone refresh from this repo's current yfinance-backed qqq_combo_gtaa cache; no static latest-weight file is read from dynamic_port_opt or webull_api.",
+  "Display Rule": "Latest-weight display hides asset rows below 1% except Cash / Reduced Exposure."
+}

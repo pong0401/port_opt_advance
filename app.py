@@ -233,12 +233,12 @@ STRATEGY_EXPLANATIONS = {
         "instead of being moved to another active stock market. This version ignores trading cost."
     ),
     "Joint US+TH Dynamic HMM Copula/Gold/BTC 60/30/10": (
-        "ใช้โมเดลร่วมของหุ้น US+TH แล้วผสม Gold/BTC ที่ 60/30/10. Dynamic HMM คือโมเดลจับ regime "
-        "เช่น ช่วงปกติหรือผันผวนสูง และปรับมุมมองตามข้อมูลใหม่."
+        "Ã Â¹Æ’Ã Â¸Å Ã Â¹â€°Ã Â¹â€šÃ Â¸Â¡Ã Â¹â‚¬Ã Â¸â€Ã Â¸Â¥Ã Â¸Â£Ã Â¹Ë†Ã Â¸Â§Ã Â¸Â¡Ã Â¸â€šÃ Â¸Â­Ã Â¸â€¡Ã Â¸Â«Ã Â¸Â¸Ã Â¹â€°Ã Â¸â„¢ US+TH Ã Â¹ÂÃ Â¸Â¥Ã Â¹â€°Ã Â¸Â§Ã Â¸Å“Ã Â¸ÂªÃ Â¸Â¡ Gold/BTC Ã Â¸â€”Ã Â¸ÂµÃ Â¹Ë† 60/30/10. Dynamic HMM Ã Â¸â€žÃ Â¸Â·Ã Â¸Â­Ã Â¹â€šÃ Â¸Â¡Ã Â¹â‚¬Ã Â¸â€Ã Â¸Â¥Ã Â¸Ë†Ã Â¸Â±Ã Â¸Å¡ regime "
+        "Ã Â¹â‚¬Ã Â¸Å Ã Â¹Ë†Ã Â¸â„¢ Ã Â¸Å Ã Â¹Ë†Ã Â¸Â§Ã Â¸â€¡Ã Â¸â€ºÃ Â¸ÂÃ Â¸â€¢Ã Â¸Â´Ã Â¸Â«Ã Â¸Â£Ã Â¸Â·Ã Â¸Â­Ã Â¸Å“Ã Â¸Â±Ã Â¸â„¢Ã Â¸Å“Ã Â¸Â§Ã Â¸â„¢Ã Â¸ÂªÃ Â¸Â¹Ã Â¸â€¡ Ã Â¹ÂÃ Â¸Â¥Ã Â¸Â°Ã Â¸â€ºÃ Â¸Â£Ã Â¸Â±Ã Â¸Å¡Ã Â¸Â¡Ã Â¸Â¸Ã Â¸Â¡Ã Â¸Â¡Ã Â¸Â­Ã Â¸â€¡Ã Â¸â€¢Ã Â¸Â²Ã Â¸Â¡Ã Â¸â€šÃ Â¹â€°Ã Â¸Â­Ã Â¸Â¡Ã Â¸Â¹Ã Â¸Â¥Ã Â¹Æ’Ã Â¸Â«Ã Â¸Â¡Ã Â¹Ë†."
     ),
     "Joint US+TH Static Copula/Gold/BTC 60/30/10": (
-        "ใช้โมเดลร่วมของหุ้น US+TH แล้วผสม Gold/BTC ที่ 60/30/10. Static model ใช้โครงสร้าง regime "
-        "ที่นิ่งกว่า Dynamic HMM จึงเปลี่ยนตามข้อมูลใหม่น้อยกว่า."
+        "Ã Â¹Æ’Ã Â¸Å Ã Â¹â€°Ã Â¹â€šÃ Â¸Â¡Ã Â¹â‚¬Ã Â¸â€Ã Â¸Â¥Ã Â¸Â£Ã Â¹Ë†Ã Â¸Â§Ã Â¸Â¡Ã Â¸â€šÃ Â¸Â­Ã Â¸â€¡Ã Â¸Â«Ã Â¸Â¸Ã Â¹â€°Ã Â¸â„¢ US+TH Ã Â¹ÂÃ Â¸Â¥Ã Â¹â€°Ã Â¸Â§Ã Â¸Å“Ã Â¸ÂªÃ Â¸Â¡ Gold/BTC Ã Â¸â€”Ã Â¸ÂµÃ Â¹Ë† 60/30/10. Static model Ã Â¹Æ’Ã Â¸Å Ã Â¹â€°Ã Â¹â€šÃ Â¸â€žÃ Â¸Â£Ã Â¸â€¡Ã Â¸ÂªÃ Â¸Â£Ã Â¹â€°Ã Â¸Â²Ã Â¸â€¡ regime "
+        "Ã Â¸â€”Ã Â¸ÂµÃ Â¹Ë†Ã Â¸â„¢Ã Â¸Â´Ã Â¹Ë†Ã Â¸â€¡Ã Â¸ÂÃ Â¸Â§Ã Â¹Ë†Ã Â¸Â² Dynamic HMM Ã Â¸Ë†Ã Â¸Â¶Ã Â¸â€¡Ã Â¹â‚¬Ã Â¸â€ºÃ Â¸Â¥Ã Â¸ÂµÃ Â¹Ë†Ã Â¸Â¢Ã Â¸â„¢Ã Â¸â€¢Ã Â¸Â²Ã Â¸Â¡Ã Â¸â€šÃ Â¹â€°Ã Â¸Â­Ã Â¸Â¡Ã Â¸Â¹Ã Â¸Â¥Ã Â¹Æ’Ã Â¸Â«Ã Â¸Â¡Ã Â¹Ë†Ã Â¸â„¢Ã Â¹â€°Ã Â¸Â­Ã Â¸Â¢Ã Â¸ÂÃ Â¸Â§Ã Â¹Ë†Ã Â¸Â²."
     ),
     "Side trigger cash drag, fee+slippage": (
         "Portfolio with a 60% US/TH stock sleeve, 30% gold sleeve, and 10% bitcoin sleeve. "
@@ -247,86 +247,86 @@ STRATEGY_EXPLANATIONS = {
         "Gold and BTC keep their own trend exposure rules. This version includes 17 bps fee+slippage."
     ),
     "Static HMM/Gold/BTC 60/30/10 daily exposure": (
-        "Daily exposure คือการปรับน้ำหนักลงทุนรายวันตามสัญญาณความเสี่ยง. กลยุทธ์นี้ใช้โมเดล regime แบบ Static "
-        "กับหุ้น US แล้วผสม Gold/BTC ที่ 60/30/10."
+        "Daily exposure Ã Â¸â€žÃ Â¸Â·Ã Â¸Â­Ã Â¸ÂÃ Â¸Â²Ã Â¸Â£Ã Â¸â€ºÃ Â¸Â£Ã Â¸Â±Ã Â¸Å¡Ã Â¸â„¢Ã Â¹â€°Ã Â¸Â³Ã Â¸Â«Ã Â¸â„¢Ã Â¸Â±Ã Â¸ÂÃ Â¸Â¥Ã Â¸â€¡Ã Â¸â€”Ã Â¸Â¸Ã Â¸â„¢Ã Â¸Â£Ã Â¸Â²Ã Â¸Â¢Ã Â¸Â§Ã Â¸Â±Ã Â¸â„¢Ã Â¸â€¢Ã Â¸Â²Ã Â¸Â¡Ã Â¸ÂªÃ Â¸Â±Ã Â¸ÂÃ Â¸ÂÃ Â¸Â²Ã Â¸â€œÃ Â¸â€žÃ Â¸Â§Ã Â¸Â²Ã Â¸Â¡Ã Â¹â‚¬Ã Â¸ÂªÃ Â¸ÂµÃ Â¹Ë†Ã Â¸Â¢Ã Â¸â€¡. Ã Â¸ÂÃ Â¸Â¥Ã Â¸Â¢Ã Â¸Â¸Ã Â¸â€”Ã Â¸ËœÃ Â¹Å’Ã Â¸â„¢Ã Â¸ÂµÃ Â¹â€°Ã Â¹Æ’Ã Â¸Å Ã Â¹â€°Ã Â¹â€šÃ Â¸Â¡Ã Â¹â‚¬Ã Â¸â€Ã Â¸Â¥ regime Ã Â¹ÂÃ Â¸Å¡Ã Â¸Å¡ Static "
+        "Ã Â¸ÂÃ Â¸Â±Ã Â¸Å¡Ã Â¸Â«Ã Â¸Â¸Ã Â¹â€°Ã Â¸â„¢ US Ã Â¹ÂÃ Â¸Â¥Ã Â¹â€°Ã Â¸Â§Ã Â¸Å“Ã Â¸ÂªÃ Â¸Â¡ Gold/BTC Ã Â¸â€”Ã Â¸ÂµÃ Â¹Ë† 60/30/10."
     ),
     "S&P Gold BTC daily exposure 70/20/10": (
-        "Daily exposure คือการปรับน้ำหนักลงทุนรายวันตามสัญญาณความเสี่ยง. กลยุทธ์นี้เริ่มจาก S&P 70%, "
-        "Gold 20%, BTC 10% แล้วลด exposure ของแต่ละ asset เมื่อแนวโน้มหรือความเสี่ยงไม่ดี."
+        "Daily exposure Ã Â¸â€žÃ Â¸Â·Ã Â¸Â­Ã Â¸ÂÃ Â¸Â²Ã Â¸Â£Ã Â¸â€ºÃ Â¸Â£Ã Â¸Â±Ã Â¸Å¡Ã Â¸â„¢Ã Â¹â€°Ã Â¸Â³Ã Â¸Â«Ã Â¸â„¢Ã Â¸Â±Ã Â¸ÂÃ Â¸Â¥Ã Â¸â€¡Ã Â¸â€”Ã Â¸Â¸Ã Â¸â„¢Ã Â¸Â£Ã Â¸Â²Ã Â¸Â¢Ã Â¸Â§Ã Â¸Â±Ã Â¸â„¢Ã Â¸â€¢Ã Â¸Â²Ã Â¸Â¡Ã Â¸ÂªÃ Â¸Â±Ã Â¸ÂÃ Â¸ÂÃ Â¸Â²Ã Â¸â€œÃ Â¸â€žÃ Â¸Â§Ã Â¸Â²Ã Â¸Â¡Ã Â¹â‚¬Ã Â¸ÂªÃ Â¸ÂµÃ Â¹Ë†Ã Â¸Â¢Ã Â¸â€¡. Ã Â¸ÂÃ Â¸Â¥Ã Â¸Â¢Ã Â¸Â¸Ã Â¸â€”Ã Â¸ËœÃ Â¹Å’Ã Â¸â„¢Ã Â¸ÂµÃ Â¹â€°Ã Â¹â‚¬Ã Â¸Â£Ã Â¸Â´Ã Â¹Ë†Ã Â¸Â¡Ã Â¸Ë†Ã Â¸Â²Ã Â¸Â S&P 70%, "
+        "Gold 20%, BTC 10% Ã Â¹ÂÃ Â¸Â¥Ã Â¹â€°Ã Â¸Â§Ã Â¸Â¥Ã Â¸â€ exposure Ã Â¸â€šÃ Â¸Â­Ã Â¸â€¡Ã Â¹ÂÃ Â¸â€¢Ã Â¹Ë†Ã Â¸Â¥Ã Â¸Â° asset Ã Â¹â‚¬Ã Â¸Â¡Ã Â¸Â·Ã Â¹Ë†Ã Â¸Â­Ã Â¹ÂÃ Â¸â„¢Ã Â¸Â§Ã Â¹â€šÃ Â¸â„¢Ã Â¹â€°Ã Â¸Â¡Ã Â¸Â«Ã Â¸Â£Ã Â¸Â·Ã Â¸Â­Ã Â¸â€žÃ Â¸Â§Ã Â¸Â²Ã Â¸Â¡Ã Â¹â‚¬Ã Â¸ÂªÃ Â¸ÂµÃ Â¹Ë†Ã Â¸Â¢Ã Â¸â€¡Ã Â¹â€žÃ Â¸Â¡Ã Â¹Ë†Ã Â¸â€Ã Â¸Âµ."
     ),
     "S&P Gold BTC daily exposure 60/30/10": (
-        "Daily exposure คือการปรับน้ำหนักลงทุนรายวันตามสัญญาณความเสี่ยง. กลยุทธ์นี้เริ่มจาก S&P 60%, "
-        "Gold 30%, BTC 10% แล้วลด exposure ของแต่ละ asset เมื่อแนวโน้มหรือความเสี่ยงไม่ดี."
+        "Daily exposure Ã Â¸â€žÃ Â¸Â·Ã Â¸Â­Ã Â¸ÂÃ Â¸Â²Ã Â¸Â£Ã Â¸â€ºÃ Â¸Â£Ã Â¸Â±Ã Â¸Å¡Ã Â¸â„¢Ã Â¹â€°Ã Â¸Â³Ã Â¸Â«Ã Â¸â„¢Ã Â¸Â±Ã Â¸ÂÃ Â¸Â¥Ã Â¸â€¡Ã Â¸â€”Ã Â¸Â¸Ã Â¸â„¢Ã Â¸Â£Ã Â¸Â²Ã Â¸Â¢Ã Â¸Â§Ã Â¸Â±Ã Â¸â„¢Ã Â¸â€¢Ã Â¸Â²Ã Â¸Â¡Ã Â¸ÂªÃ Â¸Â±Ã Â¸ÂÃ Â¸ÂÃ Â¸Â²Ã Â¸â€œÃ Â¸â€žÃ Â¸Â§Ã Â¸Â²Ã Â¸Â¡Ã Â¹â‚¬Ã Â¸ÂªÃ Â¸ÂµÃ Â¹Ë†Ã Â¸Â¢Ã Â¸â€¡. Ã Â¸ÂÃ Â¸Â¥Ã Â¸Â¢Ã Â¸Â¸Ã Â¸â€”Ã Â¸ËœÃ Â¹Å’Ã Â¸â„¢Ã Â¸ÂµÃ Â¹â€°Ã Â¹â‚¬Ã Â¸Â£Ã Â¸Â´Ã Â¹Ë†Ã Â¸Â¡Ã Â¸Ë†Ã Â¸Â²Ã Â¸Â S&P 60%, "
+        "Gold 30%, BTC 10% Ã Â¹ÂÃ Â¸Â¥Ã Â¹â€°Ã Â¸Â§Ã Â¸Â¥Ã Â¸â€ exposure Ã Â¸â€šÃ Â¸Â­Ã Â¸â€¡Ã Â¹ÂÃ Â¸â€¢Ã Â¹Ë†Ã Â¸Â¥Ã Â¸Â° asset Ã Â¹â‚¬Ã Â¸Â¡Ã Â¸Â·Ã Â¹Ë†Ã Â¸Â­Ã Â¹ÂÃ Â¸â„¢Ã Â¸Â§Ã Â¹â€šÃ Â¸â„¢Ã Â¹â€°Ã Â¸Â¡Ã Â¸Â«Ã Â¸Â£Ã Â¸Â·Ã Â¸Â­Ã Â¸â€žÃ Â¸Â§Ã Â¸Â²Ã Â¸Â¡Ã Â¹â‚¬Ã Â¸ÂªÃ Â¸ÂµÃ Â¹Ë†Ã Â¸Â¢Ã Â¸â€¡Ã Â¹â€žÃ Â¸Â¡Ã Â¹Ë†Ã Â¸â€Ã Â¸Âµ."
     ),
     "S&P/Gold/BTC 60/30/10 daily exposure": (
-        "Daily exposure คือการปรับน้ำหนักลงทุนรายวันตามสัญญาณความเสี่ยง. กลยุทธ์นี้ใช้ S&P, Gold, BTC "
-        "ที่ 60/30/10 และทุก asset ที่เลือกมีการลด exposure ได้."
+        "Daily exposure Ã Â¸â€žÃ Â¸Â·Ã Â¸Â­Ã Â¸ÂÃ Â¸Â²Ã Â¸Â£Ã Â¸â€ºÃ Â¸Â£Ã Â¸Â±Ã Â¸Å¡Ã Â¸â„¢Ã Â¹â€°Ã Â¸Â³Ã Â¸Â«Ã Â¸â„¢Ã Â¸Â±Ã Â¸ÂÃ Â¸Â¥Ã Â¸â€¡Ã Â¸â€”Ã Â¸Â¸Ã Â¸â„¢Ã Â¸Â£Ã Â¸Â²Ã Â¸Â¢Ã Â¸Â§Ã Â¸Â±Ã Â¸â„¢Ã Â¸â€¢Ã Â¸Â²Ã Â¸Â¡Ã Â¸ÂªÃ Â¸Â±Ã Â¸ÂÃ Â¸ÂÃ Â¸Â²Ã Â¸â€œÃ Â¸â€žÃ Â¸Â§Ã Â¸Â²Ã Â¸Â¡Ã Â¹â‚¬Ã Â¸ÂªÃ Â¸ÂµÃ Â¹Ë†Ã Â¸Â¢Ã Â¸â€¡. Ã Â¸ÂÃ Â¸Â¥Ã Â¸Â¢Ã Â¸Â¸Ã Â¸â€”Ã Â¸ËœÃ Â¹Å’Ã Â¸â„¢Ã Â¸ÂµÃ Â¹â€°Ã Â¹Æ’Ã Â¸Å Ã Â¹â€° S&P, Gold, BTC "
+        "Ã Â¸â€”Ã Â¸ÂµÃ Â¹Ë† 60/30/10 Ã Â¹ÂÃ Â¸Â¥Ã Â¸Â°Ã Â¸â€”Ã Â¸Â¸Ã Â¸Â asset Ã Â¸â€”Ã Â¸ÂµÃ Â¹Ë†Ã Â¹â‚¬Ã Â¸Â¥Ã Â¸Â·Ã Â¸Â­Ã Â¸ÂÃ Â¸Â¡Ã Â¸ÂµÃ Â¸ÂÃ Â¸Â²Ã Â¸Â£Ã Â¸Â¥Ã Â¸â€ exposure Ã Â¹â€žÃ Â¸â€Ã Â¹â€°."
     ),
 }
 
 SNP_GUIDE_CONFIGS = {
     "S&P 500 hold": {
         "series": ["S&P 500 buy & hold", "S&P buy & hold"],
-        "description": "ถือ S&P 500 เต็ม 100% ตลอดเวลา ไม่มีการลดน้ำหนักลงทุนรายวัน และไม่มี Gold/BTC.",
+        "description": "Ã Â¸â€“Ã Â¸Â·Ã Â¸Â­ S&P 500 Ã Â¹â‚¬Ã Â¸â€¢Ã Â¹â€¡Ã Â¸Â¡ 100% Ã Â¸â€¢Ã Â¸Â¥Ã Â¸Â­Ã Â¸â€Ã Â¹â‚¬Ã Â¸Â§Ã Â¸Â¥Ã Â¸Â² Ã Â¹â€žÃ Â¸Â¡Ã Â¹Ë†Ã Â¸Â¡Ã Â¸ÂµÃ Â¸ÂÃ Â¸Â²Ã Â¸Â£Ã Â¸Â¥Ã Â¸â€Ã Â¸â„¢Ã Â¹â€°Ã Â¸Â³Ã Â¸Â«Ã Â¸â„¢Ã Â¸Â±Ã Â¸ÂÃ Â¸Â¥Ã Â¸â€¡Ã Â¸â€”Ã Â¸Â¸Ã Â¸â„¢Ã Â¸Â£Ã Â¸Â²Ã Â¸Â¢Ã Â¸Â§Ã Â¸Â±Ã Â¸â„¢ Ã Â¹ÂÃ Â¸Â¥Ã Â¸Â°Ã Â¹â€žÃ Â¸Â¡Ã Â¹Ë†Ã Â¸Â¡Ã Â¸Âµ Gold/BTC.",
         "setting": "S&P 100% / Gold 0% / BTC 0%",
         "metrics": {"CAGR": 0.101017, "Sharpe": 0.520865, "Max Drawdown": -0.337173, "Total Return": 3.225871},
     },
     "S&P/Gold/BTC hold 70/20/10": {
         "series": "S&P Gold BTC 70/20/10",
         "blend_weights": {"SPY": 70.0, "GOLD": 20.0, "BTC": 10.0},
-        "description": "Hold baseline: ถือ S&P 70%, Gold 20%, BTC 10% และ rebalance ตามรอบเดิมโดยไม่มี daily exposure overlay. ใช้เป็นตัวเทียบกับ daily exposure lag-1 rule.",
+        "description": "Hold baseline: Ã Â¸â€“Ã Â¸Â·Ã Â¸Â­ S&P 70%, Gold 20%, BTC 10% Ã Â¹ÂÃ Â¸Â¥Ã Â¸Â° rebalance Ã Â¸â€¢Ã Â¸Â²Ã Â¸Â¡Ã Â¸Â£Ã Â¸Â­Ã Â¸Å¡Ã Â¹â‚¬Ã Â¸â€Ã Â¸Â´Ã Â¸Â¡Ã Â¹â€šÃ Â¸â€Ã Â¸Â¢Ã Â¹â€žÃ Â¸Â¡Ã Â¹Ë†Ã Â¸Â¡Ã Â¸Âµ daily exposure overlay. Ã Â¹Æ’Ã Â¸Å Ã Â¹â€°Ã Â¹â‚¬Ã Â¸â€ºÃ Â¹â€¡Ã Â¸â„¢Ã Â¸â€¢Ã Â¸Â±Ã Â¸Â§Ã Â¹â‚¬Ã Â¸â€”Ã Â¸ÂµÃ Â¸Â¢Ã Â¸Å¡Ã Â¸ÂÃ Â¸Â±Ã Â¸Å¡ daily exposure lag-1 rule.",
         "setting": "S&P hold 70% / Gold hold 20% / BTC hold 10%",
         "metrics": {"CAGR": 0.140674, "Sharpe": 0.726985, "Max Drawdown": -0.262583, "Total Return": 5.735832},
     },
     "S&P/Gold/BTC hold 80/10/10": {
         "series": "S&P Gold BTC 80/10/10",
         "blend_weights": {"SPY": 80.0, "GOLD": 10.0, "BTC": 10.0},
-        "description": "Hold baseline: ถือ S&P 80%, Gold 10%, BTC 10% และ rebalance ตามรอบเดิมโดยไม่มี daily exposure overlay.",
+        "description": "Hold baseline: Ã Â¸â€“Ã Â¸Â·Ã Â¸Â­ S&P 80%, Gold 10%, BTC 10% Ã Â¹ÂÃ Â¸Â¥Ã Â¸Â° rebalance Ã Â¸â€¢Ã Â¸Â²Ã Â¸Â¡Ã Â¸Â£Ã Â¸Â­Ã Â¸Å¡Ã Â¹â‚¬Ã Â¸â€Ã Â¸Â´Ã Â¸Â¡Ã Â¹â€šÃ Â¸â€Ã Â¸Â¢Ã Â¹â€žÃ Â¸Â¡Ã Â¹Ë†Ã Â¸Â¡Ã Â¸Âµ daily exposure overlay.",
         "setting": "S&P hold 80% / Gold hold 10% / BTC hold 10%",
     },
     "S&P/Gold/BTC hold 60/30/10": {
         "series": "S&P Gold BTC 60/30/10",
         "blend_weights": {"SPY": 60.0, "GOLD": 30.0, "BTC": 10.0},
-        "description": "Hold baseline: ถือ S&P 60%, Gold 30%, BTC 10% และ rebalance ตามรอบเดิมโดยไม่มี daily exposure overlay.",
+        "description": "Hold baseline: Ã Â¸â€“Ã Â¸Â·Ã Â¸Â­ S&P 60%, Gold 30%, BTC 10% Ã Â¹ÂÃ Â¸Â¥Ã Â¸Â° rebalance Ã Â¸â€¢Ã Â¸Â²Ã Â¸Â¡Ã Â¸Â£Ã Â¸Â­Ã Â¸Å¡Ã Â¹â‚¬Ã Â¸â€Ã Â¸Â´Ã Â¸Â¡Ã Â¹â€šÃ Â¸â€Ã Â¸Â¢Ã Â¹â€žÃ Â¸Â¡Ã Â¹Ë†Ã Â¸Â¡Ã Â¸Âµ daily exposure overlay.",
         "setting": "S&P hold 60% / Gold hold 30% / BTC hold 10%",
     },
     "S&P/BTC hold 85/0/15": {
         "series": "S&P BTC 85/0/15",
         "blend_weights": {"SPY": 85.0, "BTC": 15.0},
-        "description": "Hold baseline: ถือ S&P 85%, BTC 15%, Gold 0% และ rebalance ตามรอบเดิมโดยไม่มี daily exposure overlay.",
+        "description": "Hold baseline: Ã Â¸â€“Ã Â¸Â·Ã Â¸Â­ S&P 85%, BTC 15%, Gold 0% Ã Â¹ÂÃ Â¸Â¥Ã Â¸Â° rebalance Ã Â¸â€¢Ã Â¸Â²Ã Â¸Â¡Ã Â¸Â£Ã Â¸Â­Ã Â¸Å¡Ã Â¹â‚¬Ã Â¸â€Ã Â¸Â´Ã Â¸Â¡Ã Â¹â€šÃ Â¸â€Ã Â¸Â¢Ã Â¹â€žÃ Â¸Â¡Ã Â¹Ë†Ã Â¸Â¡Ã Â¸Âµ daily exposure overlay.",
         "setting": "S&P hold 85% / Gold hold 0% / BTC hold 15%",
     },
     "S&P 500 daily exposure": {
         "series": "S&P daily exposure",
-        "description": "Daily exposure แบบ lag-1: คำนวณ target exposure จากข้อมูลปิดวันก่อนหน้า แล้วใช้กับ return วันถัดไป. ถ้าแนวโน้มอ่อน, drawdown สูง, หรือ VIX สูง จะลดการถือ S&P ลงเพื่อคุมขาดทุน.",
+        "description": "Daily exposure Ã Â¹ÂÃ Â¸Å¡Ã Â¸Å¡ lag-1: Ã Â¸â€žÃ Â¸Â³Ã Â¸â„¢Ã Â¸Â§Ã Â¸â€œ target exposure Ã Â¸Ë†Ã Â¸Â²Ã Â¸ÂÃ Â¸â€šÃ Â¹â€°Ã Â¸Â­Ã Â¸Â¡Ã Â¸Â¹Ã Â¸Â¥Ã Â¸â€ºÃ Â¸Â´Ã Â¸â€Ã Â¸Â§Ã Â¸Â±Ã Â¸â„¢Ã Â¸ÂÃ Â¹Ë†Ã Â¸Â­Ã Â¸â„¢Ã Â¸Â«Ã Â¸â„¢Ã Â¹â€°Ã Â¸Â² Ã Â¹ÂÃ Â¸Â¥Ã Â¹â€°Ã Â¸Â§Ã Â¹Æ’Ã Â¸Å Ã Â¹â€°Ã Â¸ÂÃ Â¸Â±Ã Â¸Å¡ return Ã Â¸Â§Ã Â¸Â±Ã Â¸â„¢Ã Â¸â€“Ã Â¸Â±Ã Â¸â€Ã Â¹â€žÃ Â¸â€º. Ã Â¸â€“Ã Â¹â€°Ã Â¸Â²Ã Â¹ÂÃ Â¸â„¢Ã Â¸Â§Ã Â¹â€šÃ Â¸â„¢Ã Â¹â€°Ã Â¸Â¡Ã Â¸Â­Ã Â¹Ë†Ã Â¸Â­Ã Â¸â„¢, drawdown Ã Â¸ÂªÃ Â¸Â¹Ã Â¸â€¡, Ã Â¸Â«Ã Â¸Â£Ã Â¸Â·Ã Â¸Â­ VIX Ã Â¸ÂªÃ Â¸Â¹Ã Â¸â€¡ Ã Â¸Ë†Ã Â¸Â°Ã Â¸Â¥Ã Â¸â€Ã Â¸ÂÃ Â¸Â²Ã Â¸Â£Ã Â¸â€“Ã Â¸Â·Ã Â¸Â­ S&P Ã Â¸Â¥Ã Â¸â€¡Ã Â¹â‚¬Ã Â¸Å¾Ã Â¸Â·Ã Â¹Ë†Ã Â¸Â­Ã Â¸â€žÃ Â¸Â¸Ã Â¸Â¡Ã Â¸â€šÃ Â¸Â²Ã Â¸â€Ã Â¸â€”Ã Â¸Â¸Ã Â¸â„¢.",
         "setting": "S&P daily exposure 100% / Gold 0% / BTC 0% / lag-1 signal",
         "metrics": {"CAGR": 0.032014, "Sharpe": 0.019083, "Max Drawdown": -0.234136, "Total Return": 0.578817},
     },
     "S&P/Gold/BTC daily exposure 80/10/10": {
         "series": "S&P Gold BTC daily exposure 80/10/10",
         "blend_weights": {"SPY_DAILY_EXPOSURE": 80.0, "GOLD_DAILY_EXPOSURE": 10.0, "BTC_DAILY_EXPOSURE": 10.0},
-        "description": "Daily exposure แบบ lag-1: คำนวณ target exposure จากข้อมูลปิดวันก่อนหน้าแล้วใช้กับวันถัดไป. Config นี้เริ่มจาก S&P 80%, Gold 10%, BTC 10% แล้วส่วนที่ถูกลดกลายเป็น cash.",
+        "description": "Daily exposure Ã Â¹ÂÃ Â¸Å¡Ã Â¸Å¡ lag-1: Ã Â¸â€žÃ Â¸Â³Ã Â¸â„¢Ã Â¸Â§Ã Â¸â€œ target exposure Ã Â¸Ë†Ã Â¸Â²Ã Â¸ÂÃ Â¸â€šÃ Â¹â€°Ã Â¸Â­Ã Â¸Â¡Ã Â¸Â¹Ã Â¸Â¥Ã Â¸â€ºÃ Â¸Â´Ã Â¸â€Ã Â¸Â§Ã Â¸Â±Ã Â¸â„¢Ã Â¸ÂÃ Â¹Ë†Ã Â¸Â­Ã Â¸â„¢Ã Â¸Â«Ã Â¸â„¢Ã Â¹â€°Ã Â¸Â²Ã Â¹ÂÃ Â¸Â¥Ã Â¹â€°Ã Â¸Â§Ã Â¹Æ’Ã Â¸Å Ã Â¹â€°Ã Â¸ÂÃ Â¸Â±Ã Â¸Å¡Ã Â¸Â§Ã Â¸Â±Ã Â¸â„¢Ã Â¸â€“Ã Â¸Â±Ã Â¸â€Ã Â¹â€žÃ Â¸â€º. Config Ã Â¸â„¢Ã Â¸ÂµÃ Â¹â€°Ã Â¹â‚¬Ã Â¸Â£Ã Â¸Â´Ã Â¹Ë†Ã Â¸Â¡Ã Â¸Ë†Ã Â¸Â²Ã Â¸Â S&P 80%, Gold 10%, BTC 10% Ã Â¹ÂÃ Â¸Â¥Ã Â¹â€°Ã Â¸Â§Ã Â¸ÂªÃ Â¹Ë†Ã Â¸Â§Ã Â¸â„¢Ã Â¸â€”Ã Â¸ÂµÃ Â¹Ë†Ã Â¸â€“Ã Â¸Â¹Ã Â¸ÂÃ Â¸Â¥Ã Â¸â€Ã Â¸ÂÃ Â¸Â¥Ã Â¸Â²Ã Â¸Â¢Ã Â¹â‚¬Ã Â¸â€ºÃ Â¹â€¡Ã Â¸â„¢ cash.",
         "setting": "S&P daily exposure 80% / Gold daily exposure 10% / BTC daily exposure 10% / lag-1 signal",
         "metrics": {"CAGR": 0.085648, "Sharpe": 0.494591, "Max Drawdown": -0.223059, "Total Return": 2.290099},
     },
     "S&P/Gold/BTC daily exposure 70/20/10": {
         "series": "S&P Gold BTC daily exposure 70/20/10",
         "blend_weights": {"SPY_DAILY_EXPOSURE": 70.0, "GOLD_DAILY_EXPOSURE": 20.0, "BTC_DAILY_EXPOSURE": 10.0},
-        "description": "Daily exposure แบบ lag-1: คำนวณ target exposure จากข้อมูลปิดวันก่อนหน้าแล้วใช้กับวันถัดไป. Config นี้ใช้ S&P 70%, Gold 20%, BTC 10% และส่วนที่ถูกลดกลายเป็น cash.",
+        "description": "Daily exposure Ã Â¹ÂÃ Â¸Å¡Ã Â¸Å¡ lag-1: Ã Â¸â€žÃ Â¸Â³Ã Â¸â„¢Ã Â¸Â§Ã Â¸â€œ target exposure Ã Â¸Ë†Ã Â¸Â²Ã Â¸ÂÃ Â¸â€šÃ Â¹â€°Ã Â¸Â­Ã Â¸Â¡Ã Â¸Â¹Ã Â¸Â¥Ã Â¸â€ºÃ Â¸Â´Ã Â¸â€Ã Â¸Â§Ã Â¸Â±Ã Â¸â„¢Ã Â¸ÂÃ Â¹Ë†Ã Â¸Â­Ã Â¸â„¢Ã Â¸Â«Ã Â¸â„¢Ã Â¹â€°Ã Â¸Â²Ã Â¹ÂÃ Â¸Â¥Ã Â¹â€°Ã Â¸Â§Ã Â¹Æ’Ã Â¸Å Ã Â¹â€°Ã Â¸ÂÃ Â¸Â±Ã Â¸Å¡Ã Â¸Â§Ã Â¸Â±Ã Â¸â„¢Ã Â¸â€“Ã Â¸Â±Ã Â¸â€Ã Â¹â€žÃ Â¸â€º. Config Ã Â¸â„¢Ã Â¸ÂµÃ Â¹â€°Ã Â¹Æ’Ã Â¸Å Ã Â¹â€° S&P 70%, Gold 20%, BTC 10% Ã Â¹ÂÃ Â¸Â¥Ã Â¸Â°Ã Â¸ÂªÃ Â¹Ë†Ã Â¸Â§Ã Â¸â„¢Ã Â¸â€”Ã Â¸ÂµÃ Â¹Ë†Ã Â¸â€“Ã Â¸Â¹Ã Â¸ÂÃ Â¸Â¥Ã Â¸â€Ã Â¸ÂÃ Â¸Â¥Ã Â¸Â²Ã Â¸Â¢Ã Â¹â‚¬Ã Â¸â€ºÃ Â¹â€¡Ã Â¸â„¢ cash.",
         "setting": "S&P daily exposure 70% / Gold daily exposure 20% / BTC daily exposure 10% / lag-1 signal",
         "metrics": {"CAGR": 0.089355, "Sharpe": 0.546297, "Max Drawdown": -0.218233, "Total Return": 2.456695},
     },
     "S&P/Gold/BTC daily exposure 60/30/10": {
         "series": "S&P Gold BTC daily exposure 60/30/10",
         "blend_weights": {"SPY_DAILY_EXPOSURE": 60.0, "GOLD_DAILY_EXPOSURE": 30.0, "BTC_DAILY_EXPOSURE": 10.0},
-        "description": "Daily exposure แบบ lag-1: คำนวณ target exposure จากข้อมูลปิดวันก่อนหน้าแล้วใช้กับวันถัดไป. Config นี้ใช้ S&P 60%, Gold 30%, BTC 10% และส่วนที่ถูกลดกลายเป็น cash.",
+        "description": "Daily exposure Ã Â¹ÂÃ Â¸Å¡Ã Â¸Å¡ lag-1: Ã Â¸â€žÃ Â¸Â³Ã Â¸â„¢Ã Â¸Â§Ã Â¸â€œ target exposure Ã Â¸Ë†Ã Â¸Â²Ã Â¸ÂÃ Â¸â€šÃ Â¹â€°Ã Â¸Â­Ã Â¸Â¡Ã Â¸Â¹Ã Â¸Â¥Ã Â¸â€ºÃ Â¸Â´Ã Â¸â€Ã Â¸Â§Ã Â¸Â±Ã Â¸â„¢Ã Â¸ÂÃ Â¹Ë†Ã Â¸Â­Ã Â¸â„¢Ã Â¸Â«Ã Â¸â„¢Ã Â¹â€°Ã Â¸Â²Ã Â¹ÂÃ Â¸Â¥Ã Â¹â€°Ã Â¸Â§Ã Â¹Æ’Ã Â¸Å Ã Â¹â€°Ã Â¸ÂÃ Â¸Â±Ã Â¸Å¡Ã Â¸Â§Ã Â¸Â±Ã Â¸â„¢Ã Â¸â€“Ã Â¸Â±Ã Â¸â€Ã Â¹â€žÃ Â¸â€º. Config Ã Â¸â„¢Ã Â¸ÂµÃ Â¹â€°Ã Â¹Æ’Ã Â¸Å Ã Â¹â€° S&P 60%, Gold 30%, BTC 10% Ã Â¹ÂÃ Â¸Â¥Ã Â¸Â°Ã Â¸ÂªÃ Â¹Ë†Ã Â¸Â§Ã Â¸â„¢Ã Â¸â€”Ã Â¸ÂµÃ Â¹Ë†Ã Â¸â€“Ã Â¸Â¹Ã Â¸ÂÃ Â¸Â¥Ã Â¸â€Ã Â¸ÂÃ Â¸Â¥Ã Â¸Â²Ã Â¸Â¢Ã Â¹â‚¬Ã Â¸â€ºÃ Â¹â€¡Ã Â¸â„¢ cash.",
         "setting": "S&P daily exposure 60% / Gold daily exposure 30% / BTC daily exposure 10% / lag-1 signal",
         "metrics": {"CAGR": 0.092796, "Sharpe": 0.586842, "Max Drawdown": -0.218038, "Total Return": 2.618358},
     },
     "S&P/BTC daily exposure 85/0/15": {
         "series": "S&P BTC daily exposure 85/0/15",
         "blend_weights": {"SPY_DAILY_EXPOSURE": 85.0, "BTC_DAILY_EXPOSURE": 15.0},
-        "description": "Daily exposure แบบ lag-1: คำนวณ target exposure จากข้อมูลปิดวันก่อนหน้าแล้วใช้กับวันถัดไป. Config นี้ใช้ S&P 85% และ BTC 15% โดยไม่ถือ Gold; ส่วนที่ถูกลดกลายเป็น cash.",
+        "description": "Daily exposure Ã Â¹ÂÃ Â¸Å¡Ã Â¸Å¡ lag-1: Ã Â¸â€žÃ Â¸Â³Ã Â¸â„¢Ã Â¸Â§Ã Â¸â€œ target exposure Ã Â¸Ë†Ã Â¸Â²Ã Â¸ÂÃ Â¸â€šÃ Â¹â€°Ã Â¸Â­Ã Â¸Â¡Ã Â¸Â¹Ã Â¸Â¥Ã Â¸â€ºÃ Â¸Â´Ã Â¸â€Ã Â¸Â§Ã Â¸Â±Ã Â¸â„¢Ã Â¸ÂÃ Â¹Ë†Ã Â¸Â­Ã Â¸â„¢Ã Â¸Â«Ã Â¸â„¢Ã Â¹â€°Ã Â¸Â²Ã Â¹ÂÃ Â¸Â¥Ã Â¹â€°Ã Â¸Â§Ã Â¹Æ’Ã Â¸Å Ã Â¹â€°Ã Â¸ÂÃ Â¸Â±Ã Â¸Å¡Ã Â¸Â§Ã Â¸Â±Ã Â¸â„¢Ã Â¸â€“Ã Â¸Â±Ã Â¸â€Ã Â¹â€žÃ Â¸â€º. Config Ã Â¸â„¢Ã Â¸ÂµÃ Â¹â€°Ã Â¹Æ’Ã Â¸Å Ã Â¹â€° S&P 85% Ã Â¹ÂÃ Â¸Â¥Ã Â¸Â° BTC 15% Ã Â¹â€šÃ Â¸â€Ã Â¸Â¢Ã Â¹â€žÃ Â¸Â¡Ã Â¹Ë†Ã Â¸â€“Ã Â¸Â·Ã Â¸Â­ Gold; Ã Â¸ÂªÃ Â¹Ë†Ã Â¸Â§Ã Â¸â„¢Ã Â¸â€”Ã Â¸ÂµÃ Â¹Ë†Ã Â¸â€“Ã Â¸Â¹Ã Â¸ÂÃ Â¸Â¥Ã Â¸â€Ã Â¸ÂÃ Â¸Â¥Ã Â¸Â²Ã Â¸Â¢Ã Â¹â‚¬Ã Â¸â€ºÃ Â¹â€¡Ã Â¸â„¢ cash.",
         "setting": "S&P daily exposure 85% / Gold 0% / BTC daily exposure 15% / lag-1 signal",
         "metrics": {"CAGR": 0.105721, "Sharpe": 0.567250, "Max Drawdown": -0.271761, "Total Return": 3.290587},
     },
@@ -400,13 +400,13 @@ STRATEGY_B_GUIDE_CONFIGS = {
     },
     "US/TH stocks + Gold/BTC: all assets Dynamic HMM, no daily exposure": {
         "series": "All assets in one Dynamic HMM Copula model",
-        "description": "มีหุ้น US, หุ้นไทย, Gold, และ BTC อยู่ในโมเดลเดียวกันทั้งหมด. Dynamic HMM ให้โมเดลจับ regime ของทุก asset พร้อมกันและปรับตามข้อมูลใหม่ วิธีนี้ยืดหยุ่นกว่าแต่ drawdown อาจสูงขึ้น.",
+        "description": "Ã Â¸Â¡Ã Â¸ÂµÃ Â¸Â«Ã Â¸Â¸Ã Â¹â€°Ã Â¸â„¢ US, Ã Â¸Â«Ã Â¸Â¸Ã Â¹â€°Ã Â¸â„¢Ã Â¹â€žÃ Â¸â€”Ã Â¸Â¢, Gold, Ã Â¹ÂÃ Â¸Â¥Ã Â¸Â° BTC Ã Â¸Â­Ã Â¸Â¢Ã Â¸Â¹Ã Â¹Ë†Ã Â¹Æ’Ã Â¸â„¢Ã Â¹â€šÃ Â¸Â¡Ã Â¹â‚¬Ã Â¸â€Ã Â¸Â¥Ã Â¹â‚¬Ã Â¸â€Ã Â¸ÂµÃ Â¸Â¢Ã Â¸Â§Ã Â¸ÂÃ Â¸Â±Ã Â¸â„¢Ã Â¸â€”Ã Â¸Â±Ã Â¹â€°Ã Â¸â€¡Ã Â¸Â«Ã Â¸Â¡Ã Â¸â€. Dynamic HMM Ã Â¹Æ’Ã Â¸Â«Ã Â¹â€°Ã Â¹â€šÃ Â¸Â¡Ã Â¹â‚¬Ã Â¸â€Ã Â¸Â¥Ã Â¸Ë†Ã Â¸Â±Ã Â¸Å¡ regime Ã Â¸â€šÃ Â¸Â­Ã Â¸â€¡Ã Â¸â€”Ã Â¸Â¸Ã Â¸Â asset Ã Â¸Å¾Ã Â¸Â£Ã Â¹â€°Ã Â¸Â­Ã Â¸Â¡Ã Â¸ÂÃ Â¸Â±Ã Â¸â„¢Ã Â¹ÂÃ Â¸Â¥Ã Â¸Â°Ã Â¸â€ºÃ Â¸Â£Ã Â¸Â±Ã Â¸Å¡Ã Â¸â€¢Ã Â¸Â²Ã Â¸Â¡Ã Â¸â€šÃ Â¹â€°Ã Â¸Â­Ã Â¸Â¡Ã Â¸Â¹Ã Â¸Â¥Ã Â¹Æ’Ã Â¸Â«Ã Â¸Â¡Ã Â¹Ë† Ã Â¸Â§Ã Â¸Â´Ã Â¸ËœÃ Â¸ÂµÃ Â¸â„¢Ã Â¸ÂµÃ Â¹â€°Ã Â¸Â¢Ã Â¸Â·Ã Â¸â€Ã Â¸Â«Ã Â¸Â¢Ã Â¸Â¸Ã Â¹Ë†Ã Â¸â„¢Ã Â¸ÂÃ Â¸Â§Ã Â¹Ë†Ã Â¸Â²Ã Â¹ÂÃ Â¸â€¢Ã Â¹Ë† drawdown Ã Â¸Â­Ã Â¸Â²Ã Â¸Ë†Ã Â¸ÂªÃ Â¸Â¹Ã Â¸â€¡Ã Â¸â€šÃ Â¸Â¶Ã Â¹â€°Ã Â¸â„¢.",
         "setting": "No daily exposure / US stocks + Thai stocks + Gold + BTC / one Dynamic HMM model",
         "metrics": {"CAGR": 0.3367, "Sharpe": 1.332, "Max Drawdown": -0.3073},
     },
     "US/TH stocks + Gold/BTC: all assets Static model, no daily exposure": {
         "series": "All assets in one Static Copula model",
-        "description": "มีหุ้น US, หุ้นไทย, Gold, และ BTC อยู่ในโมเดลเดียวกันทั้งหมด. Static model ใช้โครงสร้าง regime ที่เปลี่ยนช้ากว่า Dynamic HMM และใช้เป็น baseline เทียบกับ Dynamic model.",
+        "description": "Ã Â¸Â¡Ã Â¸ÂµÃ Â¸Â«Ã Â¸Â¸Ã Â¹â€°Ã Â¸â„¢ US, Ã Â¸Â«Ã Â¸Â¸Ã Â¹â€°Ã Â¸â„¢Ã Â¹â€žÃ Â¸â€”Ã Â¸Â¢, Gold, Ã Â¹ÂÃ Â¸Â¥Ã Â¸Â° BTC Ã Â¸Â­Ã Â¸Â¢Ã Â¸Â¹Ã Â¹Ë†Ã Â¹Æ’Ã Â¸â„¢Ã Â¹â€šÃ Â¸Â¡Ã Â¹â‚¬Ã Â¸â€Ã Â¸Â¥Ã Â¹â‚¬Ã Â¸â€Ã Â¸ÂµÃ Â¸Â¢Ã Â¸Â§Ã Â¸ÂÃ Â¸Â±Ã Â¸â„¢Ã Â¸â€”Ã Â¸Â±Ã Â¹â€°Ã Â¸â€¡Ã Â¸Â«Ã Â¸Â¡Ã Â¸â€. Static model Ã Â¹Æ’Ã Â¸Å Ã Â¹â€°Ã Â¹â€šÃ Â¸â€žÃ Â¸Â£Ã Â¸â€¡Ã Â¸ÂªÃ Â¸Â£Ã Â¹â€°Ã Â¸Â²Ã Â¸â€¡ regime Ã Â¸â€”Ã Â¸ÂµÃ Â¹Ë†Ã Â¹â‚¬Ã Â¸â€ºÃ Â¸Â¥Ã Â¸ÂµÃ Â¹Ë†Ã Â¸Â¢Ã Â¸â„¢Ã Â¸Å Ã Â¹â€°Ã Â¸Â²Ã Â¸ÂÃ Â¸Â§Ã Â¹Ë†Ã Â¸Â² Dynamic HMM Ã Â¹ÂÃ Â¸Â¥Ã Â¸Â°Ã Â¹Æ’Ã Â¸Å Ã Â¹â€°Ã Â¹â‚¬Ã Â¸â€ºÃ Â¹â€¡Ã Â¸â„¢ baseline Ã Â¹â‚¬Ã Â¸â€”Ã Â¸ÂµÃ Â¸Â¢Ã Â¸Å¡Ã Â¸ÂÃ Â¸Â±Ã Â¸Å¡ Dynamic model.",
         "setting": "No daily exposure / US stocks + Thai stocks + Gold + BTC / one Static model",
         "metrics": {"CAGR": 0.3345, "Sharpe": 1.323, "Max Drawdown": -0.3073},
     },
@@ -450,38 +450,87 @@ SNP_GUIDE_CONFIGS = {
         "latest_weights_file": "data/precomputed/country_etf_tactical_gold_dd_boost16_latest_effective_weights.csv",
         "latest_weights_metadata_file": "data/precomputed/country_etf_tactical_gold_dd_boost16_latest_meta.json",
         "latest_weights_strategy": "Country ETF tactical + Gold DD boost 16",
-        "description": "Strategy A winner จาก BEST_PARAM S&P handoff Step 4: เริ่มจาก core SPY/Gold/BTC/BIL 45/30/10/15 แล้วให้ ETF momentum core หนึ่งตัวรับได้ 15% จาก SPY, เพิ่ม country ETF tactical satellite 8% เลือก top 2 จาก country ETF universe ที่มี history ประมาณ 10 ปี และใช้ Gold DD boost 16% จาก SPY เมื่อ SPY risk-off. Latest weights คำนวณใหม่ใน repo นี้จาก yfinance-backed country ETF cache ไม่อ่าน static latest-weight file จาก dynamic_port_opt.",
+        "description": "New Strategy A candidate added today: QQQ core 40%, global rotation 30%, defensive GTAA 30%, with latest weights recomputed from this repo cache rather than static dynamic_port_opt files.",
         "setting": "Core SPY 45% / Gold 30% / BTC 10% / BIL 15% / base momentum ETF bucket 15% funded from SPY / country ETF tactical bucket 8% top 2 funded from SPY / monthly rebalance / country universe requires about 10 years of history / SPY MA300 below50% / Gold DD252 warn -8% to 50%, crash -20% to 50% / BTC MA50 below0% / Gold boost 16% funded from SPY when SPY is below MA200 or SPY DD252 <= -8% / latest weights generated locally from current cache",
         "guide_bullets": [
-            "Base allocation ก่อน tactical sleeves: SPY 45%, Gold 30%, BTC 10%, BIL 15%.",
-            "Base momentum sleeve: เลือก ETF momentum core top 1 จาก SPMO, MTUM, SCHG, XLK, EWY, EWJ, INDA แล้ว fund 15% จาก SPY ถ้า momentum/trend ผ่าน rule.",
-            "Country ETF sleeve: เลือก country ETF top 2 ด้วย monthly momentum rank จาก country-only universe และให้ bucket รวม 8% funded from SPY.",
-            "Universe ของ country ETF ต้องมี usable price history ประมาณ 10 ปี; winner ล่าสุดใน handoff คือ EWZ และ NORW ณ 2026-04-29.",
-            "Optimizer/model เป็น rules-based monthly momentum allocation ไม่ใช่ mean-variance optimizer; objective ของ sweep คือเลือก parameter ที่ Sharpe ดีสุดใน BEST_PARAM S&P family.",
-            "Rebalance schedule เป็น monthly month-end selection แล้วถือ weight ไปถึงเดือนถัดไป; signals ใช้ close-based lag-1/next-session execution.",
-            "Caps: country ETF satellite รวม 8%, top 2 เท่ากันตัวละ 4%; base momentum ETF 15%; Gold base 30% และ boost เพิ่มได้ 16% จาก SPY; SPY floor หลัง fund/boost ไม่น้อยกว่า 20%; BTC 10%; BIL 15% base.",
-            "Latest weights คำนวณใหม่จาก cache ใน repo นี้ผ่าน `scripts/refresh_country_etf_tactical_latest.py`; historical curve มาจาก BEST_PARAM S&P Step 4 handoff column `current_best country_only bucket8% top2 boost16`.",
+            "Base allocation Ã Â¸ÂÃ Â¹Ë†Ã Â¸Â­Ã Â¸â„¢ tactical sleeves: SPY 45%, Gold 30%, BTC 10%, BIL 15%.",
+            "Base momentum sleeve: Ã Â¹â‚¬Ã Â¸Â¥Ã Â¸Â·Ã Â¸Â­Ã Â¸Â ETF momentum core top 1 Ã Â¸Ë†Ã Â¸Â²Ã Â¸Â SPMO, MTUM, SCHG, XLK, EWY, EWJ, INDA Ã Â¹ÂÃ Â¸Â¥Ã Â¹â€°Ã Â¸Â§ fund 15% Ã Â¸Ë†Ã Â¸Â²Ã Â¸Â SPY Ã Â¸â€“Ã Â¹â€°Ã Â¸Â² momentum/trend Ã Â¸Å“Ã Â¹Ë†Ã Â¸Â²Ã Â¸â„¢ rule.",
+            "Country ETF sleeve: Ã Â¹â‚¬Ã Â¸Â¥Ã Â¸Â·Ã Â¸Â­Ã Â¸Â country ETF top 2 Ã Â¸â€Ã Â¹â€°Ã Â¸Â§Ã Â¸Â¢ monthly momentum rank Ã Â¸Ë†Ã Â¸Â²Ã Â¸Â country-only universe Ã Â¹ÂÃ Â¸Â¥Ã Â¸Â°Ã Â¹Æ’Ã Â¸Â«Ã Â¹â€° bucket Ã Â¸Â£Ã Â¸Â§Ã Â¸Â¡ 8% funded from SPY.",
+            "Universe Ã Â¸â€šÃ Â¸Â­Ã Â¸â€¡ country ETF Ã Â¸â€¢Ã Â¹â€°Ã Â¸Â­Ã Â¸â€¡Ã Â¸Â¡Ã Â¸Âµ usable price history Ã Â¸â€ºÃ Â¸Â£Ã Â¸Â°Ã Â¸Â¡Ã Â¸Â²Ã Â¸â€œ 10 Ã Â¸â€ºÃ Â¸Âµ; winner Ã Â¸Â¥Ã Â¹Ë†Ã Â¸Â²Ã Â¸ÂªÃ Â¸Â¸Ã Â¸â€Ã Â¹Æ’Ã Â¸â„¢ handoff Ã Â¸â€žÃ Â¸Â·Ã Â¸Â­ EWZ Ã Â¹ÂÃ Â¸Â¥Ã Â¸Â° NORW Ã Â¸â€œ 2026-04-29.",
+            "Optimizer/model Ã Â¹â‚¬Ã Â¸â€ºÃ Â¹â€¡Ã Â¸â„¢ rules-based monthly momentum allocation Ã Â¹â€žÃ Â¸Â¡Ã Â¹Ë†Ã Â¹Æ’Ã Â¸Å Ã Â¹Ë† mean-variance optimizer; objective Ã Â¸â€šÃ Â¸Â­Ã Â¸â€¡ sweep Ã Â¸â€žÃ Â¸Â·Ã Â¸Â­Ã Â¹â‚¬Ã Â¸Â¥Ã Â¸Â·Ã Â¸Â­Ã Â¸Â parameter Ã Â¸â€”Ã Â¸ÂµÃ Â¹Ë† Sharpe Ã Â¸â€Ã Â¸ÂµÃ Â¸ÂªÃ Â¸Â¸Ã Â¸â€Ã Â¹Æ’Ã Â¸â„¢ BEST_PARAM S&P family.",
+            "Rebalance schedule Ã Â¹â‚¬Ã Â¸â€ºÃ Â¹â€¡Ã Â¸â„¢ monthly month-end selection Ã Â¹ÂÃ Â¸Â¥Ã Â¹â€°Ã Â¸Â§Ã Â¸â€“Ã Â¸Â·Ã Â¸Â­ weight Ã Â¹â€žÃ Â¸â€ºÃ Â¸â€“Ã Â¸Â¶Ã Â¸â€¡Ã Â¹â‚¬Ã Â¸â€Ã Â¸Â·Ã Â¸Â­Ã Â¸â„¢Ã Â¸â€“Ã Â¸Â±Ã Â¸â€Ã Â¹â€žÃ Â¸â€º; signals Ã Â¹Æ’Ã Â¸Å Ã Â¹â€° close-based lag-1/next-session execution.",
+            "Caps: country ETF satellite Ã Â¸Â£Ã Â¸Â§Ã Â¸Â¡ 8%, top 2 Ã Â¹â‚¬Ã Â¸â€”Ã Â¹Ë†Ã Â¸Â²Ã Â¸ÂÃ Â¸Â±Ã Â¸â„¢Ã Â¸â€¢Ã Â¸Â±Ã Â¸Â§Ã Â¸Â¥Ã Â¸Â° 4%; base momentum ETF 15%; Gold base 30% Ã Â¹ÂÃ Â¸Â¥Ã Â¸Â° boost Ã Â¹â‚¬Ã Â¸Å¾Ã Â¸Â´Ã Â¹Ë†Ã Â¸Â¡Ã Â¹â€žÃ Â¸â€Ã Â¹â€° 16% Ã Â¸Ë†Ã Â¸Â²Ã Â¸Â SPY; SPY floor Ã Â¸Â«Ã Â¸Â¥Ã Â¸Â±Ã Â¸â€¡ fund/boost Ã Â¹â€žÃ Â¸Â¡Ã Â¹Ë†Ã Â¸â„¢Ã Â¹â€°Ã Â¸Â­Ã Â¸Â¢Ã Â¸ÂÃ Â¸Â§Ã Â¹Ë†Ã Â¸Â² 20%; BTC 10%; BIL 15% base.",
+            "Latest weights Ã Â¸â€žÃ Â¸Â³Ã Â¸â„¢Ã Â¸Â§Ã Â¸â€œÃ Â¹Æ’Ã Â¸Â«Ã Â¸Â¡Ã Â¹Ë†Ã Â¸Ë†Ã Â¸Â²Ã Â¸Â cache Ã Â¹Æ’Ã Â¸â„¢ repo Ã Â¸â„¢Ã Â¸ÂµÃ Â¹â€°Ã Â¸Å“Ã Â¹Ë†Ã Â¸Â²Ã Â¸â„¢ `scripts/refresh_country_etf_tactical_latest.py`; historical curve Ã Â¸Â¡Ã Â¸Â²Ã Â¸Ë†Ã Â¸Â²Ã Â¸Â BEST_PARAM S&P Step 4 handoff column `current_best country_only bucket8% top2 boost16`.",
         ],
         "daily_exposure_bullets": [
-            "ใช้ daily exposure overlay กับ SPY, Gold และ BTC; country ETF, base momentum ETF และ BIL ถือเต็มตาม target หลัง monthly rebalance.",
-            "Signal timing เป็น close-based lag-1: ใช้สัญญาณจาก close ที่รู้แล้วไปใช้กับ next session เพื่อลด lookahead.",
-            "SPY exposure: ถ้า SPY ต่ำกว่า MA300 จะลด exposure เหลือ 50%; ส่วนที่ลดไปอยู่ Cash / Reduced Exposure.",
-            "Gold exposure: ใช้ DD252; drawdown <= -8% ลด exposure เหลือ 50% และ drawdown <= -20% ยังอยู่ที่ 50%; ส่วนที่ลดไปอยู่ Cash / Reduced Exposure.",
-            "BTC exposure: ถ้า BTC ต่ำกว่า MA50 จะลด exposure เหลือ 0%; ส่วนที่ลดไปอยู่ Cash / Reduced Exposure.",
-            "Gold boost rule แยกจาก daily exposure: ถ้า SPY ต่ำกว่า MA200 หรือ SPY DD252 <= -8% ณ rebalance จะเพิ่ม Gold 16% โดย fund จาก SPY ก่อนนำ daily exposure ไปใช้.",
+            "Ã Â¹Æ’Ã Â¸Å Ã Â¹â€° daily exposure overlay Ã Â¸ÂÃ Â¸Â±Ã Â¸Å¡ SPY, Gold Ã Â¹ÂÃ Â¸Â¥Ã Â¸Â° BTC; country ETF, base momentum ETF Ã Â¹ÂÃ Â¸Â¥Ã Â¸Â° BIL Ã Â¸â€“Ã Â¸Â·Ã Â¸Â­Ã Â¹â‚¬Ã Â¸â€¢Ã Â¹â€¡Ã Â¸Â¡Ã Â¸â€¢Ã Â¸Â²Ã Â¸Â¡ target Ã Â¸Â«Ã Â¸Â¥Ã Â¸Â±Ã Â¸â€¡ monthly rebalance.",
+            "Signal timing Ã Â¹â‚¬Ã Â¸â€ºÃ Â¹â€¡Ã Â¸â„¢ close-based lag-1: Ã Â¹Æ’Ã Â¸Å Ã Â¹â€°Ã Â¸ÂªÃ Â¸Â±Ã Â¸ÂÃ Â¸ÂÃ Â¸Â²Ã Â¸â€œÃ Â¸Ë†Ã Â¸Â²Ã Â¸Â close Ã Â¸â€”Ã Â¸ÂµÃ Â¹Ë†Ã Â¸Â£Ã Â¸Â¹Ã Â¹â€°Ã Â¹ÂÃ Â¸Â¥Ã Â¹â€°Ã Â¸Â§Ã Â¹â€žÃ Â¸â€ºÃ Â¹Æ’Ã Â¸Å Ã Â¹â€°Ã Â¸ÂÃ Â¸Â±Ã Â¸Å¡ next session Ã Â¹â‚¬Ã Â¸Å¾Ã Â¸Â·Ã Â¹Ë†Ã Â¸Â­Ã Â¸Â¥Ã Â¸â€ lookahead.",
+            "SPY exposure: Ã Â¸â€“Ã Â¹â€°Ã Â¸Â² SPY Ã Â¸â€¢Ã Â¹Ë†Ã Â¸Â³Ã Â¸ÂÃ Â¸Â§Ã Â¹Ë†Ã Â¸Â² MA300 Ã Â¸Ë†Ã Â¸Â°Ã Â¸Â¥Ã Â¸â€ exposure Ã Â¹â‚¬Ã Â¸Â«Ã Â¸Â¥Ã Â¸Â·Ã Â¸Â­ 50%; Ã Â¸ÂªÃ Â¹Ë†Ã Â¸Â§Ã Â¸â„¢Ã Â¸â€”Ã Â¸ÂµÃ Â¹Ë†Ã Â¸Â¥Ã Â¸â€Ã Â¹â€žÃ Â¸â€ºÃ Â¸Â­Ã Â¸Â¢Ã Â¸Â¹Ã Â¹Ë† Cash / Reduced Exposure.",
+            "Gold exposure: Ã Â¹Æ’Ã Â¸Å Ã Â¹â€° DD252; drawdown <= -8% Ã Â¸Â¥Ã Â¸â€ exposure Ã Â¹â‚¬Ã Â¸Â«Ã Â¸Â¥Ã Â¸Â·Ã Â¸Â­ 50% Ã Â¹ÂÃ Â¸Â¥Ã Â¸Â° drawdown <= -20% Ã Â¸Â¢Ã Â¸Â±Ã Â¸â€¡Ã Â¸Â­Ã Â¸Â¢Ã Â¸Â¹Ã Â¹Ë†Ã Â¸â€”Ã Â¸ÂµÃ Â¹Ë† 50%; Ã Â¸ÂªÃ Â¹Ë†Ã Â¸Â§Ã Â¸â„¢Ã Â¸â€”Ã Â¸ÂµÃ Â¹Ë†Ã Â¸Â¥Ã Â¸â€Ã Â¹â€žÃ Â¸â€ºÃ Â¸Â­Ã Â¸Â¢Ã Â¸Â¹Ã Â¹Ë† Cash / Reduced Exposure.",
+            "BTC exposure: Ã Â¸â€“Ã Â¹â€°Ã Â¸Â² BTC Ã Â¸â€¢Ã Â¹Ë†Ã Â¸Â³Ã Â¸ÂÃ Â¸Â§Ã Â¹Ë†Ã Â¸Â² MA50 Ã Â¸Ë†Ã Â¸Â°Ã Â¸Â¥Ã Â¸â€ exposure Ã Â¹â‚¬Ã Â¸Â«Ã Â¸Â¥Ã Â¸Â·Ã Â¸Â­ 0%; Ã Â¸ÂªÃ Â¹Ë†Ã Â¸Â§Ã Â¸â„¢Ã Â¸â€”Ã Â¸ÂµÃ Â¹Ë†Ã Â¸Â¥Ã Â¸â€Ã Â¹â€žÃ Â¸â€ºÃ Â¸Â­Ã Â¸Â¢Ã Â¸Â¹Ã Â¹Ë† Cash / Reduced Exposure.",
+            "Gold boost rule Ã Â¹ÂÃ Â¸Â¢Ã Â¸ÂÃ Â¸Ë†Ã Â¸Â²Ã Â¸Â daily exposure: Ã Â¸â€“Ã Â¹â€°Ã Â¸Â² SPY Ã Â¸â€¢Ã Â¹Ë†Ã Â¸Â³Ã Â¸ÂÃ Â¸Â§Ã Â¹Ë†Ã Â¸Â² MA200 Ã Â¸Â«Ã Â¸Â£Ã Â¸Â·Ã Â¸Â­ SPY DD252 <= -8% Ã Â¸â€œ rebalance Ã Â¸Ë†Ã Â¸Â°Ã Â¹â‚¬Ã Â¸Å¾Ã Â¸Â´Ã Â¹Ë†Ã Â¸Â¡ Gold 16% Ã Â¹â€šÃ Â¸â€Ã Â¸Â¢ fund Ã Â¸Ë†Ã Â¸Â²Ã Â¸Â SPY Ã Â¸ÂÃ Â¹Ë†Ã Â¸Â­Ã Â¸â„¢Ã Â¸â„¢Ã Â¸Â³ daily exposure Ã Â¹â€žÃ Â¸â€ºÃ Â¹Æ’Ã Â¸Å Ã Â¹â€°.",
+        ],
+    },
+    "QQQ + global rotation + defensive GTAA 40/30/30": {
+        "series": "QQQ + global rotation + defensive GTAA 40/30/30",
+        "latest_weights_file": "data/precomputed/qqq_global_rotation_defensive_gtaa_403030_latest_effective_weights.csv",
+        "latest_weights_metadata_file": "data/precomputed/qqq_global_rotation_defensive_gtaa_403030_latest_meta.json",
+        "latest_weights_strategy": "QQQ + global rotation + defensive GTAA 40/30/30",
+        "description": "New Strategy A candidate added today: QQQ core 40%, global rotation 30%, defensive GTAA 30%, with latest weights recomputed from this repo cache rather than static dynamic_port_opt files.",
+        "setting": "QQQ core 40% / global country-sector rotation 30% / defensive GLD-IEF-TLT 30% / monthly rebalance / rotation top 3 by 6-month momentum among ETFs above MA200 / 126-day inverse-vol risk parity for rotation and defensive sleeves / per-asset MA200 daily exposure / reduced exposure to BIL via Cash / Reduced Exposure / latest weights generated locally from qqq_combo_gtaa cache",
+        "guide_bullets": [
+            "Base allocation: QQQ core 40%, global rotation sleeve 30%, defensive GTAA sleeve 30%.",
+            "Universe: QQQ, country ETFs, sector/industry/commodity ETFs, GLD, IEF, TLT, and BIL as cash proxy.",
+            "Selection rules: rotation sleeve reselects monthly top 3 ETFs by 6-month momentum and requires each selected ETF to be above MA200.",
+            "Optimizer/model: rotation and defensive sleeves use 126-day inverse-vol risk parity; QQQ core remains fixed at 40% before daily exposure.",
+            "Objective: durable QQQ-led growth with lower drawdown from global rotation, defensive bonds/gold, and daily exposure gates.",
+            "Rebalance schedule: monthly rotation selection and monthly sleeve refresh; daily exposure can change effective weights between rebalances.",
+            "Caps: structural sleeve caps are Core 40%, Rotation 30%, Defensive 30%; inactive allocation is held as Cash / Reduced Exposure.",
+            "Latest weights come from scripts/refresh_qqq_combo_gtaa_latest.py using this repo's qqq_combo_gtaa cache."
+        ],
+        "daily_exposure_bullets": [
+            "Uses daily exposure overlay on every holding.",
+            "Signal timing is lag-1: today's effective exposure uses the prior session close signal for next-session execution.",
+            "Signal: each asset uses its own MA200; risk-on when close is above MA200.",
+            "Threshold: when an asset is below MA200, that asset slice is reduced to 0% exposure.",
+            "Reduced exposure goes to BIL and is displayed as Cash / Reduced Exposure."
         ],
     }
 }
 
 ACTIVE_STRATEGY_B_GUIDE_NAMES = [
+    "Tactical TH/Gold/BTC 60/30/10 asset-level daily exposure",
     "US/TH/JP index signal + JP optimized top10 cap15 + weekly exposure + Gold DD252",
-    "US/TH tactical final best Sharpe 65/25/10 with Gold crash protection",
-    "One-model US cap 70% / TH cap 30% with daily exposure",
     "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure",
-    "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 US segment cap 30% + daily exposure",
 ]
 
 STRATEGY_B_GUIDE_CONFIGS = {
+    "Tactical TH/Gold/BTC 60/30/10 asset-level daily exposure": {
+        "series": "Best asset sweep US30/TH30/max6 dynamic cash drag, fee+slippage",
+        "latest_weights_file": "result/us_th_best_asset_sweep_latest_effective_weights_live_thb.csv",
+        "latest_weights_metadata_file": "result/us_th_side_trigger_latest_asset_weights_live_metadata.json",
+        "latest_weights_strategy": "Best asset sweep US30/TH30/max6 dynamic cash drag, fee+slippage",
+        "description": "Strategy B tactical 60/30/10 version: stock sleeve 60% uses Dynamic HMM selection across US30 and Thai30 with max 6% per stock, Gold 30%, BTC 10%, and lag-1 asset-level daily exposure. Reduced exposure stays in Cash / Reduced Exposure. Includes fee+slippage.",
+        "setting": "Tactical TH/Gold/BTC 60/30/10 / Dynamic HMM US30 + TH30 max6 / stock sleeve 60% / Gold 30% / BTC 10% / lag-1 asset-level daily exposure / reduced exposure to cash / fee+slippage",
+        "guide_bullets": [
+            "Base allocation: stock sleeve 60%, Gold 30%, BTC 10%.",
+            "Universe: US30 and Thai30 candidate stocks selected by the Dynamic HMM stock model.",
+            "Selection rules: stock sleeve uses the best-asset sweep setup with max 6% per stock and separate US/TH selected names.",
+            "Optimizer/model: Dynamic HMM stock model for the stock sleeve; Gold and BTC are fixed overlay sleeves before daily exposure.",
+            "Objective: combine tactical US/TH stock selection with Gold/BTC diversifiers while reducing risk-off exposure to cash.",
+            "Rebalance schedule follows the source best-asset sweep curve; daily exposure can change effective weights between rebalances.",
+            "Caps: stock sleeve 60%, Gold 30%, BTC 10%, and max 6% per selected stock before exposure scaling.",
+            "Latest weights come from result/us_th_best_asset_sweep_latest_effective_weights_live_thb.csv generated by the local best-asset sweep refresh path.",
+        ],
+        "daily_exposure_bullets": [
+            "Uses asset-level daily exposure overlay.",
+            "Signal timing is lag-1: the prior close signal is applied to the next trading session.",
+            "US equity, Thai equity, Gold, and BTC can each be reduced by their own trend/risk trigger.",
+            "When a sleeve is risk-off, that sleeve's exposure is reduced instead of being shifted into another sleeve.",
+            "Reduced exposure is displayed as Cash / Reduced Exposure.",
+        ],
+        "metrics": {"CAGR": 0.292766, "Sharpe": 1.956816, "Max Drawdown": -0.096523, "Total Return": 8.061765},
+    },
     "US stock-only dynamic model with momentum": {
         "series": "US stock only Dynamic HMM Copula [mean_variance] [with momentum] max10 PIT reselect",
         "description": "This is the stock-only base model. At every monthly rebalance it gets the point-in-time S&P 500 membership for that date, ranks the active names by trailing liquidity, keeps 30 US stocks, builds momentum-aware clustering features, fits a Dynamic HMM Copula regime model, and optimizes with a mean-variance objective. Each stock is capped at 10% so the portfolio cannot concentrate in only a few names. No Gold, BTC, BIL, IEF, Thai stocks, or daily exposure overlay is applied here.",
@@ -492,53 +541,30 @@ STRATEGY_B_GUIDE_CONFIGS = {
         "latest_weights_file": "data/precomputed/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_latest_effective_weights_thb.csv",
         "latest_weights_metadata_file": "data/precomputed/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_latest_meta.json",
         "latest_weights_strategy": "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure",
-        "description": "Strategy B best sleeve ตัวนี้เปลี่ยนเป็น one-model US/TH optimizer จาก PIT handoff: เลือกหุ้น US top 50 และ SET100 top 50, จำกัดหุ้นรายตัว 5%, ใส่ concentration penalty 0.02 และใช้ daily exposure overlay ของ US, TH, Gold, BTC. Latest weights คำนวณใหม่จาก fresh yfinance panel ตอนรัน ไม่อ่าน static latest-weight จาก dynamic_port_opt.",
-        "setting": "One-model US cap 70% / TH cap 30% / PIT S&P 500 top50 + PIT SET100 top50 / stock cap 5% / concentration penalty 0.02 / Gold cap 30% / BTC cap 10% / monthly rebalance / daily exposure overlay / reduced exposure to Cash",
+        "latest_refresh_scripts": ["scripts/refresh_us_th_one_model_us70_th30_stockcap5_assets50_latest.py"],
+        "description": "One-model US/TH cap5 version: stock cap 5%, concentration penalty 0.02, US assets 50, TH assets 50, Gold cap 30%, BTC cap 10%, mom_63, and daily exposure. Latest weights are recomputed by this repo standalone refresh path, not read from dynamic_port_opt static latest-weight files.",
+        "setting": "One-model US cap 70% / TH cap 30% / PIT S&P 500 top50 + PIT SET100 top50 / stock cap 5% / concentration penalty 0.02 / Gold cap 30% / BTC cap 10% / mom_63 / monthly rebalance / lag-1 daily exposure / latest weights generated locally",
         "guide_bullets": [
-            "Base allocation เป็น one combined optimizer ครอบ US equity, Thai equity, Gold และ BTC; US group cap 70%, TH group cap 30%, Gold cap 30%, BTC cap 10%.",
-            "Universe คือ PIT S&P 500 top 50 และ PIT SET100 top 50 จาก liquidity/rank cache; Thai sleeve จะมีน้ำหนักเมื่อ TH tactical signal active.",
-            "Selection rules ใช้ PIT universe ตาม evaluation/alignment rules ของ PIT_RESELECT_BY_STEP_HANDOFF family; ลด duplicate share classes ก่อน optimize.",
-            "Optimizer/model คือ sample mean-covariance optimizer พร้อม mean-variance objective, mom_63 signal และ concentration penalty 0.02.",
-            "Rebalance schedule เป็น monthly rebalance ตาม PIT handoff family; weights ใน backtest ใช้หลังวัน rebalance เพื่อหลีกเลี่ยง same-close lookahead.",
-            "Caps: stock รายตัวไม่เกิน 5%, US group cap 70%, TH group cap 30%, Gold cap 30%, BTC cap 10%. BIL ไม่ได้เป็น asset ใน optimizer.",
-            "Latest weights คำนวณใหม่จาก fresh yfinance panel ผ่าน standalone refresh script ไม่อ่าน static latest-weight file จาก dynamic_port_opt.",
-        ],
-        "daily_exposure_bullets": [
-            "ใช้ daily exposure overlay หลัง optimizer โดย signal ถูก lag 1 trading session หรือใช้ close signal ที่รู้แล้วสำหรับ next-session execution.",
-            "US equity ใช้ SPY MA300; ถ้าต่ำกว่า MA300 exposure เหลือ 50%.",
-            "Thai equity ใช้ SET MA200; ถ้าต่ำกว่า MA200 exposure เหลือ 0%.",
-            "Gold ใช้ DD252 crash protection: warn -8% เหลือ 50%, crash -20% เหลือ 50%, panic -30% พร้อม Gold ต่ำกว่า MA200 และ mom63 < 0 เหลือ 0%, recover เมื่อ drawdown ดีขึ้นถึง -5%.",
-            "BTC ใช้ BTC MA50; ถ้าต่ำกว่า MA50 exposure เหลือ 0%.",
-            "Reduced exposure จากทุก asset/sleeve ไปอยู่ `Cash / Reduced Exposure`; ไม่มีการโยกน้ำหนักที่ถูกลดไป sleeve อื่น.",
-        ],
-        "metrics": {"CAGR": 0.1977, "Sharpe": 1.0179, "Max Drawdown": -0.1801},
-    },
-    "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 US segment cap 30% + daily exposure": {
-        "series": "US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure",
-        "latest_weights_file": "data/precomputed/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_segment_cap30_latest_effective_weights_thb.csv",
-        "latest_weights_metadata_file": "data/precomputed/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_segment_cap30_latest_meta.json",
-        "latest_weights_strategy": "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 US segment cap 30% + daily exposure",
-        "description": "Strategy B variant from the PIT segment-cap handoff. It keeps stockcap5 penalty0.02 assets50, replaces the old US+TH 25% segment guardrail with a US-only segment cap at 30%, and does not cap Thai segments separately. Latest weights are recomputed inside this repo from current cache and data/us_segment.csv; no static latest-weight file is read from dynamic_port_opt.",
-        "setting": "One-model US cap 70% / TH cap 30% / PIT S&P 500 top50 + PIT SET100 top50 / stock cap 5% / concentration penalty 0.02 / US segment cap 30% / TH segments not capped / Gold cap 30% / BTC cap 10% / monthly rebalance / daily exposure overlay / reduced exposure to Cash",
-        "guide_bullets": [
+            "Strategy setup",
             "Base allocation is one combined optimizer across US equity, Thai equity, Gold, and BTC; US group cap 70%, TH group cap 30%, Gold cap 30%, BTC cap 10%.",
-            "Universe is PIT S&P 500 top 50 and PIT SET100 top 50 from liquidity/rank cache; Thai sleeve can receive weight only when the TH tactical signal is active.",
-            "Selection rules follow the PIT_RESELECT_BY_STEP_HANDOFF family evaluation/alignment rules; duplicate share classes are removed before optimization.",
-            "Optimizer/model is a sample mean-covariance optimizer with mean-variance objective, mom_63 signal, and concentration penalty 0.02.",
-            "Segment guardrail uses data/us_segment.csv; each US normalized segment is capped at 30%. TH segments are not capped separately beyond TH group cap 30% and stock cap 5%.",
-            "Caps: stock max 5%, US segment cap 30%, US group cap 70%, TH group cap 30%, Gold cap 30%, BTC cap 10%. BIL is not an optimizer asset.",
-            "Rebalance schedule is monthly, matching the PIT handoff family; backtest weights are applied after the rebalance date to avoid same-close lookahead.",
-            "Latest weights are recomputed by scripts/refresh_us_th_one_model_us70_th30_segment_cap30_latest.py from this repo current data/cache and US segment file.",
+            "Universe uses PIT S&P 500 top 50 and PIT SET100 top 50 from the same cache/alignment family as the existing one-model US/TH strategies.",
+            "Selection rules keep 50 US assets and 50 TH assets before optimization; duplicate share classes are removed before optimize.",
+            "Optimizer/model is sample mean-covariance with mean-variance objective, mom_63 input, and concentration penalty 0.02.",
+            "Rebalance schedule is monthly and follows the same alignment rules as the one-model US/TH strategy family.",
+            "Caps: each stock max 5%, US group cap 70%, TH group cap 30%, Gold cap 30%, BTC cap 10%. BIL is not an optimizer asset.",
+            "Latest weights come from scripts/refresh_us_th_one_model_us70_th30_stockcap5_assets50_latest.py using current repo data/cache; deployed runtime does not read static latest weights from dynamic_port_opt."
         ],
         "daily_exposure_bullets": [
-            "Uses daily exposure overlay after the optimizer; signals are lagged by one trading session for next-session execution.",
-            "US equity uses SPY MA300; below MA300, exposure is reduced to 50%.",
-            "Thai equity uses SET MA200; below MA200, exposure is reduced to 0%.",
-            "Gold uses DD252 crash protection: warn -8% leaves 50%, crash -20% leaves 50%, panic -30% plus Gold below MA200 and mom63 < 0 leaves 0%, recover when drawdown improves to -5%.",
-            "BTC uses BTC MA50; below MA50, exposure is reduced to 0%.",
-            "Reduced exposure from every asset/sleeve goes to Cash / Reduced Exposure; reduced weight is not shifted into another sleeve.",
+            "Daily exposure rules",
+            "Uses daily exposure overlay after optimizer weights are selected.",
+            "Signal timing is lag-1: close signals known at the prior session are applied to next-session returns/effective weights.",
+            "US equity signal uses SPY MA300; when risk-off, US exposure is reduced to 50%.",
+            "Thai equity signal uses SET MA200; when risk-off, TH exposure is reduced to 0%.",
+            "Gold uses DD252 crash protection: warn/crash states reduce exposure to 50%, panic can reduce to 0%, and recovery follows the source rule.",
+            "BTC signal uses BTC MA50; when risk-off, BTC exposure is reduced to 0%.",
+            "Reduced exposure from any sleeve is displayed as Cash / Reduced Exposure and is not shifted into another risky sleeve."
         ],
-        "metrics": {"CAGR": 0.1509, "Sharpe": 0.9217, "Max Drawdown": -0.2002},
+        "metrics": {"CAGR": 0.201825, "Sharpe": 1.026865, "Max Drawdown": -0.178526, "Total Return": 32.635837},
     },
     "Stocks, Gold, BTC, and BIL in one static model": {
         "series": "Stocks+Gold+BTC+BIL one-model Static Copula [mean_variance] PIT reselect",
@@ -551,85 +577,6 @@ STRATEGY_B_GUIDE_CONFIGS = {
         "latest_weights_strategy": "Stocks+Gold+BTC+BIL one-model capped Static Copula [mean_variance] PIT reselect",
         "description": "This is also a single optimizer containing stocks, Gold, BTC, and BIL, but the overlay caps are copied from the fixed-sleeve winner so the optimizer cannot over-allocate to the side assets. Stock names are still reselected point-in-time every rebalance. The model is Static Copula with momentum and mean-variance optimization. The cap structure is US stock 10% per name, Thai stock 10% per name if present, Gold up to 40%, BTC up to 5%, and BIL controlled by the optimizer.",
         "setting": "One combined optimizer with caps / PIT stock reselect every rebalance / Static Copula / momentum on / mean-variance objective / stock cap 10% / Gold cap 40% / BTC cap 5% / BIL available / no daily exposure",
-    },
-    "US/TH tactical final best Sharpe 65/25/10 with Gold crash protection": {
-        "series": "Tactical TH/Gold/BTC 65/25/10 Gold crash protection",
-        "latest_weights_file": "data/precomputed/us_th_tactical_perf_momentum_final_best_latest_effective_security_weights_thb.csv",
-        "latest_weights_metadata_file": "data/precomputed/us_th_tactical_perf_momentum_final_best_latest_meta.json",
-        "latest_weights_strategy": "Final Best Sharpe Tactical TH/Gold/BTC 65/25/10 Gold crash protection",
-        "description": "This is the new Strategy B best-Sharpe candidate from the PIT handoff. The portfolio starts with an Equity/Gold/BTC mix of 65%/25%/10%. The equity sleeve is split tactically between US and Thailand: the TH weight inside the equity sleeve can rise to 30% when the monthly SET-vs-SPY THB relative-return rule is positive, otherwise equity stays in US. US and TH stock sleeves are reselected point-in-time from S&P 500 and SET100 membership, keep the top 30 liquid names, and use a mean-covariance optimizer with mean-variance objective, 63-day momentum signal, and 8% cap per stock. Daily exposure is lagged by one session: US follows SPY MA300 below 50%, TH follows SET MA200 below 0%, Gold uses drawdown crash protection, BTC follows MA50 below 0%. Reduced exposure becomes Cash / Reduced Exposure.",
-        "setting": "Strategy B final best Sharpe / Equity 65% / Gold 25% / BTC 10% / TH tactical cap 30% inside equity / monthly SET-vs-SPY THB relative-return binary rule lb1 entry0 exit0 hold0 confirm1 / US PIT S&P500 top30 / TH PIT SET100 top30 / mean covariance / mean-variance + mom_63 / stock cap 8% / US SPY MA300 below50% / TH SET MA200 below0% / Gold DD252 warn -8% to 50%, crash -20% to 50%, panic -30% plus below MA200 plus mom63<0 to 0%, recover -5% / BTC MA50 below0% / latest weights generated locally for standalone deployment",
-        "guide_bullets": [
-            "Best-Sharpe Strategy B candidate from the PIT handoff.",
-            "Base sleeve mix: Equity 65%, Gold 25%, BTC 10%.",
-            "Equity can shift toward Thailand up to 30% of the equity sleeve when the monthly SET-vs-SPY THB relative-return rule is positive.",
-            "US and TH stock sleeves are reselected point-in-time from S&P 500 and SET100 membership, keeping the top 30 liquid names.",
-            "Optimizer uses sample mean covariance, mean-variance objective, 63-day momentum input, and 8% cap per stock.",
-            "Latest weights are generated locally from this repo's current cache for standalone deployment.",
-        ],
-        "daily_exposure_bullets": [
-            "All daily exposure signals are lagged by one trading session before returns are applied.",
-            "US equity sleeve: SPY MA300 signal; below-threshold exposure is reduced to 50%.",
-            "Thai equity sleeve: SET MA200 signal; below-threshold exposure is reduced to 0%.",
-            "Gold sleeve: 252-day drawdown crash protection; warn at -8% cuts to 50%, crash at -20% cuts to 50%, panic cuts to 0% when drawdown is below -30% and Gold is also below MA200 with negative 63-day momentum.",
-            "BTC sleeve: BTC MA50 signal; below-threshold exposure is reduced to 0%.",
-            "Reduced exposure is reported as Cash / Reduced Exposure.",
-        ],
-        "metrics": {"CAGR": 0.2400, "Sharpe": 1.3835, "Max Drawdown": -0.1906, "Total Return": 5.3316},
-    },
-    "One-model US cap 70% / TH cap 30% with daily exposure": {
-        "series": "One-model US cap 70% / TH cap 30% + daily exposure",
-        "latest_weights_file": "data/precomputed/us_th_tactical_one_model_us70_th30_latest_effective_weights_thb.csv",
-        "latest_weights_metadata_file": "data/precomputed/us_th_tactical_one_model_us70_th30_latest_meta.json",
-        "latest_weights_strategy": "One-model US cap 70% / TH cap 30% + daily exposure",
-        "description": "This Strategy B candidate comes from the PIT reselect handoff asymmetric group-cap grid. It uses one combined optimizer for US stocks, Thai stocks, Gold, and BTC instead of fixed sleeves. At each rebalance the US side uses point-in-time S&P 500 membership, the TH side uses point-in-time SET100 membership only when the monthly SET-vs-SPY THB relative-return tactical signal is on, and the optimizer also includes Gold and BTC. The model keeps the top 30 liquid US names and top 30 liquid Thai names when eligible, uses a sample mean-covariance optimizer with mean-variance objective and 63-day momentum input, caps each stock at 8%, caps the aggregate US stock group at 70%, caps the aggregate TH stock group at 30%, caps Gold at 30%, and caps BTC at 10%. Daily exposure is applied after optimization with lagged close signals: US stocks follow SPY MA300 below 50%, TH stocks follow SET MA200 below 0%, Gold uses the drawdown crash-protection rule, and BTC follows MA50 below 0%. Any reduced exposure becomes Cash / Reduced Exposure. Latest weights are regenerated from this repo's current cache for standalone deployment.",
-        "setting": "One combined optimizer / PIT S&P500 top30 / PIT SET100 top30 when TH tactical signal is active / mean covariance / mean-variance + mom_63 / stock cap 8% / US group cap 70% / TH group cap 30% / Gold cap 30% / BTC cap 10% / TH tactical eligibility from monthly SET-vs-SPY THB relative-return binary rule lb1 entry0 exit0 hold0 confirm1 / US SPY MA300 below50% / TH SET MA200 below0% / Gold DD252 warn -8% to 50%, crash -20% to 50%, panic -30% plus below MA200 plus mom63<0 to 0%, recover -5% / BTC MA50 below0% / latest weights generated locally for standalone deployment",
-        "guide_bullets": [
-            "One combined optimizer for US stocks, Thai stocks, Gold, and BTC instead of fixed sleeves.",
-            "US universe uses point-in-time S&P 500 membership and keeps the top 30 liquid names.",
-            "Thai universe uses point-in-time SET100 membership only when the monthly TH tactical signal is active, then keeps the top 30 liquid names.",
-            "Optimizer uses sample mean covariance, mean-variance objective, and 63-day momentum input.",
-            "Caps: each stock 8%, US stock group 70%, Thai stock group 30%, Gold 30%, BTC 10%.",
-            "Latest weights are regenerated from this repo's current cache for standalone deployment.",
-        ],
-        "daily_exposure_bullets": [
-            "Daily exposure is applied after optimization, using lagged close signals.",
-            "US stocks: SPY MA300 signal; below-threshold exposure is reduced to 50%.",
-            "Thai stocks: SET MA200 signal; below-threshold exposure is reduced to 0%.",
-            "Gold: 252-day drawdown crash protection with warn -8% to 50%, crash -20% to 50%, and panic -30% plus below MA200 plus negative 63-day momentum to 0%.",
-            "BTC: BTC MA50 signal; below-threshold exposure is reduced to 0%.",
-            "Any reduced exposure becomes Cash / Reduced Exposure.",
-        ],
-        "metrics": {"CAGR": 0.1919, "Sharpe": 0.9447, "Max Drawdown": -0.2163},
-    },
-    "US/TH/JP index signal + JP optimized top10 cap15 + weekly exposure + Gold DD252": {
-        "series": "JP optimized min_vol_mom_tilt top10 cap15 weekly exposure with Gold DD252",
-        "latest_weights_file": "data/precomputed/us_th_jp_optimized_minvol_top10_cap15_weekly_latest_effective_weights_thb.csv",
-        "latest_weights_metadata_file": "data/precomputed/us_th_jp_optimized_minvol_top10_cap15_latest_meta.json",
-        "latest_weights_strategy": "JP optimized min_vol_mom_tilt top10 cap15% Stock60/Gold30/BTC10 Index signal leaves inactive equity in cash + weekly exposure all assets + gold drawdown 252d warn10 crash20",
-        "description": "strategy นี้เป็น US/Thailand/Japan candidate จาก PIT handoff ที่เปลี่ยน Japan sleeve จาก equal-selected เป็น optimized sleeve. Base allocation คือ Equity 60%, Gold 30%, BTC 10%; equity ของแต่ละประเทศรับได้สูงสุดหนึ่งในสามของ equity budget ตาม lagged index score และส่วนที่ inactive อยู่ใน Cash / Reduced Exposure. US และ TH ใช้ PIT optimized sleeve ส่วน JP ใช้ PIT universe top 10 แล้ว optimize แบบ min_vol_mom_tilt โดย cap น้ำหนักภายในหุ้น JP ที่ 15%. Exposure ใช้ weekly W-FRI ที่ sample จาก daily signal แบบ lag-1 และ Gold ใช้ drawdown protection 252 วัน",
-        "setting": "US/TH/JP index signal / Equity 60% / Gold 30% / BTC 10% / inactive country equity to cash / US PIT optimized sleeve / TH PIT optimized sleeve / JP PIT optimized min_vol_mom_tilt top10 cap15% / JP covariance lookback 120 trading days / min train 40 days / momentum 63 days / concentration penalty 0.01 / weekly W-FRI exposure sampled from lagged daily signals / US SPY MA300 below50% / TH SET MA200 below0% / JP MA120 below0% / Gold DD252 warn -10% เหลือ 75%, crash -20% เหลือ 50%, panic -30% พร้อมต่ำกว่า MA200 และ mom63<0 เหลือ 0%, recover -5% / BTC MA50 below0% / latest weights generated locally from current cache",
-        "guide_bullets": [
-            "Base sleeve mix: Equity 60%, Gold 30%, BTC 10%.",
-            "Universe ของ Equity คือ US PIT optimized sleeve, Thailand PIT optimized sleeve และ Japan PIT optimized sleeve.",
-            "JP sleeve ใช้ Japan PIT universe, เลือก top 10 ตาม monthly PIT rank แล้ว optimize ด้วย objective `min_vol_mom_tilt`.",
-            "JP internal optimizer ใช้ covariance lookback 120 trading days, minimum training history 40 วัน, momentum tilt 63 วัน, concentration penalty 0.01 และ cap หุ้น JP รายตัวไม่เกิน 15% ภายใน JP sleeve.",
-            "JP internal weights ถูกใช้แบบ 1-session lag ใน backtest; ถ้า history ไม่พอจะ fallback เป็น equal weight เฉพาะรอบนั้น.",
-            "Country allocation ใช้ lagged index scores โดยแต่ละประเทศรับหนึ่งในสามของ equity budget คูณ signal score ของตัวเอง.",
-            "Inactive equity อยู่ใน Cash / Reduced Exposure แทนการโยกไปประเทศที่ยัง active.",
-            "Latest weights คำนวณใหม่จาก cache ใน repo นี้; effective date ถูกจำกัดด้วยวันที่ล่าสุดร่วมกันระหว่าง Japan PIT cache และ overlay assets.",
-            "ราคาหุ้น JP สำหรับ latest weight ดึงจาก Yahoo Finance เฉพาะหุ้น JP top 10 ล่าสุดและ 1306.T proxy ในหน้าต่างข้อมูลสั้นพอสำหรับ optimizer/exposure; ชื่อหุ้น JP มาจาก J-Quants equity master cache.",
-        ],
-        "daily_exposure_bullets": [
-            "ใช้ weekly exposure โดย sample daily exposure signal ที่ lag แล้วทุก W-FRI และ forward-fill ระหว่าง weekly updates.",
-            "Raw daily exposure signals เป็น close-based และ shift 1 trading session ก่อนใช้งาน เพื่อหลีกเลี่ยง lookahead.",
-            "US Equity exposure: SPY ต่ำกว่า MA300 จะลด exposure เหลือ 50%.",
-            "TH Equity exposure: SET ต่ำกว่า MA200 จะลด exposure เหลือ 0%.",
-            "JP Equity exposure: Japan signal price ต่ำกว่า MA120 จะลด exposure เหลือ 0%.",
-            "Gold exposure: DD252 warn ที่ -10% ลด exposure เหลือ 75%, crash ที่ -20% ลดเหลือ 50%, panic ลดได้ถึง 0% ถ้า drawdown ต่ำกว่า -30%, Gold ต่ำกว่า MA200 และ momentum 63 วันติดลบ; recover เมื่อ drawdown ดีขึ้นถึง -5%.",
-            "BTC exposure: BTC ต่ำกว่า MA50 จะลด exposure เหลือ 0%; reduced exposure ทั้งหมดอยู่ใน Cash / Reduced Exposure.",
-        ],
-        "metrics": {"CAGR": 0.3003, "Sharpe": 2.1295, "Max Drawdown": -0.0692},
     },
     "Mean Covariance Gold30 stock cap 8 with asset-level daily exposure": {
         "series": "Mean Covariance Gold30 stock-cap sweep stockcap8 mom_63 + asset-level daily exposure",
@@ -1778,15 +1725,47 @@ def render_strategy_guide_notes(config: dict) -> None:
         st.info("\n\n".join(sections))
 
 
+def _previous_weekday(value: date) -> date:
+    current = value
+    while current.weekday() >= 5:
+        current -= timedelta(days=1)
+    return current
+
+
+def expected_latest_weight_date() -> date:
+    return _previous_weekday(date.today())
+
+
+def _parse_latest_date(value: object) -> date | None:
+    if value is None or pd.isna(value):
+        return None
+    try:
+        return pd.Timestamp(value).date()
+    except Exception:
+        return None
+
+
+def latest_weights_are_stale(latest_date: str) -> tuple[bool, str]:
+    parsed = _parse_latest_date(latest_date)
+    expected = expected_latest_weight_date()
+    if parsed is None:
+        return True, expected.isoformat()
+    return parsed < expected, expected.isoformat()
+
+
 def refresh_live_latest_weights(config: dict) -> tuple[bool, str]:
     if not config.get("latest_weights_file"):
         return True, ""
     root = Path(__file__).resolve().parent
-    scripts = [
-        root / "scripts" / "refresh_overlay_latest.py",
-        root / "scripts" / "refresh_us_th_best_config_latest.py",
-        root / "scripts" / "refresh_us_th_strategy_b_latest.py",
-    ]
+    configured_scripts = config.get("latest_refresh_scripts")
+    if configured_scripts:
+        scripts = [_resolved_project_path(str(script)) for script in configured_scripts]
+    else:
+        scripts = [
+            root / "scripts" / "refresh_overlay_latest.py",
+            root / "scripts" / "refresh_us_th_best_config_latest.py",
+            root / "scripts" / "refresh_us_th_strategy_b_latest.py",
+        ]
     for script in scripts:
         if not script.exists():
             return False, f"Missing refresh script: {script.name}"
@@ -1795,14 +1774,35 @@ def refresh_live_latest_weights(config: dict) -> tuple[bool, str]:
             cwd=root,
             capture_output=True,
             text=True,
-            timeout=600,
+            timeout=900,
             check=False,
         )
         if completed.returncode != 0:
             output = (completed.stderr or completed.stdout or "").strip()
             return False, f"{script.name} failed: {output[-1500:]}"
-    return True, "Latest weights refreshed without updating historical backtest results."
+    st.cache_data.clear()
+    return True, "Latest weights refreshed from the current repo data/cache. Historical backtest curves were not rebuilt."
 
+
+def load_latest_weights_with_optional_refresh(
+    label: str,
+    config: dict,
+    sleeves: pd.DataFrame,
+    *,
+    refresh_if_stale: bool,
+) -> tuple[pd.DataFrame, str, str]:
+    latest_weights, latest_date = latest_weight_rows(label, config, sleeves)
+    stale, expected_date = latest_weights_are_stale(latest_date)
+    if refresh_if_stale and stale and config.get("latest_refresh_scripts"):
+        ok, message = refresh_live_latest_weights(config)
+        if not ok:
+            return latest_weights, latest_date, message
+        latest_weights, latest_date = latest_weight_rows(label, config, sleeves)
+        stale_after, expected_date = latest_weights_are_stale(latest_date)
+        if stale_after:
+            return latest_weights, latest_date, f"Refresh completed, but latest weight date is still {latest_date or 'unknown'}; expected around {expected_date}."
+        return latest_weights, latest_date, message
+    return latest_weights, latest_date, ""
 
 def strategy_curve_to_result(strategy: str, curve_series: pd.Series) -> Dict[str, object]:
     values = curve_series.dropna().astype(float)
@@ -1961,6 +1961,7 @@ def render_strategy_guide_page() -> None:
             "strategy_latest_weights_label",
             "strategy_latest_weights_date",
             "strategy_latest_weights_metadata",
+            "strategy_latest_weights_refresh_message",
         ]:
             st.session_state.pop(key, None)
 
@@ -2059,12 +2060,19 @@ def render_strategy_guide_page() -> None:
             use_container_width=True,
             disabled=latest_weights.empty,
         ):
-            latest_weights, latest_date = latest_weight_rows(raw_label, raw_config, sleeves)
+            latest_weights, latest_date, refresh_message = load_latest_weights_with_optional_refresh(
+                raw_label,
+                raw_config,
+                sleeves,
+                refresh_if_stale=True,
+            )
             st.session_state.strategy_latest_weights = latest_weights
             st.session_state.strategy_latest_weights_label = raw_label
             st.session_state.strategy_latest_weights_date = latest_date
             st.session_state.strategy_latest_weights_metadata = latest_weight_metadata(raw_config)
             st.session_state.strategy_latest_weights_fingerprint = latest_weight_source_fingerprint(raw_config)
+            if refresh_message:
+                st.session_state.strategy_latest_weights_refresh_message = refresh_message
         if action_cols[1].button(
             "Retire",
             key=f"retire_compare_{raw_label}",
@@ -2082,6 +2090,7 @@ def render_strategy_guide_page() -> None:
             "strategy_latest_weights_label",
             "strategy_latest_weights_date",
             "strategy_latest_weights_metadata",
+            "strategy_latest_weights_refresh_message",
         ]:
             st.session_state.pop(key, None)
 
@@ -2100,6 +2109,7 @@ def render_strategy_guide_page() -> None:
                 st.session_state.strategy_latest_weights_date = refreshed_date
                 st.session_state.strategy_latest_weights_metadata = latest_weight_metadata(label_to_config[latest_label_in_state])
                 st.session_state.strategy_latest_weights_fingerprint = current_fingerprint
+                st.session_state.pop("strategy_latest_weights_refresh_message", None)
 
     latest_table = st.session_state.get("strategy_latest_weights")
     if isinstance(latest_table, pd.DataFrame) and not latest_table.empty:
@@ -2113,6 +2123,32 @@ def render_strategy_guide_page() -> None:
         ).any()
         latest_heading = "Latest Daily Exposure Weights" if has_daily_overlay else "Latest Weights"
         st.markdown(f"**{latest_heading}: {latest_label}**")
+        refresh_message = st.session_state.pop("strategy_latest_weights_refresh_message", "")
+        if refresh_message:
+            st.info(refresh_message)
+        latest_stale, expected_latest_date = latest_weights_are_stale(latest_date)
+        if latest_stale:
+            st.warning(
+                f"Latest weight date is {latest_date or 'unknown'}; expected around {expected_latest_date}."
+            )
+            stale_config = label_to_config.get(latest_label, {})
+            if stale_config.get("latest_refresh_scripts") and st.button(
+                "Refresh latest weights now",
+                key=f"refresh_latest_weights_{latest_label}",
+                use_container_width=True,
+            ):
+                ok, message = refresh_live_latest_weights(stale_config)
+                if ok:
+                    refreshed_weights, refreshed_date = latest_weight_rows(latest_label, stale_config, sleeves)
+                    if not refreshed_weights.empty:
+                        st.session_state.strategy_latest_weights = refreshed_weights
+                        st.session_state.strategy_latest_weights_date = refreshed_date
+                        st.session_state.strategy_latest_weights_metadata = latest_weight_metadata(stale_config)
+                        st.session_state.strategy_latest_weights_fingerprint = latest_weight_source_fingerprint(stale_config)
+                    st.success(message)
+                    st.rerun()
+                else:
+                    st.error(message)
         if latest_date:
             generated_at = latest_metadata.get("calculated_at") or metadata.get("generated_at", "")
             calculated_text = ""
@@ -2122,8 +2158,8 @@ def render_strategy_guide_page() -> None:
             jp_source_text = ""
             if latest_metadata.get("Japan Price Source"):
                 jp_source_text = (
-                    f" ราคาหุ้น JP ย้อนหลังใช้ {latest_metadata.get('Japan Price Source')} "
-                    f"ชื่อหุ้น JP ใช้ {latest_metadata.get('Japan Name Source', 'local Japan master cache')}"
+                    f" Ã Â¸Â£Ã Â¸Â²Ã Â¸â€žÃ Â¸Â²Ã Â¸Â«Ã Â¸Â¸Ã Â¹â€°Ã Â¸â„¢ JP Ã Â¸Â¢Ã Â¹â€°Ã Â¸Â­Ã Â¸â„¢Ã Â¸Â«Ã Â¸Â¥Ã Â¸Â±Ã Â¸â€¡Ã Â¹Æ’Ã Â¸Å Ã Â¹â€° {latest_metadata.get('Japan Price Source')} "
+                    f"Ã Â¸Å Ã Â¸Â·Ã Â¹Ë†Ã Â¸Â­Ã Â¸Â«Ã Â¸Â¸Ã Â¹â€°Ã Â¸â„¢ JP Ã Â¹Æ’Ã Â¸Å Ã Â¹â€° {latest_metadata.get('Japan Name Source', 'local Japan master cache')}"
                 )
             if "Strategy B:" in latest_label:
                 if has_daily_overlay:
@@ -2281,7 +2317,7 @@ def render_forward_test(result: Dict[str, object]) -> None:
             st.dataframe(display_weights, use_container_width=True, hide_index=True)
     with tab3:
         if annual_df.empty:
-            st.info("ยังมีข้อมูลไม่พอสำหรับสรุป annual return รายปี")
+            st.info("Ã Â¸Â¢Ã Â¸Â±Ã Â¸â€¡Ã Â¸Â¡Ã Â¸ÂµÃ Â¸â€šÃ Â¹â€°Ã Â¸Â­Ã Â¸Â¡Ã Â¸Â¹Ã Â¸Â¥Ã Â¹â€žÃ Â¸Â¡Ã Â¹Ë†Ã Â¸Å¾Ã Â¸Â­Ã Â¸ÂªÃ Â¸Â³Ã Â¸Â«Ã Â¸Â£Ã Â¸Â±Ã Â¸Å¡Ã Â¸ÂªÃ Â¸Â£Ã Â¸Â¸Ã Â¸â€º annual return Ã Â¸Â£Ã Â¸Â²Ã Â¸Â¢Ã Â¸â€ºÃ Â¸Âµ")
         else:
             chart_df = annual_df.copy()
             long_annual = chart_df.melt(
@@ -2582,7 +2618,7 @@ def render_retirement_page(forward_test_result: Dict[str, object] | None) -> Non
     s4.metric("Source Max Drawdown", "-" if pd.isna(source_max_drawdown) else f"{source_max_drawdown:.2%}")
     st.caption(
         "Retirement simulation ใช้ประวัติผลตอบแทนรายเดือนจาก source ที่เลือกในหน้านี้ "
-        "ส่วน Monte Carlo ใช้ CAGR และ volatility ของ source เดียวกัน"
+        "ส่วน Bootstrap สุ่มจากผลตอบแทนรายเดือนของ source เดียวกัน และ Monte Carlo ใช้ CAGR กับ volatility ของ source เดียวกัน"
     )
 
     col1, col2, col3 = st.columns(3)

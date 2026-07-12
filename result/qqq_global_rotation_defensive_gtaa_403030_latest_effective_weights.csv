@@ -1,0 +1,3 @@
+Asset,Sleeve,Target Weight,Target Weight %,Daily Exposure,Effective Weight,Effective Weight %,Date,Last Exposure Date,Last Rebalance Date,Signal Source Close Date,Latest Cache Trading Date,Strategy,Daily Exposure Variant
+Cash / Reduced Exposure,Cash / Reduced Exposure,0.0,0.0,1.0,0.6,60.0,2026-07-10,2026-07-10,2026-07-10,2026-07-09,2026-07-10,QQQ + global rotation + defensive GTAA 40/30/30,BIL cash return for MA200-gated inactive slices
+QQQ,Core,0.4,40.0,1.0,0.4,40.0,2026-07-10,2026-07-10,2026-07-10,2026-07-09,2026-07-10,QQQ + global rotation + defensive GTAA 40/30/30,"Per-asset MA200 close signal, lag-1 next-session execution"

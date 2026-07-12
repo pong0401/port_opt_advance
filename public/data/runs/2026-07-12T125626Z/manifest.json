@@ -1,0 +1,179 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-07-12T12:56:27Z",
+  "market_date": "2026-07-12",
+  "run_id": "2026-07-12T125626Z",
+  "status": "ok",
+  "data_base_url": "runs/2026-07-12T125626Z/",
+  "files": {
+    "strategy_summary": "strategy_summary.json",
+    "strategy_curves": "strategy_curves.json",
+    "strategy_returns": "strategy_returns.parquet",
+    "strategy_metadata": "strategy_metadata.json",
+    "latest_weights": {
+      "qqq_global_rotation_defensive_gtaa_403030": "latest_weights/qqq_global_rotation_defensive_gtaa_403030.json",
+      "country_etf_tactical_gold_dd_boost16": "latest_weights/country_etf_tactical_gold_dd_boost16.json",
+      "mean_covariance_gold30_asset_daily": "latest_weights/mean_covariance_gold30_asset_daily.json",
+      "mean_covariance_gold40_asset_daily": "latest_weights/mean_covariance_gold40_asset_daily.json",
+      "pit_reselect_step2_5_daily_exposure": "latest_weights/pit_reselect_step2_5_daily_exposure.json",
+      "us_th_one_model_stockcap5_assets50": "latest_weights/us_th_one_model_stockcap5_assets50.json",
+      "us_th_jp_optimized_minvol_top10_cap15": "latest_weights/us_th_jp_optimized_minvol_top10_cap15.json",
+      "us_th_best_asset_sweep_603010_asset_daily": "latest_weights/us_th_best_asset_sweep_603010_asset_daily.json"
+    }
+  },
+  "latest_weights": [
+    {
+      "strategy_id": "qqq_global_rotation_defensive_gtaa_403030",
+      "strategy": "QQQ + global rotation + defensive GTAA 40/30/30",
+      "market_date": "2026-07-10",
+      "source_file": "data/precomputed/qqq_global_rotation_defensive_gtaa_403030_latest_effective_weights.csv",
+      "csv": "latest_weights/qqq_global_rotation_defensive_gtaa_403030.csv",
+      "json": "latest_weights/qqq_global_rotation_defensive_gtaa_403030.json",
+      "weight_column": "Effective Weight",
+      "raw_weight_sum": 1.0,
+      "visible_rows": 2,
+      "raw_rows": 2
+    },
+    {
+      "strategy_id": "country_etf_tactical_gold_dd_boost16",
+      "strategy": "Country ETF tactical + Gold DD boost 16",
+      "market_date": "2026-06-30",
+      "source_file": "data/precomputed/country_etf_tactical_gold_dd_boost16_latest_effective_weights.csv",
+      "csv": "latest_weights/country_etf_tactical_gold_dd_boost16.csv",
+      "json": "latest_weights/country_etf_tactical_gold_dd_boost16.json",
+      "weight_column": "Effective Weight",
+      "raw_weight_sum": 1.0,
+      "visible_rows": 6,
+      "raw_rows": 7
+    },
+    {
+      "strategy_id": "mean_covariance_gold30_asset_daily",
+      "strategy": "Mean Covariance Gold30 stock cap 8 mom_63 + asset-level daily exposure",
+      "market_date": "2026-05-29",
+      "source_file": "data/precomputed/mean_covariance_gold30_asset_daily_latest_effective_weights.csv",
+      "csv": "latest_weights/mean_covariance_gold30_asset_daily.csv",
+      "json": "latest_weights/mean_covariance_gold30_asset_daily.json",
+      "weight_column": "Effective Weight",
+      "raw_weight_sum": 0.9999999999999944,
+      "visible_rows": 13,
+      "raw_rows": 13
+    },
+    {
+      "strategy_id": "mean_covariance_gold40_asset_daily",
+      "strategy": "Mean Covariance + Gold/BTC/BIL capped Gold 40 + asset-level daily exposure",
+      "market_date": "2026-05-29",
+      "source_file": "data/precomputed/mean_covariance_gold40_asset_daily_latest_effective_weights.csv",
+      "csv": "latest_weights/mean_covariance_gold40_asset_daily.csv",
+      "json": "latest_weights/mean_covariance_gold40_asset_daily.json",
+      "weight_column": "Effective Weight",
+      "raw_weight_sum": 0.9999999999999979,
+      "visible_rows": 10,
+      "raw_rows": 10
+    },
+    {
+      "strategy_id": "pit_reselect_step2_5_daily_exposure",
+      "strategy": "pit_reselect_step2_5_daily_exposure",
+      "market_date": "2026-07-01",
+      "source_file": "data/precomputed/pit_reselect_step2_5_latest_effective_security_weights_thb.csv",
+      "csv": "latest_weights/pit_reselect_step2_5_daily_exposure.csv",
+      "json": "latest_weights/pit_reselect_step2_5_daily_exposure.json",
+      "weight_column": "Effective Weight",
+      "raw_weight_sum": 0.9999999999999972,
+      "visible_rows": 10,
+      "raw_rows": 10
+    },
+    {
+      "strategy_id": "us_th_one_model_stockcap5_assets50",
+      "strategy": "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure",
+      "market_date": "2026-07-12",
+      "source_file": "data/precomputed/us_th_one_model_us70_th30_stockcap5_penalty002_assets50_latest_effective_weights_thb.csv",
+      "csv": "latest_weights/us_th_one_model_stockcap5_assets50.csv",
+      "json": "latest_weights/us_th_one_model_stockcap5_assets50.json",
+      "weight_column": "Effective Weight",
+      "raw_weight_sum": 0.9999999999999967,
+      "visible_rows": 16,
+      "raw_rows": 16
+    },
+    {
+      "strategy_id": "us_th_jp_optimized_minvol_top10_cap15",
+      "strategy": "JP optimized min_vol_mom_tilt top10 cap15% Stock60/Gold30/BTC10 Index signal leaves inactive equity in cash + weekly exposure all assets + gold drawdown 252d warn10 crash20",
+      "market_date": "2026-06-30",
+      "source_file": "data/precomputed/us_th_jp_optimized_minvol_top10_cap15_weekly_latest_effective_weights_thb.csv",
+      "csv": "latest_weights/us_th_jp_optimized_minvol_top10_cap15.csv",
+      "json": "latest_weights/us_th_jp_optimized_minvol_top10_cap15.json",
+      "weight_column": "Effective Weight",
+      "raw_weight_sum": 0.9999999999999971,
+      "visible_rows": 33,
+      "raw_rows": 44
+    },
+    {
+      "strategy_id": "us_th_best_asset_sweep_603010_asset_daily",
+      "strategy": "us_th_best_asset_sweep_603010_asset_daily",
+      "market_date": "2026-06-30",
+      "source_file": "data/precomputed/us_th_best_asset_sweep_latest_effective_weights_live_thb.csv",
+      "csv": "latest_weights/us_th_best_asset_sweep_603010_asset_daily.csv",
+      "json": "latest_weights/us_th_best_asset_sweep_603010_asset_daily.json",
+      "weight_column": "Portfolio Exposure",
+      "raw_weight_sum": 0.9999999999999992,
+      "visible_rows": 20,
+      "raw_rows": 20
+    }
+  ],
+  "dashboard_strategy_groups": {
+    "strategy_a": {
+      "label": "Strategy A: Best Param S&P Port Opt Advance",
+      "default": "QQQ + global rotation + defensive GTAA 40/30/30",
+      "options": [
+        {
+          "label": "S&P 500 hold: 100% SPY, no daily exposure",
+          "series": "S&P 500 buy and hold",
+          "latest_weight_id": null
+        },
+        {
+          "label": "Monthly multi-asset allocation: SPY 35%, Gold 40%, BTC 10%, BIL 15%",
+          "series": "Monthly allocation SPY/Gold/BTC/BIL 35/40/10/15",
+          "latest_weight_id": null
+        },
+        {
+          "label": "Country ETF tactical + Gold DD boost 16",
+          "series": "Country ETF tactical + Gold DD boost 16",
+          "latest_weight_id": "country_etf_tactical_gold_dd_boost16"
+        },
+        {
+          "label": "QQQ + global rotation + defensive GTAA 40/30/30",
+          "series": "QQQ + global rotation + defensive GTAA 40/30/30",
+          "latest_weight_id": "qqq_global_rotation_defensive_gtaa_403030"
+        }
+      ]
+    },
+    "strategy_b": {
+      "label": "Strategy B: PIT Reselect Strategies",
+      "default": "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure",
+      "options": [
+        {
+          "label": "Tactical TH/Gold/BTC 60/30/10 asset-level daily exposure",
+          "series": "Best asset sweep US30/TH30/max6 dynamic cash drag, fee+slippage",
+          "latest_weight_id": "us_th_best_asset_sweep_603010_asset_daily"
+        },
+        {
+          "label": "US/TH/JP index signal + JP optimized top10 cap15 + weekly exposure + Gold DD252",
+          "series": "JP optimized min_vol_mom_tilt top10 cap15 weekly exposure with Gold DD252",
+          "latest_weight_id": "us_th_jp_optimized_minvol_top10_cap15"
+        },
+        {
+          "label": "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure",
+          "series": "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure",
+          "latest_weight_id": "us_th_one_model_stockcap5_assets50"
+        }
+      ]
+    }
+  },
+  "validation": {
+    "strategy_summary_rows": 56,
+    "strategy_curve_columns": 56,
+    "strategy_curve_start": "2016-07-01",
+    "strategy_curve_end": "2026-07-01",
+    "hidden_below_weight": 0.01,
+    "weight_sum_tolerance": 0.01
+  }
+}

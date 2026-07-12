@@ -1,13 +1,17 @@
 Asset,Sleeve,Effective Weight,Raw Optimizer Weight,Daily Exposure,Effective Weight %,Date,Strategy,Case,Last Exposure Date,Signal Source Close Date
-Cash / Reduced Exposure,Cash / Reduced Exposure,0.1499999999999999,0.0,1.0,14.999999999999991,2026-07-03,One-model US cap 70% / TH cap 30% + daily exposure,US cap 70% / TH cap 30%,2026-07-03,2026-07-02
-GC=F,Gold,0.1499999999999998,0.2999999999999996,0.5,14.99999999999998,2026-07-03,One-model US cap 70% / TH cap 30% + daily exposure,US cap 70% / TH cap 30%,2026-07-03,2026-07-02
-GS,US Equity,0.07999999999999989,0.07999999999999989,1.0,7.999999999999989,2026-07-03,One-model US cap 70% / TH cap 30% + daily exposure,US cap 70% / TH cap 30%,2026-07-03,2026-07-02
-APP,US Equity,0.07999999999999989,0.07999999999999989,1.0,7.999999999999989,2026-07-03,One-model US cap 70% / TH cap 30% + daily exposure,US cap 70% / TH cap 30%,2026-07-03,2026-07-02
-INTC,US Equity,0.07999999999999989,0.07999999999999989,1.0,7.999999999999989,2026-07-03,One-model US cap 70% / TH cap 30% + daily exposure,US cap 70% / TH cap 30%,2026-07-03,2026-07-02
-UNH,US Equity,0.07999999999999985,0.07999999999999985,1.0,7.999999999999985,2026-07-03,One-model US cap 70% / TH cap 30% + daily exposure,US cap 70% / TH cap 30%,2026-07-03,2026-07-02
-MU,US Equity,0.07999999999999964,0.07999999999999964,1.0,7.9999999999999645,2026-07-03,One-model US cap 70% / TH cap 30% + daily exposure,US cap 70% / TH cap 30%,2026-07-03,2026-07-02
-HOOD,US Equity,0.07999999999999963,0.07999999999999963,1.0,7.999999999999963,2026-07-03,One-model US cap 70% / TH cap 30% + daily exposure,US cap 70% / TH cap 30%,2026-07-03,2026-07-02
-AMD,US Equity,0.07999999999999945,0.07999999999999945,1.0,7.999999999999945,2026-07-03,One-model US cap 70% / TH cap 30% + daily exposure,US cap 70% / TH cap 30%,2026-07-03,2026-07-02
-LLY,US Equity,0.07999999999999918,0.07999999999999918,1.0,7.999999999999918,2026-07-03,One-model US cap 70% / TH cap 30% + daily exposure,US cap 70% / TH cap 30%,2026-07-03,2026-07-02
-BAC,US Equity,0.05899366813024073,0.05899366813024073,1.0,5.899366813024073,2026-07-03,One-model US cap 70% / TH cap 30% + daily exposure,US cap 70% / TH cap 30%,2026-07-03,2026-07-02
-V,US Equity,0.0010063318697592209,0.0010063318697592209,1.0,0.10063318697592209,2026-07-03,One-model US cap 70% / TH cap 30% + daily exposure,US cap 70% / TH cap 30%,2026-07-03,2026-07-02
+Cash / Reduced Exposure,Cash / Reduced Exposure,0.15000000000000058,0.0,1.0,15.000000000000057,2026-07-12,One-model US cap 70% / TH cap 30% stockcap5 pure + daily exposure,US cap 70% / TH cap 30% stockcap5 pure,2026-07-12,2026-07-11
+GC=F,Gold,0.14999999999999955,0.2999999999999991,0.5,14.999999999999956,2026-07-12,One-model US cap 70% / TH cap 30% stockcap5 pure + daily exposure,US cap 70% / TH cap 30% stockcap5 pure,2026-07-12,2026-07-11
+MU,US Equity,0.049999999999999926,0.049999999999999926,1.0,4.999999999999993,2026-07-12,One-model US cap 70% / TH cap 30% stockcap5 pure + daily exposure,US cap 70% / TH cap 30% stockcap5 pure,2026-07-12,2026-07-11
+AAPL,US Equity,0.049999999999999926,0.049999999999999926,1.0,4.999999999999993,2026-07-12,One-model US cap 70% / TH cap 30% stockcap5 pure + daily exposure,US cap 70% / TH cap 30% stockcap5 pure,2026-07-12,2026-07-11
+LLY,US Equity,0.049999999999999926,0.049999999999999926,1.0,4.999999999999993,2026-07-12,One-model US cap 70% / TH cap 30% stockcap5 pure + daily exposure,US cap 70% / TH cap 30% stockcap5 pure,2026-07-12,2026-07-11
+UNH,US Equity,0.049999999999999926,0.049999999999999926,1.0,4.999999999999993,2026-07-12,One-model US cap 70% / TH cap 30% stockcap5 pure + daily exposure,US cap 70% / TH cap 30% stockcap5 pure,2026-07-12,2026-07-11
+HOOD,US Equity,0.049999999999999926,0.049999999999999926,1.0,4.999999999999993,2026-07-12,One-model US cap 70% / TH cap 30% stockcap5 pure + daily exposure,US cap 70% / TH cap 30% stockcap5 pure,2026-07-12,2026-07-11
+META,US Equity,0.049999999999999926,0.049999999999999926,1.0,4.999999999999993,2026-07-12,One-model US cap 70% / TH cap 30% stockcap5 pure + daily exposure,US cap 70% / TH cap 30% stockcap5 pure,2026-07-12,2026-07-11
+AMD,US Equity,0.049999999999999926,0.049999999999999926,1.0,4.999999999999993,2026-07-12,One-model US cap 70% / TH cap 30% stockcap5 pure + daily exposure,US cap 70% / TH cap 30% stockcap5 pure,2026-07-12,2026-07-11
+APP,US Equity,0.049999999999999926,0.049999999999999926,1.0,4.999999999999993,2026-07-12,One-model US cap 70% / TH cap 30% stockcap5 pure + daily exposure,US cap 70% / TH cap 30% stockcap5 pure,2026-07-12,2026-07-11
+GS,US Equity,0.049999999999999926,0.049999999999999926,1.0,4.999999999999993,2026-07-12,One-model US cap 70% / TH cap 30% stockcap5 pure + daily exposure,US cap 70% / TH cap 30% stockcap5 pure,2026-07-12,2026-07-11
+V,US Equity,0.049999999999999926,0.049999999999999926,1.0,4.999999999999993,2026-07-12,One-model US cap 70% / TH cap 30% stockcap5 pure + daily exposure,US cap 70% / TH cap 30% stockcap5 pure,2026-07-12,2026-07-11
+JPM,US Equity,0.04999999999999989,0.04999999999999989,1.0,4.999999999999989,2026-07-12,One-model US cap 70% / TH cap 30% stockcap5 pure + daily exposure,US cap 70% / TH cap 30% stockcap5 pure,2026-07-12,2026-07-11
+BAC,US Equity,0.049999999999999885,0.049999999999999885,1.0,4.9999999999999885,2026-07-12,One-model US cap 70% / TH cap 30% stockcap5 pure + daily exposure,US cap 70% / TH cap 30% stockcap5 pure,2026-07-12,2026-07-11
+GEV,US Equity,0.04999999999999987,0.04999999999999987,1.0,4.999999999999987,2026-07-12,One-model US cap 70% / TH cap 30% stockcap5 pure + daily exposure,US cap 70% / TH cap 30% stockcap5 pure,2026-07-12,2026-07-11
+MA,US Equity,0.04999999999999986,0.04999999999999986,1.0,4.999999999999986,2026-07-12,One-model US cap 70% / TH cap 30% stockcap5 pure + daily exposure,US cap 70% / TH cap 30% stockcap5 pure,2026-07-12,2026-07-11

@@ -1,0 +1,17 @@
+Asset,Effective Weight,Date,Strategy,Case
+Cash / Reduced Exposure,0.1999999999999993,2026-06-30,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure,Stock cap 5%
+GC=F,0.09999999999999964,2026-06-30,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure,Stock cap 5%
+APP,0.04999999999999982,2026-06-30,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure,Stock cap 5%
+AVGO,0.04999999999999982,2026-06-30,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure,Stock cap 5%
+ORCL,0.04999999999999982,2026-06-30,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure,Stock cap 5%
+MU,0.04999999999999982,2026-06-30,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure,Stock cap 5%
+CSCO,0.04999999999999982,2026-06-30,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure,Stock cap 5%
+UNH,0.04999999999999982,2026-06-30,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure,Stock cap 5%
+SMCI,0.04999999999999982,2026-06-30,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure,Stock cap 5%
+LRCX,0.04999999999999966,2026-06-30,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure,Stock cap 5%
+AMAT,0.049999999999999635,2026-06-30,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure,Stock cap 5%
+AMZN,0.049999999999999566,2026-06-30,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure,Stock cap 5%
+TXN,0.049999999999999566,2026-06-30,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure,Stock cap 5%
+QCOM,0.049999999999999545,2026-06-30,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure,Stock cap 5%
+AMD,0.04999999999999949,2026-06-30,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure,Stock cap 5%
+INTC,0.04999999999999939,2026-06-30,One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure,Stock cap 5%

@@ -7,6 +7,9 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from qqq_combo_gtaa import PRICE_CACHE as QQQ_COMBO_PRICE_CACHE
+from qqq_combo_gtaa import STRATEGY as QQQ_COMBO_STRATEGY
+from qqq_combo_gtaa import daily_returns as qqq_combo_daily_returns
 from share_class_utils import drop_duplicate_share_classes_available
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -25,6 +28,12 @@ LOOKAHEAD_SERIES_PREFIXES = (
 LOOKAHEAD_SERIES_NAMES = {
     "Side trigger realloc to active stock side, fee+slippage (with Gold/BTC 60/30/10)",
 }
+EXCLUDED_STRATEGY_NAME_PARTS = ("no cost",)
+
+
+def _is_excluded_strategy_name(name: object) -> bool:
+    text = str(name).casefold()
+    return any(part in text for part in EXCLUDED_STRATEGY_NAME_PARTS)
 
 HANDOFF_CURVE_SOURCES = [
     {
@@ -76,27 +85,9 @@ HANDOFF_CURVE_SOURCES = [
         "family": "PIT_RESELECT_BY_STEP_HANDOFF",
     },
     {
-        "label": "Tactical TH/Gold/BTC 65/25/10 Gold crash protection",
-        "path": ("..", "dynamic_port_opt", "result", "us_th_tactical_perf_momentum_gold_crash_protection_sweep_curves_thb.csv"),
-        "column": "Gold25 crash DD252 warn-8%/exp50% crash-20%/exp50% recover-5% panic-30%/MA200/mom63->0",
-        "family": "PIT_RESELECT_BY_STEP_HANDOFF",
-    },
-    {
-        "label": "One-model US cap 70% / TH cap 30% + daily exposure",
-        "path": ("..", "dynamic_port_opt", "result", "us_th_tactical_perf_momentum_one_model_gold30_btc10_th_signal_asym_group_cap_grid_us70_80_th30_40_curves_thb.csv"),
-        "column": "One-model US cap 70% / TH cap 30% + daily exposure",
-        "family": "PIT_RESELECT_BY_STEP_HANDOFF",
-    },
-    {
         "label": "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure",
-        "path": ("..", "dynamic_port_opt", "result", "us_th_one_model_us70_th30_concentration_sweep_curves_thb.csv"),
+        "path": ("result", "us_th_one_model_us70_th30_stockcap5_penalty002_assets50_weekday_june_curves_thb.csv"),
         "column": "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure",
-        "family": "PIT_RESELECT_BY_STEP_HANDOFF",
-    },
-    {
-        "label": "US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure",
-        "path": ("result", "us_th_one_model_us70_th30_segment_cap30_all_us_segments_backtest_curves_thb.csv"),
-        "column": "US/TH one-model stockcap5 penalty0.02 assets50 all US segments cap 30% each + daily exposure",
         "family": "PIT_RESELECT_BY_STEP_HANDOFF",
     },
     {
@@ -216,24 +207,9 @@ HANDOFF_SUPPORT_FILES = [
         "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 concentration diagnostics.",
     },
     {
-        "source": ("result", "us_th_one_model_us70_th30_segment_cap30_all_us_segments_backtest_summary_thb.csv"),
-        "target": "us_th_one_model_us70_th30_segment_cap30_all_us_segments_backtest_summary_thb.csv",
-        "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 US segment-cap 30% summary.",
-    },
-    {
-        "source": ("result", "us_th_one_model_us70_th30_segment_cap30_all_us_segments_backtest_curves_thb.csv"),
-        "target": "us_th_one_model_us70_th30_segment_cap30_all_us_segments_backtest_curves_thb.csv",
-        "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 US segment-cap 30% curves.",
-    },
-    {
-        "source": ("result", "us_th_one_model_us70_th30_segment_cap30_all_us_segments_backtest_latest_effective_weights_thb.csv"),
-        "target": "us_th_one_model_us70_th30_segment_cap30_all_us_segments_backtest_latest_effective_weights_thb.csv",
-        "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 US segment-cap 30% historical latest effective weights.",
-    },
-    {
-        "source": ("result", "us_th_one_model_us70_th30_segment_cap30_all_us_segments_backtest_segment_weight_history_thb.csv"),
-        "target": "us_th_one_model_us70_th30_segment_cap30_all_us_segments_backtest_segment_weight_history_thb.csv",
-        "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 US segment-cap 30% segment diagnostics.",
+        "source": ("result", "us_th_best_asset_sweep_latest_effective_weights_live_thb.csv"),
+        "target": "us_th_best_asset_sweep_latest_effective_weights_live_thb.csv",
+        "description": "Latest effective weights for Tactical TH/Gold/BTC 60/30/10 asset-level daily exposure.",
     },
     {
         "source": ("..", "dynamic_port_opt", "result", "us_th_jp_optimized_sleeve_sweep_focus_summary_thb.csv"),
@@ -262,6 +238,37 @@ def _repo_path(*parts: str) -> Path:
     return PROJECT_ROOT.joinpath(*parts)
 
 
+def _display_path(path: Path) -> str:
+    try:
+        return str(path.relative_to(PROJECT_ROOT))
+    except ValueError:
+        return str(path)
+
+
+def _source_path_info(parts: tuple[str, ...], target: str | None = None) -> dict[str, str | Path]:
+    original = _repo_path(*parts)
+    filename = Path(*parts).name
+    candidates = [
+        ("result", _repo_path("result", filename)),
+        ("precomputed", OUT_DIR / (target or filename)),
+        ("configured", original),
+    ]
+    for source_type, candidate in candidates:
+        if candidate.exists():
+            return {
+                "path": candidate,
+                "source_type": source_type,
+                "configured_path": str(Path(*parts)),
+                "actual_path": _display_path(candidate),
+            }
+    return {
+        "path": original,
+        "source_type": "missing",
+        "configured_path": str(Path(*parts)),
+        "actual_path": str(Path(*parts)),
+    }
+
+
 def _is_legacy_lookahead_series(name: str) -> bool:
     return name in LOOKAHEAD_SERIES_NAMES or any(name.startswith(prefix) for prefix in LOOKAHEAD_SERIES_PREFIXES)
 
@@ -282,19 +289,41 @@ def _read_curve_column(path: Path, column: str) -> pd.Series:
 def _copy_support_files() -> list[dict[str, str]]:
     copied: list[dict[str, str]] = []
     for item in HANDOFF_SUPPORT_FILES:
-        source = _repo_path(*item["source"])
+        source_info = _source_path_info(item["source"], str(item["target"]))
+        source = source_info["path"]
         target = OUT_DIR / str(item["target"])
         if not source.exists():
             continue
-        shutil.copy2(source, target)
+        if source.resolve() != target.resolve():
+            shutil.copy2(source, target)
         copied.append(
             {
-                "source": str(Path(*item["source"])),
+                "source": str(source_info["actual_path"]),
+                "configured_source": str(source_info["configured_path"]),
+                "source_type": str(source_info["source_type"]),
                 "target": str(target.relative_to(PROJECT_ROOT)),
                 "description": str(item["description"]),
             }
         )
     return copied
+
+
+def _mirror_handoff_curve_sources() -> list[dict[str, str]]:
+    mirrored: list[dict[str, str]] = []
+    for source in HANDOFF_CURVE_SOURCES:
+        configured = _repo_path(*source["path"])
+        target = OUT_DIR / Path(*source["path"]).name
+        if target.exists() or not configured.exists():
+            continue
+        shutil.copy2(configured, target)
+        mirrored.append(
+            {
+                "strategy": str(source["label"]),
+                "source": str(Path(*source["path"])),
+                "target": str(target.relative_to(PROJECT_ROOT)),
+            }
+        )
+    return mirrored
 
 
 def _latest_sp_trend_exposure() -> dict[str, object]:
@@ -632,6 +661,11 @@ def main() -> None:
         ),
     }
 
+    if QQQ_COMBO_PRICE_CACHE.exists():
+        qqq_combo_prices = pd.read_parquet(QQQ_COMBO_PRICE_CACHE).sort_index().ffill()
+        qqq_combo_ret = qqq_combo_daily_returns(qqq_combo_prices).loc[overlay.index.min() : overlay.index.max()]
+        strategy_returns[QQQ_COMBO_STRATEGY] = qqq_combo_ret
+
     source_prices = _repo_path("data", "cache", "portopt_optimizer_proof", "20Y", "prices.parquet")
     source_volumes = _repo_path("data", "cache", "portopt_optimizer_proof", "20Y", "volumes.parquet")
     sp500_intervals = _repo_path("data", "sp500", "sp500_ticker_start_end.csv")
@@ -681,12 +715,17 @@ def main() -> None:
             name = curve_renames.get(column, column)
             if _is_legacy_lookahead_series(name):
                 continue
+            if _is_excluded_strategy_name(name):
+                continue
             if name not in strategy_returns:
                 strategy_returns[name] = _returns_from_curve(curves[column])
 
+    mirrored_handoff_curve_sources = _mirror_handoff_curve_sources()
+
     handoff_sources_used: list[dict[str, str]] = []
     for source in HANDOFF_CURVE_SOURCES:
-        path = _repo_path(*source["path"])
+        source_info = _source_path_info(source["path"])
+        path = source_info["path"]
         if not path.exists():
             continue
         curve = _read_curve_column(path, source["column"])
@@ -695,7 +734,9 @@ def main() -> None:
             {
                 "strategy": source["label"],
                 "family": source["family"],
-                "path": str(Path(*source["path"])),
+                "path": str(source_info["actual_path"]),
+                "configured_path": str(source_info["configured_path"]),
+                "source_type": str(source_info["source_type"]),
                 "column": source["column"],
                 "source_start": curve.index.min().date().isoformat(),
                 "source_end": curve.index.max().date().isoformat(),
@@ -703,6 +744,7 @@ def main() -> None:
         )
 
     returns = pd.DataFrame(strategy_returns).sort_index().loc[overlay.index.min() : overlay.index.max()]
+    returns = returns.loc[:, [column for column in returns.columns if not _is_excluded_strategy_name(column)]]
     curves = returns.apply(_curve_from_returns)
     returns.to_parquet(OUT_DIR / "streamlit_10y_strategy_returns.parquet")
     curves.to_parquet(OUT_DIR / "streamlit_10y_strategy_curves.parquet")
@@ -736,7 +778,29 @@ def main() -> None:
             "Strategy return series keep their own available history; the app trims only the selected chart pair to a shared date window.",
         ],
         "handoff_curve_sources": handoff_sources_used,
+        "mirrored_handoff_curve_sources": mirrored_handoff_curve_sources,
         "handoff_support_files": support_files,
+        "strategy_descriptions": {
+            QQQ_COMBO_STRATEGY: {
+                "Strategy setup": [
+                    "Base allocation: QQQ core 40%, global country/sector rotation 30%, defensive GLD/IEF/TLT 30%.",
+                    "Universe: QQQ, country ETFs, US sector/industry/commodity ETFs, GLD, IEF, TLT, and BIL as cash proxy.",
+                    "Selection rules: rotation sleeve reselects monthly top 3 ETFs by 6-month momentum, only among ETFs above MA200.",
+                    "Optimizer/model: rotation and defensive sleeves use 126-day inverse-vol risk parity; QQQ core is fixed.",
+                    "Objective: durable risk-adjusted return with lower drawdown than QQQ buy-and-hold, net of 17 bps turnover cost.",
+                    "Rebalance schedule: monthly rotation selection; structural sleeve weights stay 40/30/30.",
+                    "Caps: sleeve caps are fixed at Core 40%, Rotation 30%, Defensive 30%; no extra single-ETF cap beyond sleeve construction.",
+                    "Latest-weight source: standalone refresh from this repo's yfinance-backed qqq_combo_gtaa cache, not static files from dynamic_port_opt or webull_api.",
+                ],
+                "Daily exposure rules": [
+                    "Uses daily exposure overlay on every holding.",
+                    "Signal timing: close signal is shifted lag-1, so today's exposure uses the prior session signal for next-session execution.",
+                    "Signal: each asset uses its own MA200; asset is risk-on when close is above MA200.",
+                    "Threshold: below MA200 reduces that asset sleeve slice to 0% exposure.",
+                    "Reduced exposure goes to BIL via Cash / Reduced Exposure.",
+                ],
+            }
+        },
         "files": {
             "returns": "data/precomputed/streamlit_10y_strategy_returns.parquet",
             "curves": "data/precomputed/streamlit_10y_strategy_curves.parquet",
