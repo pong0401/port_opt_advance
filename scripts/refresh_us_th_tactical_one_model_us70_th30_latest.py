@@ -48,6 +48,7 @@ GOLD_CAP = 0.30
 BTC_CAP = 0.10
 RISK_AVERSION = 8.0
 CONCENTRATION_PENALTY = 0.02
+CASH_ASSET = "Cash / Reduced Exposure"
 
 
 def _select_stock_group(
@@ -97,17 +98,22 @@ def _optimize_one_model(
         feature_flags=FEATURE_FLAGS,
     )
     momentum = build_momentum_signal(features, mode="mom_63").reindex(selected)
-    mu = momentum.fillna(momentum.median() if momentum.notna().any() else 0.0).to_numpy(dtype=float)
+    mu = momentum.fillna(momentum.median() if momentum.notna().any() else 0.0)
     if len(mu):
-        mu = np.clip(mu, np.nanpercentile(mu, 10), np.nanpercentile(mu, 90))
+        clipped = np.clip(mu.to_numpy(dtype=float), np.nanpercentile(mu, 10), np.nanpercentile(mu, 90))
+        mu = pd.Series(clipped, index=selected, dtype=float)
 
     cov = train_returns.cov().reindex(index=selected, columns=selected).fillna(0.0)
-    cov_matrix = cov.to_numpy(dtype=float)
     caps = pd.Series(STOCK_CAP, index=selected, dtype=float)
     caps.loc[[asset for asset in selected if asset == "GC=F"]] = GOLD_CAP
     caps.loc[[asset for asset in selected if asset == "BTC-USD"]] = BTC_CAP
-    if float(caps.sum()) < 1.0 - 1e-12:
-        raise RuntimeError("One-model caps are infeasible; caps sum below 100%.")
+    cap_shortfall = 1.0 - float(caps.sum())
+    if cap_shortfall > 1e-12:
+        selected = selected + [CASH_ASSET]
+        caps.loc[CASH_ASSET] = cap_shortfall
+        mu.loc[CASH_ASSET] = 0.0
+        cov = cov.reindex(index=selected, columns=selected, fill_value=0.0).fillna(0.0)
+    cov_matrix = cov.to_numpy(dtype=float)
 
     x0 = caps / caps.sum()
     bounds = [(0.0, float(caps.loc[asset])) for asset in selected]
@@ -142,8 +148,8 @@ def _sleeve(asset: str, us_assets: set[str], th_assets: set[str]) -> str:
         return "Gold"
     if asset == "BTC-USD":
         return "BTC"
-    if asset == "Cash / Reduced Exposure":
-        return "Cash / Reduced Exposure"
+    if asset == CASH_ASSET:
+        return CASH_ASSET
     return "Other"
 
 
