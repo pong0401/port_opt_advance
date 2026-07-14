@@ -39,6 +39,14 @@
 5. ห้าม duplicate คำอธิบายเดียวกันทั้งใน gray caption และ info box ให้ใช้ bullet info box เป็นหลักสำหรับรายละเอียด user-facing
 6. สำหรับ strategy ที่ไม่มี overlay ต้องเขียนให้ชัดว่าไม่มี daily exposure overlay และ sleeves ยัง active จนถึง rebalance ถัดไป
 
+## Language and Encoding Rules
+
+1. ไฟล์ source, config, docs และ generated text ที่มีภาษาไทยต้องบันทึกเป็น UTF-8 และต้องแสดงภาษาไทยได้ถูกต้อง ห้ามมี mojibake เช่น `Ã`, `Â`, `â€` หรือข้อความภาษาไทยที่กลายเป็น `???`
+2. ห้ามส่งข้อความภาษาไทยผ่าน shell pipeline หรือเครื่องมือที่อาจแปลง encoding โดยไม่ตรวจผลลัพธ์ หากต้องสร้างหรือแก้ข้อความผ่าน script ต้องใช้ UTF-8 แบบ explicit และอ่านไฟล์กลับมาตรวจหลังเขียน
+3. ทุกครั้งที่เพิ่มหรือแก้ user-facing text ให้รัน smoke test ที่ import/parse app หรือ config แล้ว assert ว่าข้อความที่เกี่ยวข้องมีอักขระไทยจริง และไม่มี mojibake markers หรือ `???`
+4. ต้องตรวจทั้งข้อความใน app, docs, metadata, precomputed/static dashboard export และ generated JSON ที่ user มองเห็น ไม่ตรวจเฉพาะ source file จุดเดียว
+5. ถ้าพบ mojibake เดิมใน section หรือ strategy ที่กำลังแก้ ต้องแก้ให้หมดใน scope เดียวกันก่อนถือว่างานเสร็จ โดยห้ามเปลี่ยน backend behavior เพียงเพื่อแก้ภาษา
+
 ## Chart Display Rules
 
 1. Chart ที่แสดง performance ของ strategy ต้องแสดงข้อมูลเต็มเท่าที่ strategy นั้นมีให้มากที่สุดเป็น default ห้ามตัด history ทั้ง dataset ให้สั้นลงเพียงเพราะมี strategy บางตัวที่ข้อมูลสั้นกว่า
