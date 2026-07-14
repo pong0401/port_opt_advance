@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "strategy_id": "qqq_global_rotation_defensive_gtaa_403030",
+  "strategy": "QQQ + global rotation + defensive GTAA 40/30/30",
+  "market_date": "2026-07-10",
+  "source_file": "data/precomputed/qqq_global_rotation_defensive_gtaa_403030_latest_effective_weights.csv",
+  "weight_column": "Effective Weight",
+  "raw_weight_sum": 1.0,
+  "visible_weight_sum": 1.0,
+  "hidden_below_weight": 0.01,
+  "rows": [
+    {
+      "Asset": "Cash / Reduced Exposure",
+      "Sleeve": "Cash / Reduced Exposure",
+      "Target Weight": 0.0,
+      "Target Weight %": 0.0,
+      "Daily Exposure": 1.0,
+      "Effective Weight": 0.6,
+      "Effective Weight %": 60.0,
+      "Date": "2026-07-10",
+      "Last Exposure Date": "2026-07-10",
+      "Last Rebalance Date": "2026-07-10",
+      "Signal Source Close Date": "2026-07-09",
+      "Latest Cache Trading Date": "2026-07-10",
+      "Strategy": "QQQ + global rotation + defensive GTAA 40/30/30",
+      "Daily Exposure Variant": "BIL cash return for MA200-gated inactive slices"
+    },
+    {
+      "Asset": "QQQ",
+      "Sleeve": "Core",
+      "Target Weight": 0.4,
+      "Target Weight %": 40.0,
+      "Daily Exposure": 1.0,
+      "Effective Weight": 0.4,
+      "Effective Weight %": 40.0,
+      "Date": "2026-07-10",
+      "Last Exposure Date": "2026-07-10",
+      "Last Rebalance Date": "2026-07-10",
+      "Signal Source Close Date": "2026-07-09",
+      "Latest Cache Trading Date": "2026-07-10",
+      "Strategy": "QQQ + global rotation + defensive GTAA 40/30/30",
+      "Daily Exposure Variant": "Per-asset MA200 close signal, lag-1 next-session execution"
+    }
+  ]
+}

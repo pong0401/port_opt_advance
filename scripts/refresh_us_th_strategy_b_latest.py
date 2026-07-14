@@ -3,6 +3,7 @@ from __future__ import annotations
 import pandas as pd
 
 import refresh_us_th_tactical_final_best_latest as final_best
+import refresh_us_th_tactical_603010_latest as tactical_603010
 import refresh_us_th_one_model_variants_latest as one_model_variants
 
 
@@ -35,6 +36,9 @@ def main() -> None:
         final_best.main()
     finally:
         final_best._fresh_us_th_panel = original_final_panel_loader
+
+    print("Refreshing Tactical TH/Gold/BTC 60/30/10 latest weights...")
+    tactical_603010.main(panel=_copy_panel(panel))
 
     one_model_variants.main(panel=_copy_panel(panel))
 

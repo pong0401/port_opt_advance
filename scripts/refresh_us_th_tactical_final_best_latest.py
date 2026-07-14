@@ -56,6 +56,13 @@ RISK_FREE_RATE = 0.03
 SELECTED_MIX = {"Equity": 0.65, "Gold": 0.25, "BTC": 0.10}
 STRATEGY = "Tactical TH/Gold/BTC 65/25/10 Gold crash protection"
 RESULT_PREFIX = "us_th_tactical_perf_momentum_final_best"
+OVERLAY_MIX_LABEL = "Equity/Gold/BTC 65/25/10"
+GOLD_EXPOSURE_MODE = "drawdown_crash_protection"
+DAILY_EXPOSURE_DESCRIPTION = (
+    "US SPY MA300 below50%; TH SET MA200 below0%; "
+    "Gold DD252 warn-8%->50%, crash-20%->50%, panic-30% + below MA200 + mom63<0 -> 0%, recover-5%; "
+    "BTC MA50 below0%"
+)
 FEATURE_FLAGS = {"resid_vol": False, "drawdown": False, "downside_beta": False}
 FRESH_LOOKBACK_CALENDAR_DAYS = 850
 FRESH_BATCH_SIZE = 80
@@ -439,8 +446,15 @@ def _gold_crash_protection_exposure(gold_price: pd.Series) -> pd.Series:
             active = 1.0
         values.append(active)
     return pd.Series(values, index=drawdown.index, name="Gold Crash Protection Exposure").shift(1).fillna(1.0)
-
-
+
+def _gold_daily_exposure(gold_price: pd.Series) -> pd.Series:
+    if GOLD_EXPOSURE_MODE == "ma50_below100":
+        return _close_trend_exposure(gold_price, 50, 1.0)
+    if GOLD_EXPOSURE_MODE == "drawdown_crash_protection":
+        return _gold_crash_protection_exposure(gold_price)
+    raise ValueError(f"Unknown Gold exposure mode: {GOLD_EXPOSURE_MODE}")
+
+
 def _month_end(series: pd.Series) -> pd.Series:
     return series.groupby(series.index.to_period("M")).last()
 
@@ -759,7 +773,7 @@ def main() -> None:
         {
             "US Equity": _close_trend_exposure(signal_prices["US Equity"], 300, 0.50),
             "TH Equity": _close_trend_exposure(signal_prices["TH Equity"], 200, 0.00),
-            "Gold": _gold_crash_protection_exposure(signal_prices["Gold"]),
+            "Gold": _gold_daily_exposure(signal_prices["Gold"]),
             "BTC": _close_trend_exposure(signal_prices["BTC"], 50, 0.00),
         }
     ).reindex(daily_returns.index).ffill().fillna(1.0).clip(0.0, 1.0)
@@ -840,12 +854,8 @@ def main() -> None:
                 "Date": output_date.date().isoformat(),
                 "Strategy": STRATEGY,
                 "Tactical Rule": "proxy_regime relative_return binary lb1 cap30 entry0 exit0 hold0 confirm1",
-                "Overlay Mix": "Equity/Gold/BTC 65/25/10",
-                "Daily Exposure": (
-                    "US SPY MA300 below50%; TH SET MA200 below0%; "
-                    "Gold DD252 warn-8%->50%, crash-20%->50%, panic-30% + below MA200 + mom63<0 -> 0%, recover-5%; "
-                    "BTC MA50 below0%"
-                ),
+                "Overlay Mix": OVERLAY_MIX_LABEL,
+                "Daily Exposure": DAILY_EXPOSURE_DESCRIPTION,
                 "TH Tactical Weight Inside Equity Sleeve": th_tactical_weight,
                 "US Sleeve Internal Weight Date": us_internal_date,
                 "TH Sleeve Internal Weight Date": th_internal_date,
@@ -857,6 +867,7 @@ def main() -> None:
                 "BTC MA50": float(signal_prices["BTC"].rolling(50, min_periods=20).mean().loc[:as_of].iloc[-1]),
                 "BTC Daily Exposure": float(latest_exposure["BTC"]),
                 "Gold Price": float(signal_prices["Gold"].loc[:as_of].iloc[-1]),
+                "Gold MA50": float(signal_prices["Gold"].rolling(50, min_periods=20).mean().loc[:as_of].iloc[-1]),
                 "Gold DD252": float(
                     signal_prices["Gold"].loc[:as_of].iloc[-1]
                     / signal_prices["Gold"].rolling(GOLD_DD_WINDOW, min_periods=max(20, GOLD_DD_WINDOW // 4)).max().loc[:as_of].iloc[-1]

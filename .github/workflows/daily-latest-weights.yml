@@ -104,6 +104,10 @@ jobs:
           git add -f result/us_th_tactical_perf_momentum_final_best_latest_effective_sleeve_weights_thb.csv
           git add -f result/us_th_tactical_perf_momentum_final_best_latest_meta.csv
           git add -f result/us_th_tactical_perf_momentum_final_best_latest_meta.json
+          git add -f result/us_th_tactical_perf_momentum_603010_latest_effective_security_weights_thb.csv
+          git add -f result/us_th_tactical_perf_momentum_603010_latest_effective_sleeve_weights_thb.csv
+          git add -f result/us_th_tactical_perf_momentum_603010_latest_meta.csv
+          git add -f result/us_th_tactical_perf_momentum_603010_latest_meta.json
           git add -f result/us_th_tactical_one_model_us70_th30_latest_effective_weights_thb.csv
           git add -f result/us_th_tactical_one_model_us70_th30_latest_sleeve_weights_thb.csv
           git add -f result/us_th_tactical_one_model_us70_th30_latest_meta.csv

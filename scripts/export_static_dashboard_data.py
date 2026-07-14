@@ -64,7 +64,7 @@ LATEST_WEIGHT_FILES = {
 
     "us_th_jp_optimized_minvol_top10_cap15": "us_th_jp_optimized_minvol_top10_cap15_weekly_latest_effective_weights_thb.csv",
 
-    "us_th_best_asset_sweep_603010_asset_daily": "us_th_best_asset_sweep_latest_effective_weights_live_thb.csv",
+    "us_th_tactical_603010_asset_daily": "us_th_tactical_perf_momentum_603010_latest_effective_security_weights_thb.csv",
 
 }
 
@@ -87,7 +87,7 @@ DASHBOARD_STRATEGY_GROUPS = {
         "label": "Strategy B: PIT Reselect Strategies",
         "default": "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure",
         "options": [
-            {"label": "Tactical TH/Gold/BTC 60/30/10 asset-level daily exposure", "series": "Best asset sweep US30/TH30/max6 dynamic cash drag, fee+slippage", "latest_weight_id": "us_th_best_asset_sweep_603010_asset_daily"},
+            {"label": "Tactical TH/Gold/BTC 60/30/10 asset-level daily exposure", "series": "Tactical TH/Gold/BTC 60/30/10 asset-level daily exposure", "latest_weight_id": "us_th_tactical_603010_asset_daily"},
             {"label": "US/TH/JP index signal + JP optimized top10 cap15 + weekly exposure + Gold DD252", "series": "JP optimized min_vol_mom_tilt top10 cap15 weekly exposure with Gold DD252", "latest_weight_id": "us_th_jp_optimized_minvol_top10_cap15"},
             {"label": "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure", "series": "One-model US cap 70% / TH cap 30% stockcap5 penalty0.02 assets50 + daily exposure", "latest_weight_id": "us_th_one_model_stockcap5_assets50"},
         ],

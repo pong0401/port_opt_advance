@@ -207,8 +207,8 @@ HANDOFF_SUPPORT_FILES = [
         "description": "US70/TH30 one-model stockcap5 penalty0.02 assets50 concentration diagnostics.",
     },
     {
-        "source": ("result", "us_th_best_asset_sweep_latest_effective_weights_live_thb.csv"),
-        "target": "us_th_best_asset_sweep_latest_effective_weights_live_thb.csv",
+        "source": ("result", "us_th_tactical_perf_momentum_603010_latest_effective_security_weights_thb.csv"),
+        "target": "us_th_tactical_perf_momentum_603010_latest_effective_security_weights_thb.csv",
         "description": "Latest effective weights for Tactical TH/Gold/BTC 60/30/10 asset-level daily exposure.",
     },
     {
@@ -695,6 +695,7 @@ def main() -> None:
     curve_sources = [
         _repo_path("result", "gold_btc_sp500_overlay", "equity_curves.csv"),
         _repo_path("..", "dynamic_port_opt", "result", "joint_confirm_603010_504d_1m_overlay_curves_thb.csv"),
+        _repo_path("data", "precomputed", "us_th_tactical_perf_momentum_gold_btc_overlay_curves_thb.csv"),
         _repo_path("result", "us_th_side_trigger_reallocation_curves_thb.csv"),
         _repo_path("result", "strategy_b_weekly_exposure_test_curves.csv"),
         _repo_path("result", "us_th_stocks_only_vs_gold_btc_side_trigger_curves_thb.csv"),
@@ -706,11 +707,12 @@ def main() -> None:
     ]
     curve_renames = {
         "S&P overlay + Gold/BTC": "S&P overlay + Gold/BTC 80/10/10",
+        "Tactical TH/Gold/BTC 60/30/10 asset-level daily exposure (Tactical TH proxy_regime relative_return binary lb1 cap30 entry0% exit0% hold0 confirm1)": "Tactical TH/Gold/BTC 60/30/10 asset-level daily exposure",
     }
     for path in curve_sources:
         if not path.exists():
             continue
-        curves = _read_curve_csv(path).loc[overlay.index.min() : overlay.index.max()]
+        curves = _read_curve_csv(path).loc[: overlay.index.max()]
         for column in curves.columns:
             name = curve_renames.get(column, column)
             if _is_legacy_lookahead_series(name):
@@ -743,7 +745,7 @@ def main() -> None:
             }
         )
 
-    returns = pd.DataFrame(strategy_returns).sort_index().loc[overlay.index.min() : overlay.index.max()]
+    returns = pd.DataFrame(strategy_returns).sort_index().loc[: overlay.index.max()]
     returns = returns.loc[:, [column for column in returns.columns if not _is_excluded_strategy_name(column)]]
     curves = returns.apply(_curve_from_returns)
     returns.to_parquet(OUT_DIR / "streamlit_10y_strategy_returns.parquet")
@@ -760,6 +762,14 @@ def main() -> None:
         }
         rows.append(row)
     summary = pd.DataFrame(rows).sort_values(["Sharpe", "CAGR"], ascending=[False, False])
+    canonical_path = OUT_DIR / "us_th_tactical_perf_momentum_gold_btc_overlay_summary_thb.csv"
+    canonical_label = "Tactical TH/Gold/BTC 60/30/10 asset-level daily exposure"
+    if canonical_path.exists():
+        canonical = pd.read_csv(canonical_path)
+        canonical_row = canonical.loc[canonical["Strategy"].str.startswith(f"{canonical_label} (")].iloc[0]
+        target = summary["Strategy"].eq(canonical_label)
+        for column in ["Start", "End", "Total Return", "CAGR", "Annual Vol", "Sharpe", "Sortino", "Max Drawdown", "Hit Rate"]:
+            summary.loc[target, column] = canonical_row[column]
     summary.to_csv(OUT_DIR / "streamlit_10y_strategy_summary.csv", index=False)
 
     support_files = _copy_support_files()
@@ -767,7 +777,7 @@ def main() -> None:
 
     metadata = {
         "generated_at": pd.Timestamp.now(tz="Asia/Bangkok").isoformat(),
-        "data_start": overlay.index.min().date().isoformat(),
+        "data_start": returns.dropna(how="all").index.min().date().isoformat(),
         "raw_data_start": overlay.index.min().date().isoformat(),
         "data_end": overlay.index.max().date().isoformat(),
         "currency": "THB",

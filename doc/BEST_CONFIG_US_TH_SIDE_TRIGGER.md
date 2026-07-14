@@ -15,13 +15,13 @@ Selected from fee/slippage-adjusted results only.
 
 ## Metrics
 
-- CAGR: `17.2486%`
-- Sharpe: `0.9937`
-- Sortino: `1.2573`
+- CAGR: `16.2970%`
+- Sharpe: `0.9412`
+- Sortino: `1.1797`
 - Max Drawdown: `-20.3341%`
-- Hit Rate: `0.5541`
+- Hit Rate: `0.5546`
 - Start: `2017-12-29`
-- End: `2026-05-25`
+- End: `2026-04-29`
 
 ## Files
 
