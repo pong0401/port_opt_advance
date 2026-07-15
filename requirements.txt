@@ -3,6 +3,6 @@ pandas>=2.2
 numpy>=1.26
 scipy>=1.11
 plotly>=5.20
-yfinance>=0.2.54
+yfinance>=1.5.1
 websockets>=13.0
 pyarrow>=15.0
